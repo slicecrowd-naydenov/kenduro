@@ -35,17 +35,20 @@ function get_all_products($request) {
     return $external_api_response;
   }
 
-  foreach ($product_variations['items'] as $variation) {
-    if (isset($variation[$product_variation]) && is_array($variation[$product_variation])) {
-      foreach ($variation[$product_variation] as $value) {
-        if (!in_array($value, $outputArray)) {
-          $outputArray[] = $value;
+  if (is_array($product_variations) && isset($product_variations['items'])) {
+    foreach ($product_variations['items'] as $variation) {
+      if (isset($variation[$product_variation]) && is_array($variation[$product_variation])) {
+        foreach ($variation[$product_variation] as $value) {
+          if (!in_array($value, $outputArray)) {
+            $outputArray[] = $value;
+          }
         }
       }
     }
   }
 
-  $filteredData = filter_items($external_api_response['items'], $fieldsToRemove);
+  // $filteredData = filter_items($external_api_response['items'], $fieldsToRemove);
+  $filteredData = isset($external_api_response['items']) ? filter_items($external_api_response['items'], $fieldsToRemove) : [];
 
   $filteredArrays = array_filter($filteredData, function ($item) use ($outputArray) {
     return in_array($item['id'], $outputArray);
