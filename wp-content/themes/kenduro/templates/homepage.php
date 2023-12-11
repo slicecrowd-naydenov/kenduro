@@ -149,7 +149,7 @@ get_header();
 // $sales_records = get_external_api_response('64fffa372bef62e52b350219', null);
 
 // pretty_dump($sales_records);
-
+pretty_dump(asddd('64fffa372bef62e52b350219'));
 ?>
 <main>
   <?php Load::organisms('homepage/index'); ?>
