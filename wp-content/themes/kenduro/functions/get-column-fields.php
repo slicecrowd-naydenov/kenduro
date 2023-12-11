@@ -50,10 +50,10 @@ function fetch_column_fields($app_id) {
   $url = $rest_url . 'ss-data/get-column-fields/' . $app_id;
 
   $headers = array(
-    'Authorization: Token 2570295cb9c1e4c7f81d46ed046c09bf43fd5740',
-    'ACCOUNT-ID: sd0y91s2',
     'Content-Type' => 'application/json',
-);
+    'Authorization' => 'Token 2570295cb9c1e4c7f81d46ed046c09bf43fd5740',
+    'ACCOUNT-ID' => 'sd0y91s2',
+  );
 
   $ch = curl_init($url);
 
