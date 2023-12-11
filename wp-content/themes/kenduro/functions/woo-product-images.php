@@ -1,4 +1,3 @@
-
 <?php
 add_action('after_setup_theme', 'remove_woo_three_support', 11);
 function remove_woo_three_support() {
