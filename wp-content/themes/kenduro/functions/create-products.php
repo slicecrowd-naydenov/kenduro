@@ -262,7 +262,7 @@ function set_values($fields, $product_id, $item) {
 function get_column_field_id($helper_text, $fetch_variation_columns) {
   $result = null;
   foreach ($fetch_variation_columns as $column) {
-    if ($column['help_text'] === $helper_text) {
+    if (isset($column['help_text']) && $column['help_text'] === $helper_text) {
       $result = $column['slug'];
       break;
     }
