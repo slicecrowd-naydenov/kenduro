@@ -4,7 +4,7 @@ require_once ABSPATH . 'wp-admin/includes/file.php';
 require_once ABSPATH . 'wp-admin/includes/image.php';
 add_action('rest_api_init', 'add_get_products_endpoint');
 $ss_ids = get_field('ss_ids', 'option');
-$product_variations = get_external_api_response($ss_ids['product_variations'], null);
+$product_variations = post_column_fields($ss_ids['product_variations']);
 
 function add_get_products_endpoint() {
   register_rest_route(
@@ -26,7 +26,7 @@ function get_all_products($request) {
   $data = $request->get_json_params();
   $id = $request->get_param('id');
   $product_id = $request->get_param('product_id');
-  $external_api_response = get_external_api_response($id, $data);
+  $external_api_response = post_column_fields($id);
   $product_variations_fields = fetch_column_fields($ss_ids['product_variations']);  
   $product_variation = get_column_field_id('product_variation', $product_variations_fields);
   $outputArray = array();
