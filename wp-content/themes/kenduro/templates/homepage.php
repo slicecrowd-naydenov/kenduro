@@ -183,7 +183,6 @@ get_header();
 
         <?php
         if (get_site_url() === 'http://kenduro.test') : ?>
-          <a href="#" id="createProducts">create Products</a>
           </br>
           <a href="#" id="createCategories">create Categories</a>
           </br>
@@ -196,10 +195,12 @@ get_header();
           <a href="#" id="createFilters">create Filters</a>
           </br>
         <?php endif; ?>
+        <a href="#" id="createProducts">create Products</a>
+        </br>
         <a href="#" id="updateProduct">update Product</a>
-          </br>
-          <a href="#" id="updateProductVariation">update Variation Product</a>
-          </br>
+        </br>
+        <a href="#" id="updateProductVariation">update Variation Product</a>
+        </br>
       </div>
     </div>
   </div>
