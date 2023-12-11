@@ -150,7 +150,7 @@ get_header();
 
 // pretty_dump($sales_records);
 global $ss_ids;
-$product_variations_fields = get_external_api_response('651f9c5af5b14e0d99b3e73c', array());  
+$product_variations_fields = get_column_fields('651f9c5af5b14e0d99b3e73c');  
 pretty_dump($product_variations_fields);
 ?>
 <main>
