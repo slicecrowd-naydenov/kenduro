@@ -200,6 +200,10 @@ get_header();
           <a href="#" id="createFilters">create Filters</a>
           </br>
         <?php endif; ?>
+        <a href="#" id="updateProduct">update Product</a>
+          </br>
+          <a href="#" id="updateProductVariation">update Variation Product</a>
+          </br>
       </div>
     </div>
   </div>
