@@ -7,7 +7,7 @@ require_once(ABSPATH . 'wp-admin/includes/image.php');
 /* Template Name: Home*/
 
 get_header();
-$arrow_down = file_get_contents(ICON_PATH . '/arrow_down.svg');
+// $arrow_down = file_get_contents(ICON_PATH . '/arrow_down.svg');
 // pretty_dump(json_encode(body));
 // $cart_items = WC()->cart->get_cart();
 
@@ -162,7 +162,7 @@ $arrow_down = file_get_contents(ICON_PATH . '/arrow_down.svg');
             <p class="paragraph paragraph-xl semibold primary">Popular Categories</p>
             <a href="#" class="paragraph paragraph-m semibold primary">
               Browse All Products
-              <?php echo $arrow_down; ?>
+              <?php // echo $arrow_down; ?>
             </a>
           </div>
           <hr>

@@ -6,7 +6,7 @@ add_filter( 'woocommerce_add_to_cart_fragments', 'woocommerce_header_add_to_cart
 
 function woocommerce_header_add_to_cart_fragment( $fragments ) {
 	global $woocommerce;
-  $cart_icon = file_get_contents(ICON_PATH.'/cart.svg');
+  // $cart_icon = file_get_contents(ICON_PATH.'/cart.svg');
 
 	ob_start();
 
@@ -16,7 +16,7 @@ function woocommerce_header_add_to_cart_fragment( $fragments ) {
     href="<?php echo esc_url(wc_get_cart_url()); ?>" 
     title="<?php _e('View your shopping cart', 'woothemes'); ?>"
   >
-    <span class="cart-icon"><?php echo $cart_icon; ?></span>
+    <span class="cart-icon"><?php // echo $cart_icon; ?></span>
     <span class="text">Cart :</span> 
     <?php echo $woocommerce->cart->get_cart_total(); ?></a>
 	<?php
