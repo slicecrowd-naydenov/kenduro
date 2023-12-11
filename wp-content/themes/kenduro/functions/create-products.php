@@ -524,7 +524,7 @@ function update_woocommerce_product($data, $update_product) {
       // pretty_dump($product_variation_id);
       if ($product_id !== 0) {
         // pretty_dump('tuk sme');
-        if (strtolower($item[$is_variation]) === strtolower('No') || !$product->is_type( 'variable' )) {
+        if (isset($item[$is_variation]) && strtolower($item[$is_variation]) === strtolower('No') || !$product->is_type( 'variable' )) {
           $item['product_variation_id'] = $item[$product_var_id];
         }
         set_values($product_fields, $product_id, $item);
