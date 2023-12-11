@@ -150,7 +150,7 @@ get_header();
 
 // pretty_dump($sales_records);
 global $ss_ids;
-$product_variations_fields = get_external_api_response($ss_ids['product_variations'], null);  
+$product_variations_fields = fetch_records_in_app($ss_ids['product_variations']);  
 pretty_dump($product_variations_fields);
 ?>
 <main>
