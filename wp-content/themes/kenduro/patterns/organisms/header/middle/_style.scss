@@ -1,0 +1,49 @@
+#middle-section {
+  position: relative;
+  padding: 20px 0;
+  background-color: $G-0;
+  border-radius: $radius-medium $radius-medium 0 0;
+
+  .site-title {
+    @extend .flex-center-y;
+
+    .logo,
+    .custom-logo-link {
+      font-size: 21px;
+      line-height: 29px;
+      font-weight: 600;
+      margin-right: 30px;
+      margin-bottom: 0;
+    }
+
+    input {
+      margin: 0;
+    }
+
+    .yith-ajaxsearchform-container {
+      width: 100%;
+
+      input[type="search"] {
+        padding: 10px 15px;
+        font-size: 12px;
+        box-shadow: none;
+        outline: none;
+        border-radius: $radius-circle;
+        color: $text-secondary;
+        flex: 0 1 100%;
+        margin-right: 15px;
+      }
+
+      input {
+        padding-top: 0;
+        padding-bottom: 0;
+      }
+
+      form {
+        & > div {
+          display: flex;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,226 @@
+#hero-section {
+  padding: 50px 0 0;
+  color: $G-0;
+  background: url(../../assets/images/home_hero.jpg) center center no-repeat;
+  background-size: 100% auto;
+  position: relative;
+
+  &:before {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    content: '';
+    /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#000000+0,023047+100&0+0,0.79+100 */
+    background: linear-gradient(to bottom,  rgba(0,0,0,0) 0%,rgba(2,48,71,0.79) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+
+  }
+
+  .hero-logo {
+    padding: 0 17px;
+    background-color: $G-0;
+    border-radius: $radius-medium;
+    display: inline-flex;
+    margin-bottom: 90px;
+  }
+
+  .hero_title {
+    color: $G-0;
+    margin-bottom: 6px;
+  }
+
+  .hero-banner {
+    background-color: rgba($G-0, 0.8);
+    border-radius: $radius-medium;
+    position: absolute;
+    width: 495px;
+    right: $bootstrap-gap;
+    top: 50%;
+    transform: translateY(-50%);
+    // height: calc(100% - 50px);
+    padding-top: 25px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    z-index: 5;
+    overflow: hidden;
+
+    &__header {
+      display: flex;
+      justify-content: space-between;
+      padding: 0 25px 10px 25px;
+
+      a {
+        color: $text-primary;
+        text-decoration: underline;
+      }
+    }
+
+    &__list {
+      padding: 10px 25px 1px;
+      gap: 10px;
+      display: flex;
+      flex-direction: column;
+      color: $text-tetriary;
+      margin: 0;
+      list-style-type: none;
+
+      li {
+        padding-left: 26px;
+        background: url('../../assets/icons/svg/checkbox.svg') center left no-repeat;
+      }
+    }
+
+    &__add-bike {
+      // height: 100%;
+      position: relative;
+      padding: 60px 0 60px 25px;
+      background: linear-gradient(328.37deg, rgba(251, 138, 0, 0.24) 6.13%, rgba(217, 217, 217, 0) 51.33%);
+
+      &:before {
+        width: 100%;
+        height: 100%;
+        content: '';
+        background: url('../../assets/images/cross_motor.png') right bottom no-repeat;
+        position: absolute;
+        left: 0;
+        top: 0;
+      }
+
+      a {
+        padding: 10px 20px;
+        border: 1px dashed $G-3;
+        display: inline-flex;
+        align-items: center;
+        gap: 20px;
+        background-color: rgba($G-0, 0.8);
+        border-radius: $radius-circle;
+        text-decoration: none;
+        position: relative;
+        overflow: hidden;
+
+        &:before {
+          width: 100%;
+          height: 100%;
+          content: '';
+          filter: blur(10px);
+          position: absolute;
+          left: 0;
+          top: 0;
+        }
+
+        .text {
+          display: flex;
+          flex-direction: column;
+          gap: 2px;
+        }
+      }
+    }
+  }
+
+  .swiper {
+    width: auto;
+    height: auto;
+    padding-left: $bootstrap-gap;
+    padding-bottom: 50px;
+
+    .button {
+      margin-top: 26px;
+      background-color: $b-highlight-two;
+    }
+
+    .swiper-slide {
+      padding-right: 60%;
+    }
+
+    .swiper-pagination {
+      position: absolute;
+      bottom: 20px;
+      @extend .flex-center;
+
+      .swiper-pagination-bullet {
+        width: 16px;
+        height: 16px;
+        margin: 0 3px;
+        opacity: 0.5;
+        background-color: $G-0;
+
+        &.swiper-pagination-bullet-active {
+          opacity: 1;
+        }
+      }
+    }
+  }
+}
+
+.popular-categories {
+  padding-top: 30px;
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+
+    a {
+      text-decoration: underline;
+
+      svg {
+        transform: rotate(-90deg);
+        margin-left: 9px;
+
+        path {
+          fill: $b-highlight-two;
+        }
+      }
+    }
+  }
+}
+
+div.quick-order {
+  background-color: #f3f3f3;
+  border: 1px solid #e4e4e4;
+  padding: 10px;
+  margin-bottom: 10px;
+  text-align: center;
+  color: #685a4d;
+}
+
+// span.wpcf7-not-valid-tip {
+//   color: #f00;
+//   font-size: 1em;
+//   font-weight: normal;
+//   display: inline-block;
+// }
+
+// .use-floating-validation-tip span.wpcf7-not-valid-tip {
+//   position: absolute;
+//   top: 20%;
+//   left: 7%;
+//   z-index: 100;
+//   border: 1px solid red;
+//   background: #fff;
+//   padding: .2em .8em;
+//   width: 85%;
+//   text-align: left;
+// }
+
+.wpcf7 input[type="text"].product_sku,
+.wpcf7 input[type="text"].product_name {
+  display: none;
+}
+
+// .wpcf7 p {
+//   clear: both;
+//   height: auto;
+//   overflow: hidden;
+//   margin: 0 10px;
+// }
+
+// .wpcf7 input.wpcf7-submit[type="submit"] {
+//   transition: all .3s ease-in-out;
+//   -moz-transition: all .3s ease-in-out;
+//   -webkit-transition: all .3s ease-in-out;
+//   -o-transition: all .3s ease-in-out;
+//   border: 0;
+//   border-radius: 0;
+// }

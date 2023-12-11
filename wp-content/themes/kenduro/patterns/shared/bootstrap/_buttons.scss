@@ -1,0 +1,20 @@
+.button {
+  border-radius: $radius-circle;
+  padding: 10px 15px;
+  color: $G-0;
+
+  &-primary {
+    background-color: $b-primary;
+  }
+
+  &-secondary {
+    border: 1px solid $b-primary;
+    color: $text-primary;
+    background-color: transparent;
+  }
+
+  &.disable {
+    opacity: 0.5;
+    pointer-events: none;
+  }
+}

@@ -1,0 +1,14 @@
+@import 'shared/bootstrap/variables';
+@import 'shared/bootstrap/mixins';
+@import 'shared/bootstrap/buttons';
+@import 'node_modules/bootstrap/scss/bootstrap';
+
+@import 'shared/style';
+@import 'atoms/style';
+@import 'molecules/style';
+@import 'organisms/style';
+
+.swiper {
+  width: 600px;
+  height: 300px;
+}

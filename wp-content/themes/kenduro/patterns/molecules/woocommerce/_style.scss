@@ -1,0 +1,11 @@
+@import './pagination';
+@import './product-category';
+@import './single-product';
+@import './checkout';
+
+// Recently viewed products
+.woocommerce {
+  .recently-viewed-title {
+    margin: 100px 0 10px;
+  }
+}

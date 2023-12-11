@@ -1,0 +1,51 @@
+$primary-font: 'Open Sans', sans-serif;
+
+// Text colors
+$text-primary: #2E3538;
+$text-tetriary: #6B6B6B;
+$text-secondary: #878B92;
+$text-inactive: #B2B2B3;
+
+// Brand
+$b-primary: #023047;
+$b-secondary: #219EBC;
+$b-twtriary: #8ECAE6;
+$b-highlight-one: #FFB703;
+$b-highlight-two: #FB8500;
+
+// Greyscale colors
+$G-0:   #FFFFFF;
+$G-0-5: #FAFAFA;
+$G-1:   #F3F3F4;
+$G-1-5: #E9E9E9;
+$G-2:   #DEDEDE;
+$G-3:   #C7C8C9;
+$G-4:   #B2B2B3;
+$G-5:   #9B9C9E;
+$G-6:   #868788;
+$G-7:   #6F7173;
+$G-8:   #4D4D4D;
+
+$radius-thin: 4px;
+$radius-small: 8px;
+$radius-medium: 12px;
+$radius-circle: 65px;
+// Bootstrap 
+$grid-breakpoints: (
+  xs: 0,
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+  xl: 1200px,
+  large: 1440px  // <-- modified!
+);
+
+$container-max-widths: (
+  sm: 540px,
+  md: 720px,
+  lg: 960px,
+  xl: 1140px,
+  large: 1430px  // <-- modified!
+); 
+
+$bootstrap-gap: calc((100% - 1400px) / 2);

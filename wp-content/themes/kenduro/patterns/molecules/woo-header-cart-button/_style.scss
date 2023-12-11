@@ -1,0 +1,33 @@
+a.cart-customlocation {
+  height: 40px;
+  margin-left: 10px;
+  background-color: rgba($G-0, 0.12);
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 25px 8px 15px;
+  color: $G-0;
+  border-radius: $radius-circle;
+  transition: background-color 0.25s;
+
+  .cart-icon {
+    display: inline-block;
+    padding-right: 12px;
+    margin-right: 12px;
+    border-right: 1px solid rgba($G-0, 0.1);
+  }
+
+  .text {
+    padding-right: 2px;
+    @extend #{'.paragraph','.paragraph-m'};
+  }
+
+  .amount {
+    @extend #{'.paragraph','.paragraph-m', '.semibold'};
+  }
+
+  .count {
+    display: none;
+  }
+}

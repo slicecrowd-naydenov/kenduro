@@ -1,0 +1,130 @@
+#bottom-section {
+  padding-bottom: 16px;
+  background-color: $G-0;
+  position: relative;
+  
+  .main-menu {
+    position: relative;
+    margin: 0;
+
+    .menu-item {
+      position: initial;
+      margin-right: 30px;
+      padding: 4px 0;
+
+      &:hover {
+        .cat-name:before {
+          opacity: 1;
+        }
+      }
+
+      &.menu-item-has-children {
+
+        &:hover {
+          .sub-menu {
+            opacity: 1;
+            pointer-events: auto;
+          }
+        }
+
+        .cat-name {
+          padding-right: 16px;
+        }
+
+        svg {
+          position: absolute;
+          right: 0;
+          top: 50%;
+          transform: translateY(-50%);
+        }
+      }
+    }
+
+    .cat-name {
+      color: $text-primary;
+      display: inline-block;
+      position: relative;
+
+      &:before {
+        width: 100%;
+        height: 3px;
+        background-color: $G-8;
+        content: '';
+        position: absolute;
+        left: 0;
+        bottom: -2px;
+        opacity: 0;
+        transition: opacity 0.2s ease;
+      }
+    }
+
+    .sub-menu {
+      width: 100%;
+      opacity: 0;
+      pointer-events: none;
+      left: 0;
+      float: none;
+      // top: calc(100% + 2px);
+      background-color: $G-8;
+      border-radius: $radius-small;
+      padding: 24px;
+      display: flex;
+      flex-wrap: wrap;
+      padding-bottom: 50px;
+      transition: opacity 0.2s ease;
+
+      &__item {
+        flex: 0 0 25%;
+        margin-bottom: 24px;
+
+        &-link {
+          font-size: 16px;
+          margin-bottom: 8px;
+          padding: 0;
+          font-weight: 600;
+          color: $G-0;
+        }
+      }
+
+      .main-category-link {
+        width: calc(100% - 48px);
+        position: absolute;
+        left: 24px;
+        bottom: 24px;
+        padding-top: 15px;
+        border-top: 1px solid rgba($G-0-5, 0.1);
+
+        a {
+          color: $G-0;
+          padding: 0;
+          font-size: 12px;
+          display: inline-flex;
+          align-items: center;
+          position: relative;
+          padding-right: 15px;
+
+          span {
+            transform: rotate(-90deg) translateX(3px);
+            position: absolute;
+            right: 0;
+            top: 50%;
+          }
+        }
+      }
+    }
+
+    .sub-sub-menu {
+      position: initial;
+      margin-left: 0;
+      float: none;
+
+      &__item-link {
+        font-size: 12px;
+        margin: 0 0 6px;
+        line-height: 16px;
+        padding: 0;
+        color: $G-0;
+      }
+    }
+  }
+}

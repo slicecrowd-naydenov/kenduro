@@ -1,0 +1,50 @@
+// Pagination
+.woocommerce-pagination {
+  &__info {
+    margin-bottom: 37px;
+    @extend .flex-center-y;
+
+    p {
+      margin: 0 30px;
+    }
+  }
+
+  ul.page-numbers {
+    li {
+      margin: 0 3px;
+    }
+
+    .page-numbers {
+      width: 22px;
+      height: 22px;
+      border-radius: $radius-circle;
+      padding: 0 !important;
+      color: $text-primary !important;
+      background-color: transparent;
+      text-decoration: none;
+      transition: all 0.25s ease;
+      @extend #{'.paragraph','.paragraph-m', '.flex-center'};
+  
+      &.current,
+      &:hover {
+        background-color: $G-8 !important;
+        color: $G-0 !important;
+      }
+  
+      &.prev,
+      &.next {
+        display: none;
+      }
+    }
+  }
+}
+
+.storefront-sorting {
+  flex-direction: column;
+  @extend .flex-center-y;
+
+  .woocommerce-ordering,
+  .woocommerce-result-count {
+    display: none;
+  }
+}

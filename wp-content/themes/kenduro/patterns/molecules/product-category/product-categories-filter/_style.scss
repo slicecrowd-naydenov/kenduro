@@ -1,0 +1,115 @@
+.blockUI {
+  height: 100vh !important;
+}
+
+#child_cat {
+  .filter-item.checkbox.active.level-0 > label, 
+  .filter-item.checkbox.level-0 > label, 
+  .filter-item.level-0.active .filter-items .filter-items, 
+  .filter-item.level-1.active .filter-items,
+  .filter-item.level-0:not(.active) .filter-item.level-1:not(.active) > label {
+    display: none;
+  }
+  // .filter-item.checkbox.level-0.no-color:not(.active),
+  // .filter-item.checkbox.level-0.no-color.active > label,
+  // .filter-items.filter-checkbox.level-1 .filter-items.filter-checkbox.level-1 {
+  //   display: none;
+  // }
+
+}
+
+#sub_child_cat {
+  .filter-item.checkbox.active.level-0 > label,
+  .filter-item.checkbox.active.level-0 > .filter-items.level-1 > li > label,
+  .filter-item.level-0:not(.active) > label,
+  .filter-item.level-0:not(.active) > .filter-items.level-1 > .filter-item.active > label,
+  .filter-item.level-0:not(.active) > .filter-items.level-1 > .filter-item:not(.active) > label {
+    display: none;
+  }
+  // .filter-item.checkbox.level-0.no-color:not(.active),
+  // .filter-item.checkbox.level-0.no-color.active > label,
+  // .filter-item.checkbox.level-0.no-color.active > .filter-items.filter-checkbox.level-1 > .filter-item.checkbox.level-1.no-color > label {
+  //   display: none;
+  // }
+}
+
+#child_cat,
+#sub_child_cat {
+  ul {
+    margin: 0;
+    padding: 0 !important;
+  }
+}
+
+#cat-filters {
+  display: inline-flex;
+  gap: 20px;
+  margin-right: 15px;
+
+  + .storefront-sorting {
+    display: none;
+  }
+}
+
+.yith-wcan-filters {
+  background-color: transparent;
+  display: inline-flex;
+  margin: 0;
+
+  & + .storefront-sorting {
+    display: none;
+  }
+
+  form {
+    display: flex;
+    gap: 20px;
+  }
+
+  .yith-wcan-filter {
+    position: relative;
+    margin-bottom: 10px;
+
+    .filter-title {
+      padding-right: 12px;
+      background: url('../../assets/icons/svg/arrow_down.svg') center right no-repeat;
+      background-size: 6px;
+      transition: color 0.25s ease;
+      cursor: pointer;
+      @extend #{'.paragraph','.paragraph-m', '.tetriary'};
+
+      &.active {
+        color: $text-primary;
+      }
+    }
+
+    .filter-content {
+      display: none;
+      border: 1px solid $G-8;
+      position: absolute;
+      min-width: 200px;
+      left: 0;
+      top: calc(100% + 5px);
+      padding: 8px 10px;
+      z-index: 222;
+      background-color: $G-0;
+
+      li {
+        border-bottom: 1px solid $G-3;
+
+        &:last-child {
+          border: none;
+        }
+
+        label {
+          margin: 0;
+        }
+      }
+    }
+  }
+}
+
+.home {
+  #cat-filters {
+    display: none;
+  }
+}

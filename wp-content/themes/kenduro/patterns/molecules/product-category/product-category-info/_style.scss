@@ -1,0 +1,16 @@
+.product-category-info {
+  height: 300px;
+  border-radius: $radius-medium;
+  padding: 20px;
+  gap: 30px;
+  background-color: $G-1;
+  flex-direction: column;
+  @extend .flex-center;
+
+  &__text {
+    max-width: 80%;
+    flex-direction: column;
+    gap: 10px;
+    @extend .flex-center-y;
+  }
+}

@@ -1,0 +1,8 @@
+@import './top/style';
+@import './middle/style';
+@import './bottom/style';
+
+#header {
+  background-color: $b-primary;
+  padding-top: 52px;
+}

@@ -1,0 +1,185 @@
+.storefront-full-width-content {
+  &.single-product {
+    #main {
+      background-color: $G-0-5;
+    }
+
+    div.product {
+      overflow: visible;
+    }
+
+    .storefront-breadcrumb {
+      padding: 20px 0;
+      margin: 0 0 10px 0;
+    }
+
+    div.product {
+      .product-gallery-section {
+        display: flex;
+        gap: 30px;
+        padding: 20px;
+        border-radius: $radius-medium;
+        background-color: $G-0;
+        align-items: flex-start;
+    
+        .woocommerce-product-gallery,
+        .summary {
+          margin: 0;
+        }
+    
+        .woocommerce-product-gallery {
+          // flex: 0 1 64.725%;
+          width: auto;
+          display: flex;
+          gap: 10px;
+
+          // &__wrapper {
+          //   border: 2px solid $G-0;
+          //   border-radius: $radius-small;
+          //   overflow: hidden;
+          //   position: relative;
+          //   box-shadow: 0 3px 6px 0 rgba(15, 15, 15, 0.1), 20px 29px 154px 0 rgba(15, 15, 15, 0.2);
+          // }
+          
+          // &__image {
+            // }
+            
+          
+          & > .flex-viewport,
+          & > .woocommerce-product-gallery__wrapper {
+            flex: 0 0 630px;
+            width: 630px;
+            border: 2px solid $G-0;
+            border-radius: $radius-small;
+            margin: 0;
+            box-shadow: 0 3px 6px 0 rgba(15, 15, 15, 0.1), 20px 29px 154px 0 rgba(15, 15, 15, 0.2);
+            // box-shadow: 20px 29px 154px 0 rgba(15, 15, 15, 0.2);
+          }
+    
+          .flex-control-thumbs {
+            display: flex;
+            flex-direction: column;
+            order: -1;
+    
+            li {
+              width: 70px !important;
+              margin: 0 0 10px !important;
+
+              &:last-of-type {
+                margin: 0 !important;
+              }
+
+              img {
+                position: relative;
+                border-radius: $radius-thin;
+
+                &:before {
+                  /* Стилове за :before псевдо-елемента */
+                  content: "";
+                  display: block;
+                  width: 10px; /* Пример за ширина */
+                  height: 10px; /* Пример за височина */
+                  background-color: red; /* Пример за цвят */
+                }
+              }
+            }
+          }
+
+          &__trigger {
+            // Zoom image icon
+            display: none;
+          }
+    
+        }
+    
+        .summary {
+          position: relative;
+          width: auto;
+
+          .product_title {
+            @extend #{'.h3','.tetriary'};
+          }
+
+          .woosw-btn {
+            position: absolute;
+            right: 0;
+            top: 0;
+            width: 66px;
+            height: 66px;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: $G-0-5;
+            border: 1px solid $G-1;
+            border-radius: 4px;
+
+            &-icon {
+              font-size: 22px;
+              color: $G-4;
+            }
+          }
+        }
+      }
+    }
+
+    ul.flex-direction-nav {
+      position: absolute;
+      bottom: 0;
+      z-index: 1;
+      width: calc(100% - 80px);
+      right: 0;
+      margin: 0;
+      padding: 0px;
+      list-style: none;
+      padding: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      
+      li {
+        display: flex;
+      }
+      
+      a {
+        visibility: hidden;
+        margin: 0;
+        font-size: 0;
+        display: inline-block;
+        text-decoration: none;
+
+        &.flex-prev::before,
+        &.flex-next::after {
+          background: rgba(255, 255, 255, 0.5);
+          color: black;
+          padding: 10px;
+          width: 46px;
+          height: 46px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          border-radius: 5px;
+          margin: 0 !important;
+        }
+
+        &.flex-prev::before {
+          visibility:visible;
+          content: '\f053';
+          font-family: 'Font Awesome 5 Free';   
+          margin-left: 10px;
+          font-size: 20px;
+          font-weight: bold;
+        }
+
+        &.flex-next::after {
+          visibility:visible;
+          content: '\f054';
+          font-family: 'Font Awesome 5 Free';
+          margin-right: 10px;
+          font-size: 20px;   
+          font-weight: bold;
+        }
+      }
+    }
+  }
+}

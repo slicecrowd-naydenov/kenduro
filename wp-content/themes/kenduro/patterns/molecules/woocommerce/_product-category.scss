@@ -1,0 +1,150 @@
+// Product category
+.tax-product_cat {
+  .storefront-breadcrumb {
+    padding: 20px 0 0;
+    margin: 0 0 10px 0;
+  }
+
+  .page-title {
+    margin-bottom: 30px;
+
+    &.no-parent {
+      margin-bottom: 10px;
+      margin-top: 10px;
+    }
+  }
+
+  .woocommerce-breadcrumb {
+    & {
+      color: transparent
+    }
+
+    .breadcrumb-separator,
+    a {
+      color: $text-tetriary;
+    }
+
+    a:first-of-type,
+    a:first-of-type + .breadcrumb-separator {
+      display: none;
+
+      &:before {
+        display: none;
+      }
+    }
+  }
+}
+
+.products {
+  .button.add_to_cart_button {
+    display: none;
+  }
+
+  &.columns-4 {
+    li.product {
+      width: calc(25% - 15px) !important;
+      margin-right: 20px !important;
+      margin-bottom: 40px;
+
+      img {
+        width: auto;
+        max-height: 180px;
+        border-radius: $radius-medium;
+        margin: 0 auto 10px !important;
+      }
+
+      .woocommerce-loop-product__link {
+        display: flex;
+        flex-direction: column;
+        align-items: baseline;
+        text-decoration: none;
+
+        & + a {
+          display: none;
+        }
+      }
+
+      .woocommerce-loop-product__title {
+        order: 10;
+        color: $b-highlight-two;
+        @extend #{'.paragraph','.paragraph-l'};
+      }
+
+      .price {
+        margin: 0 0 4px;
+      }
+    }
+  }
+
+  // .product-category { 
+  //   width: calc(20% - 15px) !important;
+  //   margin-right: 10px !important;
+  // }
+}
+
+.popular-categories {
+  ul.products {
+    display: flex;
+    gap: 10px;
+    margin: 0 -10px;
+
+    li.product-category {
+      width: calc(20% - 10px) !important;
+      position: relative;
+      border-radius: $radius-circle;
+      overflow: hidden;
+      display: flex;
+      align-items: end;
+
+
+
+      &:before {
+        width: 100%;
+        height: 110px;
+        content: '';
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        background-color: $G-0-5;
+        border-radius: $radius-circle;
+      }
+
+      img {
+        margin: 0 0 -75px 0;
+        position: relative;
+        z-index: 2;
+        top: 0;
+        transition: top 0.2s ease;
+      }
+
+      a {
+        border-radius: $radius-circle;
+
+        &:hover {
+          img,
+          .woocommerce-loop-category__title {
+            top: 10px;
+          }
+        }
+      }
+    }
+
+    .woocommerce-loop-category__title {
+      height: 110px;
+      margin: 0 !important;
+      position: relative;
+      padding: 24px 12px 0px 12px;
+      color: $text-primary;
+      font-size: 14px !important;
+      line-height: 20px !important;
+      font-weight: 600 !important;
+      transition: top 0.2s ease;
+      top: 0;
+      @extend .flex-center;
+
+      .count {
+        display: none;
+      }
+    }
+  }
+}

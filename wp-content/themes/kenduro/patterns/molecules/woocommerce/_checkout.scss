@@ -1,0 +1,37 @@
+.woocommerce-billing-fields {
+  &__field-wrapper {
+    .form-row {
+      width: 100% !important;
+      margin-left: 0;
+    }
+  }
+}
+
+.woocommerce-additional-fields,
+.woocommerce-billing-fields {
+  &__field-wrapper {
+    .form-row {
+      margin-left: 0;
+      flex-direction: column;
+    }
+  }
+
+  input,
+  textarea {
+    box-shadow: none;
+    background-color: $G-0;
+    border: 1px solid $G-1-5;
+  }
+}
+
+.woocommerce-checkout-review-order {
+  tr, td, th {
+    border: 1px solid $G-1-5;
+  }
+}
+
+#payment {
+  .wc-payment-form .form-row {
+    flex-direction: column;
+  }
+}
