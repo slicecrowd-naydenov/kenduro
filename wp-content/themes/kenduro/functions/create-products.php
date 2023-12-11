@@ -46,7 +46,7 @@ function get_all_products($request) {
       }
     }
   }
-
+  pretty_dump($outputArray);
   $filteredData = filter_items($external_api_response['items'], $fieldsToRemove);
 
   $filteredArrays = array_filter($filteredData, function ($item) use ($outputArray) {
