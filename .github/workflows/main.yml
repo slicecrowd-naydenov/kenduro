@@ -1,0 +1,39 @@
+name: Deploy to SuperHosting
+
+env:
+  APP_PRODUCTION: kenduro.com
+  APP_STAGING: staging.kenduro.com
+
+on:
+  push:
+    branches:
+    - main
+    - staging
+
+jobs:
+  web-deploy:
+    name: 🎉 Deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: 🚚 Get latest code
+        uses: actions/checkout@v3
+
+      - name: Set app name
+        run: |
+          if [[ "${{github.ref_name}}" == 'main' && "${{github.ref_type}}" == 'branch' ]]; then
+            echo "APP_NAME=${{env.APP_PRODUCTION}}" >> $GITHUB_ENV
+          fi
+
+          if [[ "${{github.ref_name}}" == 'staging' && "${{github.ref_type}}" == 'branch' ]]; then
+            echo "APP_NAME=${{env.APP_STAGING}}" >> $GITHUB_ENV
+          fi
+
+      - name: 📂 Sync files
+        if: ${{env.APP_NAME}}
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          local-dir: './'
+          server-dir: ${{ env.APP_NAME }}/
