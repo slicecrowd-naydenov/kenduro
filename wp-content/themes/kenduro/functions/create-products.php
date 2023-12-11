@@ -34,35 +34,35 @@ function get_all_products($request) {
   if (is_wp_error($external_api_response)) {
     return $external_api_response;
   }
+  
+  // foreach ($product_variations['items'] as $variation) {
+  //   if (isset($variation[$product_variation]) && is_array($variation[$product_variation])) {
+  //     foreach ($variation[$product_variation] as $value) {
+  //       if (!in_array($value, $outputArray)) {
+  //         $outputArray[] = $value;
+  //       }
+  //     }
+  //   }
+  // }
 
-  foreach ($product_variations['items'] as $variation) {
-    if (isset($variation[$product_variation]) && is_array($variation[$product_variation])) {
-      foreach ($variation[$product_variation] as $value) {
-        if (!in_array($value, $outputArray)) {
-          $outputArray[] = $value;
-        }
-      }
-    }
-  }
+  // $filteredData = filter_items($external_api_response['items'], $fieldsToRemove);
 
-  $filteredData = filter_items($external_api_response['items'], $fieldsToRemove);
+  // $filteredArrays = array_filter($filteredData, function ($item) use ($outputArray) {
+  //   return in_array($item['id'], $outputArray);
+  // });
 
-  $filteredArrays = array_filter($filteredData, function ($item) use ($outputArray) {
-    return in_array($item['id'], $outputArray);
-  });
+  // if (!$product_id) {
+  //   // Create product
+  //   create_woocommerce_products($filteredArrays);
+  // } else {
+  //   // Update product
+  //   $filteredArrays = array_filter($filteredData, function ($item) use ($product_id) {
+  //     return $item['id'] === $product_id;
+  //   });
+  //   update_woocommerce_product($filteredArrays, $product_id);
+  // }
 
-  if (!$product_id) {
-    // Create product
-    create_woocommerce_products($filteredArrays);
-  } else {
-    // Update product
-    $filteredArrays = array_filter($filteredData, function ($item) use ($product_id) {
-      return $item['id'] === $product_id;
-    });
-    update_woocommerce_product($filteredArrays, $product_id);
-  }
-
-  return $filteredArrays;
+  return $product_variations;
 }
 
 function is_variation_id($id) {
