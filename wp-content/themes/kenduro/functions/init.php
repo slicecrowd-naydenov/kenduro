@@ -39,7 +39,7 @@ function my_custom_init() {
 
 function get_external_api_response($id, $data) {
   $response = wp_remote_request(
-    'https://app.smartsuite.com/api/v1/applications/' . $id . '/records/list/',
+    'http://localhost:3003/api/v1/applications/' . $id . '/records/list/',
     array(
       'method' => 'POST',
       'headers' => array(
@@ -60,7 +60,7 @@ function get_external_api_response($id, $data) {
 
 function get_column_fields($id) {
   $response = wp_remote_request(
-    'https://app.smartsuite.com/api/v1/applications/' . $id,
+    'http://localhost:3003/api/v1/applications/' . $id,
     array(
       'method' => 'GET',
       'headers' => array(
