@@ -38,7 +38,7 @@ function my_custom_init() {
 }
 
 function get_external_api_response($id, $data) {
-  $url = 'http://app.smartsuite.com/api/v1/applications/' . $id . '/records/list/';
+  $url = 'https://app.smartsuite.com/api/v1/applications/' . $id . '/records/list/';
 
   $headers = array(
     'Content-Type: application/json',
@@ -85,6 +85,26 @@ function get_column_fields($id) {
   return json_decode(wp_remote_retrieve_body($response), true);
 }
 
+function post_column_fields($id) {
+  $response = wp_remote_request(
+    'https://app.smartsuite.com/api/v1/applications/' . $id . '/records/list/',
+    array(
+      'method' => 'POST',
+      'headers' => array(
+        'Content-Type' => 'application/json',
+        'Authorization' => 'Token 2570295cb9c1e4c7f81d46ed046c09bf43fd5740',
+        'ACCOUNT-ID' => 'sd0y91s2',
+      ),
+    )
+  );
+
+  if (is_wp_error($response)) {
+    return new WP_Error('api_error', 'Error fetching data from get_column_fields', array('status' => 500));
+  }
+
+  return json_decode(wp_remote_retrieve_body($response), true);
+}
+
 function filter_items($items, $fieldsToRemove) {
   $filteredItems = array_map(function ($item) use ($fieldsToRemove) {
     foreach ($fieldsToRemove as $field) {
@@ -114,28 +134,28 @@ function update_acf($fields, $id, $is_cat_prefix) {
   }
 }
 
-function fetch_records_in_app($app_id) {
-  $url = 'https://app.smartsuite.com/api/v1/applications/'.$app_id.'/records/list/';
+// function fetch_records_in_app($app_id) {
+//   $url = 'http://localhost:3003/api/v1/applications/'.$app_id.'/records/list/';
 
-  $response = wp_remote_post($url, array(
-    'body' => json_encode(array()),
-    'headers' => array(
-      'Content-Type' => 'application/json',
-      'Authorization' => 'Token 2570295cb9c1e4c7f81d46ed046c09bf43fd5740',
-      'ACCOUNT-ID' => 'sd0y91s2'
-    ),
-  ));
+//   $response = wp_remote_post($url, array(
+//     'body' => json_encode(array()),
+//     'headers' => array(
+//       'Content-Type' => 'application/json',
+//       'Authorization' => 'Token 2570295cb9c1e4c7f81d46ed046c09bf43fd5740',
+//       'ACCOUNT-ID' => 'sd0y91s2'
+//     ),
+//   ));
 
-  if (is_wp_error($response)) {
-    echo 'Error fetching data from REST API: ' . $response->get_error_message();
-    return;
-  }
+//   if (is_wp_error($response)) {
+//     echo 'Error fetching data from REST API: ' . $response->get_error_message();
+//     return;
+//   }
 
-  $body = wp_remote_retrieve_body($response);
-  $data = json_decode($body, true);
+//   $body = wp_remote_retrieve_body($response);
+//   $data = json_decode($body, true);
 
-  return $data;
-}
+//   return $data;
+// }
 
 // filter
 function my_posts_where($where) {
