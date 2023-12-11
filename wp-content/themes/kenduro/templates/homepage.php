@@ -150,7 +150,7 @@ get_header();
 
 // pretty_dump($sales_records);
 global $ss_ids;
-$product_variations_fields = fetch_column_fields($ss_ids['product_variations']);  
+$product_variations_fields = get_column_fields($ss_ids['product_variations']);  
 pretty_dump($product_variations_fields);
 ?>
 <main>
