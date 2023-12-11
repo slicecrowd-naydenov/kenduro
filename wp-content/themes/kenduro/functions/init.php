@@ -37,32 +37,32 @@ function my_custom_init() {
   // add_get_filters_endpoint();
 }
 
-function get_external_api_response($id, $data) {
-  $url = 'https://app.smartsuite.com/api/v1/applications/' . $id . '/records/list/';
+// function get_external_api_response($id, $data) {
+//   $url = 'https://app.smartsuite.com/api/v1/applications/' . $id . '/records/list/';
 
-  $headers = array(
-    'Content-Type: application/json',
-    'Authorization: Token 2570295cb9c1e4c7f81d46ed046c09bf43fd5740',
-    'ACCOUNT-ID: sd0y91s2',
-  );
+//   $headers = array(
+//     'Content-Type: application/json',
+//     'Authorization: Token 2570295cb9c1e4c7f81d46ed046c09bf43fd5740',
+//     'ACCOUNT-ID: sd0y91s2',
+//   );
 
-  $ch = curl_init($url);
+//   $ch = curl_init($url);
 
-  curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-  curl_setopt($ch, CURLOPT_POST, true);
-  curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
-  curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+//   curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+//   curl_setopt($ch, CURLOPT_POST, true);
+//   curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
+//   curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
 
-  $response = curl_exec($ch);
+//   $response = curl_exec($ch);
 
-  if (curl_errno($ch)) {
-      return new WP_Error('api_error', 'Error fetching data from get_external_api_response: ' . curl_error($ch), array('status' => 500));
-  }
+//   if (curl_errno($ch)) {
+//       return new WP_Error('api_error', 'Error fetching data from get_external_api_response: ' . curl_error($ch), array('status' => 500));
+//   }
 
-  curl_close($ch);
+//   curl_close($ch);
 
-  return json_decode($response, true);
-}
+//   return json_decode($response, true);
+// }
 
 
 function get_column_fields($id) {

@@ -18,10 +18,10 @@ function add_get_categories_endpoint() {
 function get_all_categories($request) {
   global $fieldsToRemove;
 
-  $data = $request->get_json_params();
+  // $data = $request->get_json_params();
   $id = $request->get_param('id');
 
-  $external_api_response = get_external_api_response($id, $data);
+  $external_api_response = post_column_fields($id);
 
   if (is_wp_error($external_api_response)) {
     return $external_api_response;

@@ -18,10 +18,10 @@ function add_get_filters_endpoint() {
 function get_all_filters($request) {
   global $fieldsToRemove;
 
-  $data = $request->get_json_params();
+  // $data = $request->get_json_params();
   $id = $request->get_param('id');
 
-  $external_api_response = get_external_api_response($id, $data);
+  $external_api_response = post_column_fields($id);
 
   if (is_wp_error($external_api_response)) {
     return $external_api_response;
@@ -91,7 +91,7 @@ function createTerm(string $termName, string $termSlug, string $taxonomy, int $o
 
 function create_woocommerce_filters($filteredData) {
   global $ss_ids;
-  $filter_values = get_external_api_response($ss_ids['filter_values'], null);
+  $filter_values = post_column_fields($ss_ids['filter_values']);
   $filter_column_fields = fetch_column_fields($ss_ids['filter_values']);
 
   foreach ($filteredData as $item) {
