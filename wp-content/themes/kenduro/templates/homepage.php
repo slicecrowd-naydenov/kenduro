@@ -149,7 +149,9 @@ get_header();
 // $sales_records = get_external_api_response('64fffa372bef62e52b350219', null);
 
 // pretty_dump($sales_records);
-pretty_dump(asddd('64fffa372bef62e52b350219'));
+global $ss_ids;
+$product_variations_fields = fetch_column_fields($ss_ids['product_variations']);  
+pretty_dump($product_variations_fields);
 ?>
 <main>
   <?php Load::organisms('homepage/index'); ?>
