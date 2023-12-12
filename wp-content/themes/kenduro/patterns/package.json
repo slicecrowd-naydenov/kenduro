@@ -51,7 +51,7 @@
     "sass": "^1.66.1",
     "select2": "^4.0.13",
     "stream-browserify": "^3.0.0",
-    "swiper": "^11.0.3",
+    "swiper": "^11.0.5",
     "toastr": "^2.1.4"
   }
 }
