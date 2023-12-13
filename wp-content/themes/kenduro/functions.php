@@ -62,17 +62,6 @@ function add_ajaxurl_to_front() {
 }
 add_action('wp_head', 'add_ajaxurl_to_front');
 
-function curl_get_file_contents($URL) {
-  $c = curl_init();
-  curl_setopt($c, CURLOPT_RETURNTRANSFER, 1);
-  curl_setopt($c, CURLOPT_URL, $URL);
-  $contents = curl_exec($c);
-  curl_close($c);
-
-  if ($contents) return $contents;
-  else return FALSE;
-}
-
 // add_action( 'woocommerce_before_cart', 'add_columns');
 
 // function add_columns() {
