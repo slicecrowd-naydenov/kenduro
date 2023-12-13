@@ -153,13 +153,6 @@ get_header();
 // $product_variations_fields = post_column_fields('651f9c5af5b14e0d99b3e73c');  
 // pretty_dump($product_variations_fields);
 
-if( ini_get('allow_url_fopen') ) {
-    die('allow_url_fopen is enabled. file_get_contents should work well');
-} else {
-    die('allow_url_fopen is disabled. file_get_contents would not work');
-}
-
-
 ?>
 <main>
   <?php Load::organisms('homepage/index'); ?>
