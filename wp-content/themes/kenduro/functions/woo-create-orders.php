@@ -169,6 +169,7 @@ function create_order_ajax_script($contactFormId, $data, $product_titles) {
       document.addEventListener('wpcf7mailfailed', function(event) {
         var inputs = event.detail.inputs;
         console.log("wpcf7mailfailed: ", inputs);
+        console.log("wpcf7mailfailed event: ", event);
       }, false);
     })(jQuery);
   </script>
