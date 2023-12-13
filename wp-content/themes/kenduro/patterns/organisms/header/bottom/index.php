@@ -30,7 +30,7 @@ $main_categories = get_terms($args);
                       <?php
                       echo $main_category->name;
                       if ($child_categories) { 
-                        // Load::atom('svg', ['name' => 'arrow_down']);
+                        Load::atom('svg', ['name' => 'arrow_down']);
                       }
                       ?>
                     </span>
@@ -72,7 +72,7 @@ $main_categories = get_terms($args);
                           <a href="<?php echo esc_url($category_link); ?>">
                             View all products in <?php echo $main_category->name; ?>
                             <span>
-                              <?php // Load::atom('svg', ['name' => 'arrow_down']); ?>
+                              <?php Load::atom('svg', ['name' => 'arrow_down']); ?>
                             </span>
                           </a>
                         </div>
