@@ -154,6 +154,12 @@ function create_order_ajax_script($contactFormId, $data, $product_titles) {
           });
         }
       }, false);
+      document.addEventListener('wpcf7mailfailed ', function(event) {
+        if ('<?php echo $contactFormId; ?>' == event.detail.contactFormId) {
+          var inputs = event.detail.inputs;
+          console.log("ERROR: ", inputs);
+        }
+      }, false);
     })(jQuery);
   </script>
   <?php
