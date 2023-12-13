@@ -31,11 +31,32 @@ function my_custom_init() {
   add_theme_support('post-thumbnails');
   register_custom_menus();
   custom_posts_init();
+
+  register_post_status( 'wc-arrival-shipment', array(
+    'label'                     => 'Shipment Arrival',
+    'public'                    => true,
+    'show_in_admin_status_list' => true,
+    'show_in_admin_all_list'    => true,
+    'exclude_from_search'       => false,
+    'label_count'               => _n_noop( 'Shipment Arrival <span class="count">(%s)</span>', 'Shipment Arrival <span class="count">(%s)</span>' )
+) );
   // add_get_categories_endpoint();
   // add_get_products_endpoint();
   // get_column_fields_endpoint();
   // add_get_filters_endpoint();
 }
+
+function add_awaiting_shipment_to_order_statuses( $order_statuses ) {
+  $new_order_statuses = array();
+  foreach ( $order_statuses as $key => $status ) {
+      $new_order_statuses[ $key ] = $status;
+      if ( 'wc-processing' === $key ) {
+          $new_order_statuses['wc-arrival-shipment'] = 'Shipment Arrival';
+      }
+  }
+  return $new_order_statuses;
+}
+add_filter( 'wc_order_statuses', 'add_awaiting_shipment_to_order_statuses' );
 
 // function get_external_api_response($id, $data) {
 //   $url = 'https://app.smartsuite.com/api/v1/applications/' . $id . '/records/list/';
