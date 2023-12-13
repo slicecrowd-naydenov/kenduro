@@ -11,7 +11,7 @@ function register_custom_endpoint() {
   ));
 }
 
-function create_order_from_product_ids($product_ids, $product_info) {
+function create_order_from_product_ids($product_ids, $product_info, $client_phone, $client_email) {
   $order = wc_create_order();
 
   foreach ($product_ids as $product_id) {
@@ -24,8 +24,8 @@ function create_order_from_product_ids($product_ids, $product_info) {
     }
   }
   $address = array(
-    "email" => "joe@testing.com",
-    "phone" => "760-555-1212"
+    "phone" => $client_phone,
+    "email" => $client_email,
   );
 
   $order->calculate_totals();
@@ -104,9 +104,11 @@ function handle_create_woo_order($data) {
   if (isset($data['action'])) {
     $product_info = isset($data['product_info']) ? $data['product_info'] : array();
     $product_ids = isset($data['product_ids']) && is_array($data['product_ids']) ? $data['product_ids'] : array();
+    $client_phone = isset($data['client_phone']) ? $data['client_phone'] : '';
+    $client_email = isset($data['client_email']) ? $data['client_email'] : '';
 
     if (!empty($product_ids)) {
-      $order_id = create_order_from_product_ids($product_ids, $product_info);
+      $order_id = create_order_from_product_ids($product_ids, $product_info, $client_phone, $client_email);
 
       $response = array(
         'order_id' => $order_id,
@@ -147,6 +149,9 @@ function create_order_ajax_script($contactFormId, $data, $product_titles) {
       });
       document.addEventListener('wpcf7mailsent', function(event) {
         console.log("wpcf7mailsent event: ", event);
+        
+        order_response.client_phone = $('input[name="client-phone-number"]').val();
+        order_response.client_email = $('input[name="client-email"]').val();
         if ('<?php echo $contactFormId; ?>' == event.detail.contactFormId) {
           $.ajax({
             type: 'POST',
