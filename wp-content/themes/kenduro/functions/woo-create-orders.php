@@ -25,6 +25,7 @@ function create_order_from_product_ids($product_ids, $product_info) {
   }
 
   $order->calculate_totals();
+  $order->update_status('processing');
   $order_id = $order->save();
 
   return $order_id;
