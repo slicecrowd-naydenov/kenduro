@@ -25,11 +25,8 @@ function create_order_from_product_ids($product_ids, $product_info) {
   }
 
   $order->calculate_totals();
-  $order->update_status('arrival-shipment');
+  // $order->update_status('processing');
   $order_id = $order->save();
-
-  $email_oc = new WC_Email_Customer_Completed_Order();
-  $email_oc->trigger($order_id);
 
   return $order_id;
 }
