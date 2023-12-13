@@ -28,6 +28,8 @@ function create_order_from_product_ids($product_ids, $product_info) {
   $order->update_status('arrival-shipment');
   $order_id = $order->save();
 
+  WC()->mailer()->emails['WC_Email_Customer_Completed_Order']->trigger( $order_id );
+
   return $order_id;
 }
 
