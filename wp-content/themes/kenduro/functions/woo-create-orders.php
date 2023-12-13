@@ -140,6 +140,7 @@ function create_order_ajax_script($contactFormId, $data, $product_titles) {
         console.log('order_response: ', order_response);
       });
       document.addEventListener('wpcf7mailsent', function(event) {
+        console.log("wpcf7mailsent event: ", event);
         if ('<?php echo $contactFormId; ?>' == event.detail.contactFormId) {
           $.ajax({
             type: 'POST',
