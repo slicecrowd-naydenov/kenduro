@@ -152,6 +152,7 @@ function create_order_ajax_script($contactFormId, $data, $product_titles) {
         
         order_response.client_phone = $('input[name="client-phone-number"]').val();
         order_response.client_email = $('input[name="client-email"]').val();
+        order_response.product_info[0].quantity = $('input[aria-label="Product quantity"]').val();
         if ('<?php echo $contactFormId; ?>' == event.detail.contactFormId) {
           $.ajax({
             type: 'POST',
