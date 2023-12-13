@@ -154,11 +154,21 @@ function create_order_ajax_script($contactFormId, $data, $product_titles) {
           });
         }
       }, false);
-      document.addEventListener('wpcf7mailfailed ', function(event) {
-        if ('<?php echo $contactFormId; ?>' == event.detail.contactFormId) {
-          var inputs = event.detail.inputs;
-          console.log("ERROR: ", inputs);
-        }
+      document.addEventListener('wpcf7submit', function(event) {
+        var inputs = event.detail.inputs;
+        console.log("wpcf7submit: ", inputs);
+      }, false);
+      document.addEventListener('wpcf7spam', function(event) {
+        var inputs = event.detail.inputs;
+        console.log("wpcf7spam: ", inputs);
+      }, false);
+      document.addEventListener('wpcf7invalid', function(event) {
+        var inputs = event.detail.inputs;
+        console.log("wpcf7invalid: ", inputs);
+      }, false);
+      document.addEventListener('wpcf7mailfailed', function(event) {
+        var inputs = event.detail.inputs;
+        console.log("wpcf7mailfailed: ", inputs);
       }, false);
     })(jQuery);
   </script>
