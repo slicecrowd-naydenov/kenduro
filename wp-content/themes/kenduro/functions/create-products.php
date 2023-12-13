@@ -4,7 +4,7 @@ require_once ABSPATH . 'wp-admin/includes/file.php';
 require_once ABSPATH . 'wp-admin/includes/image.php';
 add_action('rest_api_init', 'add_get_products_endpoint');
 $ss_ids = get_field('ss_ids', 'option');
-$product_variations = get_external_api_response($ss_ids['product_variations'], null);
+$product_variations = post_column_fields($ss_ids['product_variations']);
 
 function add_get_products_endpoint() {
   register_rest_route(
@@ -26,7 +26,7 @@ function get_all_products($request) {
   $data = $request->get_json_params();
   $id = $request->get_param('id');
   $product_id = $request->get_param('product_id');
-  $external_api_response = get_external_api_response($id, $data);
+  $external_api_response = post_column_fields($id);
   $product_variations_fields = fetch_column_fields($ss_ids['product_variations']);  
   $product_variation = get_column_field_id('product_variation', $product_variations_fields);
   $outputArray = array();
@@ -262,7 +262,7 @@ function set_values($fields, $product_id, $item) {
 function get_column_field_id($helper_text, $fetch_variation_columns) {
   $result = null;
   foreach ($fetch_variation_columns as $column) {
-    if ($column['help_text'] === $helper_text) {
+    if (isset($column['help_text']) && $column['help_text'] === $helper_text) {
       $result = $column['slug'];
       break;
     }
@@ -523,8 +523,8 @@ function update_woocommerce_product($data, $update_product) {
       // pretty_dump($product_no_variation_id);
       // pretty_dump($product_variation_id);
       if ($product_id !== 0) {
-        pretty_dump('tuk sme');
-        if (strtolower($item[$is_variation]) === strtolower('No') || !$product->is_type( 'variable' )) {
+        // pretty_dump('tuk sme');
+        if (isset($item[$is_variation]) && strtolower($item[$is_variation]) === strtolower('No') || !$product->is_type( 'variable' )) {
           $item['product_variation_id'] = $item[$product_var_id];
         }
         set_values($product_fields, $product_id, $item);

@@ -7,7 +7,7 @@ require_once(ABSPATH . 'wp-admin/includes/image.php');
 /* Template Name: Home*/
 
 get_header();
-$arrow_down = file_get_contents(ICON_PATH . '/arrow_down.svg');
+// $arrow_down = file_get_contents(ICON_PATH . '/arrow_down.svg');
 // pretty_dump(json_encode(body));
 // $cart_items = WC()->cart->get_cart();
 
@@ -149,6 +149,9 @@ $arrow_down = file_get_contents(ICON_PATH . '/arrow_down.svg');
 // $sales_records = get_external_api_response('64fffa372bef62e52b350219', null);
 
 // pretty_dump($sales_records);
+// global $ss_ids;
+// $product_variations_fields = post_column_fields('651f9c5af5b14e0d99b3e73c');  
+// pretty_dump($product_variations_fields);
 
 ?>
 <main>
@@ -162,7 +165,7 @@ $arrow_down = file_get_contents(ICON_PATH . '/arrow_down.svg');
             <p class="paragraph paragraph-xl semibold primary">Popular Categories</p>
             <a href="#" class="paragraph paragraph-m semibold primary">
               Browse All Products
-              <?php echo $arrow_down; ?>
+              <?php // echo $arrow_down; ?>
             </a>
           </div>
           <hr>
@@ -181,25 +184,23 @@ $arrow_down = file_get_contents(ICON_PATH . '/arrow_down.svg');
         ]);
         ?>
 
-        <?php
-        if (get_site_url() === 'http://kenduro.test') : ?>
-          <a href="#" id="createProducts">create Products</a>
-          </br>
-          <a href="#" id="updateProduct">update Product</a>
-          </br>
-          <a href="#" id="updateProductVariation">update Variation Product</a>
-          </br>
-          <a href="#" id="createCategories">create Categories</a>
-          </br>
-          <a href="#" id="productFields">Product fields</a>
-          </br>
-          <a href="#" id="filterFields">Filter fields</a>
-          </br>
-          <a href="#" id="filterValues">Filter values</a>
-          </br>
-          <a href="#" id="createFilters">create Filters</a>
-          </br>
-        <?php endif; ?>
+
+        <a href="#" id="createProducts">create Products</a>
+        </br>
+        <!-- <a href="#" id="updateProduct">update Product</a> -->
+        <!-- </br> -->
+        <!-- <a href="#" id="updateProductVariation">update Variation Product</a> -->
+        <!-- </br> -->
+        <a href="#" id="createCategories">create Categories</a>
+        </br>
+        <a href="#" id="productFields">Product fields</a>
+        </br>
+        <a href="#" id="filterFields">Filter fields</a>
+        </br>
+        <a href="#" id="filterValues">Filter values</a>
+        </br>
+        <a href="#" id="createFilters">create Filters</a>
+        </br>
       </div>
     </div>
   </div>

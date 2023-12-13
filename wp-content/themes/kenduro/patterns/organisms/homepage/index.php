@@ -1,4 +1,4 @@
-<?php $moto_icon = file_get_contents(ICON_PATH.'/moto_icon.svg'); ?>
+<?php // $moto_icon = file_get_contents(ICON_PATH.'/moto_icon.svg'); ?>
 <div id="hero-section">
   <!-- <div class="container">
     <div class="row">
@@ -52,7 +52,7 @@
             <div class="hero-banner__add-bike">
               <a href="#">
                 <div class="moto-icon">
-                  <?php echo $moto_icon; ?>
+                  <?php // echo $moto_icon; ?>
                 </div>
                 <div class="text">
                   <p class="paragraph paragraph-l semibold primary">Add Your Bike</p>

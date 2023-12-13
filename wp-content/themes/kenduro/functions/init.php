@@ -37,32 +37,59 @@ function my_custom_init() {
   // add_get_filters_endpoint();
 }
 
-function get_external_api_response($id, $data) {
+// function get_external_api_response($id, $data) {
+//   $url = 'https://app.smartsuite.com/api/v1/applications/' . $id . '/records/list/';
+
+//   $headers = array(
+//     'Content-Type: application/json',
+//     'Authorization: Token 2570295cb9c1e4c7f81d46ed046c09bf43fd5740',
+//     'ACCOUNT-ID: sd0y91s2',
+//   );
+
+//   $ch = curl_init($url);
+
+//   curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+//   curl_setopt($ch, CURLOPT_POST, true);
+//   curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
+//   curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+
+//   $response = curl_exec($ch);
+
+//   if (curl_errno($ch)) {
+//       return new WP_Error('api_error', 'Error fetching data from get_external_api_response: ' . curl_error($ch), array('status' => 500));
+//   }
+
+//   curl_close($ch);
+
+//   return json_decode($response, true);
+// }
+
+
+function get_column_fields($id) {
   $response = wp_remote_request(
-    'http://localhost:3003/api/v1/applications/' . $id . '/records/list/',
+    'https://app.smartsuite.com/api/v1/applications/' . $id,
     array(
-      'method' => 'POST',
+      'method' => 'GET',
       'headers' => array(
         'Content-Type' => 'application/json',
         'Authorization' => 'Token 2570295cb9c1e4c7f81d46ed046c09bf43fd5740',
         'ACCOUNT-ID' => 'sd0y91s2',
       ),
-      'body' => json_encode($data),
     )
   );
 
   if (is_wp_error($response)) {
-    return new WP_Error('api_error', 'Error fetching data from get_external_api_response', array('status' => 500));
+    return new WP_Error('api_error', 'Error fetching data from get_column_fields', array('status' => 500));
   }
 
   return json_decode(wp_remote_retrieve_body($response), true);
 }
 
-function get_column_fields($id) {
+function post_column_fields($id) {
   $response = wp_remote_request(
-    'http://localhost:3003/api/v1/applications/' . $id,
+    'https://app.smartsuite.com/api/v1/applications/' . $id . '/records/list/',
     array(
-      'method' => 'GET',
+      'method' => 'POST',
       'headers' => array(
         'Content-Type' => 'application/json',
         'Authorization' => 'Token 2570295cb9c1e4c7f81d46ed046c09bf43fd5740',

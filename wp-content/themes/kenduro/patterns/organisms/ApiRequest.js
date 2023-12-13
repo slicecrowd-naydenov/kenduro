@@ -1,7 +1,7 @@
 
 import axios from "axios";
 
-const API_URL = 'http://localhost:3003';
+const API_URL = 'https://app.smartsuite.com';
 
 // Create AxiosInstance with preferred setup
 const apiInstance = axios.create({

@@ -46,15 +46,46 @@ function get_filtered_column_fields($fields) {
 
 function fetch_column_fields($app_id) {
   $rest_url = esc_url_raw(rest_url());
-  $response = wp_remote_get($rest_url . 'ss-data/get-column-fields/'.$app_id);
 
-  if (is_wp_error($response)) {
-    echo 'Error fetching data from fetch_column_fields: ' . $response->get_error_message();
+  $url = $rest_url . 'ss-data/get-column-fields/' . $app_id;
+
+  $headers = array(
+    'Content-Type' => 'application/json',
+    'Authorization' => 'Token 2570295cb9c1e4c7f81d46ed046c09bf43fd5740',
+    'ACCOUNT-ID' => 'sd0y91s2',
+  );
+
+  $ch = curl_init($url);
+
+  curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+  curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+
+  $response = curl_exec($ch);
+
+  if (curl_errno($ch)) {
+    echo 'Error fetching data from fetch_column_fields: ' . curl_error($ch);
+    curl_close($ch);
     return;
   }
 
-  $body = wp_remote_retrieve_body($response);
-  $data = json_decode($body, true);
+  curl_close($ch);
+
+  $data = json_decode($response, true);
 
   return $data;
 }
+
+// function fetch_column_fields($app_id) {
+//   $rest_url = esc_url_raw(rest_url());
+//   $response = wp_remote_get($rest_url . 'ss-data/get-column-fields/'.$app_id);
+
+//   if (is_wp_error($response)) {
+//     echo 'Error fetching data from fetch_column_fields: ' . $response->get_error_message();
+//     return;
+//   }
+
+//   $body = wp_remote_retrieve_body($response);
+//   $data = json_decode($body, true);
+
+//   return $data;
+// }

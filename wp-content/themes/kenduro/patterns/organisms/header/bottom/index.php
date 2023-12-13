@@ -1,4 +1,6 @@
 <?php 
+  use Lean\Load; 
+
 $chosenCat = '';
 $args = array(
   'taxonomy' => 'product_cat',
@@ -6,7 +8,6 @@ $args = array(
   'hide_empty' => true
 );
 $main_categories = get_terms($args);
-$arrow_down = file_get_contents(ICON_PATH.'/arrow_down.svg');
 
 ?>
 <div id="bottom-section" class="storefront-primary-navigation">
@@ -28,8 +29,8 @@ $arrow_down = file_get_contents(ICON_PATH.'/arrow_down.svg');
                     <span class="cat-name">
                       <?php
                       echo $main_category->name;
-                      if ($child_categories) {
-                        echo $arrow_down;
+                      if ($child_categories) { 
+                        Load::atom('svg', ['name' => 'arrow_down']);
                       }
                       ?>
                     </span>
@@ -71,7 +72,7 @@ $arrow_down = file_get_contents(ICON_PATH.'/arrow_down.svg');
                           <a href="<?php echo esc_url($category_link); ?>">
                             View all products in <?php echo $main_category->name; ?>
                             <span>
-                              <?php echo $arrow_down; ?>
+                              <?php Load::atom('svg', ['name' => 'arrow_down']); ?>
                             </span>
                           </a>
                         </div>

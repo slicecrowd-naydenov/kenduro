@@ -140,6 +140,7 @@ function create_order_ajax_script($contactFormId, $data, $product_titles) {
         console.log('order_response: ', order_response);
       });
       document.addEventListener('wpcf7mailsent', function(event) {
+        console.log("wpcf7mailsent event: ", event);
         if ('<?php echo $contactFormId; ?>' == event.detail.contactFormId) {
           $.ajax({
             type: 'POST',
@@ -153,6 +154,23 @@ function create_order_ajax_script($contactFormId, $data, $product_titles) {
             }
           });
         }
+      }, false);
+      document.addEventListener('wpcf7submit', function(event) {
+        var inputs = event.detail.inputs;
+        console.log("wpcf7submit: ", inputs);
+      }, false);
+      document.addEventListener('wpcf7spam', function(event) {
+        var inputs = event.detail.inputs;
+        console.log("wpcf7spam: ", inputs);
+      }, false);
+      document.addEventListener('wpcf7invalid', function(event) {
+        var inputs = event.detail.inputs;
+        console.log("wpcf7invalid: ", inputs);
+      }, false);
+      document.addEventListener('wpcf7mailfailed', function(event) {
+        var inputs = event.detail.inputs;
+        console.log("wpcf7mailfailed: ", inputs);
+        console.log("wpcf7mailfailed event: ", event);
       }, false);
     })(jQuery);
   </script>

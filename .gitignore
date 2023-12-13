@@ -113,3 +113,4 @@ Thumbs.db
 !wp-content/themes/kenduro/
 wp-content/themes/kenduro/build/*
 wp-content/themes/kenduro/patterns/vendor/*
+!.github

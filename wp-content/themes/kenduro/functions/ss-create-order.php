@@ -1,4 +1,3 @@
-
 <?php
 
 function create_record_curl($appId, $dataBody, $bulk) {
