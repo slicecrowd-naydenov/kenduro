@@ -62,25 +62,6 @@ function add_ajaxurl_to_front() {
 }
 add_action('wp_head', 'add_ajaxurl_to_front');
 
-function url_get_contents ( $url ) {
-
-  if ( ! function_exists( 'curl_init' ) ) {
-      die( 'The cURL library is not installed.' );
-  }
-
-  $ch = curl_init();
-
-  curl_setopt( $ch, CURLOPT_URL, $url );
-  curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
-
-  $output = curl_exec( $ch );
-
-  curl_close( $ch );
-
-  return $output;
-
-}
-
 // add_action( 'woocommerce_before_cart', 'add_columns');
 
 // function add_columns() {
