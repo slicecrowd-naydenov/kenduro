@@ -23,8 +23,13 @@ function create_order_from_product_ids($product_ids, $product_info) {
       $order->add_product($product, $quantity);
     }
   }
+  $address = array(
+    "email" => "joe@testing.com",
+    "phone" => "760-555-1212"
+  );
 
   $order->calculate_totals();
+  $order->set_address($address, 'billing');
   $order->update_status('quick-order');
   $order_id = $order->save();
 
