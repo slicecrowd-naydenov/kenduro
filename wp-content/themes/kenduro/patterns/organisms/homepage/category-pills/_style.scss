@@ -1,0 +1,28 @@
+.nav-pills {
+  margin: 40px 0 0 0;
+  padding-right: 150px;
+  position: relative;
+
+  .nav-link {
+    border-radius: $radius-circle;
+    color: $text-primary;
+    background-color: rgba($b-primary, 0.05);
+    margin-right: 5px;
+    padding: 5px 18px 5px 18px;
+
+    &.active {
+      background-color: $b-primary;
+    }
+  }
+  
+  .custom-link {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+}
+
+.tab-content {
+  margin-bottom: 40px;
+}
