@@ -1,13 +1,13 @@
 <?php 
   use Lean\Load; 
 
-$chosenCat = '';
-$args = array(
-  'taxonomy' => 'product_cat',
-  'parent' => 0,
-  'hide_empty' => true
-);
-$main_categories = get_terms($args);
+  $chosenCat = '';
+  $args = array(
+    'taxonomy' => 'product_cat',
+    'parent' => 0,
+    'hide_empty' => true
+  );
+  $main_categories = get_terms($args);
 
 ?>
 <div id="bottom-section" class="storefront-primary-navigation">

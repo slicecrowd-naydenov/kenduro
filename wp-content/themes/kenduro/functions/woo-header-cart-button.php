@@ -1,4 +1,6 @@
 <?php
+  use Lean\Load; 
+
 /**
  * Show cart contents / total Ajax
  */
@@ -16,7 +18,7 @@ function woocommerce_header_add_to_cart_fragment( $fragments ) {
     href="<?php echo esc_url(wc_get_cart_url()); ?>" 
     title="<?php _e('View your shopping cart', 'woothemes'); ?>"
   >
-    <span class="cart-icon"><?php // echo $cart_icon; ?></span>
+    <span class="cart-icon"><?php Load::atom('svg', ['name' => 'cart']); ?></span>
     <span class="text">Cart :</span> 
     <?php echo $woocommerce->cart->get_cart_total(); ?></a>
 	<?php
