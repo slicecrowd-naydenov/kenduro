@@ -11,7 +11,7 @@ function register_custom_endpoint() {
   ));
 }
 
-function create_order_from_product_ids($product_ids, $product_info, $client_phone, $client_email) {
+function create_order_from_product_ids($product_ids, $product_info) {
   $order = wc_create_order();
 
   foreach ($product_ids as $product_id) {
@@ -23,14 +23,14 @@ function create_order_from_product_ids($product_ids, $product_info, $client_phon
       $order->add_product($product, $quantity);
     }
   }
-  $address = array(
-    "phone" => $client_phone,
-    "email" => $client_email,
-  );
+  // $address = array(
+  //   "phone" => $client_phone,
+  //   "email" => $client_email,
+  // );
 
   $order->calculate_totals();
-  $order->set_address($address, 'billing');
-  $order->update_status('quick-order');
+  // $order->set_address($address, 'billing');
+  // $order->update_status('quick-order');
   $order_id = $order->save();
 
   return $order_id;
@@ -104,11 +104,11 @@ function handle_create_woo_order($data) {
   if (isset($data['action'])) {
     $product_info = isset($data['product_info']) ? $data['product_info'] : array();
     $product_ids = isset($data['product_ids']) && is_array($data['product_ids']) ? $data['product_ids'] : array();
-    $client_phone = isset($data['client_phone']) ? $data['client_phone'] : '';
-    $client_email = isset($data['client_email']) ? $data['client_email'] : '';
+    // $client_phone = isset($data['client_phone']) ? $data['client_phone'] : '';
+    // $client_email = isset($data['client_email']) ? $data['client_email'] : '';
 
     if (!empty($product_ids)) {
-      $order_id = create_order_from_product_ids($product_ids, $product_info, $client_phone, $client_email);
+      $order_id = create_order_from_product_ids($product_ids, $product_info);
 
       $response = array(
         'order_id' => $order_id,
@@ -152,7 +152,7 @@ function create_order_ajax_script($contactFormId, $data, $product_titles) {
         
         order_response.client_phone = $('input[name="client-phone-number"]').val();
         order_response.client_email = $('input[name="client-email"]').val();
-        order_response.product_info[0].quantity = $('input[aria-label="Product quantity"]').val();
+        // order_response.product_info[0].quantity = $('input[aria-label="Product quantity"]').val();
         if ('<?php echo $contactFormId; ?>' == event.detail.contactFormId) {
           $.ajax({
             type: 'POST',
