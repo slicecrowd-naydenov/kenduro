@@ -236,8 +236,8 @@ function product_quick_order_form() {
   }
 }
 
-add_filter('woocommerce_after_add_to_cart_form', 'product_quick_order_form');
-add_filter('woocommerce_before_checkout_form', 'product_quick_order_form');
+// add_filter('woocommerce_after_add_to_cart_form', 'product_quick_order_form');
+// add_filter('woocommerce_before_checkout_form', 'product_quick_order_form');
 
 add_action('woocommerce_thankyou', 'success_message_after_payment');
 function success_message_after_payment($order_id) {
