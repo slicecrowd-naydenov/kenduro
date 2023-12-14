@@ -1,5 +1,6 @@
 <?php
 define('ICON_PATH', get_stylesheet_directory_uri() . '/assets/icons/svg');
+define('IMAGES_PATH', get_stylesheet_directory_uri() . '/assets/images');
 
 require_once get_stylesheet_directory() . '/patterns/vendor/autoload.php';
 

@@ -155,28 +155,16 @@ get_header();
 
 ?>
 <main>
-  <?php Load::organisms('homepage/index'); ?>
-
+  <?php 
+    Load::organisms('homepage/hero-section/index');
+    Load::organisms('homepage/information-list/index');
+  ?>
   <div class="container">
     <div class="row">
       <div class="col">
-        <div class="popular-categories">
-          <div class="popular-categories__header">
-            <p class="paragraph paragraph-xl semibold primary">Popular Categories</p>
-            <a href="#" class="paragraph paragraph-m semibold primary">
-              Browse All Products
-              <?php // echo $arrow_down; ?>
-            </a>
-          </div>
-          <hr>
-          <?php
-          echo do_shortcode('[product_categories ids="1874, 1878" columns="5"]');
-          ?>
-        </div>
-        <?php
-        Load::molecules('product-category/product-categories-filter/index');
-        echo do_shortcode("[products]");
-
+        <?php 
+        Load::organisms('homepage/popular-cats/index'); 
+        Load::organisms('homepage/category-pills/index'); 
         Load::molecules('product-category/product-category-info/index', [
           'title' => 'Join our Community',
           'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam sit amet nulla eu lacus pellentesque sodales in ut felis. Morbi consectetur rhoncus leo, quis efficitur sem sodales efficitur.',

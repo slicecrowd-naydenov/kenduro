@@ -9,7 +9,7 @@
 
     .menu-item {
       position: initial;
-      margin-right: 30px;
+      margin-right: 20px;
       padding: 4px 0;
 
       &:hover {
@@ -29,6 +29,11 @@
 
         .cat-name {
           padding-right: 16px;
+          @extend #{'.paragraph','.paragraph-l', '.semibold'};
+
+          svg path {
+            fill: $b-primary;
+          }
         }
 
         svg {

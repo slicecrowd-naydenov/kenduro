@@ -40,17 +40,23 @@
     display: none;
   }
 
-  &.columns-4 {
+  &.columns-5 {
+    display: flex;
+    gap: 20px;
+    padding: 0;
+    flex-wrap: wrap;
+
+    &:before {
+      display: none;
+    }
+
     li.product {
-      width: calc(25% - 15px) !important;
-      margin-right: 20px !important;
-      margin-bottom: 40px;
+      flex: 0 0 calc(20% - 16px);
+      margin: 0 !important;
 
       img {
         width: auto;
-        max-height: 180px;
         border-radius: $radius-medium;
-        margin: 0 auto 10px !important;
       }
 
       .woocommerce-loop-product__link {
@@ -65,13 +71,19 @@
       }
 
       .woocommerce-loop-product__title {
+        text-align: left;
         order: 10;
+        color: $b-primary;
+        @extend #{'.paragraph','.paragraph-xl', '.semibold'};
+      }
+      
+      .price {
         color: $b-highlight-two;
-        @extend #{'.paragraph','.paragraph-l'};
+        margin: 0 0 4px;
       }
 
-      .price {
-        margin: 0 0 4px;
+      .woosw-btn-has-icon {
+        display: none;
       }
     }
   }
@@ -80,71 +92,4 @@
   //   width: calc(20% - 15px) !important;
   //   margin-right: 10px !important;
   // }
-}
-
-.popular-categories {
-  ul.products {
-    display: flex;
-    gap: 10px;
-    margin: 0 -10px;
-
-    li.product-category {
-      width: calc(20% - 10px) !important;
-      position: relative;
-      border-radius: $radius-circle;
-      overflow: hidden;
-      display: flex;
-      align-items: end;
-
-
-
-      &:before {
-        width: 100%;
-        height: 110px;
-        content: '';
-        position: absolute;
-        left: 0;
-        bottom: 0;
-        background-color: $G-0-5;
-        border-radius: $radius-circle;
-      }
-
-      img {
-        margin: 0 0 -75px 0;
-        position: relative;
-        z-index: 2;
-        top: 0;
-        transition: top 0.2s ease;
-      }
-
-      a {
-        border-radius: $radius-circle;
-
-        &:hover {
-          img,
-          .woocommerce-loop-category__title {
-            top: 10px;
-          }
-        }
-      }
-    }
-
-    .woocommerce-loop-category__title {
-      height: 110px;
-      margin: 0 !important;
-      position: relative;
-      padding: 24px 12px 0px 12px;
-      color: $text-primary;
-      font-size: 14px !important;
-      line-height: 20px !important;
-      font-weight: 600 !important;
-      transition: top 0.2s ease;
-      top: 0;
-      @extend .flex-center;
-
-      .count {
-        display: none;
-      }
-    }
-  }
 }
