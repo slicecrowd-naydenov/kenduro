@@ -1,5 +1,10 @@
 .best-selling {
-  padding: 40px 0;
+  padding: calc(40px + $radius-medium) 0 40px 0;
+  margin-top: -$radius-medium;
+  position: relative;
+  z-index: 3;
+  background-color: $G-0;
+  border-radius: $radius-medium $radius-medium 0 0;
 
   .title {
     margin-bottom: 22px;

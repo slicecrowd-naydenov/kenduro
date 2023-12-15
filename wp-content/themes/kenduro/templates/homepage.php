@@ -173,12 +173,11 @@ get_header();
             ]);
 
             // echo do_shortcode('[products limit="12" columns="5" best_selling="true"]');
-            Load::molecules('best-selling-products/index');
-
           ?>
         </div>
       </div>
     </div>
+    <?php Load::molecules('best-selling-products/index'); ?>
     <a href="#" id="createProducts">create Products</a>
     </br>
     <!-- <a href="#" id="updateProduct">update Product</a> -->
