@@ -18,8 +18,7 @@ export default class Slider {
     }
 
     this.$el = $(el);
-    this.swiper;
-
+    
     this.events();
   }
 
@@ -37,6 +36,10 @@ export default class Slider {
         el: this.$el.find('.swiper-pagination')[0],
         clickable: true
       },
+      navigation: {
+        nextEl: this.$el.find('.swiper-button-next')[0],
+        prevEl: this.$el.find('.swiper-button-prev')[0],
+      }
     });
   }
 }

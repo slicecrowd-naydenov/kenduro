@@ -158,40 +158,43 @@ get_header();
   <?php 
     Load::organisms('homepage/hero-section/index');
     Load::organisms('homepage/information-list/index');
-  ?>
-  <div class="container">
-    <div class="row">
-      <div class="col">
-        <?php 
-        Load::organisms('homepage/popular-cats/index'); 
-        Load::organisms('homepage/category-pills/index'); 
-        Load::molecules('product-category/product-category-info/index', [
-          'title' => 'Join our Community',
-          'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam sit amet nulla eu lacus pellentesque sodales in ut felis. Morbi consectetur rhoncus leo, quis efficitur sem sodales efficitur.',
-          'cta_text' => 'Join Community'
-        ]);
-        ?>
+    Load::organisms('homepage/popular-cats/index'); 
+    Load::organisms('homepage/category-pills/index');
+    ?>
+    <div class="container">
+      <div class="row">
+        <div class="col">
+          <?php
+            Load::molecules('product-category/product-category-info/index', [
+              'title' => '<span class="highlighted">K</span>enduro is crafted by Teo',
+              'class' => 'full-width-container',
+              'description' => 'Teo Kabakchiev, a world-renowned hard enduro rider, leads Kenduro.com with an unwavering passion, ensuring our unwavering commitment to top-tier services and quality.',
+              'cta_text' => 'Learn more'
+            ]);
 
+            // echo do_shortcode('[products limit="12" columns="5" best_selling="true"]');
+            Load::molecules('best-selling-products/index');
 
-        <a href="#" id="createProducts">create Products</a>
-        </br>
-        <!-- <a href="#" id="updateProduct">update Product</a> -->
-        <!-- </br> -->
-        <!-- <a href="#" id="updateProductVariation">update Variation Product</a> -->
-        <!-- </br> -->
-        <a href="#" id="createCategories">create Categories</a>
-        </br>
-        <a href="#" id="productFields">Product fields</a>
-        </br>
-        <a href="#" id="filterFields">Filter fields</a>
-        </br>
-        <a href="#" id="filterValues">Filter values</a>
-        </br>
-        <a href="#" id="createFilters">create Filters</a>
-        </br>
+          ?>
+        </div>
       </div>
     </div>
-  </div>
+    <a href="#" id="createProducts">create Products</a>
+    </br>
+    <!-- <a href="#" id="updateProduct">update Product</a> -->
+    <!-- </br> -->
+    <!-- <a href="#" id="updateProductVariation">update Variation Product</a> -->
+    <!-- </br> -->
+    <a href="#" id="createCategories">create Categories</a>
+    </br>
+    <a href="#" id="productFields">Product fields</a>
+    </br>
+    <a href="#" id="filterFields">Filter fields</a>
+    </br>
+    <a href="#" id="filterValues">Filter values</a>
+    </br>
+    <a href="#" id="createFilters">create Filters</a>
+    </br>
 </main>
 <?php
 get_footer();

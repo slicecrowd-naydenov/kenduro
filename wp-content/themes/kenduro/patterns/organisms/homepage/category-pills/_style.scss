@@ -1,7 +1,32 @@
+.category-pills {
+  background-color: $G-0;
+  border-radius: 0 0 $radius-medium $radius-medium;
+  margin-bottom: -$radius-medium;
+  z-index: 2;
+  position: relative;
+  
+  .custom-link {
+    position: absolute;
+    right: 15px;
+    top: 48px;
+  }
+  
+  .tab-content {
+    margin-bottom: 40px;
+  }
+
+  .col {
+    position: relative;
+  }
+}
+
 .nav-pills {
   margin: 40px 0 0 0;
   padding-right: 150px;
-  position: relative;
+  
+  &.product-categories-view {
+    margin-bottom: 18px;
+  }
 
   .nav-link {
     border-radius: $radius-circle;
@@ -12,17 +37,8 @@
 
     &.active {
       background-color: $b-primary;
+      pointer-events: none;
+      color: $G-0;
     }
-  }
-  
-  .custom-link {
-    position: absolute;
-    right: 0;
-    top: 50%;
-    transform: translateY(-50%);
-  }
-}
-
-.tab-content {
-  margin-bottom: 40px;
+  }    
 }

@@ -1,7 +1,7 @@
 /* eslint-disable require-jsdoc */
 //Import
 import $ from 'jquery';
-import 'swiper';
+// import 'swiper';
 const axios = require('axios');
 
 /**

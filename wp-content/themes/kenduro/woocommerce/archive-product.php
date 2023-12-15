@@ -63,8 +63,8 @@ do_action('woocommerce_before_main_content');
 			if (is_product_category()) :
 				Load::molecules('product-category/product-category-info/index', [
 					'title' => 'Learn more about ',
-					'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam sit amet nulla eu lacus pellentesque sodales in ut felis. Morbi consectetur rhoncus leo, quis efficitur sem sodales efficitur.',
-					'cta_text' => 'Learn more',
+					'class' => 'full-container',
+					'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
 					'cat' => single_term_title('', false)
 				]);
 				Load::molecules('product-category/product-categories-view/index');
@@ -115,9 +115,10 @@ do_action('woocommerce_before_main_content');
 			// echo do_shortcode('[wrvp_recently_viewed_products number_of_products_in_row="4" posts_per_page="4"]');
 			echo do_shortcode('[recently_viewed_products]');
 			Load::molecules('product-category/product-category-info/index', [
-				'title' => 'Join our Community',
-				'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam sit amet nulla eu lacus pellentesque sodales in ut felis. Morbi consectetur rhoncus leo, quis efficitur sem sodales efficitur.',
-				'cta_text' => 'Join Community'
+				'title' => '<span class="highlighted">K</span>enduro is crafted by Teo',
+				'class' => 'full-width-container',
+				'description' => 'Teo Kabakchiev, a world-renowned hard enduro rider, leads Kenduro.com with an unwavering passion, ensuring our unwavering commitment to top-tier services and quality.',
+				'cta_text' => 'Learn more'
 			]);
 			?>
 		</div>
