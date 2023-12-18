@@ -20,7 +20,6 @@
         padding: 20px;
         border-radius: $radius-medium;
         background-color: $G-0;
-        align-items: flex-start;
     
         .woocommerce-product-gallery,
         .summary {
@@ -94,10 +93,72 @@
     
         .summary {
           position: relative;
-          width: auto;
+          display: flex;
+          flex-direction: column;
+
+          .reset_variations,
+          .quantity,
+          .product_meta {
+            display: none !important;
+          }
+          
+          .single_add_to_cart_button {
+            padding-left: 55px;
+            background-color: $b-highlight-two;
+            background-image: url("../../assets/icons/svg/cart.svg");
+            background-repeat: no-repeat;
+            background-position: center left 20px;
+            padding-right: 25px;
+            @extend #{'.paragraph','.paragraph-l', '.semibold'};
+          }
+
+          .stock {
+            padding: 4px 9px;
+            display: inline-flex;
+            align-items: center;
+            border-radius: $radius-circle;
+            color: $text-primary;
+            align-self: baseline;
+
+            &:before {
+              display: none;
+            }
+
+            svg {
+              margin-right: 6px;
+            }
+            
+            &.in-stock {
+              background-color: rgba($success, 0.05);
+              border: 1px solid $success;
+
+              svg {
+                path {
+                  fill: $success;
+                }
+              }
+            }
+
+            &.out-of-stock {
+              background-color: rgba($error, 0.05);
+              border: 1px solid $error;
+
+              svg {
+                path {
+                  fill: $error;
+                }
+              }
+            }
+          }
+
+          .price {
+            font-size: 20px;
+            color: $b-highlight-two;
+            margin: 0 0 15px;
+          }
 
           .product_title {
-            @extend #{'.h3','.tetriary'};
+            @extend #{'.h3','.primary', '.semibold'};
           }
 
           .woosw-btn {
@@ -119,6 +180,85 @@
               color: $G-4;
             }
           }
+
+          .variations_form {
+            display: flex;
+            flex-direction: column-reverse;
+            position: relative;
+            padding-bottom: 50px;
+            padding-top: 0;
+
+            .woocommerce-variation {
+              margin-bottom: 30px;
+            }
+
+            .woocommerce-variation-add-to-cart {
+              position: absolute;
+              left: 0;
+              bottom: 0;
+            }
+          }
+        }
+      }
+
+      .woocommerce-tabs {
+        z-index: 2;
+        margin-top: 10px;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        background-color: $G-0;
+        border-radius: $radius-medium;
+        padding: 30px;
+
+        .tabs {
+          width: auto;
+          float: none;
+          display: flex;
+          margin: 0;
+          gap: 20px;
+          padding: 0;
+          border: none;
+
+          li {
+            border: none;
+
+            &.active {
+              border-bottom: 2px solid $G-8;
+            }
+
+            &:after {
+              display: none;
+            }
+
+            a {
+              color: $text-primary;
+              text-decoration: none;
+              padding: 0 0 8px;
+              margin: 0;
+              @extend #{'.h4','.primary'};
+            }
+          }
+        }
+
+        .entry-content {
+          margin: 0;
+          padding-top: 10px;
+          padding-bottom: 20px;
+        }
+      }
+
+      &.product-type-variable {
+        .summary {
+          & > .price {
+            display: none;
+          }
+        }
+      }
+
+      .related {
+        .popular-categories {
+          padding-bottom: 0;
         }
       }
     }
@@ -178,6 +318,36 @@
           font-size: 20px;   
           font-weight: bold;
         }
+      }
+    }
+  }
+
+  .variations {
+    .label {
+      margin-bottom: 10px;
+      font-size: 12px;
+      color: $text-primary;
+      
+      label {
+        font-weight: 600;
+      }
+
+      .cfvsw-selected-label {
+        display: none;
+      }
+    }
+
+    .cfvsw-swatches-container {
+      grid-gap: 5px; 
+    }
+
+    .cfvsw-label-option {
+      padding: 0 29px;
+      border-color: $G-1-5;
+
+      &.cfvsw-swatches-disabled {
+        color: $text-secondary;
+        background-color: $G-1;
       }
     }
   }

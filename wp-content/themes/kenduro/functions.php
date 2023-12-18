@@ -48,12 +48,12 @@ add_action('wp_ajax_clear_woocommerce_transients', 'clear_woocommerce_transients
 add_action('wp_ajax_nopriv_clear_woocommerce_transients', 'clear_woocommerce_transients_callback');
 
 function clear_woocommerce_transients_callback() {
-    // Изтриване на транзиентите
-    delete_transient('wc_transients_cache');
+  // Изтриване на транзиентите
+  delete_transient('wc_transients_cache');
 
-    // Връщане на отговор
-    echo 'Транзиентите са изтрити успешно.';
-    wp_die();
+  // Връщане на отговор
+  echo 'Транзиентите са изтрити успешно.';
+  wp_die();
 }
 
 function add_ajaxurl_to_front() {

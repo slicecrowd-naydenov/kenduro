@@ -14,6 +14,7 @@
  * @package WooCommerce\Templates
  * @version 3.6.0
  */
+use Lean\Load; 
 
 defined( 'ABSPATH' ) || exit;
 
@@ -58,6 +59,15 @@ if ( post_password_required() ) {
 		 * @hooked WC_Structured_Data::generate_product_data() - 60
 		 */
 		do_action( 'woocommerce_single_product_summary' );
+		Load::organisms('information-list/index', [
+			'class' => 'product-single',
+      'list'  => [
+				['icon' => 'customer-support', 'text' => 'Next Day Delivery *'],
+				['icon' => 'return-policy', 'text' => 'Test before you buy'],
+				['icon' => 'payment', 'text' => 'Pay on Delivery'],
+				['icon' => 'return-policy', 'text' => '14-day Return Policy']
+			]
+    ]);
 		?>
 	</div>
 	</div>

@@ -157,7 +157,15 @@ get_header();
 <main>
   <?php 
     Load::organisms('homepage/hero-section/index');
-    Load::organisms('homepage/information-list/index');
+    Load::organisms('information-list/index', [
+      'class' => 'with-border',
+      'list'  => [
+        ['icon' => 'star', 'text' => 'Unique Products'],
+        ['icon' => 'customer-support', 'text' => 'Immediate Customer Support'],
+        ['icon' => 'return-policy', 'text' => '14-day Return Policy'],
+        ['icon' => 'payment', 'text' => 'Pay on Delivery'],
+      ]
+    ]);
     Load::organisms('homepage/popular-cats/index'); 
     Load::organisms('homepage/category-pills/index');
     ?>
@@ -173,6 +181,7 @@ get_header();
             ]);
 
             // echo do_shortcode('[products limit="12" columns="5" best_selling="true"]');
+            // Load::molecules('exclusive-brands/index');
           ?>
         </div>
       </div>
