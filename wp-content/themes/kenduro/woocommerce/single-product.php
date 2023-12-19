@@ -15,6 +15,7 @@
  * @package     WooCommerce\Templates
  * @version     1.6.4
  */
+use Lean\Load;
 
 if (!defined('ABSPATH')) {
 	exit; // Exit if accessed directly
@@ -63,9 +64,7 @@ do_action('woocommerce_after_main_content');
  * @hooked woocommerce_get_sidebar - 10
  */
 do_action('woocommerce_sidebar');
-?>
-
-<?php
+Load::organisms('modals/added_to_cart/index');
 get_footer('shop');
 
 /* Omit closing PHP tag at the end of PHP files to avoid "headers already sent" issues. */

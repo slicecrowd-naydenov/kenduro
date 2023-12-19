@@ -98,7 +98,8 @@
 
           .reset_variations,
           .quantity,
-          .product_meta {
+          .product_meta,
+          .added_to_cart {
             display: none !important;
           }
           
@@ -110,6 +111,16 @@
             background-position: center left 20px;
             padding-right: 25px;
             @extend #{'.paragraph','.paragraph-l', '.semibold'};
+
+            &.loading {
+              padding-right: 50px;
+
+              &:after {
+                color: $G-0;
+                left: auto;
+                right: 15px;
+              }
+            }
           }
 
           .stock {

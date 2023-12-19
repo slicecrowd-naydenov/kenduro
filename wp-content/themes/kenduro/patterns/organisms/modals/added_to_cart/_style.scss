@@ -1,0 +1,47 @@
+#addedToCart {
+  backdrop-filter: blur(2px);
+  
+  .modal {
+    &-dialog {
+      max-width: 650px;
+    }
+
+    &-content {
+      border: none;
+      border-radius: $radius-medium;
+      box-shadow: 0px 3px 6px 0px rgba(15, 15, 15, 0.1), 0px 9px 24px 0px rgba(15, 15, 15, 0.2);
+    }
+
+    &-body {
+      padding: 30px;
+      display: flex;
+      align-items: center;
+      gap: 40px;
+
+      .img-wrapper {
+        border-radius: $radius-small;
+        overflow: hidden;
+
+        img {
+          max-width: 180px;
+        }
+      }
+
+      .button-secondary {
+        border-color: $G-1-5;
+        margin-right: 5px;
+        margin-top: 27px;
+      }
+
+      .button-primary {
+        margin-left: 5px;
+        margin-top: 27px;
+        background-color: $b-highlight-two;
+      }
+    }
+  }
+}
+
+.modal-backdrop {
+  background-color: rgba($b-primary, 0.1);
+}

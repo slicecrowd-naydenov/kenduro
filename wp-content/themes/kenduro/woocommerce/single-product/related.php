@@ -35,12 +35,10 @@ if ($related_products) : ?>
 				<?php
 				global $product;
 				$category_ids = $product->get_category_ids();
-				// Определяне на вътрешната категория и slug
 				$innermost_category_id = null;
 				$innermost_category_slug = null;
 
 				foreach ($category_ids as $category_id) {
-					// Проверка дали текущата категория е подкатегория на предходната
 					if ($innermost_category_id === null || term_is_ancestor_of($innermost_category_id, $category_id, 'product_cat')) {
 						$innermost_category_id = $category_id;
 						$innermost_category = get_term_by('id', $category_id, 'product_cat');
@@ -48,7 +46,6 @@ if ($related_products) : ?>
 					}
 				}
 
-				// Тук може да добавите логика за получаване на името на категорията, ако е необходимо
 				$innermost_category_name = get_term_field('name', $innermost_category_id, 'product_cat');
 
 				?>
