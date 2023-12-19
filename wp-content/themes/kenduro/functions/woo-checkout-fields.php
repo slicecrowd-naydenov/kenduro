@@ -27,3 +27,15 @@ function wc_remove_checkout_fields($fields) {
   return $fields;
 }
 add_filter('woocommerce_checkout_fields', 'wc_remove_checkout_fields');
+
+// Add Cart info to Checkout page 
+add_action( 'woocommerce_before_checkout_form', 'cart_on_checkout_page', 11 );
+function cart_on_checkout_page() {
+   echo do_shortcode( '[woocommerce_cart]' );
+}
+
+// Redirect to checkout from cart and if cart is not empty
+add_filter( 'woocommerce_get_cart_url', 'redirect_empty_cart_checkout_to_shop' );
+function redirect_empty_cart_checkout_to_shop() {
+   return ( isset( WC()->cart ) && ! WC()->cart->is_empty() ) ? wc_get_checkout_url() : wc_get_page_permalink( 'shop' );
+}

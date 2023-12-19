@@ -1,6 +1,3 @@
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addedToCart">
-  Launch demo modal
-</button>
 <!-- Modal -->
 <div class="modal fade" id="addedToCart" tabindex="-1" role="dialog" aria-labelledby="addedToCartTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
