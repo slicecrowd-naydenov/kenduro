@@ -23,8 +23,8 @@ function woocommerce_header_add_to_cart_fragment($fragments) {
   return $fragments;
 }
 
-add_action('wp_footer', 'trigger_for_ajax_add_to_cart');
-function trigger_for_ajax_add_to_cart() {
+add_action('wp_footer', 'trigger_ajax_to_cart');
+function trigger_ajax_to_cart() {
 ?>
   <script type="text/javascript">
     (function($) {
@@ -44,6 +44,65 @@ function trigger_for_ajax_add_to_cart() {
           .attr('data-product_id', variation_id)
           .attr('data-product_sku', variation_sku);
         // console.log('variation_id: ', variation_id);
+      });
+
+      let productEl = '';
+      const confirmationModal = $('#deleteProductConfirmation');
+      $('.remove').on('click', function(event) {
+        event.preventDefault();
+        event.stopPropagation();
+        productEl = event.currentTarget;
+        let imgPath = $(productEl).closest('.custom-cart-list__item').find('.product-thumbnail img').attr('src');
+        let productName = $(productEl).closest('.custom-cart-list__item').find('.product-name a').text();
+        
+        confirmationModal.find('img').attr('src', imgPath);
+        confirmationModal.find('#product_name').text('"' + productName + '"');
+        confirmationModal.modal('show');
+        // console.log(productName);
+        // const productID = $(event.currentTarget).attr('data-product_id');
+
+        // if (productEl) {
+        //   const productElID = $(productEl).attr('data-product_id');
+
+        //   if (productID === productElID) {
+        //     return;
+        //   }
+        // }
+        // console.log('event: ', event);
+      });
+
+      confirmationModal.on('click', '#confirmDeleteButton', () => {
+        $(productEl).closest('li').addClass('removing');
+        confirmationModal.modal('hide');
+        if (!productEl) {
+          return;
+        }
+        
+        fetch(productEl.href)
+          .then(((res) => {
+            console.log('OK!', res);
+            if ( res.ok ) {
+              $(productEl).closest('.custom-cart-list__item').remove();
+              const productPrice = $(productEl).closest('li').find('.product-price bdi')
+                .clone()    //clone the element
+                .children() //select all the children
+                .remove()   //remove all the children
+                .end()  //again go back to selected element
+                .text();
+
+              let total = $('#total').text();
+              let sum = total - productPrice;
+              let updatedTotal = Number(sum.toFixed(2))
+              $('#total').text(updatedTotal);
+            }
+          }))
+          .catch((err) => {
+            console.log('error: ', err);
+          });
+      });
+
+      confirmationModal.on('click', '#cancelDeleteButton', function () {
+        confirmationModal.modal('hide');
       });
     })(jQuery);
   </script>
