@@ -97,7 +97,7 @@ export default class CreateCategories {
   }
 
   createFilters() {
-    return new Promise(async (resolve, reject) => {
+    return new Promise(async (resolve, reject) => { 
       try {
         const response = await axios({
           method: "get",

@@ -115,7 +115,7 @@ export default class CreateProducts {
   }
 
   filterValues() {
-    return new Promise(async (resolve, reject) => {
+    return new Promise(async (resolve, reject) => { 
       try {
         const response = await axios({
           method: 'get',
