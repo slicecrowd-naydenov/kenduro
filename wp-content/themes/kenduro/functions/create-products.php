@@ -434,6 +434,7 @@ function create_simple_product($pid, $term_slug, $product_fields) {
 }
 
 function create_woocommerce_products($filteredData) {
+  $count = 0;
   global $ss_ids;
 
   $product_fields = fetch_column_fields($ss_ids['products_app_id']);
@@ -448,8 +449,13 @@ function create_woocommerce_products($filteredData) {
   $product_var_id = get_column_field_id('product_var_id', $product_fields);
 
   foreach ($filteredData as $item) {
+    $count++;
     $incoming_id = $item['id'];
     $product_id = is_exist_product($incoming_id);
+
+    if ($count >= 15) {
+      break;
+    }
 
     if (!$product_id) {
       // if Product no exists
