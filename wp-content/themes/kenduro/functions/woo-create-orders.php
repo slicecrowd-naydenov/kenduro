@@ -95,7 +95,7 @@ function create_sales_record($response) {
     $invoice_details = create_record_curl($invoices_id, $new_data, '');
 
     if (!is_wp_error($invoice_details)) {
-      create_CRM_record($response['order_id'], $invoice_details['id']);
+      // create_CRM_record($response['order_id'], $invoice_details['id']);
     }
     update_field('sync_order_with_smartsuite', 'synced', $response['order_id']);
   } else {
