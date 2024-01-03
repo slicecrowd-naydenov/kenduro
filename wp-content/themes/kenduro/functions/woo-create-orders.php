@@ -92,7 +92,11 @@ function create_sales_record($response) {
     $new_data = array(
       $invoices_items => $sales_ids_array
     );
-    create_record_curl($invoices_id, $new_data, '');
+    $invoice_details = create_record_curl($invoices_id, $new_data, '');
+
+    if (!is_wp_error($invoice_details)) {
+      create_CRM_record($response['order_id'], $invoice_details['id']);
+    }
     update_field('sync_order_with_smartsuite', 'synced', $response['order_id']);
   } else {
     $error_message = $sales_results->get_error_message();
@@ -238,6 +242,47 @@ function product_quick_order_form() {
 
 // add_filter('woocommerce_after_add_to_cart_form', 'product_quick_order_form');
 // add_filter('woocommerce_before_checkout_form', 'product_quick_order_form');
+function create_CRM_record($order_id, $invoice_id) {
+  $crm_id = '656f2ad9b219903296a74b69';
+  $crm_fields = fetch_column_fields($crm_id);
+
+  $first_name = get_column_field_id('first_name', $crm_fields);
+  $last_name = get_column_field_id('last_name', $crm_fields);
+  $phone_number = get_column_field_id('phone_number', $crm_fields);
+  $email = get_column_field_id('email', $crm_fields);
+  $vat_id = get_column_field_id('vat_id', $crm_fields);
+  $vat_registered = get_column_field_id('vat_registered', $crm_fields);
+  $bulstat = get_column_field_id('bulstat', $crm_fields);
+  $company_phone = get_column_field_id('company_phone', $crm_fields);
+  $company_name = get_column_field_id('company_name', $crm_fields);
+  $accountable_person = get_column_field_id('accountable_person', $crm_fields);
+  $link_to_invoices = get_column_field_id('link_to_invoices', $crm_fields);
+  
+  $order = wc_get_order( $order_id );
+  
+  $vat_choice = get_post_meta( $order_id, '_invoice_vat_registration', true ) === 'no' ? false : true;
+  $item_data = array(
+    $first_name => $order->get_billing_first_name(),
+    $last_name => $order->get_billing_last_name(),
+    $phone_number => $order->get_billing_phone(),
+    $email => $order->get_billing_email(),
+    $vat_id => get_post_meta( $order_id, '_invoice_vat_number', true ),
+    $vat_registered => $vat_choice,
+    $bulstat => get_post_meta( $order_id, '_invoice_bulstat', true ),
+    $company_phone => get_post_meta( $order_id, '_invoice_phone', true ),
+    $company_name => get_post_meta( $order_id, '_invoice_company_name', true ),
+    $accountable_person => get_post_meta( $order_id, '_invoice_mol', true ),
+    $link_to_invoices => array($invoice_id)
+  );
+
+  $CRM_results = create_record_curl($crm_id, $item_data, '');
+
+  if (is_wp_error($CRM_results)) {
+    $error_message = $CRM_results->get_error_message();
+    echo "Грешка при изпълнение на заявката: $error_message";
+  }
+
+}
 
 add_action('woocommerce_thankyou', 'success_message_after_payment');
 function success_message_after_payment($order_id) {

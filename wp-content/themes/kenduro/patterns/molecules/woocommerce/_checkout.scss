@@ -1,12 +1,3 @@
-.woocommerce-billing-fields {
-  &__field-wrapper {
-    .form-row {
-      width: 100% !important;
-      margin-left: 0;
-    }
-  }
-}
-
 .woocommerce-shipping-fields {
   display: none;
 }
@@ -35,23 +26,12 @@
 
 .woocommerce-additional-fields,
 .woocommerce-billing-fields {
-  &__field-wrapper {
-    .form-row {
-      margin-left: 0;
-      flex-direction: column;
-    }
-  }
-
-  input,
-  textarea {
-    height: 40px;
-    box-shadow: none;
-    padding-left: 12px;
-    padding-right: 8px;
-    background-color: $G-0;
-    border: 1px solid $G-1-5;
-    border-radius: $radius-small;
-  }
+  // &__field-wrapper {
+  //   .form-row {
+  //     margin-left: 0;
+  //     flex-direction: column;
+  //   }
+  // }
 
   .select2-container--default {
     .select2-selection--single {
@@ -88,10 +68,22 @@
   .woocommerce {
     padding-top: 50px;
 
+    input:not(#want_invoice),
+    textarea {
+      height: 40px;
+      box-shadow: none;
+      padding-left: 12px;
+      padding-right: 8px;
+      background-color: $G-0;
+      border: 1px solid $G-1-5;
+      border-radius: $radius-small;
+    }
+
     .woocommerce {
       float: left;
       width: 350px;
       margin-right: 60px;
+
     }
   }
 }
@@ -192,14 +184,20 @@
       border-radius: $radius-medium;  
       margin: 0;
 
+      .form-row:not(.input-checkbox, .notes) {
+        margin: 0;
+        width: calc(50% - 10px);
+        
+        label {
+          padding-bottom: 4px;
+          @extend #{'.paragraph','.paragraph-l', '.primary'};
+        }
+      }
+
       .woocommerce-billing-fields {
 
         &__field-wrapper {
           padding-top: 10px;
-          display: flex;
-          flex-wrap: wrap;
-          justify-content: space-between;
-          gap: 20px;
 
           #billing_country_field {
             display: none;
@@ -212,22 +210,82 @@
             height: 0;
             position: absolute;
           }
-
-          p {
-            margin: 0;
-            width: calc(50% - 10px) !important;
-            
-            label {
-              padding-bottom: 4px;
-              @extend #{'.paragraph','.paragraph-l', '.primary'};
-            }
-          }
         }
       }
     }
 
     #order_review_heading {
       display: none;
+    }
+
+    #custom_invoice_fields,
+    .woocommerce-billing-fields__field-wrapper {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    #custom_invoice_fields,
+    #custom_invoice_checkbox {
+      .form-row {
+        .optional {
+          display: none;
+        }
+
+      }
+    }
+    
+    #custom_invoice_checkbox {      
+      #want_invoice_field {
+        margin-top: 27px;
+
+        input[type="checkbox"] {
+          display: none;
+
+          & + span {
+            margin-left: 0;
+            position: relative;
+            padding-left: 30px;
+            cursor: pointer;
+            @extend #{'.paragraph','.paragraph-l', '.semibold'};
+  
+            &:before {
+              content: '';
+              position: absolute;
+              top: 50%;
+              left: 0;
+              transform: translateY(-50%);
+              width: 18px;
+              height: 18px;
+              border-radius: $radius-thin;
+              background-color: transparent;
+              border: 1px solid $G-3;
+            }
+
+            &:after {
+              content: '';
+              position: absolute;
+              top: 50%;
+              left: 5px;
+              transform: translateY(-50%);
+              width: 8px;
+              height: 8px;
+              border-radius: 2px;
+              background-color: transparent;
+              background-color: $b-primary;
+              opacity: 0;
+              transition: opacity 0.3s;
+            }
+          }
+    
+          &:checked {
+            & + span:after {
+              opacity: 1;
+            }
+          }
+        }
+      }
     }
 
     input {
@@ -315,15 +373,128 @@
       }
 
       #shipping_method {
-        padding: 0 60px 40px;
+        padding: 0 60px 50px;
 
         li {
-          &:first-child {
+          &:first-child:not(.multiselect__element) {
             margin-bottom: 15px;
+          }
+
+          & > label {
+            display: block;
           }
           
           .woo-bg--econt-delivery {
             margin-left: 30px;
+            position: relative;
+          }
+        }
+
+        .woo-bg--city-state-field {
+          padding-left: 30px;
+        }
+
+        .woo-bg--city-state-field,
+        .woo-bg--econt-delivery {
+          display: inline-block;
+          width: calc(50% - 15px);
+        }
+
+        .woo-bg--office-error {
+          color: $error;
+          font-size: 13px;
+        }
+
+        .woo-bg-multiselect {
+          margin-bottom: 0;
+        }
+
+        .multiselect {
+          &__tags {
+            height: 40px;
+            padding: 0 40px 0 0;
+          }
+
+          &__content-wrapper {
+            border-top: 1px solid $G-1-5;
+            top: calc(100% - 1px);
+          }
+
+          &__placeholder,
+          &__single {
+            position: relative;
+            top: 8px;
+            left: 12px;
+            padding: 0;
+            margin: 0;
+            // padding: 0;
+      
+            strong {
+              font-weight: normal;
+            }
+          }
+
+          &__single {
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow: hidden;
+          }
+  
+          &__select {
+            &:before {
+              right: 50%;
+              top: 50%;
+              transform: translate(50%, -50%);
+              position: absolute;
+              margin-top: 0;
+              border-color: $G-8 transparent transparent;
+            }
+          }
+
+          &__element {
+            margin-bottom: 1px;
+          }
+
+          &__option {
+            color: $text-primary !important;
+            transition: background-color 0.25s ease;
+
+            &:hover {
+              background-color: $G-1-5;
+            }
+
+            &:after {
+              display: none;
+            }
+
+            span {
+              max-width: none;
+              line-height: 1.2;
+            }
+          }
+
+          &__option--highlight {
+            &:not(&__option--selected) {
+              background-color: transparent;
+
+              &:hover {
+                background-color: $G-1-5;
+              }
+            }
+          }
+
+          &__option--selected {
+            pointer-events: none;
+            background-color: $G-3;
+          }
+        }
+        
+        .woo-bg-multiselect--additional-field {
+          &.input-text {
+            position: absolute;
+            right: -6px;
+            width: 200%;
+            top: calc(100% + 10px);
           }
         }
 
@@ -333,13 +504,14 @@
             
             &:after {
               content: 'На следващия работен ден при поръчка до 16:00 ч.';
-              @extend #{'.paragraph','.paragraph-m'};
               color: $text-tetriary;
               position: absolute;
               top: 100%;
               left: 30px;
               opacity: 0;
               white-space: nowrap;
+              pointer-events: none;
+              @extend #{'.paragraph','.paragraph-m'};
             }
           } 
           
@@ -374,6 +546,39 @@
       // background: url('../../assets/icons/svg/send.svg') center center no-repeat;
       background-color: $b-highlight-two;
       @extend #{'.paragraph','.paragraph-l'};
+    }
+  }
+}
+
+.custom-select {
+
+  .woocommerce-input-wrapper {
+    position: relative;
+    
+    &::after {
+      --size: 4px;
+      content: "";
+      position: absolute;
+      right: 1rem;
+      pointer-events: none;
+      border-left: var(--size) solid transparent;
+      border-right: var(--size) solid transparent;
+      border-top: var(--size) solid $G-8;
+      bottom: 17px;
+    }
+
+    select {
+      appearance: none;
+      /*  safari  */
+      -webkit-appearance: none;
+      /*  other styles for aesthetics */
+      width: 100%;
+      padding: 7px 12px;
+      background-color: $G-0;
+      border: 1px solid $G-1-5;
+      border-radius: $radius-small;
+      color: $text-primary;
+      cursor: pointer;
     }
   }
 }

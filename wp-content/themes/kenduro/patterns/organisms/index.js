@@ -16,6 +16,17 @@ export default () => {
     new Slider(el);
   });
 
+  $('#custom_invoice_fields').hide();
+
+  // Покажете или скрийте полетата при промяна в състоянието на чекбокса
+  $('#want_invoice').change(function () {
+    if ($(this).is(':checked')) {
+      $('#custom_invoice_fields').slideDown();
+    } else {
+      $('#custom_invoice_fields').slideUp();
+    }
+  });
+
   var triggerTabList = [].slice.call(document.querySelectorAll('#pills-tab a'));
   triggerTabList.forEach(function (triggerEl) {
     var tabTrigger = new Tab(triggerEl);
