@@ -44,7 +44,7 @@ export default class CreateCategories {
       try {
         const response = await axios({
           method: "get",
-          url: `${wpApiSettings.rest_url}ss-data/get-categories/64fffd472342af43b5f7a511`,
+          url: `${wpApiSettings.rest_url}ss-data/get-categories/6501a3e8a95e9be1612f04f1`,
           headers: {
             'X-WP-Nonce': `${wpApiSettings.nonce}`, 
           }
@@ -63,7 +63,7 @@ export default class CreateCategories {
       try {
         const response = await axios({
           method: "get",
-          url: `${wpApiSettings.rest_url}ss-data/get-categories/64fffd8181170b2bfd847cf7`,
+          url: `${wpApiSettings.rest_url}ss-data/get-categories/6501a3e8a95e9be1612f04fa`,
           headers: {
             'X-WP-Nonce': `${wpApiSettings.nonce}`, 
           }
@@ -82,7 +82,7 @@ export default class CreateCategories {
       try {
         const response = await axios({
           method: "get",
-          url: `${wpApiSettings.rest_url}ss-data/get-categories/64fffd8d547c1bc2b52021d6`,
+          url: `${wpApiSettings.rest_url}ss-data/get-categories/6501a3e8a95e9be1612f050f`,
           headers: {
             'X-WP-Nonce': `${wpApiSettings.nonce}`, 
           }
@@ -101,7 +101,7 @@ export default class CreateCategories {
       try {
         const response = await axios({
           method: "get",
-          url: `${wpApiSettings.rest_url}ss-data/get-filters/6500569fa5f9be59c811b365`,
+          url: `${wpApiSettings.rest_url}ss-data/get-filters/6501a4062d14b1261118e547`,
           headers: {
             'X-WP-Nonce': `${wpApiSettings.nonce}`, 
           }

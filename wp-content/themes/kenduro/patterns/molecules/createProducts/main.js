@@ -39,7 +39,7 @@ export default class CreateProducts {
       try {
         const response = await axios({
           method: 'get',
-          url: `${wpApiSettings.rest_url}ss-data/get-products/64fffa49372b0c1543d60c35/`
+          url: `${wpApiSettings.rest_url}ss-data/get-products/64e75a98b9212caa8746ef1b/`
         });
         console.log('response Products: ', response);
         resolve(response);
