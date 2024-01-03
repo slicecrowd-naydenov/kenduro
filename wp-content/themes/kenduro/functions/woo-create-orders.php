@@ -243,7 +243,8 @@ function product_quick_order_form() {
 // add_filter('woocommerce_after_add_to_cart_form', 'product_quick_order_form');
 // add_filter('woocommerce_before_checkout_form', 'product_quick_order_form');
 function create_CRM_record($order_id, $invoice_id) {
-  $crm_id = '656f2ad9b219903296a74b69';
+  global $ss_ids;
+  $crm_id = $ss_ids['crm'];
   $crm_fields = fetch_column_fields($crm_id);
 
   $first_name = get_column_field_id('first_name', $crm_fields);
