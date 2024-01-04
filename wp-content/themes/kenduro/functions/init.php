@@ -105,6 +105,26 @@ function post_column_fields($id) {
   return json_decode(wp_remote_retrieve_body($response), true);
 }
 
+function get_column_fields_related($id) {
+  $response = wp_remote_request(
+    'https://app.smartsuite.com/api/v1/applications/' . $id . '/records/records_with_related/',
+    array(
+      'method' => 'GET',
+      'headers' => array(
+        'Content-Type' => 'application/json',
+        'Authorization' => 'Token 2570295cb9c1e4c7f81d46ed046c09bf43fd5740',
+        'ACCOUNT-ID' => 'sd0y91s2',
+      ),
+    )
+  );
+
+  if (is_wp_error($response)) {
+    return new WP_Error('api_error', 'Error fetching data from get_column_fields', array('status' => 500));
+  }
+
+  return json_decode(wp_remote_retrieve_body($response), true);
+}
+
 function filter_items($items, $fieldsToRemove) {
   $filteredItems = array_map(function ($item) use ($fieldsToRemove) {
     foreach ($fieldsToRemove as $field) {

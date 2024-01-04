@@ -26,13 +26,23 @@ function get_all_products($request) {
   $data = $request->get_json_params();
   $id = $request->get_param('id');
   $product_id = $request->get_param('product_id');
-  $external_api_response = post_column_fields($id);
-  $product_variations_fields = fetch_column_fields($ss_ids['product_variations']);  
+  $external_api_response = get_column_fields_related($id);
+  $product_variations_fields = fetch_column_fields($ss_ids['product_variations']);
+  $product_fields = fetch_column_fields($ss_ids['products_app_id']);
   $product_variation = get_column_field_id('product_variation', $product_variations_fields);
+  $product_var_id = get_column_field_id('product_var_id', $product_fields);
+  $existing_ids = array_column($external_api_response['related_records'], 'id');
   $outputArray = array();
 
   if (is_wp_error($external_api_response)) {
     return $external_api_response;
+  }
+
+  // IMPORTANT -> remove unnecessary IDs from Product
+  if (!$product_id) {
+    foreach ($external_api_response['records'] as &$record) {
+      $record[$product_var_id] = array_intersect($record[$product_var_id], $existing_ids);
+    }
   }
 
   foreach ($product_variations['items'] as $variation) {
@@ -45,7 +55,7 @@ function get_all_products($request) {
     }
   }
 
-  $filteredData = filter_items($external_api_response['items'], $fieldsToRemove);
+  $filteredData = filter_items($external_api_response['records'], $fieldsToRemove);
 
   $filteredArrays = array_filter($filteredData, function ($item) use ($outputArray) {
     return in_array($item['id'], $outputArray);
