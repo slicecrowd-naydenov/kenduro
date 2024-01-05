@@ -1,4 +1,15 @@
-<?php use Lean\Load; ?>
+<?php use Lean\Load; 
+$terms = get_field('popular_categories', 'options');
+$term_ids = '';
+
+if( $terms ): 
+  foreach( $terms as $term ): 
+    $term_ids .= $term . ', ';
+  endforeach; 
+endif; 
+
+$term_ids = rtrim($term_ids, ', ');
+?>
 <div class="container">
   <div class="row">
     <div class="col">
@@ -15,7 +26,7 @@
           ?>
         </div>
         <hr>
-        <?php echo do_shortcode('[product_categories ids="1937, 1941" columns="5"]'); ?>
+        <?php echo do_shortcode('[product_categories ids="'. $term_ids .'" columns="5"]'); ?>
       </div>
     </div>
   </div>
