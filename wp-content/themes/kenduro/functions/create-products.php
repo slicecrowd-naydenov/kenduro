@@ -441,12 +441,6 @@ function create_simple_product($pid, $term_slug, $product_fields) {
   }
 }
 
-function processFilter($pid, $incoming_id, $filter_slug, $product_variations_fields) {
-  if ($filter_slug) {
-      create_variation($pid, $incoming_id, $filter_slug, $product_variations_fields);
-  }
-}
-
 function create_woocommerce_products($filteredData) {
   $count = 0;
   global $ss_ids;
@@ -489,9 +483,17 @@ function create_woocommerce_products($filteredData) {
         set_values($product_fields, $pid, $item);
         update_acf($item, $pid, false);
         
-        processFilter($pid, $incoming_id, $filter_clothing_size_slug, $product_variations_fields);
-        processFilter($pid, $incoming_id, $filter_helmet_size_slug, $product_variations_fields);
-        processFilter($pid, $incoming_id, $filter_boot_size_slug, $product_variations_fields);
+        if ($filter_clothing_size_slug) {
+          create_variation($pid, $incoming_id, $filter_clothing_size_slug, $product_variations_fields);
+        }
+
+        if ($filter_helmet_size_slug) {
+          create_variation($pid, $incoming_id, $filter_helmet_size_slug, $product_variations_fields);
+        }
+        
+        if ($filter_boot_size_slug) {
+          create_variation($pid, $incoming_id, $filter_boot_size_slug, $product_variations_fields);
+        }
 
       } else {
         $simple_product = new WC_Product_Simple();
