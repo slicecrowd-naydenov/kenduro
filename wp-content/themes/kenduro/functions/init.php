@@ -352,5 +352,10 @@ function load_variation_settings_fields($variations) {
   return $variations;
 }
 
-
+// Get related values of Linked records
+function related_records(&$records, $keyToModify, $existingIds) {
+  foreach ($records as &$record) {
+      $record[$keyToModify] = array_values(array_intersect($record[$keyToModify], $existingIds));
+  }
+}
 

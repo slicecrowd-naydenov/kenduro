@@ -195,12 +195,12 @@ get_header();
     <!-- </br> -->
     <a href="#" id="createCategories">create Categories</a>
     </br>
-    <a href="#" id="productFields">Product fields</a>
+    <!-- <a href="#" id="productFields">Product fields</a>
     </br>
     <a href="#" id="filterFields">Filter fields</a>
     </br>
     <a href="#" id="filterValues">Filter values</a>
-    </br>
+    </br> -->
     <a href="#" id="createFilters">create Filters</a>
     </br>
 </main>

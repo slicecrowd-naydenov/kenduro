@@ -16,18 +16,24 @@ function add_get_filters_endpoint() {
 }
 
 function get_all_filters($request) {
-  global $fieldsToRemove;
+  global $ss_ids, $fieldsToRemove;
 
   // $data = $request->get_json_params();
   $id = $request->get_param('id');
 
-  $external_api_response = post_column_fields($id);
+  $external_api_response = get_column_fields_related($id);
+  $filters = fetch_column_fields($ss_ids['filters_id']);
+  $filter_values = get_column_field_id('filter_values', $filters);
+  $existing_ids = array_column($external_api_response['related_records'], 'id');
 
   if (is_wp_error($external_api_response)) {
     return $external_api_response;
   }
 
-  $filteredData = filter_items($external_api_response['items'], $fieldsToRemove);
+
+  related_records($external_api_response['records'], $filter_values, $existing_ids);
+
+  $filteredData = filter_items($external_api_response['records'], $fieldsToRemove);
 
   create_woocommerce_filters($filteredData);
 

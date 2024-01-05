@@ -40,9 +40,7 @@ function get_all_products($request) {
 
   // IMPORTANT -> remove unnecessary IDs from Product
   if (!$product_id) {
-    foreach ($external_api_response['records'] as &$record) {
-      $record[$product_var_id] = array_values(array_intersect($record[$product_var_id], $existing_ids));
-    }
+    related_records($external_api_response['records'], $product_var_id, $existing_ids);
   }
 
   foreach ($product_variations['items'] as $variation) {
