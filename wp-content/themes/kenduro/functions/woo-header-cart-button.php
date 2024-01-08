@@ -43,6 +43,10 @@ function trigger_ajax_to_cart() {
           .find('.single_add_to_cart_button')
           .attr('data-product_id', variation_id)
           .attr('data-product_sku', variation_sku);
+        
+        if ($('body').find('.woocommerce-variation-price').children().length > 0) {
+          $('.product-type-variable').find('.summary > .price').slideUp();
+        }
         // console.log('variation_id: ', variation_id);
       });
 

@@ -259,13 +259,13 @@
         }
       }
 
-      &.product-type-variable {
-        .summary {
-          & > .price {
-            display: none;
-          }
-        }
-      }
+      // &.product-type-variable {
+      //   .summary {
+      //     & > .price {
+      //       display: none;
+      //     }
+      //   }
+      // }
 
       .related {
         .popular-categories {
