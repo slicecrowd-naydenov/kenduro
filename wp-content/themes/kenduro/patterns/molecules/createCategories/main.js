@@ -44,7 +44,7 @@ export default class CreateCategories {
       try {
         const response = await axios({
           method: "get",
-          url: `${wpApiSettings.rest_url}ss-data/get-categories/6501a3e8a95e9be1612f04f1`,
+          url: `${wpApiSettings.rest_url}ss-data/get-categories/`+$(this.createMainCategoriesBtn).attr('data-main-cat-id'),
           headers: {
             'X-WP-Nonce': `${wpApiSettings.nonce}`, 
           }
@@ -63,7 +63,7 @@ export default class CreateCategories {
       try {
         const response = await axios({
           method: "get",
-          url: `${wpApiSettings.rest_url}ss-data/get-categories/6501a3e8a95e9be1612f04fa`,
+          url: `${wpApiSettings.rest_url}ss-data/get-categories/`+$(this.createMainCategoriesBtn).attr('data-child-cat-id'),
           headers: {
             'X-WP-Nonce': `${wpApiSettings.nonce}`, 
           }
@@ -82,7 +82,7 @@ export default class CreateCategories {
       try {
         const response = await axios({
           method: "get",
-          url: `${wpApiSettings.rest_url}ss-data/get-categories/6501a3e8a95e9be1612f050f`,
+          url: `${wpApiSettings.rest_url}ss-data/get-categories/`+$(this.createMainCategoriesBtn).attr('data-sub-child-cat-id'),
           headers: {
             'X-WP-Nonce': `${wpApiSettings.nonce}`, 
           }
@@ -101,7 +101,7 @@ export default class CreateCategories {
       try {
         const response = await axios({
           method: "get",
-          url: `${wpApiSettings.rest_url}ss-data/get-filters/6501a4062d14b1261118e547`,
+          url: `${wpApiSettings.rest_url}ss-data/get-filters/`+$(this.createFiltersBtn).attr('data-filters-id'),
           headers: {
             'X-WP-Nonce': `${wpApiSettings.nonce}`, 
           }

@@ -187,22 +187,6 @@ get_header();
       </div>
     </div>
     <?php Load::molecules('best-selling-products/index'); ?>
-    <a href="#" id="createProducts">create Products</a>
-    </br>
-    <!-- <a href="#" id="updateProduct">update Product</a> -->
-    <!-- </br> -->
-    <!-- <a href="#" id="updateProductVariation">update Variation Product</a> -->
-    <!-- </br> -->
-    <a href="#" id="createCategories">create Categories</a>
-    </br>
-    <!-- <a href="#" id="productFields">Product fields</a>
-    </br>
-    <a href="#" id="filterFields">Filter fields</a>
-    </br>
-    <a href="#" id="filterValues">Filter values</a>
-    </br> -->
-    <a href="#" id="createFilters">create Filters</a>
-    </br>
 </main>
 <?php
 get_footer();
