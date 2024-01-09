@@ -466,6 +466,8 @@ function create_woocommerce_products($filteredData) {
   $filter_helmet_size_slug = get_column_field_id('filter_helmet_size', $product_variations_fields);
 	$filter_clothing_size_slug = get_column_field_id('filter_clothing_size', $product_variations_fields);
 	$filter_boot_size_slug = get_column_field_id('filter_boot_size', $product_variations_fields);
+	$filter_backpack_size_slug = get_column_field_id('filter_backpack_size', $product_variations_fields);
+	$filter_handlebar_rise_slug = get_column_field_id('filter_handlebar_rise', $product_variations_fields);
 	$prduct_sku = get_column_field_id('set_sku', $product_fields);
   $product_var_id = get_column_field_id('product_var_id', $product_fields);
 
@@ -499,6 +501,8 @@ function create_woocommerce_products($filteredData) {
         processFilter($pid, $incoming_id, $filter_clothing_size_slug, $product_variations_fields);
         processFilter($pid, $incoming_id, $filter_helmet_size_slug, $product_variations_fields);
         processFilter($pid, $incoming_id, $filter_boot_size_slug, $product_variations_fields);
+        processFilter($pid, $incoming_id, $filter_backpack_size_slug, $product_variations_fields);
+        processFilter($pid, $incoming_id, $filter_handlebar_rise_slug, $product_variations_fields);
 
       } else {
         $simple_product = new WC_Product_Simple();
