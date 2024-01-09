@@ -476,7 +476,7 @@ function create_woocommerce_products($filteredData) {
     $incoming_id = $item['id'];
     $product_id = is_exist_product($incoming_id);
 
-    if ($count >= 150) {
+    if ($count >= 50) {
       break;
     }
 
