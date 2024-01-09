@@ -455,7 +455,7 @@ function processFilter($pid, $incoming_id, $filter_slug, $product_variations_fie
 }
 
 function create_woocommerce_products($filteredData) {
-  $count = 0;
+  // $count = 0;
   global $ss_ids;
 
   $product_fields = fetch_column_fields($ss_ids['products_app_id']);
@@ -472,13 +472,13 @@ function create_woocommerce_products($filteredData) {
   $product_var_id = get_column_field_id('product_var_id', $product_fields);
 
   foreach ($filteredData as $item) {
-    $count++;
+    // $count++;
     $incoming_id = $item['id'];
     $product_id = is_exist_product($incoming_id);
 
-    if ($count >= 20) {
-      break;
-    }
+    // if ($count >= 20) {
+    //   break;
+    // }
 
     if (!$product_id) {
       // if Product no exists
