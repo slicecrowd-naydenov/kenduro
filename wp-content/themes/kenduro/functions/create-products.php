@@ -232,11 +232,13 @@ function set_values($fields, $product_id, $item) {
   $handlesToKeep = array();
 
   foreach ($fields as $field) {
-    
+
     if ($field['help_text'] === 'set_name') {
       $product->set_name($item['title']);
     } else if ($field['help_text'] === 'set_regular_price') {
       $product->set_regular_price($item[$field['slug']]);
+    } else if ($field['help_text'] === 'product_description_bg') {
+      $product->set_description($item[$field['slug']]['preview']);
     } else if ($field['help_text'] === 'main_category') {
       $filtered_data[] = is_exist_cat($item[$field['slug']][0], $all_categories);
     } else if ($field['help_text'] === 'child_category') {
@@ -472,7 +474,7 @@ function create_woocommerce_products($filteredData) {
     $incoming_id = $item['id'];
     $product_id = is_exist_product($incoming_id);
 
-    if ($count >= 115) {
+    if ($count >= 150) {
       break;
     }
 
