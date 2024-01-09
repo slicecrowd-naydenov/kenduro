@@ -324,6 +324,17 @@ function variation_settings_fields($loop, $variation_data, $variation) {
       'value'       => get_post_meta($variation->ID, '_my_product_variation_id', true)
     )
   );
+
+  // Checkbox Field
+  woocommerce_wp_checkbox(
+    array(
+        'id'          => '_my_show_in_shop[' . $variation->ID . ']',
+        'label'       => __('Show in shop', 'woocommerce'),
+        'desc_tip'    => 'true',
+        'description' => __('Check this box if needed.', 'woocommerce'),
+        'value'       => get_post_meta($variation->ID, '_my_show_in_shop', true),
+    )
+);
 }
 /**
  * Save new fields for variations
@@ -335,6 +346,10 @@ function save_variation_settings_fields($post_id) {
   if (!empty($my_custom_field)) {
     update_post_meta($post_id, '_my_product_variation_id', esc_attr($my_custom_field));
   }
+
+  // Checkbox Field
+  $my_checkbox_field = isset($_POST['_my_show_in_shop'][$post_id]) ? 'yes' : 'no';
+  update_post_meta($post_id, '_my_show_in_shop', $my_checkbox_field);
 }
 
 
@@ -346,8 +361,11 @@ add_filter('woocommerce_available_variation', 'load_variation_settings_fields');
  *
  */
 function load_variation_settings_fields($variations) {
-  // duplicate the line for each field
+  // Text Field
   $variations['my_custom_field'] = get_post_meta($variations['variation_id'], '_my_product_variation_id', true);
+
+  // Checkbox Field
+  $variations['my_checkbox_field'] = get_post_meta($variations['variation_id'], '_my_show_in_shop', true);
 
   return $variations;
 }

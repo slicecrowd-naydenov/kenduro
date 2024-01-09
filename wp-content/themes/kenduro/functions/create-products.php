@@ -410,6 +410,7 @@ function create_simple_product($pid, $term_slug, $product_fields) {
 	$product_id_slug = get_column_field_id('product_variation', $product_fields);
   $set_regular_price = get_column_field_id('set_regular_price', $product_fields);
   $product_variation_sku = get_column_field_id('product_variation_sku', $product_fields);
+  $show_in_shop = get_column_field_id('show_in_shop', $product_fields);
   
   foreach ($product_variations['items'] as $product_variation) {
     $is_set_color = isset($product_variation[$attr_color]);
@@ -431,6 +432,10 @@ function create_simple_product($pid, $term_slug, $product_fields) {
         );
       }
 
+      if (isset($product_variation[$show_in_shop]) && !$product_variation[$show_in_shop]) {
+        $terms = array( 'exclude-from-catalog', 'exclude-from-search' );
+        wp_set_object_terms($pid, $terms, 'product_visibility');
+      }
       update_post_meta($pid, '_product_attributes', $attributes_data);
       update_post_meta($pid, '_manage_stock', true);
       update_post_meta($pid, '_stock_status', $is_stock);
@@ -467,7 +472,7 @@ function create_woocommerce_products($filteredData) {
     $incoming_id = $item['id'];
     $product_id = is_exist_product($incoming_id);
 
-    if ($count >= 15) {
+    if ($count >= 115) {
       break;
     }
 
