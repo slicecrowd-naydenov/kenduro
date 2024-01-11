@@ -55,9 +55,17 @@
       margin: 0 !important;
 
       img {
-        width: auto;
-        max-height: 266px;
+        width: 100%;
+        max-height: $thumbnail_size;
         border-radius: $radius-medium;
+        margin: 0;
+      }
+
+      .wc-img-wrapper {
+        height: $thumbnail_size;
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
       }
 
       .woocommerce-loop-product__link {
