@@ -55,9 +55,8 @@
       margin: 0 !important;
 
       img {
-        width: 100%;
+        width: auto;
         max-height: $thumbnail_size;
-        border-radius: $radius-medium;
         margin: 0;
       }
 
@@ -66,6 +65,11 @@
         display: flex;
         align-items: center;
         margin-bottom: 10px;
+        background: $thumbs_bg;
+        width: 100%;
+        justify-content: center;
+        border-radius: $radius-medium;
+        overflow: hidden;
       }
 
       .woocommerce-loop-product__link {
