@@ -91,6 +91,11 @@ h2,
 .h2 {
   font-size: 38px;
   line-height: 52px;
+
+  @include media-breakpoint-down(lg) {
+    font-size: 30px;
+    line-height: 40px;
+  }
 }
 
 h3,

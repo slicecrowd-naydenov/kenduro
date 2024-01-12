@@ -5,6 +5,11 @@
   background-size: cover;
   position: relative;
 
+  @include media-breakpoint-down(lg) {
+    background-size: auto 225px;
+    background-position: top center;
+  }
+
   &:before {
     width: 100%;
     height: 100%;
@@ -15,6 +20,9 @@
     /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#000000+0,023047+100&0+0,0.79+100 */
     background: linear-gradient(to bottom,  rgba(0,0,0,0) 0%,rgba(2,48,71,0.79) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
 
+    @include media-breakpoint-down(lg) {
+      height: 225px;
+    }
   }
 
   .hero-logo {
@@ -23,6 +31,10 @@
     border-radius: $radius-medium;
     display: inline-flex;
     margin-bottom: 90px;
+
+    @include media-breakpoint-down(lg) {
+      margin-bottom: 35px;
+    }
   }
 
   .hero_title {
@@ -42,6 +54,33 @@
     gap: 10px;
     z-index: 5;
 
+    @include media-breakpoint-down(lg) {
+      width: calc(100% - 60px);
+      margin: 10px 30px;
+      position: relative;
+      transform: none;
+      right: auto;
+      top: 0;
+    }
+    
+    @include media-breakpoint-only(xl) {
+      right: $bootstrap-gap-xl;
+    }
+
+    @include media-breakpoint-only(lg) {
+      right: $bootstrap-gap-lg;
+    }
+
+    @include media-breakpoint-only(sm) {
+      width: 514px;
+      margin: 10px auto;
+    }
+
+    @include media-breakpoint-only(xs) {
+      width: calc(100% - 30px);
+      margin: 10px 15px;
+    }
+
     &__box {
       display: flex;
       padding: 25px 25px 17px;
@@ -51,6 +90,27 @@
       border-radius: $radius-medium;
       overflow: hidden;
 
+      &:first-child {
+        display: none;
+      }
+
+      &:last-child {
+        @include media-breakpoint-down(lg) {
+          border: 1px dashed rgba($b-primary, 0.3);
+          padding: 20px 25px 15px 20px;
+        }
+
+        .hero-banner__header + p {
+          @include media-breakpoint-only(xs) {
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            line-clamp: 3;
+            -webkit-box-orient: vertical;
+          }
+        }
+      }
+
       .learn-more {
         color: inherit;
         text-decoration: underline;
@@ -58,6 +118,10 @@
 
       .info {
         padding-right: 25px;
+
+        @include media-breakpoint-only(xs) {
+          padding-right: 0;
+        }
       }
     }
 
@@ -122,6 +186,10 @@
 
     &__image {
       margin: 0 -25px -17px 0;
+
+      @include media-breakpoint-only(xs) {
+        width: 115px;
+      }
     }
   }
 
@@ -131,6 +199,29 @@
     padding-left: $bootstrap-gap;
     padding-bottom: 50px;
 
+    @include media-breakpoint-only(xl) {
+      padding-left: $bootstrap-gap-xl;
+    }
+
+    @include media-breakpoint-only(lg) {
+      padding-left: $bootstrap-gap-lg;
+    }
+
+    @include media-breakpoint-down(lg) {
+      padding: 0 30px;
+      margin-top: 135px;
+      overflow: inherit;
+    }
+
+    @include media-breakpoint-only(sm) {
+      padding: 0;
+      width: 514px;
+    }
+
+    @include media-breakpoint-only(xs) {
+      padding: 0 15px;
+    }
+
     .button {
       margin-top: 26px;
       background-color: $b-highlight-two;
@@ -139,8 +230,14 @@
 
     .swiper-slide {
       padding-right: 60%;
-    }
 
+      @include media-breakpoint-down(lg) {
+        padding-right: 0;
+        background-color: $b-primary;
+        padding: 20px;
+        border-radius: $radius-medium;
+      }
+    }
   }
 }
 
@@ -148,6 +245,10 @@
   position: absolute;
   bottom: 20px !important;
   @extend .flex-center;
+
+  @include media-breakpoint-down(lg) {
+    bottom: calc(100% + 10px) !important;
+  }
 
   .swiper-pagination-bullet {
     width: 16px;

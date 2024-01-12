@@ -239,7 +239,7 @@ function set_values($fields, $product_id, $item) {
     } else if ($field['help_text'] === 'set_regular_price') {
       $product->set_regular_price($item[$field['slug']]);
     } else if ($field['help_text'] === 'product_description_bg') {
-      $product->set_description($item[$field['slug']]['preview']);
+      $product->set_description($item[$field['slug']]['html']);
     } else if ($field['help_text'] === 'main_category') {
       $filtered_data[] = is_exist_cat($item[$field['slug']][0], $all_categories);
     } else if ($field['help_text'] === 'child_category') {
@@ -261,7 +261,10 @@ function set_values($fields, $product_id, $item) {
           }
         }
       } 
-    }
+    } else if ($field['help_text'] === 'show_in_shop') {
+      $show_in_shop = $item[$field['slug']] ? 'visible' : 'hidden';
+      $product->set_catalog_visibility($show_in_shop);
+    } 
     wp_set_post_terms($product_id, $filtered_data, 'product_cat');
   }
 
@@ -413,7 +416,6 @@ function create_simple_product($pid, $term_slug, $product_fields) {
 	$product_id_slug = get_column_field_id('product_variation', $product_fields);
   $set_regular_price = get_column_field_id('set_regular_price', $product_fields);
   $product_variation_sku = get_column_field_id('product_variation_sku', $product_fields);
-  $show_in_shop = get_column_field_id('show_in_shop', $product_fields);
   
   foreach ($product_variations['items'] as $product_variation) {
     $is_set_color = isset($product_variation[$attr_color]);
@@ -434,11 +436,7 @@ function create_simple_product($pid, $term_slug, $product_fields) {
           'is_taxonomy' => '1'
         );
       }
-
-      if (isset($product_variation[$show_in_shop]) && !$product_variation[$show_in_shop]) {
-        $terms = array( 'exclude-from-catalog', 'exclude-from-search' );
-        wp_set_object_terms($pid, $terms, 'product_visibility');
-      }
+      
       update_post_meta($pid, '_product_attributes', $attributes_data);
       update_post_meta($pid, '_manage_stock', true);
       update_post_meta($pid, '_stock_status', $is_stock);
