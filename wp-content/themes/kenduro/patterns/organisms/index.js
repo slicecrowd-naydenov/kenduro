@@ -4,6 +4,7 @@ import $ from 'jquery';
 import { Tab } from 'bootstrap';
 import ShopFilter from './shop';
 import Slider from './slider';
+import MobileNavigation from './header/bottom/index';
 
 export default () => {
   const $body = $('body');
@@ -15,10 +16,13 @@ export default () => {
   $('[data-slider]').each((index, el) => {
     new Slider(el);
   });
+  
+  if (MobileNavigation) {
+    new MobileNavigation(document.getElementById('site-navigation-menu-toggle'));
+  }
 
   $('#custom_invoice_fields').hide();
 
-  // Покажете или скрийте полетата при промяна в състоянието на чекбокса
   $('#want_invoice').change(function () {
     if ($(this).is(':checked')) {
       $('#custom_invoice_fields').slideDown();

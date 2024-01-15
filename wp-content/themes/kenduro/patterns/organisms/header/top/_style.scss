@@ -10,12 +10,27 @@
   align-items: center;
   justify-content: space-between;
 
+  @include media-breakpoint-down(md) {
+    height: 70px;
+  }
+
   & > div {
     @extend .flex-center-y;
+  }
+
+  & > p {
+    @include media-breakpoint-down(md) {
+      opacity: 0;
+      pointer-events: none;
+    }
   }
 
   .lang-bar {
     display: inline-block;
     margin-left: 20px;
+  }
+
+  .chat-link {
+    color: $G-0;
   }
 }
