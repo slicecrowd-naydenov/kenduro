@@ -166,6 +166,7 @@
     }
 
     .product-of-the-week { 
+      display: none;
       padding: 30px;
       position: absolute;
       right: 0;
@@ -202,12 +203,12 @@
       // top: calc(100% + 2px);
       background-color: $b-primary;
       border-radius: $radius-small;
-      padding: 30px 300px 30px 30px;
+      padding: 30px;
       display: flex;
       flex-wrap: wrap;
       padding-bottom: 50px;
       transition: opacity 0.2s ease;
-      min-height: 400px;
+      // min-height: 400px;
       
       &,
       .sub-sub-menu {
@@ -345,7 +346,7 @@
       }
 
       .main-category-link {
-        width: calc(100% - 380px);
+        width: calc(100% - 48px);
         position: absolute;
         left: 24px;
         bottom: 24px;
@@ -357,7 +358,7 @@
         }
 
         a {
-          width: calc(100% - 330px);
+          width: auto;
           color: $G-0;
           padding: 0;
           font-size: 12px;

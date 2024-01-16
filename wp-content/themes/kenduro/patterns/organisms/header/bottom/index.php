@@ -129,10 +129,10 @@ $main_categories = get_terms($args);
                             </span>
                           </a>
                         </li>
-                        <li class="product-of-the-week">
+                        <!-- <li class="product-of-the-week">
                           <p class="paragraph paragraph-m regular">Prdouct of the week</p>
-                          <?php echo do_shortcode("[products ids='5420']"); ?> 
-                        </li>
+                          <?php // echo do_shortcode("[products ids='5420']"); ?> 
+                        </li> -->
                       </ul>
                     <?php endif; ?>
                   </li>

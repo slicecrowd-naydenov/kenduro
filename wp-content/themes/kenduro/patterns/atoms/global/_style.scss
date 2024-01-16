@@ -4,8 +4,24 @@ body {
 }
 
 #primary {
+  position: relative;
   float: none;
   padding-top: 10px;
+
+  &.showed-menu {
+    @include media-breakpoint-up(md) {
+      &:after {
+        width: 100%;
+        height: 100%;
+        content: '';
+        background-color: rgba($b-primary, 0.1);
+        left: 0;
+        top: 0;
+        position: absolute;
+        backdrop-filter: blur(2px);
+      }
+    }
+  }
 }
 
 main {

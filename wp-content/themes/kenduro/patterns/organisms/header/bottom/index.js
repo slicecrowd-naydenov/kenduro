@@ -33,7 +33,19 @@ export default class MobileNavigation {
       this.closeMenu();
       this.showSubMenu();
       this.closeSubMenu();
+    } else {
+      this.menuToggleDesktop();
     }
+  }
+
+  menuToggleDesktop() {
+    $('.menu-item-has-children').on('mouseenter', function() {
+      $('#primary').addClass('showed-menu');
+    });
+
+    $('.menu-item-has-children').on('mouseleave', function() {
+      $('#primary').removeClass('showed-menu');
+    });
   }
 
   menuToggle() {
