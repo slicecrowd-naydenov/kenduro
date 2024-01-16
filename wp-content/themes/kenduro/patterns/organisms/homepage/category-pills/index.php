@@ -42,14 +42,33 @@ if ($main_categories) : ?>
           <!-- ADD PAGINATION 
           [products limit='10' paginate='true'] 
           ================================= -->
-            <?php echo do_shortcode("[products limit='10']"); ?> 
+            <?php echo do_shortcode("[products limit='10']"); ?>
+            <a href="<?php echo esc_attr(get_site_url()); ?>/shop" class="cat-img">
+              <img src="<?php echo IMAGES_PATH; ?>/categories/Image=Grey, For=All Products@2x.jpg" />
+              <h4 class="semibold">
+                Browse all Kenduro products
+                <?php Load::atom('svg', ['name' => 'arrow_xl']); ?>
+              </h4>
+            </a>
           </div>
           <?php foreach ($main_categories as $main_category) :
             $id = $main_category->term_id;
             $slug = $main_category->slug;
-          ?>
+            $thumbnail_id = get_term_meta( $main_category->term_id, 'thumbnail_id', true );
+            $image_url = wp_get_attachment_url( $thumbnail_id ); 
+            // pretty_dump($main_category);
+            ?>
             <div class="tab-pane fade" id="pills-<?php echo $slug; ?>" role="tabpanel" aria-labelledby="pills-<?php echo $slug; ?>-tab">
-              <?php echo do_shortcode("[products category='".$id."' limit='10']"); ?>
+              <?php echo do_shortcode("[products category='".$id."' limit='10']");
+              if ($image_url) { ?>             
+                <a href="<?php echo esc_url(get_site_url() . '/product-category/'.$main_category->slug.'/')?>" class="cat-img">
+                  <img src="<?php echo $image_url; ?>" />
+                  <h4 class="semibold">
+                    Browse all <?php echo $main_category->name; ?> Kenduro products
+                    <?php Load::atom('svg', ['name' => 'arrow_xl']); ?>
+                  </h4>
+                </a>
+              <?php } ?>
             </div>
           <?php endforeach; ?>
         </div>
