@@ -55,12 +55,12 @@ $main_categories = get_terms($args);
                     </span>
                     <?php if ($child_categories) : ?>
                       <ul class="sub-menu">
-                        <div class="sub-menu-head-mobile">
+                        <li class="sub-menu-head-mobile">
                           <div class="sub-menu-head-mobile__close">
                             <?php Load::atom('svg', ['name' => 'arrow_down']); ?>
                           </div>
                           <div class="sub-menu-head-mobile__cat"><?php echo $main_category->name; ?></div>
-                        </div>
+                        </li>
                         <li class="sub-menu__item-mobile">
                           <a href="<?php echo esc_url($category_link); ?>">
                             Виж всички <?php echo $main_category->name; ?>
@@ -121,14 +121,18 @@ $main_categories = get_terms($args);
                             <?php endif; ?>
                           </li>
                         <?php endforeach; ?>
-                        <div class="main-category-link">
+                        <li class="main-category-link">
                           <a href="<?php echo esc_url($category_link); ?>">
                             View all products in <?php echo $main_category->name; ?>
                             <span>
                               <?php Load::atom('svg', ['name' => 'arrow_down']); ?>
                             </span>
                           </a>
-                        </div>
+                        </li>
+                        <li class="product-of-the-week">
+                          <p class="paragraph paragraph-m regular">Prdouct of the week</p>
+                          <?php echo do_shortcode("[products ids='5420']"); ?> 
+                        </li>
                       </ul>
                     <?php endif; ?>
                   </li>
