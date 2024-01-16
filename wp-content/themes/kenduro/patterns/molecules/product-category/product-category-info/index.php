@@ -6,11 +6,12 @@
     'class' => '',
     'description' => null,
     'cat'   => null,
+    'cat_img_inner'   => null,
     'cta_text'   => null,
     'cta_link'   => '#',
   ]);
 ?>
-<div class="product-category-info <?php echo $args['class']; ?>">
+<div class="product-category-info <?php echo $args['class']; ?>" style="background-image: url(<?php echo $args['cat_img_inner']; ?>)">
   <?php Load::atom('svg', ['name' => 'k-logo']); ?>
   <img src="<?php echo IMAGES_PATH; ?>/teo-kabakchiev.png" alt="teo-kabakchiev" class="teo-bg" />
   <div class="product-category-info__text">

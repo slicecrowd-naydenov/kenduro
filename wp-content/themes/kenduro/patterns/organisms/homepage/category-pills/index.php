@@ -45,8 +45,8 @@ if ($main_categories) : ?>
             <?php echo do_shortcode("[products limit='10']"); ?>
             <a href="<?php echo esc_attr(get_site_url()); ?>/shop" class="cat-img">
               <img src="<?php echo IMAGES_PATH; ?>/categories/Image=Grey, For=All Products@2x.jpg" />
-              <h4 class="semibold">
-                Browse all Kenduro products
+              <h4>
+                Browse <strong>all</strong> Kenduro products
                 <?php Load::atom('svg', ['name' => 'arrow_xl']); ?>
               </h4>
             </a>
@@ -63,8 +63,8 @@ if ($main_categories) : ?>
               if ($image_url) { ?>             
                 <a href="<?php echo esc_url(get_site_url() . '/product-category/'.$main_category->slug.'/')?>" class="cat-img">
                   <img src="<?php echo $image_url; ?>" />
-                  <h4 class="semibold">
-                    Browse all <?php echo $main_category->name; ?> Kenduro products
+                  <h4>
+                    Browse all <strong><?php echo $main_category->name; ?></strong> products
                     <?php Load::atom('svg', ['name' => 'arrow_xl']); ?>
                   </h4>
                 </a>

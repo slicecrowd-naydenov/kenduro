@@ -60,12 +60,16 @@ do_action('woocommerce_before_main_content');
 				?>
 			</header>
 			<?php
+			$category_id = get_queried_object_id();
+			$cat_inner_image_url = get_field('inner_cat_thumbnail', 'product_cat_' . $category_id);
+			pretty_dump($cat_inner_image_url);
 			if (is_product_category()) :
 				Load::molecules('product-category/product-category-info/index', [
 					'title' => 'Learn more about ',
 					'class' => 'full-container',
 					'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-					'cat' => single_term_title('', false)
+					'cat' => single_term_title('', false),
+					'cat_img_inner' => $cat_inner_image_url
 				]);
 				Load::molecules('product-category/product-categories-view/index');
 			endif;
