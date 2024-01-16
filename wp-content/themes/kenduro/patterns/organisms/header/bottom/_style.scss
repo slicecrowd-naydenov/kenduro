@@ -205,11 +205,27 @@
           background-color: $G-0;
           z-index: 10;
           border-radius: $radius-medium;
+          overflow-y: auto;
+          padding-top: 73px;
         }
  
         &.visible-menu {
           @include media-breakpoint-down(md) {
             display: block;
+          }
+        }
+
+        &:after {
+          @include media-breakpoint-down(md) {
+
+            width: calc(100% - 10px);
+            height: 73px;
+            content: '';
+            background-color: $G-0;
+            left: 5px;
+            top: 5px;
+            position: fixed;
+            border-radius: $radius-medium $radius-medium 0 0;
           }
         }
       }
@@ -265,7 +281,11 @@
         position: relative;
 
         @include media-breakpoint-down(md) {
-          width: 100%;
+          width: calc(100% - 30px);
+          position: fixed;
+          z-index: 2;
+          left: 15px;
+          top: 25px;
           display: flex;
           align-items: center;
           justify-content: center;
@@ -298,6 +318,8 @@
 
         &__cat {
           font-weight: 600;
+          padding: 0 45px;
+          @include line-clamp(1);
         }
       }
 

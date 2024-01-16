@@ -39,6 +39,7 @@ export default class MobileNavigation {
   menuToggle() {
     this.$el.on('click', () => {
       // this.primaryNav.toggleClass('opened');
+      $('body').toggleClass('fixed-position blur-content');
     });
   }
 
@@ -54,8 +55,10 @@ export default class MobileNavigation {
     });
 
     $('.sub-menu__item-link').on('click', function(e) {
-      e.preventDefault();
-      e.stopPropagation();
+      if ($(this).siblings('.sub-sub-menu').length > 0) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
       $(this).siblings('.sub-sub-menu').toggleClass('visible-menu');
     });
   }

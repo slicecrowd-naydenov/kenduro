@@ -19,7 +19,9 @@ $main_categories = get_terms($args);
           <button id="site-navigation-menu-toggle" class="menu-toggle" aria-controls="site-navigation" aria-expanded="false"><span>Menu</span></button>
           <div class="primary-navigation">
             <div id="mobile-nav" class="mobile-nav">
-              <div class="mobile-nav__search">Search</div>
+              <div class="mobile-nav__search">
+                <?php Load::atom('svg', ['name' => 'search']); ?>
+              </div>
               <div class="mobile-nav__logo">
                 <?php
                 if (has_custom_logo()) {
