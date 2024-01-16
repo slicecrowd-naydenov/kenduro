@@ -154,7 +154,7 @@ get_header();
 // pretty_dump($product_variations_fields);
 
 ?>
-<main>
+<main id="primary">
   <?php 
     Load::organisms('homepage/hero-section/index');
     Load::organisms('information-list/index', [

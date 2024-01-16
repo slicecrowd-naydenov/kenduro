@@ -28,7 +28,11 @@
         left: 50%;
         top: 50%;
         transform: translate(-50%, -50%);
-        @extend .flex-center;
+
+        svg {
+          position: relative;
+          top: -2px;
+        }
       }
     }
   }
