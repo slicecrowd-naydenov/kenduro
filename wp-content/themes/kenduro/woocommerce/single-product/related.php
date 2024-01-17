@@ -44,6 +44,7 @@ $args = array(
 	'post_type'      => 'product',
 	'post__not_in' => array(get_the_ID()),
 	'posts_per_page' => -1,
+	// 'orderby'        => 'rand',
 	'tax_query'      => array(
 		array(
 			'taxonomy' => 'product_cat',
