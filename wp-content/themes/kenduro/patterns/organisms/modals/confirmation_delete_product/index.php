@@ -4,7 +4,7 @@
     <div class="modal-content">
       <div class="modal-body">
         <div class="img-wrapper">
-          <img src="<?php echo esc_url(wc_placeholder_img_src()); ?>" alt="">
+          <img class="no-lazy" src="<?php echo esc_url(wc_placeholder_img_src()); ?>" alt="">
         </div>
         <div>
           <h3 class="semibold">Сигурен ли си ?</h3>

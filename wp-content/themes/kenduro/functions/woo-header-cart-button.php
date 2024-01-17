@@ -30,7 +30,6 @@ function trigger_ajax_to_cart() {
     (function($) {
       $('body').on('added_to_cart', function() {
         let imgPath = $('.woocommerce-product-gallery__image').find('.wp-post-image').attr('src');
-        console.log(imgPath);
         $('#addedToCart').find('img').attr('src', imgPath);
         $('#addedToCart').modal('show');
         // Your code goes here
