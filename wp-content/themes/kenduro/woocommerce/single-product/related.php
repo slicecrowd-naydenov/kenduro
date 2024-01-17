@@ -22,7 +22,9 @@ if (!defined('ABSPATH')) {
 	exit;
 }
 
-if ($related_products) : ?>
+if ($related_products) :
+	$related_prod = array();
+?>
 
 	<section class="related products">
 
@@ -48,6 +50,29 @@ if ($related_products) : ?>
 
 				$innermost_category_name = get_term_field('name', $innermost_category_id, 'product_cat');
 
+				$category_id = $innermost_category_id;
+
+				$args = array(
+					'post_type'      => 'product',
+					'post__not_in' => array(get_the_ID()),
+					'posts_per_page' => -1,
+					'tax_query'      => array(
+						array(
+							'taxonomy' => 'product_cat',
+							'field'    => 'id',
+							'terms'    => $category_id,
+						),
+					)
+				);
+				$products_query = new WP_Query($args);
+				if ($products_query->have_posts()) :
+					while ($products_query->have_posts()) : $products_query->the_post();
+						$related_prod[] = get_the_ID();
+					endwhile;
+
+					wp_reset_postdata();
+				endif;
+
 				?>
 				<div class="popular-categories__header">
 					<p class="paragraph paragraph-xl semibold primary">Popular in <?php echo $innermost_category_name; ?></p>
@@ -55,7 +80,7 @@ if ($related_products) : ?>
 					Load::atoms('link/index', [
 						'text' => 'Browse All Products',
 						'class' => 'underline',
-						'url' => get_site_url().'/product-category/' . $innermost_category_slug,
+						'url' => get_site_url() . '/product-category/' . $innermost_category_slug,
 						'icon' => 'arrow_down'
 					]);
 					?>
@@ -64,21 +89,7 @@ if ($related_products) : ?>
 			<hr>
 		<?php endif; ?>
 
-		<?php woocommerce_product_loop_start(); ?>
-
-		<?php foreach ($related_products as $related_product) : ?>
-
-			<?php
-			$post_object = get_post($related_product->get_id());
-
-			setup_postdata($GLOBALS['post'] = &$post_object); // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited, Squiz.PHP.DisallowMultipleAssignments.Found
-
-			wc_get_template_part('content', 'product');
-			?>
-
-		<?php endforeach; ?>
-
-		<?php woocommerce_product_loop_end(); ?>
+		<?php echo do_shortcode('[products ids="' . implode(',', $related_prod) . '" limit="5"]'); ?>
 
 	</section>
 <?php

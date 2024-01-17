@@ -176,8 +176,7 @@ get_header();
             Load::molecules('product-category/product-category-info/index', [
               'title' => '<span class="highlighted">K</span>enduro is crafted by Teo',
               'class' => 'full-width-container',
-              'description' => 'Teo Kabakchiev, a world-renowned hard enduro rider, leads Kenduro.com with an unwavering passion, ensuring our unwavering commitment to top-tier services and quality.',
-              'cta_text' => 'Learn more'
+              'description' => 'Teo Kabakchiev, a world-renowned hard enduro rider, leads Kenduro.com with an unwavering passion, ensuring our unwavering commitment to top-tier services and quality.'
             ]);
 
             // echo do_shortcode('[products limit="12" columns="5" best_selling="true"]');
