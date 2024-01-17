@@ -33,7 +33,9 @@
                   endif;
                   if ($cta['text']) :
                   ?>
-                    <a href="<?php echo esc_attr($cta['url']) ?>" class="button"><?php echo $cta['text']; ?></a>
+                    <a href="<?php echo esc_attr($cta['url']) ?>" class="button button-primary-orange">
+                      <span><?php echo $cta['text']; ?></span>
+                    </a>
                   <?php
                   endif;
                   ?>

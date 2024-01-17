@@ -131,7 +131,6 @@
           
           .single_add_to_cart_button {
             padding-left: 55px;
-            background-color: $b-highlight-two;
             background-image: url("../../assets/icons/svg/cart.svg");
             background-repeat: no-repeat;
             background-position: center left 20px;
@@ -139,6 +138,7 @@
             @extend #{'.paragraph','.paragraph-l', '.semibold'};
 
             &.loading {
+              pointer-events: none;
               padding-right: 50px;
 
               &:after {

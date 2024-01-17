@@ -1,15 +1,3 @@
-#addedToCart {
-  .button-primary {
-    background-color: $b-highlight-two;
-  }
-}
-
-#deleteProductConfirmation {
-  .button-primary {
-    background-color: $error;
-  }
-}
-
 .modal {
   backdrop-filter: blur(2px);  
 
@@ -39,13 +27,12 @@
       }
     }
 
-    .button-secondary {
-      border-color: $G-1-5;
+    .button-secondary-grey {
       margin-right: 5px;
       margin-top: 27px;
     }
 
-    .button-primary {
+    .button-primary-orange {
       margin-left: 5px;
       margin-top: 27px;
     }

@@ -33,7 +33,7 @@
       </p>
     <?php endif; ?>
     <?php if ($args['cta_text']) : ?>
-      <a href="<?php echo $args['cta_link'];?>" class="button button-secondary paragraph paragraph-l semibold">
+      <a href="<?php echo $args['cta_link'];?>" class="button button-secondary-blue paragraph paragraph-l semibold">
         <?php echo $args['cta_text'];?>
       </a>
     <?php endif; ?>

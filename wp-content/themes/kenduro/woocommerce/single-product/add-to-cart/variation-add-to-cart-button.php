@@ -28,7 +28,9 @@ global $product;
 	do_action( 'woocommerce_after_add_to_cart_quantity' );
 	?>
 
-	<button type="submit" class="single_add_to_cart_button button ajax_add_to_cart add_to_cart_button alt<?php echo esc_attr( wc_wp_theme_get_element_class_name( 'button' ) ? ' ' . wc_wp_theme_get_element_class_name( 'button' ) : '' ); ?>" data-product_id="" data-product_sku=""><?php echo esc_html( $product->single_add_to_cart_text() ); ?></button>
+	<button type="submit" class="single_add_to_cart_button button button-primary-orange ajax_add_to_cart add_to_cart_button alt<?php echo esc_attr( wc_wp_theme_get_element_class_name( 'button' ) ? ' ' . wc_wp_theme_get_element_class_name( 'button' ) : '' ); ?>" data-product_id="" data-product_sku="">
+		<span><?php echo esc_html( $product->single_add_to_cart_text() ); ?></span>
+	</button>
 
 	<?php do_action( 'woocommerce_after_add_to_cart_button' ); ?>
 

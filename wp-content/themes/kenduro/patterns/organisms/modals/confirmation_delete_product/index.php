@@ -9,8 +9,12 @@
         <div>
           <h3 class="semibold">Сигурен ли си ?</h3>
           <p class="paragraph paragraph-xl">Премахваш <b id="product_name"></b></p>
-          <a href="#" class="button button-secondary paragraph paragraph-l semibold" id="cancelDeleteButton">Не, остави в количката</a>
-          <a href="#" class="button button-primary paragraph paragraph-l semibold" id="confirmDeleteButton">Да, премахни</a>
+          <a href="#" class="button button-secondary-grey paragraph paragraph-l semibold" id="cancelDeleteButton">
+            <span>Не, остави в количката</span>
+          </a>
+          <a href="#" class="button button-error paragraph paragraph-l semibold" id="confirmDeleteButton">
+            <span>Да, премахни</span>
+          </a>
         </div>
       </div>
     </div>

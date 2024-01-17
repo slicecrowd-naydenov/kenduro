@@ -220,7 +220,6 @@
 
     .button {
       margin-top: 26px;
-      background-color: $b-highlight-two;
       @extend #{'.paragraph','.paragraph-l', '.semibold'};
     }
 

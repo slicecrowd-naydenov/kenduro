@@ -42,9 +42,13 @@ if ($total <= 1) {
 			$has_next_link = true;
 		endif;
 		?>
-		<a href="<?php echo esc_url(str_replace('%#%', $current - 1, $base)); ?>" class="button button-secondary <?php echo esc_attr($has_prev_link ? 'enable' : 'disable'); ?>">Previous page</a>
+		<a href="<?php echo esc_url(str_replace('%#%', $current - 1, $base)); ?>" class="button button-secondary-blue <?php echo esc_attr($has_prev_link ? 'enable' : 'disable'); ?>">
+			<span>Previous page</span>
+		</a>
 		<p class="paragraph paragraph-l tetriary semibold">Page <?php echo $current; ?> of <?php echo $total; ?></p>
-		<a href="<?php echo esc_url(str_replace('%#%', $current + 1, $base)); ?>" class="button button-secondary <?php echo esc_attr($has_next_link ? 'enable' : 'disable'); ?>">Next page</a>
+		<a href="<?php echo esc_url(str_replace('%#%', $current + 1, $base)); ?>" class="button button-secondary-blue <?php echo esc_attr($has_next_link ? 'enable' : 'disable'); ?>">
+			<span>Next page</span>
+		</a>
 	</div>
 
 	<?php

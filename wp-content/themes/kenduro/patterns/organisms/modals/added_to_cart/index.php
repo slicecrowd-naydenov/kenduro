@@ -8,8 +8,12 @@
         </div>
         <div>
           <p class="paragraph paragraph-xl primary">The Product has been added to your card ❤️</p>
-          <a href="<?php echo esc_attr(get_site_url()); ?>/checkout" class="button button-secondary paragraph paragraph-l semibold">Proceed to checkout</a>
-          <a href="<?php echo esc_attr(get_site_url()); ?>/shop" class="button button-primary paragraph paragraph-l semibold">Continue Shopping</a>
+          <a href="<?php echo esc_attr(get_site_url()); ?>/checkout" class="button button-secondary-grey paragraph paragraph-l semibold">
+            <span>Proceed to checkout</span>
+          </a>
+          <a href="<?php echo esc_attr(get_site_url()); ?>/shop" class="button button-primary-orange paragraph paragraph-l semibold">
+            <span>Continue Shopping</span>
+          </a>
         </div>
       </div>
     </div>
