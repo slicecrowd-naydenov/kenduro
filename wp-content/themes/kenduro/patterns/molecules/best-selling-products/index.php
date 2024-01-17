@@ -43,10 +43,13 @@ if ($best_selling_query->have_posts()) { ?>
 
                       <li class="product <?php echo esc_attr($product_classes); ?>">
                         <a href="<?php echo esc_url(get_permalink()); ?>" class="woocommerce-LoopProduct-link woocommerce-loop-product__link">
+                          <div class='wc-img-wrapper'>
+                            <?php
+                            // Product image
+                            echo '<img src="' . esc_url($product_image) . '" alt="' . esc_attr(get_the_title()) . '" />';
+                            ?>
+                          </div>
                           <?php
-                          // Product image
-                          echo '<img src="' . esc_url($product_image) . '" alt="' . esc_attr(get_the_title()) . '" />';
-
                           // Product title
                           echo '<h2 class="woocommerce-loop-product__title">' . get_the_title() . '</h2>';
 
