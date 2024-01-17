@@ -10,8 +10,10 @@
     'cta_text'   => null,
     'cta_link'   => '#',
   ]);
+
+  $bg_image = isset($args['cat_img_inner']) ? 'background-image: url('.$args['cat_img_inner'].')' : '';
 ?>
-<div class="product-category-info <?php echo $args['class']; ?>" style="background-image: url(<?php echo $args['cat_img_inner']; ?>)">
+<div class="product-category-info <?php echo $args['class']; ?>" style="<?php echo esc_attr($bg_image);?>">
   <?php Load::atom('svg', ['name' => 'k-logo']); ?>
   <img src="<?php echo IMAGES_PATH; ?>/teo-kabakchiev.png" alt="teo-kabakchiev" class="teo-bg" />
   <div class="product-category-info__text">

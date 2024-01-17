@@ -21,73 +21,63 @@ use Lean\Load;
 if (!defined('ABSPATH')) {
 	exit;
 }
+$related_prod = array();
 
-if ($related_products) :
-	$related_prod = array();
+global $product;
+$category_ids = $product->get_category_ids();
+$innermost_category_id = null;
+$innermost_category_slug = null;
+
+foreach ($category_ids as $category_id) {
+	if ($innermost_category_id === null || term_is_ancestor_of($innermost_category_id, $category_id, 'product_cat')) {
+		$innermost_category_id = $category_id;
+		$innermost_category = get_term_by('id', $category_id, 'product_cat');
+		$innermost_category_slug = $innermost_category->slug;
+	}
+}
+
+$innermost_category_name = get_term_field('name', $innermost_category_id, 'product_cat');
+
+$category_id = $innermost_category_id;
+
+$args = array(
+	'post_type'      => 'product',
+	'post__not_in' => array(get_the_ID()),
+	'posts_per_page' => -1,
+	'tax_query'      => array(
+		array(
+			'taxonomy' => 'product_cat',
+			'field'    => 'id',
+			'terms'    => $category_id,
+		),
+	)
+);
+$products_query = new WP_Query($args);
+if ($products_query->have_posts()) :
+	while ($products_query->have_posts()) : $products_query->the_post();
+		$related_prod[] = get_the_ID();
+	endwhile;
+
+	wp_reset_postdata();
+endif;
+if ($related_prod) :
 ?>
 
 	<section class="related products">
-
-		<?php
-		$heading = apply_filters('woocommerce_product_related_products_heading', __('Related products', 'woocommerce'));
-
-		if ($heading) :
-		?>
-			<div class="popular-categories">
+		<div class="popular-categories">
+			<div class="popular-categories__header">
+				<p class="paragraph paragraph-xl semibold primary">Popular in <?php echo $innermost_category_name; ?></p>
 				<?php
-				global $product;
-				$category_ids = $product->get_category_ids();
-				$innermost_category_id = null;
-				$innermost_category_slug = null;
-
-				foreach ($category_ids as $category_id) {
-					if ($innermost_category_id === null || term_is_ancestor_of($innermost_category_id, $category_id, 'product_cat')) {
-						$innermost_category_id = $category_id;
-						$innermost_category = get_term_by('id', $category_id, 'product_cat');
-						$innermost_category_slug = $innermost_category->slug;
-					}
-				}
-
-				$innermost_category_name = get_term_field('name', $innermost_category_id, 'product_cat');
-
-				$category_id = $innermost_category_id;
-
-				$args = array(
-					'post_type'      => 'product',
-					'post__not_in' => array(get_the_ID()),
-					'posts_per_page' => -1,
-					'tax_query'      => array(
-						array(
-							'taxonomy' => 'product_cat',
-							'field'    => 'id',
-							'terms'    => $category_id,
-						),
-					)
-				);
-				$products_query = new WP_Query($args);
-				if ($products_query->have_posts()) :
-					while ($products_query->have_posts()) : $products_query->the_post();
-						$related_prod[] = get_the_ID();
-					endwhile;
-
-					wp_reset_postdata();
-				endif;
-
+				Load::atoms('link/index', [
+					'text' => 'Browse All Products',
+					'class' => 'underline',
+					'url' => get_site_url() . '/product-category/' . $innermost_category_slug,
+					'icon' => 'arrow_down'
+				]);
 				?>
-				<div class="popular-categories__header">
-					<p class="paragraph paragraph-xl semibold primary">Popular in <?php echo $innermost_category_name; ?></p>
-					<?php
-					Load::atoms('link/index', [
-						'text' => 'Browse All Products',
-						'class' => 'underline',
-						'url' => get_site_url() . '/product-category/' . $innermost_category_slug,
-						'icon' => 'arrow_down'
-					]);
-					?>
-				</div>
 			</div>
-			<hr>
-		<?php endif; ?>
+		</div>
+		<hr>
 
 		<?php echo do_shortcode('[products ids="' . implode(',', $related_prod) . '" limit="5"]'); ?>
 

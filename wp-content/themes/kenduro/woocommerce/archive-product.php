@@ -60,8 +60,15 @@ do_action('woocommerce_before_main_content');
 				?>
 			</header>
 			<?php
-			$category_id = get_queried_object_id();
-			$cat_inner_image_url = get_field('inner_cat_thumbnail', 'product_cat_' . $category_id);
+			$ancestors = get_ancestors( get_queried_object_id(), 'product_cat' );
+
+			if ( $ancestors ) {
+				$outermost_parent_id = end( $ancestors );
+			} else {
+				$outermost_parent_id = get_queried_object_id();
+			}
+			$cat_inner_image_url = get_field('inner_cat_thumbnail', 'product_cat_' . $outermost_parent_id);
+
 			if (is_product_category()) :
 				Load::molecules('product-category/product-category-info/index', [
 					'title' => 'Learn more about ',
