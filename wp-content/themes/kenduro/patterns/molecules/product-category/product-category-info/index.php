@@ -17,16 +17,15 @@
   <?php Load::atom('svg', ['name' => 'k-logo']); ?>
   <img src="<?php echo IMAGES_PATH; ?>/teo-kabakchiev.png" alt="teo-kabakchiev" class="teo-bg" />
   <div class="product-category-info__text">
-    <h4 class="semibold title">
+    <h4 class="title">
       <?php
       if ($args['title']) :
         echo $args['title'];
       endif;
-
       if ($args['cat']) :
-        echo $args['cat'];
-      endif;
       ?>
+        <strong><?php echo $args['cat']; ?> </strong>
+      <?php endif; ?>
     </h4>
     <?php if ($args['description']) : ?>
       <p class="paragraph paragraph-l">
