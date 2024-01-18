@@ -20,19 +20,43 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+global $product;
+$product = wc_get_product();
 ?>
-<p class="stock paragraph paragraph-m <?php echo esc_attr( $class ); ?>">
-	<?php // echo wp_kses_post( $availability );
-    Load::atom('svg', ['name' => 'checkbox']);
-
-		if ($class === 'in-stock') {
-			echo '<b>In stock</b>';
-			echo '&nbsp;- could be delieved on the next day';
-		}
-
-		if ($class === 'out-of-stock') {
-			echo '<b>Out of stock</b>';
-			echo '- couldn\'t be delieved on the next day';
-		}
-	?>
-</p>
+<div class="custom-stock">
+	<p class="stock paragraph paragraph-m <?php echo esc_attr( $class ); ?>">
+		<?php // echo wp_kses_post( $availability );
+			Load::atom('svg', ['name' => 'checkbox']);
+	
+			if ($class === 'in-stock') {
+				echo '<b>In stock</b>';
+				echo '&nbsp;- could be delieved on the next day';
+			}
+	
+			if ($class === 'out-of-stock') {
+				echo '<b>Out of stock</b>';
+				echo '- couldn\'t be delieved on the next day';
+			}
+		?>
+	</p>
+	<span class="woocommerce-variation-sku-number paragraph paragraph-m">
+		Prod. № : 
+		<span class="sku-value">
+			<?php 
+				if ( !$product->is_type( 'variable' ) ) {
+					echo $product->get_sku();
+						// For variable products, get the SKU of the selected variation
+						// $default_attributes = $product;
+						// pretty_dump($product);
+                
+						// Get the default variation ID based on the default attributes
+						// $variation_id = wc_get_default_variation_id( $product, $default_attributes );
+						
+						// Get the SKU of the default variation
+						// $variation = wc_get_product( $variation_id );
+						// echo $variation->get_sku();
+				} 
+				?>
+		</span>
+	</span>
+</div>

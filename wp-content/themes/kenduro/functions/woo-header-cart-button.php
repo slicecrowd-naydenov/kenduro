@@ -48,6 +48,7 @@ function trigger_ajax_to_cart() {
           $('.product-type-variable').find('.summary > .price').slideUp();
         }
         // console.log('variation_id: ', variation_id);
+        $('.sku-value').html(variation_sku);
       });
 
       let productEl = '';

@@ -74,8 +74,13 @@ ul {
     @extend #{'.paragraph','.paragraph-m', '.tetriary', '.semibold'};
 
     a {
+      transition: color 0.2s ease;
       text-decoration: none;
       @extend .regular;
+
+      &:hover {
+        color: $text-primary !important;
+      }
     }
   }
 }
@@ -194,5 +199,12 @@ h4,
     content: '';
     z-index: 10;
     backdrop-filter: blur(2px);  
+  }
+}
+
+
+.tax-product_cat {
+  #primary {
+    border-top: 1px solid $G-1-5;
   }
 }
