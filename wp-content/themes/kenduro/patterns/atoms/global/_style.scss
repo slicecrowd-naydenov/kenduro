@@ -46,6 +46,22 @@ hr {
 
 ul {
   list-style-type: none;
+
+  &.lower-alpha {
+    list-style-type: lower-alpha;
+  }
+
+  &.disc {
+    list-style-type: disc;
+  }
+
+  &.lower-roman {
+    list-style-type: lower-roman;
+  }
+}
+
+.text-underline {
+  text-decoration: underline;
 }
 
 .storefront-breadcrumb {

@@ -23,14 +23,7 @@ $main_categories = get_terms($args);
                 <?php Load::atom('svg', ['name' => 'search']); ?>
               </div>
               <div class="mobile-nav__logo">
-                <?php
-                if (has_custom_logo()) {
-                  the_custom_logo();
-                } else {
-                ?>
-                  <a href="<?php echo esc_url(get_site_url()); ?>" rel="home" class="logo">Kenduro</a>
-                <?php } ?>
-
+                <?php Load::molecules('logo/index'); ?>
               </div>
               <div class="mobile-nav__close">
                 <?php Load::atom('svg', ['name' => 'close']); ?>

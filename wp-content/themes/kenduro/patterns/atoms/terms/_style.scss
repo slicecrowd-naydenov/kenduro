@@ -1,0 +1,33 @@
+.terms {
+  padding: 50px 0 80px !important;
+  border-top: 1px solid $G-1-5;
+
+  a {
+    color: $text-primary;
+  }
+
+  h3 {
+    margin-bottom: 40px;
+  }
+
+  ol {
+    margin: 0;
+    padding: 0 0 0 20px;
+
+    li {
+      margin-bottom: 10px;
+    }
+  
+    & > li {  
+      & > ul {
+        margin: 0;
+        padding: 10px 0 0 25px;
+    
+        li > ul {
+          margin: 0;
+          padding: 10px 0 0 25px;
+        }
+      }
+    }
+  }
+}
