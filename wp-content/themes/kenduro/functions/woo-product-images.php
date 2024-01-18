@@ -17,32 +17,32 @@ function bbloomer_resize_storefront_images($args) {
 add_filter( 'woocommerce_product_tabs', 'add_product_tab', 9999 );
    
 function add_product_tab( $tabs ) {
-  $tabs['size_guide'] = array(
-    'title' => __( 'Size Guide', 'woocommerce' ), // TAB TITLE
-    'priority' => 40, // TAB SORTING (DESC 10, ADD INFO 20, REVIEWS 30)
-    'callback' => 'size_guide_product_tab_content', // TAB CONTENT CALLBACK
-  );
+  // $tabs['size_guide'] = array(
+  //   'title' => __( 'Size Guide', 'woocommerce' ), // TAB TITLE
+  //   'priority' => 40, // TAB SORTING (DESC 10, ADD INFO 20, REVIEWS 30)
+  //   'callback' => 'size_guide_product_tab_content', // TAB CONTENT CALLBACK
+  // );
 
-  $tabs['shipping_and_return'] = array(
-    'title' => __( 'Shipping & Returns', 'woocommerce' ), // TAB TITLE
-    'priority' => 50, // TAB SORTING (DESC 10, ADD INFO 20, REVIEWS 30)
-    'callback' => 'shipping_and_return_product_tab_content', // TAB CONTENT CALLBACK
-  );
+  // $tabs['shipping_and_return'] = array(
+  //   'title' => __( 'Shipping & Returns', 'woocommerce' ), // TAB TITLE
+  //   'priority' => 50, // TAB SORTING (DESC 10, ADD INFO 20, REVIEWS 30)
+  //   'callback' => 'shipping_and_return_product_tab_content', // TAB CONTENT CALLBACK
+  // );
 
   unset( $tabs['additional_information'] ); // To remove the additional information tab
 
-   return $tabs;
+  return $tabs;
 }
  
-function size_guide_product_tab_content() {
-  global $product;
-  echo 'Whatever Size Guide for ' . $product->get_name();
-}
+// function size_guide_product_tab_content() {
+//   global $product;
+//   echo 'Whatever Size Guide for ' . $product->get_name();
+// }
 
-function shipping_and_return_product_tab_content() {
-  global $product;
-  echo 'Shipping & Returns for ' . $product->get_name();
-}
+// function shipping_and_return_product_tab_content() {
+//   global $product;
+//   echo 'Shipping & Returns for ' . $product->get_name();
+// }
 
 add_filter( 'woocommerce_output_related_products_args', 'bbloomer_change_number_related_products', 9999 );
  
