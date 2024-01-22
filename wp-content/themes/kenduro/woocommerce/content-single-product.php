@@ -57,8 +57,8 @@ if ( post_password_required() ) {
 					}
 				}
 			} else {
-				if ($meta_field['key'] === 'brand_text_id') {
-					if ($meta_field['value'] !== 's86366185a') {
+				if ($meta_field['key'] === 's86366185a') {
+					if ($meta_field['value'] !== '') {
 						?>
 						<p class="paragraph paragraph-xl semibold text-underline"><?php echo $meta_field['value']; ?></p>
 						<?php
