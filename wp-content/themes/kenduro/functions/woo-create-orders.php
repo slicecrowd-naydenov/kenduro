@@ -256,12 +256,16 @@ function create_CRM_record($order_id, $invoice_id) {
   $bulstat = get_column_field_id('bulstat', $crm_fields);
   $company_phone = get_column_field_id('company_phone', $crm_fields);
   $company_name = get_column_field_id('company_name', $crm_fields);
+  $email_agreement = get_column_field_id('email_agreement', $crm_fields);
+  $viber_agreement = get_column_field_id('viber_agreement', $crm_fields);
   $accountable_person = get_column_field_id('accountable_person', $crm_fields);
   $link_to_invoices = get_column_field_id('link_to_invoices', $crm_fields);
   
   $order = wc_get_order( $order_id );
   
-  $vat_choice = get_post_meta( $order_id, '_invoice_vat_registration', true ) === 'no' ? false : true;
+  $vat_choice = get_post_meta( $order_id, '_invoice_vat_registration', true ) === '' ? false : true;
+  $email_agreement_val = get_post_meta( $order_id, '_email_agreement', true ) === 'yes' ? true : false;
+  $viber_agreement_val = get_post_meta( $order_id, '_viber_agreement', true ) === 'yes' ? true : false;
   $item_data = array(
     $first_name => $order->get_billing_first_name(),
     $last_name => $order->get_billing_last_name(),
@@ -269,6 +273,8 @@ function create_CRM_record($order_id, $invoice_id) {
     $email => $order->get_billing_email(),
     $vat_id => get_post_meta( $order_id, '_invoice_vat_number', true ),
     $vat_registered => $vat_choice,
+    $email_agreement => $email_agreement_val,
+    $viber_agreement => $viber_agreement_val,
     $bulstat => get_post_meta( $order_id, '_invoice_bulstat', true ),
     $company_phone => get_post_meta( $order_id, '_invoice_phone', true ),
     $company_name => get_post_meta( $order_id, '_invoice_company_name', true ),

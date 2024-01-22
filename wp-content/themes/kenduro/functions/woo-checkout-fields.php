@@ -67,8 +67,8 @@ function custom_invoice_fields($checkout) {
     'class' => array('form-row-wide custom-select'),
     'label' => __('Регистрация по ДДС'),
     'options' => array(
-      'yes' => __('Да'),
       'no' => __('Не'),
+      'yes' => __('Да'),
     ),
   ), $checkout->get_value('invoice_vat_registration'));
 
@@ -166,13 +166,33 @@ function checkout_additional_checkboxes( ){
   ?>
   <p class="form-row custom-checkboxes paragraph paragraph-m">
     <label class="woocommerce-form__label checkbox custom-one">
-      <input type="checkbox" class="woocommerce-form__input woocommerce-form__input-checkbox input-checkbox" name="custom_one" > <span><?php echo  $email_checkbox; ?></span> <span class="required">*</span>
+      <input type="checkbox" class="woocommerce-form__input woocommerce-form__input-checkbox input-checkbox" name="email_agreement" > <span><?php echo  $email_checkbox; ?></span> <span class="required">*</span>
     </label>
   </p>
   <p class="form-row custom-checkboxes paragraph paragraph-m">
     <label class="woocommerce-form__label checkbox custom-two">
-      <input type="checkbox" class="woocommerce-form__input woocommerce-form__input-checkbox input-checkbox" name="custom_two" > <span><?php echo  $viber_checkbox; ?></span> <span class="required">*</span>
+      <input type="checkbox" class="woocommerce-form__input woocommerce-form__input-checkbox input-checkbox" name="viber_agreement" > <span><?php echo  $viber_checkbox; ?></span> <span class="required">*</span>
     </label>
   </p>
   <?php
+}
+
+add_action('woocommerce_checkout_create_order', 'save_custom_checkboxes_values', 10, 2);
+function save_custom_checkboxes_values($order, $data) {
+    if (isset($_POST['email_agreement'])) {
+        $order->update_meta_data('_email_agreement', 'yes');
+    }
+
+    if (isset($_POST['viber_agreement'])) {
+        $order->update_meta_data('_viber_agreement', 'yes');
+    }
+}
+
+add_action('woocommerce_admin_order_data_after_billing_address', 'display_custom_checkboxes_values', 10, 1);
+function display_custom_checkboxes_values($order){
+    $email_agreement_value = $order->get_meta('_email_agreement');
+    $viber_agreement_value = $order->get_meta('_viber_agreement');
+
+    echo '<p><strong>Email Marketing:</strong> ' . ($email_agreement_value ? 'Yes' : 'No') . '</p>';
+    echo '<p><strong>Viber Marketing:</strong> ' . ($viber_agreement_value ? 'Yes' : 'No') . '</p>';
 }
