@@ -15,7 +15,6 @@
 
   label {
     padding-bottom: 4px;
-    color: $text-primary;
     @extend #{'.paragraph','.paragraph-l'};
   }
 
@@ -77,6 +76,25 @@
       background-color: $G-0;
       border: 1px solid $G-1-5;
       border-radius: $radius-small;
+      transition: border-color 0.25s ease;
+
+      @include placeholder {
+        color: $text-inactive;
+      }
+
+      &:focus {
+        outline: none;
+        border-color: $b-primary !important;
+      }
+    }
+
+    select {
+      transition: border-color 0.25s ease;
+      
+      &:focus {
+        outline: none;
+        border-color: $b-primary !important;
+      }
     }
 
     .woocommerce {
@@ -125,7 +143,6 @@
 
     .product-price {
       bdi {
-        color: $text-primary;
         @extend #{'.paragraph','.paragraph-xl', '.semibold'};
       }
     }
@@ -187,6 +204,12 @@
       .form-row:not(.input-checkbox, .notes) {
         margin: 0;
         width: calc(50% - 10px);
+
+        &.woocommerce-invalid-required-field {
+          .input-text {
+            border-color: $error;
+          }
+        }
         
         label {
           padding-bottom: 4px;
@@ -296,8 +319,11 @@
           margin-left: 0;
           position: relative;
           padding-left: 30px !important;
+          padding-bottom: 0 !important;
+          padding-top: 0 !important;
           transition: color 0.3s;
           cursor: pointer;
+          @extend #{'.paragraph','.paragraph-l', '.semibold'};
 
           &:before {
             content: '';
@@ -311,18 +337,65 @@
             border-radius: $radius-circle;
             background-color: $G-0;
             transition: background-color 0.22s;
-            box-shadow: 0px 0px 0px 3px $G-0, 0px 0px 0px 4px $G-3;
+            box-shadow: 0px 0px 0px 2px $G-0, 0px 0px 0px 3px $G-3;
           }
         }
 
         &:checked {
           & + label:before {
             background-color: $b-primary;
-            box-shadow: 0px 0px 0px 3px $G-0, 0px 0px 0px 4px $G-3;
+            // box-shadow: 0px 0px 0px 2px $G-0, 0px 0px 0px 3px $G-3;
           }
 
           & + label:after {
             opacity: 1 !important;
+          }
+        }
+      }
+
+      &[type="checkbox"] {
+        display: none;
+
+        & + span {
+          margin-left: 0;
+          position: relative;
+          padding-left: 30px !important;
+          transition: color 0.3s;
+          cursor: pointer;
+
+          &:before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            transform: translateY(-50%);
+            width: 18px;
+            height: 18px;
+            color: transparent !important;
+            border-radius: $radius-thin;
+            background-color: $G-0;
+            border: 1px solid $G-3;
+          }
+
+          &:after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 3px;
+            transform: translateY(-50%);
+            width: 12px;
+            height: 12px;
+            color: transparent !important;
+            border-radius: 2px;
+            background-color: $b-primary;
+            opacity: 0;
+            transition: opacity 0.22s;
+          }
+        }
+
+        &:checked {
+          & + span:after {
+            opacity: 1;
           }
         }
       }
@@ -416,8 +489,12 @@
           }
 
           &__content-wrapper {
-            border-top: 1px solid $G-1-5;
+            // border-top: 1px solid $G-1-5;
             top: calc(100% - 1px);
+          }
+
+          &__content {
+            border-top: 1px solid $G-1-5;
           }
 
           &__placeholder,
@@ -487,6 +564,18 @@
             pointer-events: none;
             background-color: $G-3;
           }
+
+          &.multiselect--active {
+            .multiselect__tags {
+              border-color: $b-primary;
+            }
+
+            .multiselect__content-wrapper {
+              border-left-color: $b-primary;
+              border-right-color: $b-primary;
+              border-bottom-color: $b-primary;
+            }
+          }
         }
         
         .woo-bg-multiselect--additional-field {
@@ -511,6 +600,7 @@
               opacity: 0;
               white-space: nowrap;
               pointer-events: none;
+              font-weight: 400;
               @extend #{'.paragraph','.paragraph-m'};
             }
           } 
@@ -541,7 +631,18 @@
       }
     }
 
-    #place_order {      
+    .place-order {
+      padding: 0;
+      background: transparent;
+      margin: 50px 0 0;
+
+      .form-row {
+        margin-bottom: 8px;
+      }
+    }
+
+    #place_order {
+      margin-top: 22px;
       border-radius: $radius-circle;
       // background: url('../../assets/icons/svg/send.svg') center center no-repeat;
       background-color: $b-highlight-two;
@@ -551,7 +652,6 @@
 }
 
 .custom-select {
-
   .woocommerce-input-wrapper {
     position: relative;
     

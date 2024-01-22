@@ -16,6 +16,11 @@ add_filter('woocommerce_billing_fields', 'wc_unrequire_fields');
 
 
 function wc_reorder_form($fields) {
+  $fields['billing']['billing_first_name']['placeholder'] = 'Теодор';
+  $fields['billing']['billing_last_name']['placeholder'] = 'Кабакчиев';
+  $fields['billing']['billing_phone']['placeholder'] = '0888 888 888';
+  $fields['billing']['billing_email']['placeholder'] = 'teo@kabakchiev.net';
+
   $fields['billing']['billing_phone']['priority'] = 21;
   $fields['billing']['billing_email']['priority'] = 22;
 
@@ -47,12 +52,14 @@ function custom_invoice_fields($checkout) {
     'type' => 'text',
     'class' => array('form-row-wide'),
     'label' => __('Име на фирмата'),
+    'placeholder' => __('Кендуро ООД'),
   ), $checkout->get_value('invoice_company_name'));
 
   woocommerce_form_field('invoice_bulstat', array(
     'type' => 'text',
     'class' => array('form-row-wide'),
     'label' => __('Булстат'),
+    'placeholder' => __('BG-11111111'),
   ), $checkout->get_value('invoice_bulstat'));
 
   woocommerce_form_field('invoice_vat_registration', array(
@@ -69,24 +76,28 @@ function custom_invoice_fields($checkout) {
     'type' => 'text',
     'class' => array('form-row-wide'),
     'label' => __('ДДС Номер'),
+    'placeholder' => __('BG-11111111'),
   ), $checkout->get_value('invoice_vat_number'));
 
   woocommerce_form_field('invoice_mol', array(
     'type' => 'text',
     'class' => array('form-row-wide'),
     'label' => __('МОЛ'),
+    'placeholder' => __('Теодор Кабакчиев'),
   ), $checkout->get_value('invoice_mol'));
 
   woocommerce_form_field('invoice_phone', array(
     'type' => 'text',
     'class' => array('form-row-wide'),
     'label' => __('Телефон'),
+    'placeholder' => __('0888 888 888'),
   ), $checkout->get_value('invoice_phone'));
 
   woocommerce_form_field('invoice_address', array(
     'type' => 'text',
     'class' => array('form-row-wide'),
     'label' => __('Адрес'),
+    'placeholder' => __('Град, улица'),
   ), $checkout->get_value('invoice_address'));
 
   echo '</div>';
@@ -146,4 +157,22 @@ function custom_shipping_package_name($name) {
 add_filter('woocommerce_order_button_text', 'wc_custom_order_button_text');
 function wc_custom_order_button_text() {
   return __('Изпрати Поръчката', 'woocommerce');
+}
+
+add_action('woocommerce_checkout_after_terms_and_conditions', 'checkout_additional_checkboxes');
+function checkout_additional_checkboxes( ){
+  $email_checkbox = __( "Съгласен съм да получавам съобщения за отстъпки и промоции по имейл", "woocommerce" );
+  $viber_checkbox = __( "Съгласен съм да получавам съобщения за отстъпки и промоции по Viber", "woocommerce" );
+  ?>
+  <p class="form-row custom-checkboxes paragraph paragraph-m">
+    <label class="woocommerce-form__label checkbox custom-one">
+      <input type="checkbox" class="woocommerce-form__input woocommerce-form__input-checkbox input-checkbox" name="custom_one" > <span><?php echo  $email_checkbox; ?></span> <span class="required">*</span>
+    </label>
+  </p>
+  <p class="form-row custom-checkboxes paragraph paragraph-m">
+    <label class="woocommerce-form__label checkbox custom-two">
+      <input type="checkbox" class="woocommerce-form__input woocommerce-form__input-checkbox input-checkbox" name="custom_two" > <span><?php echo  $viber_checkbox; ?></span> <span class="required">*</span>
+    </label>
+  </p>
+  <?php
 }

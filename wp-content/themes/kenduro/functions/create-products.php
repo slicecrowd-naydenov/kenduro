@@ -173,9 +173,19 @@ function update_product_manually($data, $product_id) {
   if ($product) {
     global $ss_ids;
     $product_variations_fields = fetch_column_fields($ss_ids['product_variations']);
-    $set_quantity = get_column_field_id('product_variations_quantity', $product_variations_fields);
+    $product_variations_quantity = get_column_field_id('product_variations_quantity', $product_variations_fields);
     $set_regular_price = get_column_field_id('set_regular_price', $product_variations_fields);
-    $product->set_stock_quantity($data[$set_quantity]);
+	  // $delivery_time = get_column_field_id('delivery_time', $product_variations_fields);
+
+    $quantity = isset($data[$product_variations_quantity]) && (int)$data[$product_variations_quantity] !== 0 ? (int)$data[$product_variations_quantity] : 0;
+    $stock_status = $quantity > 0 ? 'instock' : 'onbackorder';
+    $manage_stock = $quantity > 0 ? true : false;
+    $delivery_value = $manage_stock ? 'no' : 'notify';
+    
+    $product->set_manage_stock($manage_stock);
+    $product->set_stock_status($stock_status);
+    $product->set_backorders($delivery_value);
+    $product->set_stock_quantity($quantity);
     $product->set_regular_price($data[$set_regular_price]);
     $product->save();
     // Uncomment this below to force delete woo cache:
@@ -317,6 +327,9 @@ function create_variation($pid, $term_slug, $filter_slug, $product_variations_fi
       $attribute_value = isset($product_variation[$filter_slug][0]) ? $product_variation[$filter_slug][0] : null;
       $quantity = isset($product_variation[$product_variations_quantity]) ? $product_variation[$product_variations_quantity] : 0;
       $sku = isset($product_variation[$product_variation_sku]) ? $product_variation[$product_variation_sku] : 0;
+      $stock_status = $quantity > 0 ? 'instock' : 'onbackorder';
+      $manage_stock = $quantity > 0 ? true : false;
+      $delivery_value = $manage_stock ? 'no' : 'notify';
       // Set terms for the product
       wp_set_object_terms($pid, array($attribute_value), $product_variation[$get_filter_id], true);
 
@@ -349,7 +362,9 @@ function create_variation($pid, $term_slug, $filter_slug, $product_variations_fi
       $variation = new WC_Product_Variation();
       $variation->set_parent_id($pid);
       $variation->set_attributes(array($product_variation[$get_filter_id] => $attribute_value));
-      $variation->set_manage_stock(true);
+      $variation->set_manage_stock($manage_stock);
+      $variation->set_stock_status($stock_status);
+      $variation->set_backorders($delivery_value);
       $variation->set_stock_quantity($quantity);
       $variation->set_sku($sku);
       $variation->set_regular_price($product_variation[$set_regular_price]);
@@ -412,6 +427,7 @@ function add_img_to_gallery($product_id,$image_id_array){
 function create_simple_product($pid, $term_slug, $product_fields) {
   global $product_variations, $ss_ids;
 	$product_variations_quantity = get_column_field_id('product_variations_quantity', $product_fields);
+	$delivery_time = get_column_field_id('delivery_time', $product_fields);
   $attr_color = get_column_field_id('attr_color', $product_fields);
 	$product_id_slug = get_column_field_id('product_variation', $product_fields);
   $set_regular_price = get_column_field_id('set_regular_price', $product_fields);
@@ -420,8 +436,10 @@ function create_simple_product($pid, $term_slug, $product_fields) {
   foreach ($product_variations['items'] as $product_variation) {
     $is_set_color = isset($product_variation[$attr_color]);
     if ($is_set_color && $product_variation[$product_id_slug][0] === $term_slug) {
-      $quantity = isset($product_variation[$product_variations_quantity]) ? $product_variation[$product_variations_quantity] : 0;
-      $is_stock = $quantity > 0 ? 'instock' : 'outofstock'; 
+      $quantity = isset($product_variation[$product_variations_quantity]) && (int)$product_variation[$product_variations_quantity] !== 0 ? (int)$product_variation[$product_variations_quantity] : 0;
+      $stock_status = $quantity > 0 ? 'instock' : 'onbackorder';
+      $manage_stock = $quantity > 0 ? true : false;
+      $delivery_value = $manage_stock ? 'no' : 'notify';
   
       // Define the attribute data
       $attributes_data = array();
@@ -438,8 +456,9 @@ function create_simple_product($pid, $term_slug, $product_fields) {
       }
       
       update_post_meta($pid, '_product_attributes', $attributes_data);
-      update_post_meta($pid, '_manage_stock', true);
-      update_post_meta($pid, '_stock_status', $is_stock);
+      update_post_meta($pid, '_manage_stock', $manage_stock);
+      update_post_meta($pid, '_stock_status', $stock_status);
+      update_post_meta($pid, '_backorders', $delivery_value);
       update_post_meta($pid, '_stock', $quantity);
       update_post_meta($pid, '_price', $product_variation[$set_regular_price]);
       update_post_meta($pid, '_sku', $product_variation[$product_variation_sku]);
@@ -449,7 +468,7 @@ function create_simple_product($pid, $term_slug, $product_fields) {
 
 function processFilter($pid, $incoming_id, $filter_slug, $product_variations_fields) {
   if ($filter_slug) {
-      create_variation($pid, $incoming_id, $filter_slug, $product_variations_fields);
+    create_variation($pid, $incoming_id, $filter_slug, $product_variations_fields);
   }
 }
 
@@ -545,6 +564,7 @@ function update_woocommerce_product($data, $update_product) {
       // pretty_dump($product_no_variation_id);
       // pretty_dump($product_variation_id);
       if ($product_id !== 0) {
+        // *****Update from Products - Product
         // pretty_dump('tuk sme');
         if (isset($item[$is_variation]) && strtolower($item[$is_variation]) === strtolower('No') || !$product->is_type( 'variable' )) {
           $item['product_variation_id'] = $item[$product_var_id];
@@ -555,8 +575,10 @@ function update_woocommerce_product($data, $update_product) {
           delete_post_thumbnail($product_id);
         }
       } else if ($product_variation_id !== 0) {
+        // *****Update from Product Variations - Product variation
         update_product_manually($item, $product_variation_id);
       } else if ($product_no_variation_id !== 0) {
+        // *****Update from Product Variations - No variation
         update_product_manually($item, $product_no_variation_id);
       } 
     }

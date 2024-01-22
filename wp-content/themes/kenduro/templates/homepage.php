@@ -151,7 +151,13 @@ get_header();
 // pretty_dump($sales_records);
 // global $ss_ids;
 // $product_variations_fields = post_column_fields('651f9c5af5b14e0d99b3e73c');  
-// pretty_dump($product_variations_fields);
+// // pretty_dump($product_variations_fields['items'][0]['s2cb07213c']);
+// $quantity = isset($product_variations_fields['items'][15]['s0ecfcadaf']) && $product_variations_fields['items'][15]['s0ecfcadaf'] !== "0" ? $product_variations_fields['items'][15]['s0ecfcadaf'] : 0;
+
+// $delivery_value = isset($product_variations_fields['items'][15]['s3aef3eb19']) && (count($product_variations_fields['items'][15]['s3aef3eb19']) === 0) ? 'no' : 'notify';
+
+// pretty_dump((int)$quantity > 0);
+// // pretty_dump(count($product_variations_fields['items'][0]['s7efb0fba2']) === 0);
 
 ?>
 <main id="primary">

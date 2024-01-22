@@ -30,12 +30,17 @@ $product = wc_get_product();
 	
 			if ($class === 'in-stock') {
 				echo '<b>In stock</b>';
-				echo '&nbsp;- could be delieved on the next day';
+				echo '&nbsp;- може да бъде доставен на следващия ден';
 			}
 	
 			if ($class === 'out-of-stock') {
 				echo '<b>Out of stock</b>';
-				echo '- couldn\'t be delieved on the next day';
+				echo '- не може да бъде доставен на следващия ден';
+			}
+
+			if ($class === 'available-on-backorder') {
+				echo '<b>In Backorder</b>';
+				echo '&nbsp;- ще бъде доставен след 3-6дни';
 			}
 		?>
 	</p>
