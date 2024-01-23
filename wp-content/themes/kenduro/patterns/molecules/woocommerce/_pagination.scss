@@ -42,6 +42,7 @@
 .storefront-sorting {
   flex-direction: column;
   @extend .flex-center-y;
+  display: none;
 
   .woocommerce-ordering,
   .woocommerce-result-count {

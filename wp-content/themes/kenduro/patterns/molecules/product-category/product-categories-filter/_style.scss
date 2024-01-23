@@ -44,20 +44,12 @@
 #cat-filters {
   display: inline-flex;
   gap: 5px;
-
-  + .storefront-sorting {
-    display: none;
-  }
 }
 
 .yith-wcan-filters {
   background-color: transparent;
   display: inline-flex;
   margin: 0;
-
-  & + .storefront-sorting {
-    display: none;
-  }
 
   form {
     display: flex;

@@ -159,12 +159,14 @@
   }
 
   .nav-link {
+    height: 32px;
     border-radius: $radius-circle;
     color: $text-primary;
     background-color: rgba($b-primary, 0.05);
     margin-right: 5px;
     padding: 5px 18px;
     transition: background-color 0.25s ease;
+    @extend #{'.paragraph','.paragraph-l'};
 
     @include media-breakpoint-down(lg) {
       width: 100%;

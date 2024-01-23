@@ -46,7 +46,7 @@ do_action('woocommerce_before_main_content');
 			<header>
 				<?php if (apply_filters('woocommerce_show_page_title', true)) : ?>
 					<!-- .woocommerce-products-header__title -->
-					<h4 class="page-title semibold tetriary <?php echo category_has_parent() ? 'has-parent' : 'no-parent'; ?>"><?php woocommerce_page_title(); ?></h4>
+					<h4 class="page-title semibold"><?php woocommerce_page_title(); ?></h4>
 				<?php endif; ?>
 
 				<?php
@@ -60,16 +60,16 @@ do_action('woocommerce_before_main_content');
 				?>
 			</header>
 			<?php
-			$ancestors = get_ancestors( get_queried_object_id(), 'product_cat' );
+			$ancestors = get_ancestors(get_queried_object_id(), 'product_cat');
 
-			if ( $ancestors ) {
-				$outermost_parent_id = end( $ancestors );
+			if ($ancestors) {
+				$outermost_parent_id = end($ancestors);
 			} else {
 				$outermost_parent_id = get_queried_object_id();
 			}
 			$cat_inner_image_url = get_field('inner_cat_thumbnail', 'product_cat_' . $outermost_parent_id);
 
-			if (is_product_category()) :
+			if (is_product_category()) {
 				Load::molecules('product-category/product-category-info/index', [
 					'title' => 'Learn more about ',
 					'class' => 'full-container',
@@ -78,8 +78,18 @@ do_action('woocommerce_before_main_content');
 					'cat_img_inner' => $cat_inner_image_url
 				]);
 				Load::molecules('product-category/product-categories-view/index');
-			endif;
-			Load::molecules('product-category/product-categories-filter/index');
+				Load::molecules('product-category/product-categories-filter/index');
+			} else {
+				Load::molecules('product-category/product-category-info/index', [
+					'title' => 'ALL PRODUCTS',
+					'class' => 'full-container',
+					'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+					'cat' => single_term_title('', false),
+					'cat_img_inner' => $cat_inner_image_url
+				]);
+				Load::molecules('product-category/product-categories-view/index');
+			}
+
 			if (woocommerce_product_loop()) {
 
 				/**
