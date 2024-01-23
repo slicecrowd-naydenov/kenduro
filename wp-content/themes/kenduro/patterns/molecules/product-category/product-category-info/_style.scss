@@ -7,11 +7,14 @@
   @extend .flex-center;
 
   &__text {
-    max-width: 50%;
     flex-direction: column;
     gap: 10px;
     color: $G-0;
     @extend .flex-center-y;
+    
+    @include media-breakpoint-up(lg) {
+      max-width: 50%;
+    }
 
     .title {
       margin: 0;
@@ -43,6 +46,11 @@
     align-items: end;
     justify-content: flex-start;
     z-index: 1;
+
+    @include media-breakpoint-down(lg) {
+      flex-direction: column-reverse;
+      align-items: center;
+    }
 
     .product-category-info__text {
       padding: 40px 0;

@@ -6,6 +6,11 @@
 
     .paragraph {
       @extend #{'.paragraph-l', '.semibold'};
+
+      @include media-breakpoint-down(md) {
+        font-size: 12px;
+        line-height: 16px;
+      }
     }
   }
   

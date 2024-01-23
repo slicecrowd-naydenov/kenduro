@@ -3,24 +3,28 @@
   background-color: $G-0;
   position: relative;
 
-  @include media-breakpoint-down(md) {
+  @include media-breakpoint-down(lg) {
     position: absolute;
-    left: 0;
+    left: 3px;
     top: 15px;
     background-color: transparent;
   }
 
+  @include media-breakpoint-only(md) {
+    left: calc((100% - 720px) / 2);
+  }
+
   .primary-navigation {
-    @include media-breakpoint-down(md) {
+    @include media-breakpoint-down(lg) {
       width: calc(100vw - 10px);
       height: calc(100vh - 10px);
-      padding: 10px;
+      padding: 20px;
       display: block;
-      position: absolute;
+      position: fixed;
       background: $G-0;
       z-index: 222;
       left: 5px;
-      top: -10px;
+      top: 5px;
       border-radius: $radius-medium;
       opacity: 0;
       pointer-events: none;
@@ -33,8 +37,8 @@
   .mobile-nav {
     display: none;
 
-    @include media-breakpoint-down(md) {
-      padding: 5px 0;
+    @include media-breakpoint-down(lg) {
+      padding: 2px 0;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -44,10 +48,17 @@
       position: relative;
       z-index: 12;
     }
+
+    &__logo {
+      .custom-logo-link {
+        padding: 0;
+      }
+    }
   }
 
   .menu-toggle {
-    @include media-breakpoint-down(md) {
+    @include media-breakpoint-down(lg) {
+      display: block;
       float: none;
       border-width: 1px;
       background: transparent;
@@ -59,7 +70,7 @@
     &:before,
     &:after,
     span:before {
-      @include media-breakpoint-down(md) {
+      @include media-breakpoint-down(lg) {
         background: $G-0;
       }
     }
@@ -68,9 +79,17 @@
   .main-navigation {
     &.toggled {
       .primary-navigation {
-        @include media-breakpoint-down(md) {
+        @include media-breakpoint-down(lg) {
           opacity: 1;
           pointer-events: inherit;
+        }
+      }
+    }
+
+    ul {
+      li {
+        @include media-breakpoint-down(lg) {
+          display: block;
         }
       }
     }
@@ -80,7 +99,7 @@
     position: relative;
     margin: 0;
 
-    @include media-breakpoint-down(md) {
+    @include media-breakpoint-down(lg) {
       max-height: none;
       padding: 0;
       overflow: inherit;
@@ -113,12 +132,12 @@
           padding-right: 16px;
           @extend #{'.paragraph','.paragraph-l', '.semibold'};
 
-          @include media-breakpoint-down(md) {
+          @include media-breakpoint-down(lg) {
             width: 100%;
           }
 
           svg {
-            @include media-breakpoint-down(md) {
+            @include media-breakpoint-down(lg) {
               margin-right: 5px;
               transform: rotate(-90deg);
             }
@@ -126,7 +145,7 @@
             path {
               fill: $b-primary;
 
-              @include media-breakpoint-down(md) {
+              @include media-breakpoint-down(lg) {
                 fill: $G-5;
               }
             }
@@ -139,7 +158,7 @@
           top: 50%;
           transform: translateY(-50%);
 
-          @include media-breakpoint-down(md) {
+          @include media-breakpoint-down(lg) {
             transform: rotate(-90deg);
           }
         }
@@ -150,7 +169,7 @@
       .sub-menu__item-mobile,
       .sub-sub-menu__item-mobile,
       .sub-sub-menu__item-link {
-        @include media-breakpoint-down(md) {
+        @include media-breakpoint-down(lg) {
           margin: 0;
           border-bottom: 1px dashed $G-2;
           padding: 13px 0 13px 5px;
@@ -211,32 +230,33 @@
       
       &,
       .sub-sub-menu {
-        @include media-breakpoint-down(md) {
-          width: 100%;
+        @include media-breakpoint-down(lg) {
+          width: calc(100vw - 10px);
           min-height: auto;
-          padding: 20px 10px;
+          padding: 20px;
           height: calc(100vh - 10px);
           opacity: 1;
           pointer-events: inherit;
           margin: 0;
           display: none;
-          position: absolute;
-          top: 0;
+          position: fixed;
+          top: 5px;
+          left: 5px;
           background-color: $G-0;
           z-index: 10;
           border-radius: $radius-medium;
           overflow-y: auto;
-          padding-top: 73px;
+          padding-top: 80px;
         }
  
         &.visible-menu {
-          @include media-breakpoint-down(md) {
+          @include media-breakpoint-down(lg) {
             display: block;
           }
         }
 
         &:after {
-          @include media-breakpoint-down(md) {
+          @include media-breakpoint-down(lg) {
             width: calc(100% - 10px);
             height: 64px;
             content: '';
@@ -255,7 +275,7 @@
         margin-bottom: 24px;
         padding-right: 24px;
 
-        @include media-breakpoint-down(md) {
+        @include media-breakpoint-down(lg) {
           flex: 0 0 100%;
           padding-right: 0;
         }
@@ -272,13 +292,13 @@
           text-decoration: none;
           background-color: transparent;
 
-          @include media-breakpoint-down(md) {
+          @include media-breakpoint-down(lg) {
             color: $text-primary;
             margin: 0;
           }
 
           span {
-            @include media-breakpoint-up(md) {
+            @include media-breakpoint-up(lg) {
               display: none;
             }
   
@@ -291,7 +311,7 @@
       }
 
       &__item-mobile {
-        @include media-breakpoint-up(md) {
+        @include media-breakpoint-up(lg) {
           display: none;
         }
       }
@@ -301,7 +321,7 @@
         display: none;
         position: relative;
 
-        @include media-breakpoint-down(md) {
+        @include media-breakpoint-down(lg) {
           width: calc(100% - 30px);
           position: fixed;
           z-index: 2;
@@ -322,7 +342,7 @@
           border-radius: 6px;
           position: absolute;
           left: 0;
-          top: -6px;
+          top: 0;
           @extend .flex-center;
 
           svg {
@@ -340,6 +360,7 @@
         &__cat {
           font-weight: 600;
           padding: 0 45px;
+          line-height: 37px;
           @include line-clamp(1);
         }
       }
@@ -352,7 +373,7 @@
         padding-top: 15px;
         border-top: 1px solid rgba($G-0-5, 0.1);
 
-        @include media-breakpoint-down(md) {
+        @include media-breakpoint-down(lg) {
           display: none;
         }
 
@@ -387,10 +408,6 @@
       margin-left: 0;
       float: none;
 
-      @include media-breakpoint-down(md) {
-        margin-left: -15px !important;
-      }
-
       &__item-link,
       &__item-mobile a {
         width: auto;
@@ -403,15 +420,16 @@
         background-color: transparent;
         text-decoration: none;
 
-        @include media-breakpoint-down(md) {
+        @include media-breakpoint-down(lg) {
           color: $text-primary;
           margin: 0;
           line-height: 21px;
           font-weight: 600;
+          padding: 0 15px 0 0;
         }
 
         span {
-          @include media-breakpoint-up(md) {
+          @include media-breakpoint-up(lg) {
             display: none;
           }
 
@@ -423,7 +441,7 @@
       }
 
       &__item-mobile {
-        @include media-breakpoint-up(md) {
+        @include media-breakpoint-up(lg) {
           display: none;
         }
       }

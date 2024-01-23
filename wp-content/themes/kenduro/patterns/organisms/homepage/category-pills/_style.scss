@@ -8,7 +8,68 @@
   .custom-link {
     position: absolute;
     right: 15px;
-    top: 48px;
+    top: 42px;
+
+    @include media-breakpoint-down(lg) {
+      display: none;
+    }
+  }
+
+  #dropdownMenuButton {
+    width: 100%;
+    text-align: left;
+    height: 40px;
+    background-color: rgba($b-primary, 0.05);
+    border-radius: 24px;
+    border: none;
+    padding: 8px 18px;
+    color: $text-primary;
+    position: relative;
+    border: 1px solid transparent;
+    border-bottom: none;
+    transition: border-color 0.1s ease;
+    @extend #{'.paragraph-l'};
+
+    @include media-breakpoint-up(lg) {
+      display: none;
+    }
+
+    &[aria-expanded="true"] {
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
+      border-color: $G-2;
+    }
+
+    &:after {
+      border: none;
+      width: 16px;
+      height: 16px;
+      top: 50%;
+      right: 18px;
+      transform: translateY(-50%);
+      position: absolute;
+      background-image: url('../../assets/icons/svg/up_and_down_arrow.svg');
+    }
+  }
+
+  .dropdown {
+    @include media-breakpoint-down(lg) {
+      margin-bottom: 28px;
+    }
+
+    &__head {
+      margin: 40px 0 10px;
+
+      @include media-breakpoint-up(lg) {
+        display: none;
+      }
+    }
+  }
+
+  hr {
+    @include media-breakpoint-down(lg) {
+      display: none;
+    }
   }
   
   .tab-content {
@@ -22,15 +83,44 @@
       margin: 30px 0 100px;
       @extend .flex-center;
 
+      @include media-breakpoint-down(lg) {
+        padding: 45px 30px;
+        background-image: url("../../assets/images/teo-background.jpg");
+        background-size: 200%;
+        background-position: center right 20%;
+        color: $G-0;
+        margin-bottom: 52px;
+      }
+
       h4 {
         position: absolute;
         left: 50%;
         top: 50%;
         transform: translate(-50%, -50%);
 
+        @include media-breakpoint-down(lg) {
+          position: relative;
+          left: auto;
+          top: auto;
+          transform: none;
+          margin: 0;
+          padding-right: 20px;
+          background: url("../../assets/icons/svg/arrow_orange.svg") center right no-repeat;
+        }
+
         svg {
           position: relative;
           top: -2px;
+
+          @include media-breakpoint-down(lg) {
+            display: none;
+          }
+        }
+      }
+
+      img {
+        @include media-breakpoint-down(lg) {
+          display: none;
         }
       }
     }
@@ -43,7 +133,26 @@
 
 .nav-pills {
   margin: 35px 0 0 0;
-  padding-right: 150px;
+  
+  @include media-breakpoint-up(lg) {
+    padding: 0 150px 0 0;
+    border: none;
+    background-color: transparent;
+    position: relative;
+  }
+
+  @include media-breakpoint-down(lg) {
+    width: 100%;
+    display: none;
+    padding: 8px 15px;
+    background-color: #f2f4f5;
+    border-bottom-left-radius: 24px;
+    border-bottom-right-radius: 24px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    border-color: $G-2;
+    margin: 0;
+  }
   
   &.product-categories-view {
     margin-bottom: 18px;
@@ -57,14 +166,30 @@
     padding: 5px 18px;
     transition: background-color 0.25s ease;
 
+    @include media-breakpoint-down(lg) {
+      width: 100%;
+      text-align: left;
+      padding-left: 0;
+      padding-right: 0;
+      background-color: transparent;
+    }
+
     &:hover {
-      background-color: rgba($b-primary, 0.1);
+      @include media-breakpoint-up(lg) {
+        background-color: rgba($b-primary, 0.1);
+      }
     }
 
     &.active {
       background-color: $b-primary;
       pointer-events: none;
       color: $G-0;
+
+      @include media-breakpoint-down(lg) {
+        background-color: transparent;
+        text-decoration: underline;
+        color: $text-primary;
+      }
     }
   }    
 }

@@ -186,12 +186,15 @@ get_header();
             ]);
 
             // echo do_shortcode('[products limit="12" columns="5" best_selling="true"]');
-            // Load::molecules('exclusive-brands/index');
           ?>
         </div>
       </div>
     </div>
-    <?php Load::molecules('best-selling-products/index'); ?>
+    
+    <?php 
+      Load::molecules('exclusive-brands/index');
+      Load::molecules('best-selling-products/index'); 
+    ?>
 </main>
 <?php
 get_footer();

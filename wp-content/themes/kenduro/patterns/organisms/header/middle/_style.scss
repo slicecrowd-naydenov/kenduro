@@ -4,6 +4,10 @@
   background-color: $G-0;
   border-radius: $radius-medium $radius-medium 0 0;
 
+  @include media-breakpoint-down(lg) {
+    padding: 10px 0;
+  }
+
   .site-title {
     @extend .flex-center-y;
 
@@ -14,6 +18,10 @@
       font-weight: 600;
       margin-right: 30px;
       margin-bottom: 0;
+
+      @include media-breakpoint-down(lg) {
+        margin: 0 auto;
+      }
     }
 
     input {
@@ -22,6 +30,14 @@
 
     .yith-ajaxsearchform-container {
       width: 100%;
+
+      @include media-breakpoint-down(lg) {
+        width: calc(100% - 65px);
+        display: none;
+        position: absolute;
+        left: 50px;
+        background-color: $G-0;
+      }
 
       input[type="search"] {
         padding: 10px 15px;
@@ -44,6 +60,18 @@
           display: flex;
         }
       }
+    }
+  }
+
+  .search {
+    display: none;
+
+    @include media-breakpoint-down(lg) {
+      width: 0;
+      order: -1;
+      position: relative;
+      left: 3px;
+      display: inline-block;
     }
   }
 }

@@ -115,5 +115,11 @@
 
   #primary {
     padding-top: 0;
+    overflow: hidden;
+    border-radius: 0 0 $radius-medium $radius-medium;
+    margin-bottom: -$radius-medium;
+
+    // @include media-breakpoint-down(lg) {
+    // }
   }
 }

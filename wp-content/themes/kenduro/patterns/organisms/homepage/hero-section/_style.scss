@@ -71,6 +71,11 @@
       right: $bootstrap-gap-lg;
     }
 
+    @include media-breakpoint-only(md) {
+      width: 700px;
+      margin: 10px auto;
+    }
+
     @include media-breakpoint-only(sm) {
       width: 514px;
       margin: 10px auto;
@@ -205,6 +210,11 @@
       padding: 0 30px;
       margin-top: 135px;
       overflow: inherit;
+    }
+
+    @include media-breakpoint-only(md) {
+      padding: 0;
+      width: 700px;
     }
 
     @include media-breakpoint-only(sm) {

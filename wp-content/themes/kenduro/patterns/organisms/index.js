@@ -5,6 +5,7 @@ import { Tab } from 'bootstrap';
 import ShopFilter from './shop';
 import Slider from './slider';
 import MobileNavigation from './header/bottom/index';
+import MiddleHeader from './header/middle/index';
 
 export default () => {
   const $body = $('body');
@@ -19,6 +20,10 @@ export default () => {
   
   if (MobileNavigation) {
     new MobileNavigation(document.getElementById('site-navigation-menu-toggle'));
+  }
+
+  if (MiddleHeader) {
+    new MiddleHeader(document.getElementById('middle-section'));
   }
 
   $('#custom_invoice_fields').hide();
@@ -39,6 +44,11 @@ export default () => {
       event.preventDefault();
       tabTrigger.show();
     });
+  });
+
+  $('button[data-bs-toggle="pill"]').on('click', function() {
+    const selectedPill = $(this).text();
+    $('#dropdownMenuButton').text(selectedPill);
   });
 
   // var triggerEl = document.querySelector('#myTab a[href="#profile"]');

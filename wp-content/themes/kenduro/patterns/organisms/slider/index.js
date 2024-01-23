@@ -52,6 +52,10 @@ export default class Slider {
         },
         // when window width is >= 768px
         768: {
+          spaceBetween: 150,      
+          autoHeight: false
+        },
+        992: {
           spaceBetween: 30,      
           autoHeight: false
         }

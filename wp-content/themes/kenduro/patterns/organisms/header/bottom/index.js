@@ -28,7 +28,7 @@ export default class MobileNavigation {
    */   
 
   events() {
-    if ($(window).innerWidth() < 768) {
+    if ($(window).innerWidth() < 992) {
       this.menuToggle();
       this.closeMenu();
       this.showSubMenu();

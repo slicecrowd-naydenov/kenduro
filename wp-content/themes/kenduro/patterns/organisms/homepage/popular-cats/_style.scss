@@ -1,6 +1,10 @@
 .popular-categories {
   padding: 50px 0 20px;
 
+  @include media-breakpoint-down(lg) {
+    display: none
+  }
+
   &__header {
     display: flex;
     justify-content: space-between;

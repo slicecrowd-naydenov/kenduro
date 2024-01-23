@@ -10,8 +10,18 @@
   align-items: center;
   justify-content: space-between;
 
-  @include media-breakpoint-down(md) {
+  @include media-breakpoint-down(lg) {
     height: 70px;
+    padding: 6px 16px;
+    width: 100vw;
+  }
+
+  @include media-breakpoint-only(md) {
+    position: absolute;
+    width: 720px;
+    padding: 0 15px;
+    left: 50%;
+    transform: translateX(-50%);
   }
 
   & > div {
@@ -19,7 +29,7 @@
   }
 
   & > p {
-    @include media-breakpoint-down(md) {
+    @include media-breakpoint-down(lg) {
       opacity: 0;
       pointer-events: none;
     }

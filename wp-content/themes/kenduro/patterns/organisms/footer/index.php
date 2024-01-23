@@ -5,14 +5,14 @@ use Lean\Load;
 <footer id="footer">
   <div class="container">
     <div class="row top">
-      <div class="col-4">
+      <div class="col-md-4 col-12">
         <a href="<?php echo esc_url(get_site_url()); ?>/terms-and-conditions/#terms-delivery" class="paragraph paragraph-l">Доставка</a>
         </br>
         <a href="<?php echo esc_url(get_site_url()); ?>/terms-and-conditions/#terms-payment" class="paragraph paragraph-l">Плащания</a>
         </br>
         <a href="<?php echo esc_url(get_site_url()); ?>/terms-and-conditions/#terms-complaint" class="paragraph paragraph-l">Рекламация</a>
       </div>
-      <div class="col-4">
+      <div class="col-md-4 col-12">
         <p class="paragraph-l">Свържи се с нас</p>
         <p class="paragraph-m">
           Имейл :
@@ -45,7 +45,7 @@ use Lean\Load;
           </li>
         </ul>
       </div>
-      <div class="col-4 address-info">
+      <div class="col-md-4 col-12 address-info">
         <p class="paragraph-m">Кендуро ООД</p>
         <ul>
           <li class="paragraph-m">Република България, Област Благоевград, Община Банско, гр. Банско, 2770, ул. „Пирин“ № 29</li>
