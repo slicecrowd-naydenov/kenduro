@@ -1,5 +1,6 @@
 <?php
 $category = get_queried_object();
+
 if (is_product_category()) {
   $cat_term = $category->term_id;
   $cat_slug = $category->slug;
@@ -7,15 +8,13 @@ if (is_product_category()) {
   $cat_term = 0;
   $cat_slug = '';
 }
-$cat_term_id = is_product_category() ? get_queried_object() : 0;
-// pretty_dump(is_product_category());
+
 $args = array(
   'taxonomy' => 'product_cat',
   'parent' => $cat_term,
   'hide_empty' => true
 );
 $main_categories = get_terms($args);
-// pretty_dump($category);
 ?>
 <ul class="nav nav-pills product-categories-view">
   <?php

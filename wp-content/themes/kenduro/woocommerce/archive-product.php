@@ -133,17 +133,22 @@ do_action('woocommerce_before_main_content');
 				do_action('woocommerce_no_products_found');
 			}
 			// echo do_shortcode('[wrvp_recently_viewed_products number_of_products_in_row="4" posts_per_page="4"]');
-			echo do_shortcode('[recently_viewed_products]');
-			Load::molecules('product-category/product-category-info/index', [
-				'title' => '<span class="highlighted">K</span>enduro is crafted by Teo',
-				'class' => 'full-width-container',
-				'description' => 'Teo Kabakchiev, a world-renowned hard enduro rider, leads Kenduro.com with an unwavering passion, ensuring our unwavering commitment to top-tier services and quality.'
-			]);
-			?>
-		</div>
-	</div>
-</div>
-<?php
+            Load::molecules('product-category/product-category-info/index', [
+              'title' => '<span class="highlighted">K</span>enduro is crafted by Teo',
+              'class' => 'full-width-container',
+              'description' => 'Teo Kabakchiev, a world-renowned hard enduro rider, leads Kenduro.com with an unwavering passion, ensuring our unwavering commitment to top-tier services and quality.'
+            ]);
+
+            // echo do_shortcode('[products limit="12" columns="5" best_selling="true"]');
+          ?>
+        </div>
+      </div>
+    </div>
+    
+    <?php 
+      Load::molecules('exclusive-brands/index');
+      Load::molecules('best-selling-products/index'); 
+			// echo do_shortcode('[recently_viewed_products]');
 /**
  * Hook: woocommerce_after_main_content.
  *

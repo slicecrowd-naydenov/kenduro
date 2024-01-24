@@ -35,6 +35,10 @@
       &.next {
         display: none;
       }
+
+      &.dots {
+        pointer-events: none;
+      }
     }
   }
 }

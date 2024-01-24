@@ -1,8 +1,16 @@
 // Product category
 .tax-product_cat {
+  #primary {
+    padding-top: 40px;
+  }
+
   .storefront-breadcrumb {
-    padding: 30px 0 0;
+    padding: 0;
     margin: 0;
+  }
+
+  .nav-pills {
+    margin-bottom: 18px;
   }
 
   .page-title {
@@ -49,8 +57,8 @@
 }
 
 .products {
-  border-bottom: 1px solid $G-1-5;
   margin-bottom: 20px !important;
+  padding-bottom: 20px !important;
 
   .button.add_to_cart_button {
     display: none;
@@ -58,6 +66,13 @@
 
   & + .storefront-sorting {
     display: flex;
+    margin: 0;
+    border-top: 1px solid $G-1-5;
+
+    nav {
+      padding-top: 20px;
+      margin-bottom: 30px;
+    }
   }
 
   &.columns-5 {
@@ -94,6 +109,14 @@
         width: auto;
         max-height: $thumbnail_size;
         margin: 0;
+
+        @include media-breakpoint-only(xl) {
+          max-height: 207px;
+        }
+
+        @include media-breakpoint-between(md, lg) {
+          max-height: 219px;
+        }
       }
 
       .wc-img-wrapper {
@@ -202,7 +225,15 @@
 
 // Shop page
 .post-type-archive {
+  #primary {
+    padding-top: 50px;
+  }
+
   .page-title {
     margin-bottom: 10px;
+  }
+
+  .nav-pills {
+    margin-bottom: 23px;
   }
 }
