@@ -8,6 +8,9 @@ body {
   position: relative;
   float: none;
   padding-top: 10px;
+  overflow: hidden;
+  border-radius: 0 0 $radius-medium $radius-medium;
+  margin-bottom: -$radius-medium;
 
   &.showed-menu {
     @include media-breakpoint-up(lg) {
@@ -227,7 +230,27 @@ h4,
     border-top: 1px solid $G-1-5;
   }
 
+  main.site-main {
+    margin: 0;
+  }
+
   .nav-pills {
-    margin-top: 30px;
+    @include media-breakpoint-up(lg) {
+      margin-top: 30px;
+    }
+  }
+
+  .product-category-info.full-container  {
+    @include media-breakpoint-down(lg) {
+      display: none;
+    }
+  }
+
+  .dropdown {
+    &__head {
+      @include media-breakpoint-down(lg) {
+        display: none;
+      }
+    }
   }
 }
