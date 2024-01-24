@@ -53,6 +53,9 @@ function trigger_ajax_to_cart() {
         if (variation_option.hasClass('cfvsw-swatches-disabled')) {
           variation_option.removeClass('cfvsw-swatches-disabled');
         }
+
+        // console.log();
+        $('.custom-price-box').html($('.woocommerce-variation-price').html());
       });
 
       $(document).ready(function($) {

@@ -13,6 +13,10 @@
       margin: 0;
     }
 
+    .storefront-product-pagination {
+      display: none;
+    }
+
     div.product {
       .product-gallery-section {
         display: flex;
@@ -207,9 +211,7 @@
           }
 
           .price {
-            font-size: 20px;
-            color: $b-highlight-two;
-            margin: 0 0 15px;
+            display: none
           }
 
           .product_title {
@@ -250,7 +252,73 @@
             .woocommerce-variation-add-to-cart {
               position: absolute;
               left: 0;
-              bottom: 0;
+            }
+          }
+
+          .custom-price-box {
+            border: 1px solid rgba(15, 15, 15, 0.1);
+            height: 88px;
+            flex-direction: column-reverse;
+            @extend .flex-center;
+
+            ins,
+            & > .price > .amount,
+            & > .amount {
+              @extend #{'.h3', '.semibold'};
+              margin-bottom: 2px;
+              margin-left: 0;
+            }
+
+            del {
+              opacity: 1;
+              text-decoration: none;
+              @extend .flex-center;
+              @extend #{'.paragraph', '.paragraph-l'};
+
+              &:before {
+                display: block;
+                content: 'Намалено от ';
+              }
+
+              bdi {
+                padding-left: 5px;
+                text-decoration: line-through;
+              }
+            }
+
+            .price {
+              display: flex;
+              align-items: center;
+              flex-direction: column-reverse;
+            }
+          }
+
+          form {
+            .single_add_to_cart_button,
+            .custom-price-box {
+              border-radius: $radius-medium;
+              flex: 0 1 calc(50% - 5px);
+            }
+
+            .single_add_to_cart_button {
+              &:before {
+                border-radius: $radius-medium;
+              }
+            }
+          }
+
+          .woocommerce-variation-add-to-cart {
+            bottom: -50px;
+          }
+
+          form,
+          .woocommerce-variation-add-to-cart {
+            display: flex;
+            justify-content: space-between;
+
+            &:before,
+            &:after {
+              display: none;
             }
           }
         }

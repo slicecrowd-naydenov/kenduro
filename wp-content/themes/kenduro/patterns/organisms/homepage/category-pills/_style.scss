@@ -144,7 +144,7 @@
   @include media-breakpoint-down(lg) {
     width: 100%;
     display: none;
-    padding: 8px 15px;
+    padding: 8px 18px;
     background-color: #f2f4f5;
     border-bottom-left-radius: 24px;
     border-bottom-right-radius: 24px;
@@ -170,6 +170,7 @@
       padding-left: 0;
       padding-right: 0;
       background-color: transparent;
+      margin: 3px 0;
     }
 
     &:hover {
