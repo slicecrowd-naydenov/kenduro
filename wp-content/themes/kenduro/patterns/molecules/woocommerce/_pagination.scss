@@ -7,6 +7,12 @@
     p {
       margin: 0 30px;
     }
+
+    a {
+      @include media-breakpoint-down(sm) {
+        padding: 10px;
+      }
+    }
   }
 
   ul.page-numbers {

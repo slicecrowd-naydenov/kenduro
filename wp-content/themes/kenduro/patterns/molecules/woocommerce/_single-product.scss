@@ -1,6 +1,7 @@
 .storefront-full-width-content {
   &.single-product {
     #main {
+      margin: 0;
       background-color: $G-0-5;
     }
 
@@ -17,8 +18,7 @@
       }
     }
 
-    .storefront-product-pagination,
-    .onsale {
+    .storefront-product-pagination {
       display: none;
     }
 
@@ -37,6 +37,10 @@
 
         @include media-breakpoint-down(md) {
           padding: 0;
+        }
+
+        @include media-breakpoint-down(sm) {
+          background-color: transparent;
         }
     
         .woocommerce-product-gallery,
@@ -291,6 +295,7 @@
 
               @include media-breakpoint-down(md) {
                 padding-left: 30px;
+                padding-right: 0;
                 background-position: center left 0px;
               }
             }
@@ -402,6 +407,11 @@
               @extend .flex-center;
               @extend #{'.paragraph', '.paragraph-l'};
 
+              @include media-breakpoint-down(sm) {
+                font-size: 12px;
+                line-height: 16px;
+              }
+
               &:before {
                 display: block;
                 content: 'Намалено от ';
@@ -421,6 +431,10 @@
           }
 
           form {
+            @include media-breakpoint-down(sm) {
+              margin-bottom: 0;
+            }
+
             .single_add_to_cart_button,
             .custom-price-box {
               border-radius: $radius-medium;
@@ -430,6 +444,12 @@
             .single_add_to_cart_button {
               &:before {
                 border-radius: $radius-medium;
+              }
+            }
+
+            &.variations_form {
+              @include media-breakpoint-down(sm) {
+                margin-bottom: 60px;
               }
             }
           }
@@ -460,6 +480,11 @@
         background-color: $G-0;
         border-radius: $radius-medium;
         padding: 30px;
+
+        @include media-breakpoint-down(sm) {
+          padding: 0;
+          background-color: transparent;
+        }
 
         .tabs {
           width: auto;
@@ -513,6 +538,16 @@
       .related {
         .popular-categories {
           padding-bottom: 0;
+
+          @include media-breakpoint-down(lg) {
+            display: block;
+          }
+
+          a {
+            @include media-breakpoint-down(lg) {
+              display: none;
+            }
+          }
         }
       }
     }
