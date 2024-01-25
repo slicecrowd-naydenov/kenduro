@@ -191,6 +191,10 @@ add_filter( 'woocommerce_single_product_carousel_options', 'sf_update_woo_flexsl
 function sf_update_woo_flexslider_options( $options ) {
 
     $options['directionNav'] = true;
+    if ( wp_is_mobile() ) {
+      // $options['smoothHeight'] = true;
+      $options['controlNav'] = true;
+    }
     // $options['animationLoop'] = true;
     // $options['sync'] = '.flex-control-thumbs';
     // $options['sync'] = '.flex-control-thumbs';

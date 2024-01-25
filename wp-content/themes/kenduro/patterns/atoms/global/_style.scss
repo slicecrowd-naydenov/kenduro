@@ -12,6 +12,10 @@ body {
   border-radius: 0 0 $radius-medium $radius-medium;
   margin-bottom: -$radius-medium;
 
+  @include media-breakpoint-down(lg) {
+    padding-top: 0;
+  }
+
   &.showed-menu {
     @include media-breakpoint-up(lg) {
       &:after {

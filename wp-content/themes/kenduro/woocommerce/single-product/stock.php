@@ -29,18 +29,18 @@ $product = wc_get_product();
 			Load::atom('svg', ['name' => 'checkbox']);
 	
 			if ($class === 'in-stock') {
-				echo '<b>In stock</b>';
-				echo '&nbsp;- може да бъде доставен на следващия ден';
+				// echo '<b>In stock</b>';
+				echo 'Може да бъде доставено утре !';
 			}
 	
 			if ($class === 'out-of-stock') {
-				echo '<b>Out of stock</b>';
-				echo '- не може да бъде доставен на следващия ден';
+				// echo '<b>Out of stock</b>';
+				echo 'Не може да бъде доставен на следващия ден';
 			}
 
 			if ($class === 'available-on-backorder') {
-				echo '<b>In Backorder</b>';
-				echo '&nbsp;- ще бъде доставен след 3-6дни';
+				// echo '<b>In Backorder</b>';
+				echo 'Може да бъде доставен след 3-6 дни';
 			}
 		?>
 	</p>

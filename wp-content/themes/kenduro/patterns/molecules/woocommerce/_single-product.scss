@@ -11,9 +11,14 @@
     .storefront-breadcrumb {
       padding: 20px 0;
       margin: 0;
+
+      @include media-breakpoint-down(lg) {
+        display: none;
+      }
     }
 
-    .storefront-product-pagination {
+    .storefront-product-pagination,
+    .onsale {
       display: none;
     }
 
@@ -24,6 +29,15 @@
         padding: 20px;
         border-radius: $radius-medium;
         background-color: $G-0;
+
+        @include media-breakpoint-down(lg) {
+          margin-top: 30px;
+          flex-direction: column;
+        }
+
+        @include media-breakpoint-down(md) {
+          padding: 0;
+        }
     
         .woocommerce-product-gallery,
         .summary {
@@ -57,12 +71,39 @@
             margin: 0;
             background-color: $thumbs_bg;
             box-shadow: 0 3px 6px 0 rgba(15, 15, 15, 0.1), 20px 29px 154px 0 rgba(15, 15, 15, 0.2);
+
+            @include media-breakpoint-only(xl) {
+              width: 500px;
+              flex: 0 0 500px;
+            }
+
+            @include media-breakpoint-only(lg) {
+              width: 400px;
+              flex: 0 0 400px;
+            }
+
+            @include media-breakpoint-down(md) {
+              width: 100%;
+              flex: 0 0 100%;
+            }
             // box-shadow: 20px 29px 154px 0 rgba(15, 15, 15, 0.2);
           }
 
           & > .woocommerce-product-gallery__wrapper {
             height: $product_images;
             @extend .flex-center;
+
+            @include media-breakpoint-only(xl) {
+              height: 500px;
+            }
+
+            @include media-breakpoint-only(lg) {
+              height: 400px;
+            }
+
+            @include media-breakpoint-down(md) {
+              height: auto;
+            }
 
             .woocommerce-product-gallery__image--placeholder {
               img {
@@ -72,6 +113,18 @@
           }
 
           & > .flex-viewport {
+            @include media-breakpoint-only(md) {
+              width: 634px;
+              flex: 0 0 634px;
+            }
+
+            .woocommerce-product-gallery__wrapper {
+              @include media-breakpoint-down(md) {
+                width: 100% !important;
+                display: flex;
+              }
+            }
+
             .woocommerce-product-gallery__image {
               width: $product_images !important;
               height: $product_images;
@@ -80,9 +133,30 @@
               // justify-content: center;
               justify-content: center;
               margin-right: 80px !important;
+
+              @include media-breakpoint-only(xl) {
+                width: 500px !important;
+                height: 500px;
+              }
+
+              @include media-breakpoint-only(lg) {
+                width: 400px !important;
+                height: 400px;
+              }
+
+              @include media-breakpoint-only(md) {
+                margin-right: 0 !important;
+              }
+
+              @include media-breakpoint-down(md) {
+                flex: 0 0 100%;
+                width: 100% !important;
+                margin-right: 0 !important;
+                height: auto;
+              }
             }
           }
-    
+          
           .flex-control-thumbs {
             display: flex;
             flex-direction: column;
@@ -114,6 +188,32 @@
             }
           }
 
+          .flex-control-nav {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            position: absolute;
+            bottom: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            list-style-type: none;
+
+            a {
+              width: 15px;
+              height: 15px;
+              margin: 0 5px;
+              background-color: $G-3;
+              border-radius: $radius-circle;
+              display: inline-block;
+              color: transparent;
+              font-size: 0;
+
+              &.flex-active {
+                background-color: $b-highlight-two;
+              }
+            }
+          }
+
           &__trigger {
             // Zoom image icon
             display: none;
@@ -125,6 +225,23 @@
           position: relative;
           display: flex;
           flex-direction: column;
+
+          @include media-breakpoint-down(lg) {
+            width: 100%;
+            margin-top: 10px;
+          }
+
+          .custom-stock {
+            @include media-breakpoint-down(xl) {
+              display: flex;
+              flex-direction: column;
+              gap: 5px;
+            }
+
+            @include media-breakpoint-down(lg) {
+              margin-bottom: 20px;
+            }
+          }
 
           .reset_variations,
           .quantity,
@@ -144,6 +261,10 @@
           
           .single_add_to_cart_button {
             width: 100%;
+
+            @include media-breakpoint-down(xl) {
+              padding: 10px;
+            }
 
             &.loading {
               pointer-events: none;
@@ -167,6 +288,11 @@
               background-position: center left 20px;
               padding-right: 25px;
               @extend #{'.paragraph','.paragraph-l', '.semibold'};
+
+              @include media-breakpoint-down(md) {
+                padding-left: 30px;
+                background-position: center left 0px;
+              }
             }
           }
 
@@ -258,6 +384,7 @@
           .custom-price-box {
             border: 1px solid rgba(15, 15, 15, 0.1);
             height: 88px;
+            padding: 10px;
             flex-direction: column-reverse;
             @extend .flex-center;
 
@@ -402,6 +529,14 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
+
+      @include media-breakpoint-down(lg) {
+        width: 100%;
+      }
+
+      @include media-breakpoint-only(md) {
+        padding-right: 35px;
+      }
       
       li {
         display: flex;

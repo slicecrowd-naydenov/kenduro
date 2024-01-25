@@ -29,9 +29,10 @@
     padding: 0;
     margin: 0;
     gap: 10px;
+    justify-content: space-between;
   
     &__item {
-      flex: 0 0 25%;
+      flex: 0 0 calc(25% - 15px);
       display: flex;
       flex-direction: column;
       align-items: center;
