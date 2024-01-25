@@ -262,52 +262,6 @@
     #custom_invoice_checkbox {      
       #want_invoice_field {
         margin-top: 27px;
-
-        input[type="checkbox"] {
-          display: none;
-
-          & + span {
-            margin-left: 0;
-            position: relative;
-            padding-left: 30px;
-            cursor: pointer;
-            @extend #{'.paragraph','.paragraph-l', '.semibold'};
-  
-            &:before {
-              content: '';
-              position: absolute;
-              top: 50%;
-              left: 0;
-              transform: translateY(-50%);
-              width: 18px;
-              height: 18px;
-              border-radius: $radius-thin;
-              background-color: transparent;
-              border: 1px solid $G-3;
-            }
-
-            &:after {
-              content: '';
-              position: absolute;
-              top: 50%;
-              left: 5px;
-              transform: translateY(-50%);
-              width: 8px;
-              height: 8px;
-              border-radius: 2px;
-              background-color: transparent;
-              background-color: $b-primary;
-              opacity: 0;
-              transition: opacity 0.3s;
-            }
-          }
-    
-          &:checked {
-            & + span:after {
-              opacity: 1;
-            }
-          }
-        }
       }
     }
 
@@ -349,53 +303,6 @@
 
           & + label:after {
             opacity: 1 !important;
-          }
-        }
-      }
-
-      &[type="checkbox"] {
-        display: none;
-
-        & + span {
-          margin-left: 0;
-          position: relative;
-          padding-left: 30px !important;
-          transition: color 0.3s;
-          cursor: pointer;
-
-          &:before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 0;
-            transform: translateY(-50%);
-            width: 18px;
-            height: 18px;
-            color: transparent !important;
-            border-radius: $radius-thin;
-            background-color: $G-0;
-            border: 1px solid $G-3;
-          }
-
-          &:after {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 3px;
-            transform: translateY(-50%);
-            width: 12px;
-            height: 12px;
-            color: transparent !important;
-            border-radius: 2px;
-            background-color: $b-primary;
-            opacity: 0;
-            transition: opacity 0.22s;
-          }
-        }
-
-        &:checked {
-          & + span:after {
-            opacity: 1;
           }
         }
       }

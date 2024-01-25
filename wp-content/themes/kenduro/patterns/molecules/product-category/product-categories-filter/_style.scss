@@ -109,3 +109,54 @@
     padding-top: 0;
   }
 }
+
+.mobile-modal {
+  .modal-header,
+  .modal-body {
+    padding: 15px;
+  }
+
+  .modal-body {
+    height: calc(100vh - 100px);
+    flex-direction: column;
+    align-items: baseline;
+    gap: 15px;
+    overflow: auto;
+
+    #cat-filters,
+    #cat-filters + .yith-wcan-filters form {
+      width: 100%;
+      flex-direction: column; 
+    }
+
+    .yith-wcan-filters,
+    .filters-container,
+    form,
+    .yith-wcan-filter {
+      width: 100%;
+    }
+
+    .filter-content {
+      border: none;
+      padding: 0;
+      top: 0;
+      display: block;
+      position: relative;
+
+      li {
+        border-bottom-style: dashed;
+      }
+    }
+
+    .filter-title {
+      border: none;
+      background: none;
+      font-size: 16px;
+      padding: 0 0 5px 0;
+      border-bottom: 1px solid;
+      border-radius: 0;
+      margin-bottom: 5px;
+      margin-top: 15px;
+    }
+  }
+}

@@ -262,3 +262,53 @@ h4,
 .onsale {
   display: none;
 }
+
+// checkboxes
+input[type="checkbox"] {
+  display: none;
+
+  & + span,
+  & + a {
+    margin-left: 0;
+    position: relative;
+    padding-left: 30px;
+    cursor: pointer;
+    @extend #{'.paragraph','.paragraph-l', '.semibold'};
+
+    &:before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 0;
+      transform: translateY(-50%);
+      width: 18px;
+      height: 18px;
+      border-radius: $radius-thin;
+      background-color: transparent;
+      border: 1px solid $G-3;
+    }
+
+    &:after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 3px;
+      transform: translateY(-50%);
+      width: 12px;
+      height: 12px;
+      border-radius: 2px;
+      background-color: transparent;
+      background-color: $b-primary;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+  }
+
+  &:checked,
+  &[checked="checked"] {
+    & + span:after,
+    & + a:after {
+      opacity: 1;
+    }
+  }
+}

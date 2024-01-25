@@ -78,7 +78,39 @@ do_action('woocommerce_before_main_content');
 					'cat_img_inner' => $cat_inner_image_url
 				]);
 				Load::molecules('product-category/product-categories-view/index');
-				Load::molecules('product-category/product-categories-filter/index');
+				if (wp_is_mobile()) {
+				?>
+					<!-- Button trigger modal -->
+					<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#filterModal">
+						Filters
+					</button>
+
+					<!-- Modal -->
+					<div class="modal fade mobile-modal" id="filterModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+						<div class="modal-dialog modal-dialog-centered" role="document">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h5 class="modal-title" id="exampleModalLongTitle">Filters</h5>
+									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+									</button>
+								</div>
+								<div class="modal-body">
+									<?php
+										Load::molecules('product-category/product-categories-filter/index');
+									?>
+								</div>
+								<!-- <div class="modal-footer">
+									<button type="button" class="button btn-secondary" data-dismiss="modal">Close</button>
+									<button type="button" class="button btn-primary">Save changes</button>
+								</div> -->
+							</div>
+						</div>
+					</div>
+				<?php
+				} else {
+					Load::molecules('product-category/product-categories-filter/index');
+				}
 			} else {
 				Load::molecules('product-category/product-category-info/index', [
 					'title' => 'ALL PRODUCTS',
