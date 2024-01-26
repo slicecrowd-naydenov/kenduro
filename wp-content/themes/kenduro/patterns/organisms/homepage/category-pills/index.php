@@ -15,7 +15,7 @@ if ($main_categories) : ?>
       <div class="col">
         <?php
           Load::atoms('link/index', [
-            'text' => 'Browse All Products',
+            'text' => 'Разгледай всички Продукти',
             'class' => 'underline',
             'url' => 'shop',
             'icon' => 'arrow_down'
@@ -57,7 +57,7 @@ if ($main_categories) : ?>
             <a href="<?php echo esc_attr(get_site_url()); ?>/shop" class="cat-img">
               <img src="<?php echo IMAGES_PATH; ?>/categories/Image=Grey, For=All Products@2x.jpg" />
               <h4>
-                Browse <strong>all</strong> Kenduro products
+                Разгледайте <strong>всички</strong> Kenduro продукти
                 <?php Load::atom('svg', ['name' => 'arrow_xl']); ?>
               </h4>
             </a>
@@ -75,7 +75,7 @@ if ($main_categories) : ?>
                 <a href="<?php echo esc_url(get_site_url() . '/product-category/'.$main_category->slug.'/')?>" class="cat-img">
                   <img src="<?php echo $image_url; ?>" />
                   <h4>
-                    Browse all <strong><?php echo $main_category->name; ?></strong> products
+                    Разгледайте всички <strong><?php echo $main_category->name; ?></strong> продукти
                     <?php Load::atom('svg', ['name' => 'arrow_xl']); ?>
                   </h4>
                 </a>

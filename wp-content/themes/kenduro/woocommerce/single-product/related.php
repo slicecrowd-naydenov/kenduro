@@ -70,7 +70,7 @@ if ($related_prod) :
 				<p class="paragraph paragraph-xl semibold primary">Popular in <?php echo $innermost_category_name; ?></p>
 				<?php
 				Load::atoms('link/index', [
-					'text' => 'Browse All Products',
+					'text' => 'Разгледай всички Продукти',
 					'class' => 'underline',
 					'url' => get_site_url() . '/product-category/' . $innermost_category_slug,
 					'icon' => 'arrow_down'

@@ -64,6 +64,10 @@
 }
 
 .woocommerce-checkout {
+  .cart-customlocation {
+    display: none !important;
+  }
+  
   .woocommerce {
     padding-top: 50px;
 

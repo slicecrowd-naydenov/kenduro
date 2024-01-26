@@ -60,6 +60,26 @@
           display: flex;
         }
       }
+
+      #yith-s {
+        height: 40px;
+        padding: 0 8px 0 40px;
+        border: 1px solid $G-1-5;
+        transition: border-color 0.2s ease;
+        background-color: $G-0-5;
+        background-image: url('../../assets/icons/svg/search.svg');
+        background-position: center left 15px;
+        background-repeat: no-repeat;
+        margin: 0;
+        
+        &:focus {
+          border-color: $b-primary;
+        }
+      }
+
+      #yith-searchsubmit {
+        display: none;
+      }
     }
   }
 

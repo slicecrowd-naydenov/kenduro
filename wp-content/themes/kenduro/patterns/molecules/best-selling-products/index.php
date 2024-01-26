@@ -22,7 +22,7 @@ if ($best_selling_query->have_posts()) { ?>
     <div class="container">
       <div class="row">
         <div class="col">
-          <p class="paragraph paragraph-xl semibold primary title">Top Sellers Last Week</p>
+          <p class="paragraph paragraph-xl semibold primary title">Най-продавани миналата седмица</p>
           <div class="swiper" data-slider>
             <ul class="swiper-wrapper">
               <?php

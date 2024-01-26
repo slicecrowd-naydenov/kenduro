@@ -166,9 +166,9 @@ do_action('woocommerce_before_main_content');
 			}
 			// echo do_shortcode('[wrvp_recently_viewed_products number_of_products_in_row="4" posts_per_page="4"]');
             Load::molecules('product-category/product-category-info/index', [
-              'title' => '<span class="highlighted">K</span>enduro is crafted by Teo',
+              'title' => '<span class="highlighted">K</span>enduro е изработен от Teo',
               'class' => 'full-width-container',
-              'description' => 'Teo Kabakchiev, a world-renowned hard enduro rider, leads Kenduro.com with an unwavering passion, ensuring our unwavering commitment to top-tier services and quality.'
+              'description' => 'Тео Кабакчиев, световноизвестен хард ендуро състезател, ръководи Kenduro.com с непоколебима страст, гарантирайки нашия непоколебим ангажимент към услуги и качество от най-високо ниво.'
             ]);
 
             // echo do_shortcode('[products limit="12" columns="5" best_selling="true"]');

@@ -2,8 +2,8 @@
   <div class="container">
     <div class="row">
       <div class="col">
-        <p class="paragraph paragraph-xl semibold">Exclusive brands</p>
-        <p class="paragraph paragraph-m regular tetriary">Kenduro is an exclusive reseller of one the finest enduro brand in the world. You won’t be able to find a better price for these brands.</p>
+        <p class="paragraph paragraph-xl semibold">Ексклузивни Марки</p>
+        <p class="paragraph paragraph-m regular tetriary">Kenduro е изключителен дистрибутор на една от най-добрите ендуро марки в света. Няма да можете да намерите по-добра цена за тези марки.</p>
         <ul class="brands-list">
           <li class="brands-list__item">
             <img src="<?php echo IMAGES_PATH; ?>/hebo.png" alt="hebo">

@@ -70,16 +70,16 @@
             <div class="hero-banner__box">
               <div>
                 <div class="hero-banner__header">
-                  <p class="paragraph paragraph-xl semibold primary">Approved by Teo ✊</p>
+                  <p class="paragraph paragraph-xl semibold primary">Одобрено от Teo ✊</p>
                 </div>
                 <p class="paragraph paragraph-m regular primary info">
-                  <b>Teo Kabakchiev</b>
-                  , a world-renowned hard enduro rider, leads Kenduro.com with an unwavering passion, ensuring our unwavering commitment to top-tier services and quality. 
+                  <b>Тео Кабакчиев</b>
+                  , световноизвестен хард ендуро състезател, ръководи Kenduro.com с непоколебима страст, гарантирайки нашия непоколебим ангажимент към първокласни услуги и качество. 
                   <?php 
-                    Load::atoms('link/index', [
-                      'text' => 'Learn more',
-                      'url' => '#'
-                    ]); 
+                    // Load::atoms('link/index', [
+                    //   'text' => 'Learn more',
+                    //   'url' => '#'
+                    // ]); 
                   ?>
                 </p>
               </div>

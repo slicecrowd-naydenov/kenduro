@@ -16,7 +16,7 @@ function woocommerce_header_add_to_cart_fragment($fragments) {
 ?>
   <a class="cart-customlocation" href="<?php echo esc_url(wc_get_cart_url()); ?>" title="<?php _e('View your shopping cart', 'woothemes'); ?>">
     <span class="cart-icon"><?php Load::atom('svg', ['name' => 'cart']); ?></span>
-    <span class="text">Cart :</span>
+    <span class="text">Количка :</span>
     <?php echo $woocommerce->cart->get_cart_total(); ?></a>
 <?php
   $fragments['a.cart-customlocation'] = ob_get_clean();

@@ -15,10 +15,10 @@ $term_ids = rtrim($term_ids, ', ');
     <div class="col">
       <div class="popular-categories">
         <div class="popular-categories__header">
-          <p class="paragraph paragraph-xl semibold primary">Popular Categories</p>
+          <p class="paragraph paragraph-xl semibold primary">Популярни Категории</p>
           <?php 
             Load::atoms('link/index', [
-              'text' => 'Browse All Products',
+              'text' => 'Разгледай всички Продукти',
               'class' => 'underline',
               'url' => 'shop',
               'icon' => 'arrow_down'
