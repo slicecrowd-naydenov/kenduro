@@ -116,8 +116,13 @@
     padding: 15px;
   }
 
+  .close {
+    padding: 10px;
+    background-color: transparent;
+  }
+
   .modal-body {
-    height: calc(100vh - 100px);
+    height: calc(100vh - 200px);
     flex-direction: column;
     align-items: baseline;
     gap: 15px;

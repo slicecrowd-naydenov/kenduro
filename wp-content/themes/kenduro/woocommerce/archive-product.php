@@ -92,7 +92,7 @@ do_action('woocommerce_before_main_content');
 								<div class="modal-header">
 									<h5 class="modal-title" id="exampleModalLongTitle">Filters</h5>
 									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-										<span aria-hidden="true">&times;</span>
+										<?php Load::atom('svg', ['name' => 'close']); ?>
 									</button>
 								</div>
 								<div class="modal-body">
