@@ -129,6 +129,13 @@
       display: none;
     }
   }
+
+  .nav-pills {
+    @include media-breakpoint-down(lg) {
+      transform: none !important;
+      top: 100% !important;
+    }
+  }
 }
 
 .nav-pills {

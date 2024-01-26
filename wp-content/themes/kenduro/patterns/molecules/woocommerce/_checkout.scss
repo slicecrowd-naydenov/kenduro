@@ -67,7 +67,17 @@
   .cart-customlocation {
     display: none !important;
   }
-  
+
+  .optional {
+    font-size: 0;
+
+    &:after {
+      content: '(препоръчително)';
+      display: inline-block;
+      @extend #{'.paragraph','.paragraph-l', '.inactive'};
+    }
+  }
+
   .woocommerce {
     padding-top: 50px;
 

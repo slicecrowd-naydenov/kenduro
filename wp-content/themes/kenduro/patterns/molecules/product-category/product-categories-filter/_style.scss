@@ -76,9 +76,10 @@
 
     .filter-content {
       display: none;
-      border: 1px solid $G-8;
+      border: 1px solid $G-3;
+      border-radius: $radius-medium;
       position: absolute;
-      min-width: 200px;
+      min-width: 215px;
       left: 0;
       top: calc(100% - 20px);
       padding: 8px 10px;
@@ -111,7 +112,9 @@
 }
 
 .mobile-wrapper {
-  margin-bottom: 28px;
+  @include media-breakpoint-down(lg) {
+    margin-bottom: 28px;
+  }
 
   @include media-breakpoint-down(lg) {
     display: flex;

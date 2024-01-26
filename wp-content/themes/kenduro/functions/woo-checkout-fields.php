@@ -15,11 +15,17 @@ function wc_unrequire_fields($fields) {
 add_filter('woocommerce_billing_fields', 'wc_unrequire_fields');
 
 
-function wc_reorder_form($fields) {
+function wc_edit_checkout_fields($fields) {
+  $fields['billing']['billing_first_name']['label'] = 'Име';
   $fields['billing']['billing_first_name']['placeholder'] = 'Теодор';
+  $fields['billing']['billing_last_name']['label'] = 'Фамилия';
   $fields['billing']['billing_last_name']['placeholder'] = 'Кабакчиев';
+  $fields['billing']['billing_phone']['label'] = 'Телефон';
   $fields['billing']['billing_phone']['placeholder'] = '0888 888 888';
+  $fields['billing']['billing_email']['label'] = 'Имейл';
   $fields['billing']['billing_email']['placeholder'] = 'teo@kabakchiev.net';
+  $fields['order']['order_comments']['label'] = 'Коментар по поръчката';
+  $fields['order']['order_comments']['placeholder'] = '';
 
   $fields['billing']['billing_phone']['priority'] = 21;
   $fields['billing']['billing_email']['priority'] = 22;
@@ -34,7 +40,7 @@ function wc_reorder_form($fields) {
 
   return $fields;
 }
-add_filter('woocommerce_checkout_fields', 'wc_reorder_form');
+add_filter('woocommerce_checkout_fields', 'wc_edit_checkout_fields');
 
 
 add_action('woocommerce_after_order_notes', 'custom_invoice_fields');
