@@ -45,7 +45,7 @@ $product = wc_get_product();
 		?>
 	</p>
 	<span class="woocommerce-variation-sku-number paragraph paragraph-m">
-		Prod. № : 
+		Продукт № : 
 		<span class="sku-value">
 			<?php 
 				if ( !$product->is_type( 'variable' ) ) {

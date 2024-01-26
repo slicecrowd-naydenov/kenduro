@@ -67,7 +67,7 @@ if ($related_prod) :
 	<section class="related products">
 		<div class="popular-categories">
 			<div class="popular-categories__header">
-				<p class="paragraph paragraph-xl semibold primary">Popular in <?php echo $innermost_category_name; ?></p>
+				<p class="paragraph paragraph-xl semibold primary">Популярни в <?php echo $innermost_category_name; ?></p>
 				<?php
 				Load::atoms('link/index', [
 					'text' => 'Разгледай всички Продукти',

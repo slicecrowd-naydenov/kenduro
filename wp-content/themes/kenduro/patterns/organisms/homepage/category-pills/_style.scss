@@ -133,6 +133,7 @@
   .nav-pills {
     @include media-breakpoint-down(lg) {
       transform: none !important;
+      padding-right: 15px;
       top: 100% !important;
     }
   }
