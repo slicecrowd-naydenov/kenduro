@@ -17,9 +17,9 @@ $args = array(
 $main_categories = get_terms($args);
 ?>
 <div class="dropdown">
-  <p class="paragraph paragraph-xl semibold dropdown__head">All Products</p>
+  <p class="paragraph paragraph-xl semibold dropdown__head">Всички Продукти</p>
   <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-    All Categories
+    Категории
   </button>
   <ul class="nav nav-pills product-categories-view dropdown-menu" role="tablist" aria-labelledby="dropdownMenuButton">
     <?php
@@ -27,7 +27,7 @@ $main_categories = get_terms($args);
       ?>
         <li class="nav-item">
           <a href="<?php echo esc_url(get_site_url() .'/shop')?>" class="nav-link active">
-            All Categories
+            Всички Категории
           </a>
         </li>
       <?php

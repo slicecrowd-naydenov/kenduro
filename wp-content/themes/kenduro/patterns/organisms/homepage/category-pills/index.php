@@ -22,9 +22,9 @@ if ($main_categories) : ?>
           ]); 
         ?>
         <div class="dropdown">
-          <p class="paragraph paragraph-xl semibold dropdown__head">Kenduro Products</p>
+          <p class="paragraph paragraph-xl semibold dropdown__head">Kenduro Продукти</p>
           <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            All Products
+            Всички Продукти
           </button>
           <!-- <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
             <a class="dropdown-item" href="#">Action</a>
@@ -33,7 +33,7 @@ if ($main_categories) : ?>
           </div> -->
           <ul class="nav nav-pills dropdown-menu" id="pills-tab" role="tablist" aria-labelledby="dropdownMenuButton">
             <li class="nav-item" role="presentation">
-              <button class="paragraph paragraph-l nav-link active" id="pills-all-tab" data-bs-toggle="pill" data-bs-target="#pills-all" type="button" role="tab" aria-controls="pills-all" aria-selected="true">All</button>
+              <button class="paragraph paragraph-l nav-link active" id="pills-all-tab" data-bs-toggle="pill" data-bs-target="#pills-all" type="button" role="tab" aria-controls="pills-all" aria-selected="true">Всички</button>
             </li>
             <?php foreach ($main_categories as $main_category) :
               // pretty_dump($main_category);

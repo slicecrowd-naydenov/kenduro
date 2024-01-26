@@ -16,7 +16,7 @@ $main_categories = get_terms($args);
     <div class="row">
       <div class="col">
         <nav id="site-navigation" class="main-navigation" role="navigation" aria-label="Primary Navigation">
-          <button id="site-navigation-menu-toggle" class="menu-toggle" aria-controls="site-navigation" aria-expanded="false"><span>Menu</span></button>
+          <button id="site-navigation-menu-toggle" class="menu-toggle" aria-controls="site-navigation" aria-expanded="false"><span>Меню</span></button>
           <div class="primary-navigation">
             <div id="mobile-nav" class="mobile-nav">
               <div class="mobile-nav__search">

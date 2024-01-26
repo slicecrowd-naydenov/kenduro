@@ -77,12 +77,15 @@ do_action('woocommerce_before_main_content');
 					'cat' => single_term_title('', false),
 					'cat_img_inner' => $cat_inner_image_url
 				]);
+				?>
+				<div class="mobile-wrapper">
+				<?php
 				Load::molecules('product-category/product-categories-view/index');
 				if (wp_is_mobile()) {
 				?>
 					<!-- Button trigger modal -->
-					<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#filterModal">
-						Filters
+					<button type="button" class="button" data-toggle="modal" data-target="#filterModal">
+						Филтри
 					</button>
 
 					<!-- Modal -->
@@ -90,7 +93,7 @@ do_action('woocommerce_before_main_content');
 						<div class="modal-dialog modal-dialog-centered" role="document">
 							<div class="modal-content">
 								<div class="modal-header">
-									<h5 class="modal-title" id="exampleModalLongTitle">Filters</h5>
+									<h5 class="modal-title" id="exampleModalLongTitle">Филтри</h5>
 									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 										<?php Load::atom('svg', ['name' => 'close']); ?>
 									</button>
@@ -111,6 +114,9 @@ do_action('woocommerce_before_main_content');
 				} else {
 					Load::molecules('product-category/product-categories-filter/index');
 				}
+				?>
+				</div>
+				<?php
 			} else {
 				Load::molecules('product-category/product-category-info/index', [
 					'title' => 'ALL PRODUCTS',
