@@ -489,6 +489,11 @@ function create_woocommerce_products($filteredData) {
 	$filter_boot_size_slug = get_column_field_id('filter_boot_size', $product_variations_fields);
 	$filter_backpack_size_slug = get_column_field_id('filter_backpack_size', $product_variations_fields);
 	$filter_handlebar_rise_slug = get_column_field_id('filter_handlebar_rise', $product_variations_fields);
+	$filter_tire_inch_size_slug = get_column_field_id('filter_tire_inch_size', $product_variations_fields);
+	$filter_tire_placement_slug = get_column_field_id('filter_tire_placement', $product_variations_fields);
+	$filter_tire_terrain_slug = get_column_field_id('filter_tire_terrain', $product_variations_fields);
+	$filter_tire_width_height_slug = get_column_field_id('filter_tire_width_height', $product_variations_fields);
+	$filter_persona_slug = get_column_field_id('filter_persona', $product_variations_fields);
 	$prduct_sku = get_column_field_id('set_sku', $product_fields);
 	$name_bg = get_column_field_id('product_name_bg', $product_fields);
   $product_var_id = get_column_field_id('product_var_id', $product_fields);
@@ -527,6 +532,11 @@ function create_woocommerce_products($filteredData) {
         processFilter($pid, $incoming_id, $filter_boot_size_slug, $product_variations_fields);
         processFilter($pid, $incoming_id, $filter_backpack_size_slug, $product_variations_fields);
         processFilter($pid, $incoming_id, $filter_handlebar_rise_slug, $product_variations_fields);
+        processFilter($pid, $incoming_id, $filter_tire_inch_size_slug, $product_variations_fields);
+        processFilter($pid, $incoming_id, $filter_tire_placement_slug, $product_variations_fields);
+        processFilter($pid, $incoming_id, $filter_tire_terrain_slug, $product_variations_fields);
+        processFilter($pid, $incoming_id, $filter_tire_width_height_slug, $product_variations_fields);
+        processFilter($pid, $incoming_id, $filter_persona_slug, $product_variations_fields);
 
       } else {
         // $name_text = isset($item[$name_bg]) ? $item[$name_bg] : '';
