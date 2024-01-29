@@ -116,7 +116,7 @@ $main_categories = get_terms($args);
                         <?php endforeach; ?>
                         <li class="main-category-link">
                           <a href="<?php echo esc_url($category_link); ?>">
-                            View all products in <?php echo $main_category->name; ?>
+                            Виж всички продукти в категория "<?php echo $main_category->name; ?>"
                             <span>
                               <?php Load::atom('svg', ['name' => 'arrow_down']); ?>
                             </span>

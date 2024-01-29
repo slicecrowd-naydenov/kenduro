@@ -68,11 +68,15 @@ function create_woocommerce_categories($filteredData) {
   ));
 
   global $ss_ids;
+  $main_category_id = $ss_ids['main_category_id'];
   $child_category_id = $ss_ids['child_category_id'];
   $sub_child_category_id = $ss_ids['sub_child_category_id'];
+  $main_cat_fields = fetch_column_fields($main_category_id);
   $child_cat_fields = fetch_column_fields($child_category_id);
   $sub_child_cat_fields = fetch_column_fields($sub_child_category_id);
-
+  $main_title_bg = get_column_field_id('main_title_bg', $main_cat_fields);
+  $child_title_bg = get_column_field_id('child_title_bg', $child_cat_fields);
+  $sub_child_title_bg = get_column_field_id('sub_child_title_bg', $sub_child_cat_fields);
   $cat_main = get_column_field_id('cat_main', $child_cat_fields);
   $cat_child = get_column_field_id('cat_child', $sub_child_cat_fields);
 
@@ -80,13 +84,15 @@ function create_woocommerce_categories($filteredData) {
     $incoming_id = $item['id'];
     $is_exist = is_exist_cat($incoming_id, $all_categories);
     $is_child = (isset($item[$cat_main][0])) ? is_exist_cat($item[$cat_main][0], $all_categories) : (isset(($item[$cat_child][0])) ? is_exist_cat($item[$cat_child][0], $all_categories) : 0);
+    $bg_name = (isset($item[$main_title_bg])) ? $item[$main_title_bg] : (isset(($item[$child_title_bg])) ? $item[$child_title_bg] : $item[$sub_child_title_bg]);
 
     if (!$is_exist) {
       $new_id = wp_insert_term(
-        $item['title'], // the term 
+        $bg_name, // the term 
         'product_cat',
         array(
-          'parent' => $is_child
+          'parent' => $is_child,
+          'slug' => $item['title']
         )
       );
 
@@ -97,6 +103,9 @@ function create_woocommerce_categories($filteredData) {
 
     if ($is_exist) {
       update_acf($item, $is_exist, true);
+      wp_update_term($is_exist, 'product_cat', array(
+        'name' => $bg_name
+      ));
     }
   }
 }
