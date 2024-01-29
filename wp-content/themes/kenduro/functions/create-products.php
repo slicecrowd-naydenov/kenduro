@@ -241,15 +241,12 @@ function set_values($fields, $product_id, $item) {
   $product = wc_get_product($product_id);
   $filtered_data = array();
   $handlesToKeep = array();
-  $brand_text = '';
   $name_bg = '';
 
   foreach ($fields as $field) {
 
     if ($field['help_text'] === 'set_name') {
       $product->set_name($item['title']);
-    } else if ($field['help_text'] === 'brand_text') {
-      $brand_text = $item[$field['slug']];
     } else if ($field['help_text'] === 'product_name_bg') {
       $name_bg = $item[$field['slug']];
     } else if ($field['help_text'] === 'set_regular_price') {
@@ -287,7 +284,7 @@ function set_values($fields, $product_id, $item) {
 
   add_img_to_gallery($product_id, $handlesToKeep); 
 
-  $product->set_name($brand_text . ' ' . $name_bg);
+  $product->set_name($name_bg);
 
   $product->save();
 }
@@ -496,7 +493,6 @@ function create_woocommerce_products($filteredData) {
 	$filter_backpack_size_slug = get_column_field_id('filter_backpack_size', $product_variations_fields);
 	$filter_handlebar_rise_slug = get_column_field_id('filter_handlebar_rise', $product_variations_fields);
 	$prduct_sku = get_column_field_id('set_sku', $product_fields);
-	$brand_text = get_column_field_id('brand_text', $product_fields);
 	$name_bg = get_column_field_id('product_name_bg', $product_fields);
   $product_var_id = get_column_field_id('product_var_id', $product_fields);
 
@@ -513,11 +509,10 @@ function create_woocommerce_products($filteredData) {
       // if Product no exists
       if (is_variable_product($incoming_id, $product_id_slug, $product_variation_slug)) {
         
-        $brand = isset($item[$brand_text]) ? $item[$brand_text] : '';
         $name_text = isset($item[$name_bg]) ? $item[$name_bg] : '';
         $variations = new WC_Product_Variable();
 
-        $variations->set_name($brand . ' ' . $name_text);
+        $variations->set_name($name_text);
         $variations->set_sku($item[$prduct_sku]);
         
         $variations->save();
@@ -537,10 +532,9 @@ function create_woocommerce_products($filteredData) {
         processFilter($pid, $incoming_id, $filter_handlebar_rise_slug, $product_variations_fields);
 
       } else {
-        $brand = isset($item[$brand_text]) ? $item[$brand_text] : '';
         $name_text = isset($item[$name_bg]) ? $item[$name_bg] : '';
         $simple_product = new WC_Product_Simple();
-        $simple_product->set_name($brand . ' ' . $name_text); // product title
+        $simple_product->set_name($name_text); // product title
         $simple_product->set_status('publish'); // product title
         $p_id = $simple_product->save();
 
