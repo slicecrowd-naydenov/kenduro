@@ -241,14 +241,11 @@ function set_values($fields, $product_id, $item) {
   $product = wc_get_product($product_id);
   $filtered_data = array();
   $handlesToKeep = array();
-  $name_bg = '';
 
   foreach ($fields as $field) {
 
-    if ($field['help_text'] === 'set_name') {
-      $product->set_name($item['title']);
-    } else if ($field['help_text'] === 'product_name_bg') {
-      $name_bg = $item[$field['slug']];
+    if ($field['help_text'] === 'product_name_bg') {
+      $product->set_name($item[$field['slug']]);
     } else if ($field['help_text'] === 'set_regular_price') {
       $product->set_regular_price($item[$field['slug']]);
     } else if ($field['help_text'] === 'product_description_bg') {
@@ -284,7 +281,7 @@ function set_values($fields, $product_id, $item) {
 
   add_img_to_gallery($product_id, $handlesToKeep); 
 
-  $product->set_name($name_bg);
+  // $product->set_name($name_bg);
 
   $product->save();
 }
@@ -509,10 +506,10 @@ function create_woocommerce_products($filteredData) {
       // if Product no exists
       if (is_variable_product($incoming_id, $product_id_slug, $product_variation_slug)) {
         
-        $name_text = isset($item[$name_bg]) ? $item[$name_bg] : '';
+        // $name_text = isset($item[$name_bg]) ? $item[$name_bg] : '';
         $variations = new WC_Product_Variable();
 
-        $variations->set_name($name_text);
+        $variations->set_name($item[$name_bg]);
         $variations->set_sku($item[$prduct_sku]);
         
         $variations->save();
@@ -532,9 +529,9 @@ function create_woocommerce_products($filteredData) {
         processFilter($pid, $incoming_id, $filter_handlebar_rise_slug, $product_variations_fields);
 
       } else {
-        $name_text = isset($item[$name_bg]) ? $item[$name_bg] : '';
+        // $name_text = isset($item[$name_bg]) ? $item[$name_bg] : '';
         $simple_product = new WC_Product_Simple();
-        $simple_product->set_name($name_text); // product title
+        $simple_product->set_name($item[$name_bg]); // product title
         $simple_product->set_status('publish'); // product title
         $p_id = $simple_product->save();
 
