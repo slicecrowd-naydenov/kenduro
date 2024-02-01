@@ -64,6 +64,13 @@ function trigger_ajax_to_cart() {
         if (variation_option.hasClass('cfvsw-swatches-disabled')) {
           variation_option.removeClass('cfvsw-swatches-disabled');
         }
+        let tyre_inch_size = $('#pa_6595243a37ed0de3a4b3ae1c');
+        let tyre_placement = $('#pa_6595244a28efc03f09ca0e63');
+        let tyre_type = $('#pa_659524527b8cf849288731f3');
+
+        tyre_inch_size.parents('tr').hide();
+        tyre_placement.parents('tr').hide();
+        tyre_type.parents('tr').hide();
       });
 
       let productEl = '';
