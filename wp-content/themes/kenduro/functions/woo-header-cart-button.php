@@ -64,26 +64,6 @@ function trigger_ajax_to_cart() {
         if (variation_option.hasClass('cfvsw-swatches-disabled')) {
           variation_option.removeClass('cfvsw-swatches-disabled');
         }
-
-        // if (variation_option) {
-        //   for (let index = 0; index < variation_option.length; index++) {
-        //     const element = variation_option[index];
-        //     $(element).trigger('click');
-            
-        //   }
-        //   // console.log(variation_option);
-        // }
-
-        let choose_first_available_el = $('.cfvsw-swatches-option:not(.cfvsw-swatches-blur-disable):first');
-
-        if (choose_first_available_el.length > 0) {
-          let choose_first_available_el_timeout;
-          clearTimeout(choose_first_available_el_timeout);
-          choose_first_available_el_timeout = setTimeout(() => {
-            choose_first_available_el.trigger('click');
-          }, 1000);
-            // console.log(variation_option);
-        }
       });
 
       let productEl = '';

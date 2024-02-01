@@ -47,21 +47,23 @@ if ( post_password_required() ) {
 	<div class="summary entry-summary">
 		<?php
   	$meta_fields = get_field("meta_data", $product->get_id());
-		foreach ($meta_fields as $meta_field) {
-			if (get_site_url() === 'http://kenduro.test') {
-				if ($meta_field['key'] === 's76de0814b') {
-					if ($meta_field['value'] !== '') {
-						?>
-						<p class="paragraph paragraph-xl semibold text-underline"><?php echo $meta_field['value']; ?></p>
-						<?php
+		if ($meta_fields) {
+			foreach ($meta_fields as $meta_field) {
+				if (get_site_url() === 'http://kenduro.test') {
+					if ($meta_field['key'] === 's76de0814b') {
+						if ($meta_field['value'] !== '') {
+							?>
+							<p class="paragraph paragraph-xl semibold text-underline"><?php echo $meta_field['value']; ?></p>
+							<?php
+						}
 					}
-				}
-			} else {
-				if ($meta_field['key'] === 's86366185a') {
-					if ($meta_field['value'] !== '') {
-						?>
-						<p class="paragraph paragraph-xl semibold text-underline"><?php echo $meta_field['value']; ?></p>
-						<?php
+				} else {
+					if ($meta_field['key'] === 's86366185a') {
+						if ($meta_field['value'] !== '') {
+							?>
+							<p class="paragraph paragraph-xl semibold text-underline"><?php echo $meta_field['value']; ?></p>
+							<?php
+						}
 					}
 				}
 			}

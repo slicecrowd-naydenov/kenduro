@@ -101,13 +101,16 @@ function create_woocommerce_filters($filteredData) {
   $filter_values = post_column_fields($ss_ids['filter_values']);
   $related_records = get_column_fields_related($ss_ids['filter_values']);
   $existing_ids = array_column($related_records['related_records'], 'id');
-  $filter_column_fields = fetch_column_fields($ss_ids['filter_values']);
-  $get_field_slug = get_column_field_id('filter_name', $filter_column_fields);
+  $filter_column_fields = fetch_column_fields($ss_ids['filters_id']);
+  $filter_values_column_fields = fetch_column_fields($ss_ids['filter_values']);
+  $get_field_slug = get_column_field_id('filter_name', $filter_values_column_fields);
+  $value_name_bg = get_column_field_id('value_name_bg', $filter_values_column_fields);
+  $filter_name_bg = get_column_field_id('filter_name_bg', $filter_column_fields);
   related_records($filter_values['items'], $get_field_slug, $existing_ids);
 
   foreach ($filteredData as $item) {
-		createAttribute($item['title'], $item['id']);
-    createAllTerms($filter_values['items'], $get_field_slug, $item['id']);
+		createAttribute($item[$filter_name_bg], $item['id']);
+    createAllTerms($filter_values['items'], $get_field_slug, $item['id'], $value_name_bg);
 
     // createAttribute('Colors', 'my-colors');
 		// createTerm('Green', 'my-green', 'my-colors', 20);
@@ -115,12 +118,12 @@ function create_woocommerce_filters($filteredData) {
   }
 }
 
-function createAllTerms($values, $field_slug, $item_id) {
+function createAllTerms($values, $field_slug, $item_id, $name_bg) {
   $count = 1; 
   foreach ($values as $value) {
     $count++;
     if ($value[$field_slug][0] === $item_id) {
-      createTerm($value['title'], $value['id'], $item_id, $count);
+      createTerm($value[$name_bg], $value['id'], $item_id, $count);
     }
   }
 }

@@ -252,11 +252,11 @@ function set_values($fields, $product_id, $item) {
       $html = isset($item[$field['slug']]['html']) ? $item[$field['slug']]['html'] : '';
       $product->set_description($html);
     } else if ($field['help_text'] === 'main_category') {
-      $filtered_data[] = is_exist_cat($item[$field['slug']][0], $all_categories);
+      $filtered_data[] = isset($item[$field['slug']][0]) ? is_exist_cat($item[$field['slug']][0], $all_categories) : null;
     } else if ($field['help_text'] === 'child_category') {
-      $filtered_data[] = is_exist_cat($item[$field['slug']][0], $all_categories);
+      $filtered_data[] = isset($item[$field['slug']][0]) ? is_exist_cat($item[$field['slug']][0], $all_categories) : null;
     } else if ($field['help_text'] === 'sub_child_category') {
-      $filtered_data[] = is_exist_cat($item[$field['slug']][0], $all_categories);
+      $filtered_data[] = isset($item[$field['slug']][0]) ? is_exist_cat($item[$field['slug']][0], $all_categories) : null;
     } else if ($field['help_text'] === 'set_gallery_image_ids') {
       $imagesArr = $item[$field['slug']];
 
@@ -315,62 +315,87 @@ function is_variable_product($id, $product_id_slug, $product_variation_slug) {
   return $result;
 }
 
-function create_variation($pid, $term_slug, $filter_slug, $product_variations_fields) {
+function process_product_attributes($product_variation, $filters, $filter_arr, $filter_values) {
+  $attributes = array();
+
+  foreach ($product_variation as $key => $product_column) {
+    $active_filters = array_filter($filters, function ($filter) use ($key, $product_column) {
+      return $filter['slug'] === $key && count($product_column) > 0;
+    });
+    
+    if (count($active_filters) > 0) {
+      $active_filters_arr = array_filter($filter_arr['items'], function($f) use ($filter_values, $product_column) {
+        return (is_array($f[$filter_values]) && isset($product_column[0]) && in_array($product_column[0], $f[$filter_values]));
+      });
+
+      if (count($active_filters_arr) > 0) {
+        foreach ($active_filters_arr as $key => $active_filters_value) {
+          $attributes['pa_'.$active_filters_value['id']] = $product_column[0];
+        }
+      }
+    }
+  }
+
+  return $attributes;
+}
+
+function create_variation($pid, $term_slug, $product_variations_fields, $attributes_data) {
   global $product_variations, $ss_ids;
+  $filters = array_filter($product_variations_fields, function($k) {
+    return str_starts_with($k['help_text'], 'filter_');
+  });
+  $filters_id = fetch_column_fields($ss_ids['filters_id']);
+  $filter_values = get_column_field_id('filter_values', $filters_id);
+  $filter_arr = post_column_fields($ss_ids['filters_id']);
 	$product_variations_quantity = get_column_field_id('product_variations_quantity', $product_variations_fields);
-	$product_variation_sku = get_column_field_id('product_variation_sku', $product_variations_fields);
-	$get_filter_id = get_column_field_id('get_filter_id', $product_variations_fields);
+  $parent_product = wc_get_product($pid);
+  $parent_product_sku = $parent_product->get_sku();
 	$product_id_slug = get_column_field_id('product_variation', $product_variations_fields);
   $attr_color = get_column_field_id('attr_color', $product_variations_fields);
   $variation_product_id = get_column_field_id('variation_product_id', $product_variations_fields);
   $set_regular_price = get_column_field_id('set_regular_price', $product_variations_fields);
 
+  $filters = array_filter($product_variations_fields, function($k) {
+    return str_starts_with($k['help_text'], 'filter_');
+  });
+
   foreach ($product_variations['items'] as $product_variation) {
-    if (isset($product_variation[$filter_slug][0]) && $product_variation[$product_id_slug][0] === $term_slug) {
-      $attribute_value = isset($product_variation[$filter_slug][0]) ? $product_variation[$filter_slug][0] : null;
+    if ($product_variation[$product_id_slug][0] === $term_slug) {
       $quantity = isset($product_variation[$product_variations_quantity]) ? $product_variation[$product_variations_quantity] : 0;
-      $sku = isset($product_variation[$product_variation_sku]) ? $product_variation[$product_variation_sku] : 0;
       $stock_status = $quantity > 0 ? 'instock' : 'onbackorder';
       $manage_stock = $quantity > 0 ? true : false;
       $delivery_value = $manage_stock ? 'no' : 'notify';
-      // Set terms for the product
-      wp_set_object_terms($pid, array($attribute_value), $product_variation[$get_filter_id], true);
-
-      $is_set_color = isset($product_variation[$attr_color]);
-
-      // Define the attribute data
-      $attributes_data  = array(
-        $product_variation[$get_filter_id] => array(
-          'name' => $product_variation[$get_filter_id],
+      // $attributes_data = array();
+      $attributes = process_product_attributes($product_variation, $filters, $filter_arr, $filter_values);
+      
+      $sku = $parent_product_sku.'_';
+      foreach ($attributes as $key => $attr) {
+        wp_set_object_terms($pid, $attr, $key, true);
+        $sku.= strtoupper($attr.'_');
+        $attributes_data[$key] = array(
+          'name' => $key,
+          'value' => $attr,
           'is_visible' => '1',
           'is_taxonomy' => '1',
           'is_variation' => '1'
-        )
-      );
-
-      if ($is_set_color) {
-        // if is set Attr Color, add Attributes but not create variations
-        wp_set_object_terms($pid, array($product_variation[$attr_color]), 'pa_'.$ss_ids['filter_-_color_id'], true);
-
-        $attributes_data['pa_'.$ss_ids['filter_-_color_id']] = array(
-          'name' => 'pa_'.$ss_ids['filter_-_color_id'],
-          'is_visible' => '1',
-          'is_taxonomy' => '1'
         );
-      }
+      } 
       
       update_post_meta($pid, '_product_attributes', $attributes_data);
+      $sale_price = ''; // One day when we add Sale price in SS we have to replace this string with that field from SS
 
       // Create variation
       $variation = new WC_Product_Variation();
       $variation->set_parent_id($pid);
-      $variation->set_attributes(array($product_variation[$get_filter_id] => $attribute_value));
+      $variation->set_attributes($attributes);
       $variation->set_manage_stock($manage_stock);
       $variation->set_stock_status($stock_status);
       $variation->set_backorders($delivery_value);
       $variation->set_stock_quantity($quantity);
       $variation->set_sku($sku);
+      $variation->set_price($sale_price ? $sale_price : $product_variation[$set_regular_price]);
       $variation->set_regular_price($product_variation[$set_regular_price]);
+      $variation->set_sale_price($sale_price ? $sale_price : null);
       $variation->save();
 
       $variation_id = $variation->get_id();
@@ -430,48 +455,34 @@ function add_img_to_gallery($product_id,$image_id_array){
 function create_simple_product($pid, $term_slug, $product_fields) {
   global $product_variations, $ss_ids;
 	$product_variations_quantity = get_column_field_id('product_variations_quantity', $product_fields);
-	$delivery_time = get_column_field_id('delivery_time', $product_fields);
-  $attr_color = get_column_field_id('attr_color', $product_fields);
+  // $attr_color = get_column_field_id('attr_color', $product_fields);
 	$product_id_slug = get_column_field_id('product_variation', $product_fields);
   $set_regular_price = get_column_field_id('set_regular_price', $product_fields);
   $product_variation_sku = get_column_field_id('product_variation_sku', $product_fields);
   
   foreach ($product_variations['items'] as $product_variation) {
-    $is_set_color = isset($product_variation[$attr_color]);
-    if ($is_set_color && $product_variation[$product_id_slug][0] === $term_slug) {
+    // $is_set_color = isset($product_variation[$attr_color]) && $product_variation[$attr_color] !== '';
+    if ($product_variation[$product_id_slug][0] === $term_slug) {
       $quantity = isset($product_variation[$product_variations_quantity]) && (int)$product_variation[$product_variations_quantity] !== 0 ? (int)$product_variation[$product_variations_quantity] : 0;
       $stock_status = $quantity > 0 ? 'instock' : 'onbackorder';
       $manage_stock = $quantity > 0 ? true : false;
       $delivery_value = $manage_stock ? 'no' : 'notify';
   
       // Define the attribute data
-      $attributes_data = array();
+      // $attributes_data = array();
 
-      if ($is_set_color) {
-        // if is set Attr Color, add Attributes but not create variations
-        wp_set_object_terms($pid, array($product_variation[$attr_color]), 'pa_'.$ss_ids['filter_-_color_id'], true);
 
-        $attributes_data['pa_'.$ss_ids['filter_-_color_id']] = array(
-          'name' => 'pa_'.$ss_ids['filter_-_color_id'],
-          'is_visible' => '1',
-          'is_taxonomy' => '1'
-        );
-      }
+      $sale_price = ''; // One day when we add Sale price in SS we have to replace this string with that field from SS
       
-      update_post_meta($pid, '_product_attributes', $attributes_data);
       update_post_meta($pid, '_manage_stock', $manage_stock);
       update_post_meta($pid, '_stock_status', $stock_status);
       update_post_meta($pid, '_backorders', $delivery_value);
       update_post_meta($pid, '_stock', $quantity);
-      update_post_meta($pid, '_price', $product_variation[$set_regular_price]);
+      update_post_meta($pid, '_price', $sale_price ? $sale_price : $product_variation[$set_regular_price]);
+      update_post_meta($pid, '_regular_price', $product_variation[$set_regular_price]);
+      update_post_meta($pid, '_sale_price', $sale_price ? $sale_price : null);
       update_post_meta($pid, '_sku', $product_variation[$product_variation_sku]);
     }
-  }
-}
-
-function processFilter($pid, $incoming_id, $filter_slug, $product_variations_fields) {
-  if ($filter_slug) {
-    create_variation($pid, $incoming_id, $filter_slug, $product_variations_fields);
   }
 }
 
@@ -484,17 +495,8 @@ function create_woocommerce_products($filteredData) {
   
   $product_id_slug = get_column_field_id('product_variation', $product_variations_fields);
   $product_variation_slug = get_column_field_id('is_variation', $product_variations_fields);
-  $filter_helmet_size_slug = get_column_field_id('filter_helmet_size', $product_variations_fields);
-	$filter_clothing_size_slug = get_column_field_id('filter_clothing_size', $product_variations_fields);
-	$filter_boot_size_slug = get_column_field_id('filter_boot_size', $product_variations_fields);
-	$filter_backpack_size_slug = get_column_field_id('filter_backpack_size', $product_variations_fields);
-	$filter_handlebar_rise_slug = get_column_field_id('filter_handlebar_rise', $product_variations_fields);
-	$filter_tire_inch_size_slug = get_column_field_id('filter_tire_inch_size', $product_variations_fields);
-	$filter_tire_placement_slug = get_column_field_id('filter_tire_placement', $product_variations_fields);
-	$filter_tire_terrain_slug = get_column_field_id('filter_tire_terrain', $product_variations_fields);
-	$filter_tire_width_height_slug = get_column_field_id('filter_tire_width_height', $product_variations_fields);
-	$filter_persona_slug = get_column_field_id('filter_persona', $product_variations_fields);
 	$prduct_sku = get_column_field_id('set_sku', $product_fields);
+	$attr_color = get_column_field_id('color', $product_fields);
 	$name_bg = get_column_field_id('product_name_bg', $product_fields);
   $product_var_id = get_column_field_id('product_var_id', $product_fields);
 
@@ -511,7 +513,6 @@ function create_woocommerce_products($filteredData) {
       // if Product no exists
       if (is_variable_product($incoming_id, $product_id_slug, $product_variation_slug)) {
         
-        // $name_text = isset($item[$name_bg]) ? $item[$name_bg] : '';
         $variations = new WC_Product_Variable();
 
         $variations->set_name($item[$name_bg]);
@@ -523,31 +524,49 @@ function create_woocommerce_products($filteredData) {
         if (!is_wp_error($pid)) {
           $product_id = $pid;
         }
-        
+
+        $is_set_color = count($item[$attr_color]) > 0 ? $item[$attr_color][0] : '';
+        $attributes_data = array();
+        if ($is_set_color !== '') {
+          // if is set Attr Color, add Attributes but not create variations
+          wp_set_object_terms($pid, array($is_set_color), 'pa_'.$ss_ids['filter_-_color_id'], true);
+  
+          $attributes_data['pa_'.$ss_ids['filter_-_color_id']] = array(
+            'name' => 'pa_'.$ss_ids['filter_-_color_id'],
+            'is_visible' => '1',
+            'is_taxonomy' => '1'
+          );
+        }
+
+        // update_post_meta($pid, '_product_attributes', $attributes_data);
         set_values($product_fields, $pid, $item);
         update_acf($item, $pid, false);
-        
-        processFilter($pid, $incoming_id, $filter_clothing_size_slug, $product_variations_fields);
-        processFilter($pid, $incoming_id, $filter_helmet_size_slug, $product_variations_fields);
-        processFilter($pid, $incoming_id, $filter_boot_size_slug, $product_variations_fields);
-        processFilter($pid, $incoming_id, $filter_backpack_size_slug, $product_variations_fields);
-        processFilter($pid, $incoming_id, $filter_handlebar_rise_slug, $product_variations_fields);
-        processFilter($pid, $incoming_id, $filter_tire_inch_size_slug, $product_variations_fields);
-        processFilter($pid, $incoming_id, $filter_tire_placement_slug, $product_variations_fields);
-        processFilter($pid, $incoming_id, $filter_tire_terrain_slug, $product_variations_fields);
-        processFilter($pid, $incoming_id, $filter_tire_width_height_slug, $product_variations_fields);
-        processFilter($pid, $incoming_id, $filter_persona_slug, $product_variations_fields);
 
+        create_variation($pid, $incoming_id, $product_variations_fields, $attributes_data);
       } else {
-        // $name_text = isset($item[$name_bg]) ? $item[$name_bg] : '';
         $simple_product = new WC_Product_Simple();
         $simple_product->set_name($item[$name_bg]); // product title
-        $simple_product->set_status('publish'); // product title
+        $simple_product->set_status('publish');
         $p_id = $simple_product->save();
 
         if (!is_wp_error($p_id)) {
           $product_id = $p_id;
         }
+
+        $is_set_color = count($item[$attr_color]) > 0 ? $item[$attr_color][0] : '';
+        $attributes_data = array();
+        if ($is_set_color !== '') {
+          // if is set Attr Color, add Attributes but not create variations
+          wp_set_object_terms($p_id, array($is_set_color), 'pa_'.$ss_ids['filter_-_color_id'], true);
+  
+          $attributes_data['pa_'.$ss_ids['filter_-_color_id']] = array(
+            'name' => 'pa_'.$ss_ids['filter_-_color_id'],
+            'is_visible' => '1',
+            'is_taxonomy' => '1'
+          );
+        }
+        update_post_meta($p_id, '_product_attributes', $attributes_data);
+
 
         $item['product_variation_id'] = $item[$product_var_id];
         set_values($product_fields, $p_id, $item);
