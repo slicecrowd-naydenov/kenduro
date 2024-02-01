@@ -48,7 +48,7 @@ function trigger_ajax_to_cart() {
           $('.product-type-variable').find('.summary > .price').slideUp();
         }
         // console.log('variation_id: ', variation_id);
-        $('.sku-value').html(variation_sku);
+        $('.sku-value').html($('.sku').attr('data-o_content'));
         let variation_option = $('.cfvsw-swatches-option');
         if (variation_option.hasClass('cfvsw-swatches-disabled')) {
           variation_option.removeClass('cfvsw-swatches-disabled');

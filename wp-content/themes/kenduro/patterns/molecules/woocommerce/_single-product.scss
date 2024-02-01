@@ -236,8 +236,11 @@
           }
 
           .custom-stock {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+
             @include media-breakpoint-down(xl) {
-              display: flex;
               flex-direction: column;
               gap: 5px;
             }
@@ -255,7 +258,6 @@
           }
 
           .woocommerce-variation-sku-number {
-            margin-left: 5px;
             color: $text-tetriary;
           }
 
