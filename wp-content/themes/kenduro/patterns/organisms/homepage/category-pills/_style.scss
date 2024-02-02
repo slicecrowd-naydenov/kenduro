@@ -9,6 +9,7 @@
     position: absolute;
     right: 15px;
     top: 42px;
+    z-index: 1001;
 
     @include media-breakpoint-down(lg) {
       display: none;
@@ -141,6 +142,7 @@
 
 .nav-pills {
   margin: 35px 0 0 0;
+  row-gap: 5px;
   
   @include media-breakpoint-up(lg) {
     padding: 0 150px 0 0;

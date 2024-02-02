@@ -247,6 +247,7 @@
 
             @include media-breakpoint-down(lg) {
               margin-bottom: 20px;
+              align-items: baseline;
             }
           }
 
@@ -636,7 +637,12 @@
     }
 
     .cfvsw-swatches-container {
-      grid-gap: 5px; 
+      grid-gap: 5px;
+
+      @include media-breakpoint-down(md) {
+        width: 100%;
+        flex-flow: nowrap;
+      }
     }
 
     .cfvsw-label-option {
@@ -646,6 +652,42 @@
       &.cfvsw-swatches-blur-disable {
         color: $text-secondary;
         background-color: $G-1;
+      }
+    }
+  }
+}
+
+#addedToCart,
+#deleteProductConfirmation {
+  .modal-body {
+    @include media-breakpoint-down(md) {
+      flex-direction: column;
+    }
+
+    .img-wrapper {
+      @include media-breakpoint-down(md) {
+        width: 100%;
+      }
+
+      img {
+        @include media-breakpoint-down(md) {
+          width: 100%;
+          max-width: none;
+        }
+      }
+    }
+
+    .paragraph {
+      @include media-breakpoint-down(md) {
+        margin-bottom: 20px;
+      }
+    }
+
+    .button {
+      @include media-breakpoint-down(md) {
+        width: 100%;
+        text-align: center;
+        margin: 5px 0;
       }
     }
   }

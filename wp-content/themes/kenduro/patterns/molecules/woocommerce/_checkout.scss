@@ -68,6 +68,14 @@
     display: none !important;
   }
 
+  label {
+    &.checkbox {
+      @include media-breakpoint-down(xl) {
+        display: flex;
+      }
+    }
+  }
+
   .optional {
     font-size: 0;
 
@@ -79,7 +87,7 @@
   }
 
   .woocommerce {
-    padding-top: 50px;
+    padding-top: 30px;
 
     input:not(#want_invoice),
     textarea {
@@ -115,13 +123,40 @@
       float: left;
       width: 350px;
       margin-right: 60px;
+      padding-top: 0;
 
+      @include media-breakpoint-down(lg) {
+        margin-top: 50px;
+        position: relative;
+        margin-bottom: 30px;
+        padding: 10px 20px;
+        border-radius: $radius-medium;
+        float: none;
+        width: 100%;
+        background-color: $G-0;
+        box-shadow: 0px 3px 6px 0px rgba(15, 15, 15, 0.1),  0px 9px 24px 0px rgba(15, 15, 15, 0.2);
+      } 
+
+      .woocommerce-cart-form {
+        .cart-title {
+          margin-bottom: 20px;
+
+          @include media-breakpoint-down(lg) {
+            width: 100%;
+            position: absolute;
+            left: 0;
+            top: 0%;
+            transform: translateY(calc(-100% - 20px));
+            text-align: center;
+          }
+        }
+      }
     }
   }
 }
 
 .custom-cart-list {
-  margin: 13px 0 0;
+  margin: 13px 0 30px;
   padding: 10px 0 0;
   border-top: 1px solid $G-1-5;
 
@@ -177,6 +212,60 @@
   }
 
   button.button {
+    display: none;
+  }
+}
+
+.hide-show-cart {
+  width: 100%;
+  height: 42px;
+  border: 1px dashed $G-1-5;
+  background-color: $G-0-5 !important;
+  border-radius: $radius-medium;
+  text-align: center;
+  margin-top: 20px;
+  
+  .text {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    padding-right: 15px;
+    transform: translate(-50%, -50%);
+    @extend #{'.paragraph','.paragraph-l', '.regular'};
+
+    svg {
+      position: absolute;
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%) rotate(-180deg);
+      display: block;
+      transition: transform 0.2s ease;
+
+      path {
+        fill: $G-8;
+      }
+    }
+  }
+
+  .show-cart {
+    display: none;
+  }
+
+  &[aria-expanded="false"] {
+    .show-cart {
+      display: block;
+
+      svg {
+        transform: translateY(-50%) rotate(0deg);
+      }
+    }
+
+    .hide-cart {
+      display: none;
+    }
+  }
+  
+  @include media-breakpoint-up(lg) {
     display: none;
   }
 }
@@ -381,17 +470,33 @@
           .woo-bg--econt-delivery {
             margin-left: 30px;
             position: relative;
+
+            @include media-breakpoint-down(xl) {
+              margin-left: 0;
+            }
           }
         }
 
         .woo-bg--city-state-field {
           padding-left: 30px;
+
+          @include media-breakpoint-down(xl) {
+            padding-left: 0;
+          }
         }
 
         .woo-bg--city-state-field,
         .woo-bg--econt-delivery {
           display: inline-block;
           width: calc(50% - 15px);
+
+          @include media-breakpoint-only(xl) {
+            width: 278px;
+          }
+
+          @include media-breakpoint-down(xl) {
+            width: 100%;
+          }
         }
 
         .woo-bg--office-error {
@@ -421,21 +526,21 @@
           &__placeholder,
           &__single {
             position: relative;
-            top: 8px;
+            top: 9px;
             left: 12px;
             padding: 0;
             margin: 0;
-            // padding: 0;
       
             strong {
               font-weight: normal;
+              position: absolute;
+              left: 0;
+              top: 0px;
+              width: 100%;
+              overflow: hidden;
+              text-overflow: ellipsis;
+              white-space: nowrap;
             }
-          }
-
-          &__single {
-            white-space: nowrap;
-            text-overflow: ellipsis;
-            overflow: hidden;
           }
   
           &__select {
@@ -500,11 +605,17 @@
         }
         
         .woo-bg-multiselect--additional-field {
-          &.input-text {
-            position: absolute;
-            right: -6px;
-            width: 200%;
-            top: calc(100% + 10px);
+          &.input-text {            
+            @include media-breakpoint-up(xl) {
+              position: absolute;
+              right: -6px;
+              width: 200%;
+              top: calc(100% + 10px);
+            }
+
+            @include media-breakpoint-down(xl) {
+              margin-top: 10px;
+            }
           }
         }
 
