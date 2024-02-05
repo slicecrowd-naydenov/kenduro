@@ -23,8 +23,14 @@ function create_order_from_product_ids($product_ids, $product_info) {
       $order->add_product($product, $quantity);
     }
   }
+  // $address = array(
+  //   "phone" => $client_phone,
+  //   "email" => $client_email,
+  // );
 
   $order->calculate_totals();
+  // $order->set_address($address, 'billing');
+  // $order->update_status('quick-order');
   $order_id = $order->save();
 
   return $order_id;
@@ -86,7 +92,11 @@ function create_sales_record($response) {
     $new_data = array(
       $invoices_items => $sales_ids_array
     );
-    create_record_curl($invoices_id, $new_data, '');
+    $invoice_details = create_record_curl($invoices_id, $new_data, '');
+
+    if (!is_wp_error($invoice_details)) {
+      create_CRM_record($response['order_id'], $invoice_details['id']);
+    }
     update_field('sync_order_with_smartsuite', 'synced', $response['order_id']);
   } else {
     $error_message = $sales_results->get_error_message();
@@ -98,6 +108,8 @@ function handle_create_woo_order($data) {
   if (isset($data['action'])) {
     $product_info = isset($data['product_info']) ? $data['product_info'] : array();
     $product_ids = isset($data['product_ids']) && is_array($data['product_ids']) ? $data['product_ids'] : array();
+    // $client_phone = isset($data['client_phone']) ? $data['client_phone'] : '';
+    // $client_email = isset($data['client_email']) ? $data['client_email'] : '';
 
     if (!empty($product_ids)) {
       $order_id = create_order_from_product_ids($product_ids, $product_info);
@@ -141,6 +153,10 @@ function create_order_ajax_script($contactFormId, $data, $product_titles) {
       });
       document.addEventListener('wpcf7mailsent', function(event) {
         console.log("wpcf7mailsent event: ", event);
+        
+        order_response.client_phone = $('input[name="client-phone-number"]').val();
+        order_response.client_email = $('input[name="client-email"]').val();
+        // order_response.product_info[0].quantity = $('input[aria-label="Product quantity"]').val();
         if ('<?php echo $contactFormId; ?>' == event.detail.contactFormId) {
           $.ajax({
             type: 'POST',
@@ -224,8 +240,56 @@ function product_quick_order_form() {
   }
 }
 
-add_filter('woocommerce_after_add_to_cart_form', 'product_quick_order_form');
-add_filter('woocommerce_before_checkout_form', 'product_quick_order_form');
+// add_filter('woocommerce_after_add_to_cart_form', 'product_quick_order_form');
+// add_filter('woocommerce_before_checkout_form', 'product_quick_order_form');
+function create_CRM_record($order_id, $invoice_id) {
+  global $ss_ids;
+  $crm_id = $ss_ids['crm'];
+  $crm_fields = fetch_column_fields($crm_id);
+
+  $first_name = get_column_field_id('first_name', $crm_fields);
+  $last_name = get_column_field_id('last_name', $crm_fields);
+  $phone_number = get_column_field_id('phone_number', $crm_fields);
+  $email = get_column_field_id('email', $crm_fields);
+  $vat_id = get_column_field_id('vat_id', $crm_fields);
+  $vat_registered = get_column_field_id('vat_registered', $crm_fields);
+  $bulstat = get_column_field_id('bulstat', $crm_fields);
+  $company_phone = get_column_field_id('company_phone', $crm_fields);
+  $company_name = get_column_field_id('company_name', $crm_fields);
+  $email_agreement = get_column_field_id('email_agreement', $crm_fields);
+  $viber_agreement = get_column_field_id('viber_agreement', $crm_fields);
+  $accountable_person = get_column_field_id('accountable_person', $crm_fields);
+  $link_to_invoices = get_column_field_id('link_to_invoices', $crm_fields);
+  
+  $order = wc_get_order( $order_id );
+  
+  $vat_choice = get_post_meta( $order_id, '_invoice_vat_registration', true ) === 'yes' ? true : false;
+  $email_agreement_val = get_post_meta( $order_id, '_email_agreement', true ) === 'yes' ? true : false;
+  $viber_agreement_val = get_post_meta( $order_id, '_viber_agreement', true ) === 'yes' ? true : false;
+  $item_data = array(
+    $first_name => $order->get_billing_first_name(),
+    $last_name => $order->get_billing_last_name(),
+    $phone_number => $order->get_billing_phone(),
+    $email => $order->get_billing_email(),
+    $vat_id => get_post_meta( $order_id, '_invoice_vat_number', true ),
+    $vat_registered => $vat_choice,
+    $email_agreement => $email_agreement_val,
+    $viber_agreement => $viber_agreement_val,
+    $bulstat => get_post_meta( $order_id, '_invoice_bulstat', true ),
+    $company_phone => get_post_meta( $order_id, '_invoice_phone', true ),
+    $company_name => get_post_meta( $order_id, '_invoice_company_name', true ),
+    $accountable_person => get_post_meta( $order_id, '_invoice_mol', true ),
+    $link_to_invoices => array($invoice_id)
+  );
+
+  $CRM_results = create_record_curl($crm_id, $item_data, '');
+
+  if (is_wp_error($CRM_results)) {
+    $error_message = $CRM_results->get_error_message();
+    echo "Грешка при изпълнение на заявката: $error_message";
+  }
+
+}
 
 add_action('woocommerce_thankyou', 'success_message_after_payment');
 function success_message_after_payment($order_id) {

@@ -105,6 +105,26 @@ function post_column_fields($id) {
   return json_decode(wp_remote_retrieve_body($response), true);
 }
 
+function get_column_fields_related($id) {
+  $response = wp_remote_request(
+    'https://app.smartsuite.com/api/v1/applications/' . $id . '/records/records_with_related/',
+    array(
+      'method' => 'GET',
+      'headers' => array(
+        'Content-Type' => 'application/json',
+        'Authorization' => 'Token 2570295cb9c1e4c7f81d46ed046c09bf43fd5740',
+        'ACCOUNT-ID' => 'sd0y91s2',
+      ),
+    )
+  );
+
+  if (is_wp_error($response)) {
+    return new WP_Error('api_error', 'Error fetching data from get_column_fields', array('status' => 500));
+  }
+
+  return json_decode(wp_remote_retrieve_body($response), true);
+}
+
 function filter_items($items, $fieldsToRemove) {
   $filteredItems = array_map(function ($item) use ($fieldsToRemove) {
     foreach ($fieldsToRemove as $field) {
@@ -171,6 +191,10 @@ add_filter( 'woocommerce_single_product_carousel_options', 'sf_update_woo_flexsl
 function sf_update_woo_flexslider_options( $options ) {
 
     $options['directionNav'] = true;
+    if ( wp_is_mobile() ) {
+      // $options['smoothHeight'] = true;
+      $options['controlNav'] = true;
+    }
     // $options['animationLoop'] = true;
     // $options['sync'] = '.flex-control-thumbs';
     // $options['sync'] = '.flex-control-thumbs';
@@ -315,6 +339,7 @@ function save_variation_settings_fields($post_id) {
   if (!empty($my_custom_field)) {
     update_post_meta($post_id, '_my_product_variation_id', esc_attr($my_custom_field));
   }
+
 }
 
 
@@ -326,11 +351,16 @@ add_filter('woocommerce_available_variation', 'load_variation_settings_fields');
  *
  */
 function load_variation_settings_fields($variations) {
-  // duplicate the line for each field
+  // Text Field
   $variations['my_custom_field'] = get_post_meta($variations['variation_id'], '_my_product_variation_id', true);
 
   return $variations;
 }
 
-
+// Get related values of Linked records
+function related_records(&$records, $keyToModify, $existingIds) {
+  foreach ($records as &$record) {
+    $record[$keyToModify] = array_values(array_intersect($record[$keyToModify], $existingIds));
+  }
+}
 

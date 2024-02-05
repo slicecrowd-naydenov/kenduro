@@ -14,6 +14,7 @@
  * @package WooCommerce\Templates
  * @version 3.6.0
  */
+use Lean\Load; 
 
 defined( 'ABSPATH' ) || exit;
 
@@ -45,6 +46,29 @@ if ( post_password_required() ) {
 
 	<div class="summary entry-summary">
 		<?php
+  	$meta_fields = get_field("meta_data", $product->get_id());
+		if ($meta_fields) {
+			foreach ($meta_fields as $meta_field) {
+				if (get_site_url() === 'http://kenduro.test') {
+					if ($meta_field['key'] === 's76de0814b') {
+						if ($meta_field['value'] !== '') {
+							?>
+							<p class="paragraph paragraph-xl semibold text-underline"><?php echo $meta_field['value']; ?></p>
+							<?php
+						}
+					}
+				} else {
+					if ($meta_field['key'] === 's86366185a') {
+						if ($meta_field['value'] !== '') {
+							?>
+							<p class="paragraph paragraph-xl semibold text-underline"><?php echo $meta_field['value']; ?></p>
+							<?php
+						}
+					}
+				}
+			}
+		}
+		// pretty_dump($meta_fields);
 		/**
 		 * Hook: woocommerce_single_product_summary.
 		 *
@@ -58,6 +82,15 @@ if ( post_password_required() ) {
 		 * @hooked WC_Structured_Data::generate_product_data() - 60
 		 */
 		do_action( 'woocommerce_single_product_summary' );
+		Load::organisms('information-list/index', [
+			'class' => 'product-single',
+      'list'  => [
+				['icon' => 'customer-support', 'text' => 'Доставка на следващия ден *'],
+				['icon' => 'return-policy', 'text' => 'Тествайте преди да купите'],
+				['icon' => 'payment', 'text' => 'Плащане при доставка'],
+				['icon' => 'return-policy', 'text' => '14-дневна политика за връщане']
+			]
+    ]);
 		?>
 	</div>
 	</div>

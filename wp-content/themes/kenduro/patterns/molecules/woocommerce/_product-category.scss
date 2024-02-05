@@ -1,17 +1,22 @@
 // Product category
 .tax-product_cat {
+  #primary {
+    padding-top: 40px;
+  }
+
   .storefront-breadcrumb {
-    padding: 20px 0 0;
-    margin: 0 0 10px 0;
+    padding: 0;
+    margin: 0;
+  }
+
+  .nav-pills {
+    margin-bottom: 18px;
+    padding-right: 0;
   }
 
   .page-title {
-    margin-bottom: 30px;
-
-    &.no-parent {
-      margin-bottom: 10px;
-      margin-top: 10px;
-    }
+    margin-bottom: 20px;
+    color: $text-primary;
   }
 
   .woocommerce-breadcrumb {
@@ -22,6 +27,23 @@
     .breadcrumb-separator,
     a {
       color: $text-tetriary;
+    }
+
+    a {
+      padding-bottom: 2px;
+      position: relative;
+      margin-bottom: 5px;
+      display: inline-block;
+
+      &:after {
+        width: 100%;
+        height: 1px;
+        content: '';
+        left: 0;
+        bottom: 0;
+        position: absolute;
+        border-top: 1px dashed $text-tetriary;
+      }
     }
 
     a:first-of-type,
@@ -36,21 +58,131 @@
 }
 
 .products {
+  margin-bottom: 20px !important;
+  padding-bottom: 20px !important;
+
   .button.add_to_cart_button {
     display: none;
   }
 
-  &.columns-4 {
+  & + .storefront-sorting {
+    display: flex;
+    margin: 0;
+    border-top: 1px solid $G-1-5;
+
+    nav {
+      padding-top: 20px;
+      margin-bottom: 30px;
+    }
+  }
+
+  &.columns-5 {
+    display: flex;
+    gap: 20px;
+    padding: 0;
+    flex-wrap: wrap;
+
+    @include media-breakpoint-down(md) {
+      gap: 10px;
+    }
+
+    &:before {
+      display: none;
+    }
+
     li.product {
-      width: calc(25% - 15px) !important;
-      margin-right: 20px !important;
-      margin-bottom: 40px;
+      flex: 0 0 calc(20% - 16px);
+      margin: 0 !important;
+
+      @include media-breakpoint-only(lg) {
+        flex: 0 0 calc(25% - 15px);
+      }
+
+      @include media-breakpoint-only(md) {
+        flex: 0 0 calc(33% - 11px);
+      }
+
+      @include media-breakpoint-down(md) {
+        flex: 0 0 calc(50% - 5px);
+      }
 
       img {
         width: auto;
-        max-height: 180px;
+        max-height: $thumbnail_size;
+        margin: 0;
+
+        @include media-breakpoint-only(xl) {
+          max-height: 207px;
+        }
+
+        @include media-breakpoint-between(md, lg) {
+          max-height: 219px;
+        }
+      }
+
+      .wc-img-wrapper {
+        height: auto;
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+        background: $thumbs_bg;
+        width: 100%;
+        justify-content: center;
         border-radius: $radius-medium;
-        margin: 0 auto 10px !important;
+        overflow: hidden;
+        position: relative;
+
+        @include media-breakpoint-down(sm) {
+          height: 0;
+          padding-top: 100%;
+        }
+
+        &:before {
+          width: 100%;
+          height: 100%;
+          background-color: rgba($b-highlight-one, 0.1);
+          opacity: 0;
+          transition: opacity 0.25s ease;
+          content: '';
+          position: absolute;
+          left: 0;
+          top: 0;
+          z-index: 1;
+        }
+
+        &:after {
+          content: '';
+          display: block;
+          padding-top: 100%;
+        }
+
+        img {
+          transition: transform 0.25s ease;
+
+          @include media-breakpoint-down(sm) {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            max-height: 100%;
+          }
+        }
+
+        // @include media-breakpoint-between(lg, large) {
+        //   height: 207px;
+        // }
+
+        // @include media-breakpoint-only(md) {
+        //   height: 218px;
+        // }
+
+        // @include media-breakpoint-only(sm) {
+        //   height: 248px;
+        // }
+
+        // @include media-breakpoint-down(sm) {
+        //   height: auto;
+        // }
       }
 
       .woocommerce-loop-product__link {
@@ -62,16 +194,41 @@
         & + a {
           display: none;
         }
+
+        &:hover {
+          @include media-breakpoint-up(lg) {
+            .woocommerce-loop-product__title {
+              text-decoration: underline;
+            }
+  
+            .wc-img-wrapper {
+              &:before {
+                opacity: 1;
+              }
+  
+              img {
+                transform: scale(1.1);
+              }
+            }
+          }
+        }
       }
 
       .woocommerce-loop-product__title {
+        text-align: left;
         order: 10;
+        color: $b-primary;
+        @extend #{'.paragraph','.paragraph-xl', '.semibold'};
+        @include line-clamp(2);
+      }
+      
+      .price {
         color: $b-highlight-two;
-        @extend #{'.paragraph','.paragraph-l'};
+        margin: 0 0 4px;
       }
 
-      .price {
-        margin: 0 0 4px;
+      .woosw-btn-has-icon {
+        display: none;
       }
     }
   }
@@ -82,69 +239,21 @@
   // }
 }
 
-.popular-categories {
-  ul.products {
-    display: flex;
-    gap: 10px;
-    margin: 0 -10px;
+// Shop page
+.post-type-archive {
+  #primary {
+    padding-top: 50px;
 
-    li.product-category {
-      width: calc(20% - 10px) !important;
-      position: relative;
-      border-radius: $radius-circle;
-      overflow: hidden;
-      display: flex;
-      align-items: end;
-
-
-
-      &:before {
-        width: 100%;
-        height: 110px;
-        content: '';
-        position: absolute;
-        left: 0;
-        bottom: 0;
-        background-color: $G-0-5;
-        border-radius: $radius-circle;
-      }
-
-      img {
-        margin: 0 0 -75px 0;
-        position: relative;
-        z-index: 2;
-        top: 0;
-        transition: top 0.2s ease;
-      }
-
-      a {
-        border-radius: $radius-circle;
-
-        &:hover {
-          img,
-          .woocommerce-loop-category__title {
-            top: 10px;
-          }
-        }
-      }
+    @include media-breakpoint-down(lg) {
+      padding-top: 30px;
     }
+  }
 
-    .woocommerce-loop-category__title {
-      height: 110px;
-      margin: 0 !important;
-      position: relative;
-      padding: 24px 12px 0px 12px;
-      color: $text-primary;
-      font-size: 14px !important;
-      line-height: 20px !important;
-      font-weight: 600 !important;
-      transition: top 0.2s ease;
-      top: 0;
-      @extend .flex-center;
+  .page-title {
+    margin-bottom: 10px;
+  }
 
-      .count {
-        display: none;
-      }
-    }
+  .nav-pills {
+    margin-bottom: 23px;
   }
 }

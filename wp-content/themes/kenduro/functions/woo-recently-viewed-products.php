@@ -9,7 +9,7 @@ function bbloomer_recently_viewed_shortcode() {
 
   if (empty($viewed_products)) return;
 
-  $title = '<p class="paragraph paragraph-xl semibold tetriary recently-viewed-title">Recently Viewed</p>';
+  $title = '<p class="paragraph paragraph-xl semibold tetriary recently-viewed-title">Последно разгледани</p>';
   $viewed_products = array_slice($viewed_products, 0, 4);
   $product_ids = implode(",", $viewed_products);
 

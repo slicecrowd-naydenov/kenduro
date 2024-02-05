@@ -46,7 +46,7 @@ do_action('woocommerce_before_main_content');
 			<header>
 				<?php if (apply_filters('woocommerce_show_page_title', true)) : ?>
 					<!-- .woocommerce-products-header__title -->
-					<h4 class="page-title semibold tetriary <?php echo category_has_parent() ? 'has-parent' : 'no-parent'; ?>"><?php woocommerce_page_title(); ?></h4>
+					<h4 class="page-title semibold"><?php woocommerce_page_title(); ?></h4>
 				<?php endif; ?>
 
 				<?php
@@ -60,16 +60,74 @@ do_action('woocommerce_before_main_content');
 				?>
 			</header>
 			<?php
-			if (is_product_category()) :
+			$ancestors = get_ancestors(get_queried_object_id(), 'product_cat');
+
+			if ($ancestors) {
+				$outermost_parent_id = end($ancestors);
+			} else {
+				$outermost_parent_id = get_queried_object_id();
+			}
+			$cat_inner_image_url = get_field('inner_cat_thumbnail', 'product_cat_' . $outermost_parent_id);
+
+			if (is_product_category()) {
 				Load::molecules('product-category/product-category-info/index', [
-					'title' => 'Learn more about ',
-					'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam sit amet nulla eu lacus pellentesque sodales in ut felis. Morbi consectetur rhoncus leo, quis efficitur sem sodales efficitur.',
-					'cta_text' => 'Learn more',
-					'cat' => single_term_title('', false)
+					'title' => 'Научете повече за ',
+					'class' => 'full-container',
+					'description' => 'Разгледайте детайлно нашите продукти от тази категория.',
+					'cat' => single_term_title('', false),
+					'cat_img_inner' => $cat_inner_image_url
+				]);
+				?>
+				<div class="mobile-wrapper">
+				<?php
+				Load::molecules('product-category/product-categories-view/index');
+				if (wp_is_mobile()) {
+				?>
+					<!-- Button trigger modal -->
+					<button type="button" class="button filter-modal" data-toggle="modal" data-target="#filterModal">
+						Филтри
+					</button>
+
+					<!-- Modal -->
+					<div class="modal fade mobile-modal" id="filterModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+						<div class="modal-dialog modal-dialog-centered" role="document">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h5 class="modal-title" id="exampleModalLongTitle">Филтри</h5>
+									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+										<?php Load::atom('svg', ['name' => 'close']); ?>
+									</button>
+								</div>
+								<div class="modal-body">
+									<?php
+										Load::molecules('product-category/product-categories-filter/index');
+									?>
+								</div>
+								<!-- <div class="modal-footer">
+									<button type="button" class="button btn-secondary" data-dismiss="modal">Close</button>
+									<button type="button" class="button btn-primary">Save changes</button>
+								</div> -->
+							</div>
+						</div>
+					</div>
+				<?php
+				} else {
+					Load::molecules('product-category/product-categories-filter/index');
+				}
+				?>
+				</div>
+				<?php
+			} else {
+				Load::molecules('product-category/product-category-info/index', [
+					'title' => 'Всички продукти',
+					'class' => 'full-container',
+					'description' => 'Научете повече за нашите продукти.',
+					'cat' => single_term_title('', false),
+					'cat_img_inner' => $cat_inner_image_url
 				]);
 				Load::molecules('product-category/product-categories-view/index');
-			endif;
-			Load::molecules('product-category/product-categories-filter/index');
+			}
+
 			if (woocommerce_product_loop()) {
 
 				/**
@@ -113,17 +171,22 @@ do_action('woocommerce_before_main_content');
 				do_action('woocommerce_no_products_found');
 			}
 			// echo do_shortcode('[wrvp_recently_viewed_products number_of_products_in_row="4" posts_per_page="4"]');
-			echo do_shortcode('[recently_viewed_products]');
-			Load::molecules('product-category/product-category-info/index', [
-				'title' => 'Join our Community',
-				'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam sit amet nulla eu lacus pellentesque sodales in ut felis. Morbi consectetur rhoncus leo, quis efficitur sem sodales efficitur.',
-				'cta_text' => 'Join Community'
-			]);
-			?>
-		</div>
-	</div>
-</div>
-<?php
+            Load::molecules('product-category/product-category-info/index', [
+              'title' => '<span class="highlighted">K</span>enduro е изработен от Teo',
+              'class' => 'full-width-container',
+              'description' => 'Тео Кабакчиев, световноизвестен хард ендуро състезател, ръководи Kenduro.com с непоколебима страст, гарантирайки нашия непоколебим ангажимент към услуги и качество от най-високо ниво.'
+            ]);
+
+            // echo do_shortcode('[products limit="12" columns="5" best_selling="true"]');
+          ?>
+        </div>
+      </div>
+    </div>
+    
+    <?php 
+      Load::molecules('exclusive-brands/index');
+      Load::molecules('best-selling-products/index'); 
+			// echo do_shortcode('[recently_viewed_products]');
 /**
  * Hook: woocommerce_after_main_content.
  *

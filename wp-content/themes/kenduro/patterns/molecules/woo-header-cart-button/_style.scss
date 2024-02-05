@@ -21,6 +21,10 @@ a.cart-customlocation {
   .text {
     padding-right: 2px;
     @extend #{'.paragraph','.paragraph-m'};
+
+    @include media-breakpoint-down(lg) {
+      display: none
+    }
   }
 
   .amount {

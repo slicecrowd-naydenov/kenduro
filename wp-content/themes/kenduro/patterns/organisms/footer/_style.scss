@@ -1,0 +1,126 @@
+#footer {
+  color: $G-0;
+  background-color: $b-primary;
+
+  hr {
+    background-color: transparent;
+    border-color: $G-1-5;
+  }
+
+  a {
+    color: $G-0;
+    text-decoration: none;
+    margin-bottom: 10px;
+    display: inline-block;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+  
+  .top {
+    padding: 40px 0;
+
+    .col-md-4:nth-child(2) {
+      @include media-breakpoint-down(md) {
+        margin-top: 15px;
+      }
+    }
+
+    @include media-breakpoint-down(md) {
+      position: relative;
+      padding-top: 120px;
+    }
+    
+    .address-info {
+      @include media-breakpoint-down(md) {
+        margin-top: 20px;
+      }
+
+      * {
+        color: rgba($G-0, 0.4);
+      }
+
+      p {
+        margin-bottom: 3px;
+      }
+
+      ul {
+        padding: 0;
+        margin: 0;
+    
+        li {
+          margin-bottom: 1px;
+          margin-left: 15px;
+          list-style-type: disc;
+        }
+      }
+    }
+
+    .socials {
+      margin: 40px 0 0;
+      padding: 0;
+
+      @include media-breakpoint-down(md) {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        top: 0;
+        display: flex;
+        width: calc(100% - 30px);
+        padding: 0 15px;
+        justify-content: space-between;
+      }
+      
+      li {
+        display: inline-block;
+      }
+
+      a {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 5px;
+        border-radius: 5px;
+        margin-right: 6px;
+        background-color: transparent;
+        transition: background-color 0.25s ease;
+
+        svg {
+          width: 18px;
+          height: 18px;
+          opacity: 0.7;
+          transition: opacity 0.25s ease;
+
+          @include media-breakpoint-down(md) {
+            width: 37px;
+            height: 37px;
+          }
+        }
+
+        &:hover {
+          background-color: rgba(0, 0, 0, 0.3);
+
+          svg {
+            opacity: 1;
+          }
+        }
+      }
+    }
+  }
+
+  .bottom {
+    padding: 40px 0;
+
+    a {
+      margin: 10px;
+    }
+
+    .logo {
+      svg {
+        width: 110px;
+        height: auto;
+      }
+    }
+  }
+}

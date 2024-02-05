@@ -7,6 +7,12 @@
     p {
       margin: 0 30px;
     }
+
+    a {
+      @include media-breakpoint-down(sm) {
+        padding: 10px;
+      }
+    }
   }
 
   ul.page-numbers {
@@ -35,6 +41,10 @@
       &.next {
         display: none;
       }
+
+      &.dots {
+        pointer-events: none;
+      }
     }
   }
 }
@@ -42,6 +52,7 @@
 .storefront-sorting {
   flex-direction: column;
   @extend .flex-center-y;
+  display: none;
 
   .woocommerce-ordering,
   .woocommerce-result-count {

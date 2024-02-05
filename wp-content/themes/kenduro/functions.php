@@ -1,5 +1,6 @@
 <?php
 define('ICON_PATH', get_stylesheet_directory_uri() . '/assets/icons/svg');
+define('IMAGES_PATH', get_stylesheet_directory_uri() . '/assets/images');
 
 require_once get_stylesheet_directory() . '/patterns/vendor/autoload.php';
 
@@ -47,12 +48,12 @@ add_action('wp_ajax_clear_woocommerce_transients', 'clear_woocommerce_transients
 add_action('wp_ajax_nopriv_clear_woocommerce_transients', 'clear_woocommerce_transients_callback');
 
 function clear_woocommerce_transients_callback() {
-    // Изтриване на транзиентите
-    delete_transient('wc_transients_cache');
+  // Изтриване на транзиентите
+  delete_transient('wc_transients_cache');
 
-    // Връщане на отговор
-    echo 'Транзиентите са изтрити успешно.';
-    wp_die();
+  // Връщане на отговор
+  echo 'Транзиентите са изтрити успешно.';
+  wp_die();
 }
 
 function add_ajaxurl_to_front() {
@@ -62,14 +63,9 @@ function add_ajaxurl_to_front() {
 }
 add_action('wp_head', 'add_ajaxurl_to_front');
 
-// add_action( 'woocommerce_before_cart', 'add_columns');
-
-// function add_columns() {
-//   echo '<div class="container"><div class="row"><div class="col">';
-// }
-
-// add_action( 'woocommerce_after_cart', 'add_additional_products_section');
-
-// function add_additional_products_section() {
-//   echo '</div></div></div>';
-// }
+add_filter('woocommerce_dropdown_variation_attribute_options_args','fun_select_default_option',10,1);
+function fun_select_default_option( $args) { 
+  if(count($args['options']) > 0) //Check the count of available options in dropdown
+    $args['selected'] = $args['options'][0];
+    return $args;
+}

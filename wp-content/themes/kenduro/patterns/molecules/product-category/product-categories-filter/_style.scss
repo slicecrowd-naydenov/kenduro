@@ -43,11 +43,24 @@
 
 #cat-filters {
   display: inline-flex;
-  gap: 20px;
-  margin-right: 15px;
+  gap: 5px;
+}
 
-  + .storefront-sorting {
-    display: none;
+.yith-wcan-reset-filters {
+  border-radius: $radius-circle;
+  border: none;
+  @extend #{'.button', '.button-error'};
+  font-size: 0 !important;
+  line-height: 0 !important;
+
+  &:after {
+    display: block;
+    @extend #{'.paragraph', '.paragraph-l'};
+    content: 'Премахни филтрите';
+  }
+
+  @include media-breakpoint-down(lg) {
+    width: 100%;
   }
 }
 
@@ -56,39 +69,37 @@
   display: inline-flex;
   margin: 0;
 
-  & + .storefront-sorting {
-    display: none;
-  }
-
   form {
     display: flex;
-    gap: 20px;
+    gap: 5px;
   }
 
   .yith-wcan-filter {
     position: relative;
-    margin-bottom: 10px;
+    margin-bottom: 0;
 
     .filter-title {
+      color: $text-primary;
       padding-right: 12px;
-      background: url('../../assets/icons/svg/arrow_down.svg') center right no-repeat;
+      background: url('../../assets/icons/svg/arrow_down.svg') center right 12px no-repeat;
       background-size: 6px;
       transition: color 0.25s ease;
+      margin-bottom: 23px;
+      padding: 5px 25px 5px 18px;
+      border: 1px solid rgba($b-primary, 0.2);
+      border-radius: $radius-circle;
       cursor: pointer;
       @extend #{'.paragraph','.paragraph-m', '.tetriary'};
-
-      &.active {
-        color: $text-primary;
-      }
     }
 
     .filter-content {
       display: none;
-      border: 1px solid $G-8;
+      border: 1px solid $G-3;
+      border-radius: $radius-medium;
       position: absolute;
-      min-width: 200px;
+      min-width: 215px;
       left: 0;
-      top: calc(100% + 5px);
+      top: calc(100% - 20px);
       padding: 8px 10px;
       z-index: 222;
       background-color: $G-0;
@@ -111,5 +122,98 @@
 .home {
   #cat-filters {
     display: none;
+  }
+
+  #primary {
+    padding-top: 0;
+  }
+}
+
+.mobile-wrapper {
+  @include media-breakpoint-down(lg) {
+    margin-bottom: 28px;
+  }
+
+  @include media-breakpoint-down(lg) {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+  }
+
+  .dropdown {
+    @include media-breakpoint-down(lg) {
+      margin-bottom: 0;
+      flex: 0 0 calc(50% - 5px);
+    }
+  }
+
+  .filter-modal {
+    @include media-breakpoint-down(lg) {
+      background-image: url('../../assets/icons/svg/filter.svg');
+      background-position: center right 12px;
+      background-repeat: no-repeat;
+      background-color: rgba($b-primary, 0.05);
+      text-align: left;
+      flex: 0 0 calc(50% - 5px);
+    }
+
+    @extend #{'.paragraph','.paragraph-l', '.regular'};
+  }
+}
+
+.mobile-modal {
+  .modal-header,
+  .modal-body {
+    padding: 15px;
+  }
+
+  .close {
+    padding: 10px;
+    background-color: transparent;
+  }
+
+  .modal-body {
+    height: calc(100vh - 200px);
+    flex-direction: column;
+    align-items: baseline;
+    gap: 15px;
+    overflow: auto;
+
+    #cat-filters,
+    #cat-filters + .yith-wcan-filters form {
+      width: 100%;
+      flex-direction: column; 
+    }
+
+    .yith-wcan-filters,
+    .filters-container,
+    form,
+    .yith-wcan-filter {
+      width: 100%;
+    }
+
+    .filter-content {
+      border: none;
+      padding: 0;
+      top: 0;
+      display: block;
+      position: relative;
+
+      li {
+        border-bottom-style: dashed;
+      }
+    }
+
+    .filter-title {
+      border: none;
+      background: none;
+      font-size: 16px;
+      padding: 0 0 5px 0;
+      border-bottom: 1px solid;
+      border-radius: 0;
+      margin-bottom: 5px;
+      margin-top: 15px;
+    }
   }
 }

@@ -1,0 +1,36 @@
+.best-selling {
+  padding: calc(40px + $radius-medium) 0 40px 0;
+  margin-top: -$radius-medium;
+  position: relative;
+  z-index: 3;
+  background-color: $G-0;
+  border-radius: $radius-medium $radius-medium 0 0;
+
+  .title {
+    margin-bottom: 22px;
+  }
+
+  .swiper-wrapper {
+    margin: 0;
+    padding: 0;
+  }
+
+  .swiper {
+    padding-top: 55px;
+    margin-top: -55px;
+    padding-bottom: 20px;
+  }
+
+  .swiper-pagination {
+    bottom: 0 !important;
+
+    .swiper-pagination-bullet {
+      background-color: $G-2;
+      opacity: 1;
+  
+      &.swiper-pagination-bullet-active {
+        background-color: $G-3;
+      }
+    }
+  }
+}

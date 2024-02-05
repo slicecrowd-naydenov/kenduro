@@ -151,59 +151,50 @@ get_header();
 // pretty_dump($sales_records);
 // global $ss_ids;
 // $product_variations_fields = post_column_fields('651f9c5af5b14e0d99b3e73c');  
-// pretty_dump($product_variations_fields);
+// // pretty_dump($product_variations_fields['items'][0]['s2cb07213c']);
+// $quantity = isset($product_variations_fields['items'][15]['s0ecfcadaf']) && $product_variations_fields['items'][15]['s0ecfcadaf'] !== "0" ? $product_variations_fields['items'][15]['s0ecfcadaf'] : 0;
+
+// $delivery_value = isset($product_variations_fields['items'][15]['s3aef3eb19']) && (count($product_variations_fields['items'][15]['s3aef3eb19']) === 0) ? 'no' : 'notify';
+
+// pretty_dump((int)$quantity > 0);
+// // pretty_dump(count($product_variations_fields['items'][0]['s7efb0fba2']) === 0);
 
 ?>
-<main>
-  <?php Load::organisms('homepage/index'); ?>
-
-  <div class="container">
-    <div class="row">
-      <div class="col">
-        <div class="popular-categories">
-          <div class="popular-categories__header">
-            <p class="paragraph paragraph-xl semibold primary">Popular Categories</p>
-            <a href="#" class="paragraph paragraph-m semibold primary">
-              Browse All Products
-              <?php // echo $arrow_down; ?>
-            </a>
-          </div>
-          <hr>
+<main id="primary">
+  <?php 
+    Load::organisms('homepage/hero-section/index');
+    Load::organisms('information-list/index', [
+      'class' => 'with-border',
+      'list'  => [
+        ['icon' => 'star', 'text' => 'Уникални продукти'],
+        ['icon' => 'customer-support', 'text' => 'Незабавна поддръжка на клиенти'],
+        ['icon' => 'return-policy', 'text' => '14-дневна политика за връщане'],
+        ['icon' => 'payment', 'text' => 'Плащане при доставка'],
+      ]
+    ]);
+    Load::organisms('homepage/popular-cats/index'); 
+    Load::organisms('homepage/category-pills/index');
+    ?>
+    <div class="container">
+      <div class="row">
+        <div class="col">
           <?php
-          echo do_shortcode('[product_categories ids="1874, 1878" columns="5"]');
+            Load::molecules('product-category/product-category-info/index', [
+              'title' => '<span class="highlighted">K</span>enduro е изработен от Teo',
+              'class' => 'full-width-container',
+              'description' => 'Тео Кабакчиев, световноизвестен хард ендуро състезател, ръководи Kenduro.com с непоколебима страст, гарантирайки нашия непоколебим ангажимент към услуги и качество от най-високо ниво.'
+            ]);
+
+            // echo do_shortcode('[products limit="12" columns="5" best_selling="true"]');
           ?>
         </div>
-        <?php
-        Load::molecules('product-category/product-categories-filter/index');
-        echo do_shortcode("[products]");
-
-        Load::molecules('product-category/product-category-info/index', [
-          'title' => 'Join our Community',
-          'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam sit amet nulla eu lacus pellentesque sodales in ut felis. Morbi consectetur rhoncus leo, quis efficitur sem sodales efficitur.',
-          'cta_text' => 'Join Community'
-        ]);
-        ?>
-
-
-        <a href="#" id="createProducts">create Products</a>
-        </br>
-        <!-- <a href="#" id="updateProduct">update Product</a> -->
-        <!-- </br> -->
-        <!-- <a href="#" id="updateProductVariation">update Variation Product</a> -->
-        <!-- </br> -->
-        <a href="#" id="createCategories">create Categories</a>
-        </br>
-        <a href="#" id="productFields">Product fields</a>
-        </br>
-        <a href="#" id="filterFields">Filter fields</a>
-        </br>
-        <a href="#" id="filterValues">Filter values</a>
-        </br>
-        <a href="#" id="createFilters">create Filters</a>
-        </br>
       </div>
     </div>
-  </div>
+    
+    <?php 
+      Load::molecules('exclusive-brands/index');
+      Load::molecules('best-selling-products/index'); 
+    ?>
 </main>
 <?php
 get_footer();

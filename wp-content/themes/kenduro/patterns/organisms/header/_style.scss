@@ -5,4 +5,8 @@
 #header {
   background-color: $b-primary;
   padding-top: 52px;
+
+  @include media-breakpoint-down(lg) {
+    padding-top: 70px;
+  }
 }

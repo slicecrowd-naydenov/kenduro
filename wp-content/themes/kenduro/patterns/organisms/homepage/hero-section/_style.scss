@@ -1,0 +1,349 @@
+#hero-section {
+  padding: 50px 0 0;
+  color: $G-0;
+  background: url(../../assets/images/home_hero_teo.jpg) center top no-repeat;
+  background-size: cover;
+  position: relative;
+
+  @include media-breakpoint-down(lg) {
+    background-size: auto 225px;
+    background-position: top center;
+  }
+
+  &:before {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    content: '';
+    /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#000000+0,023047+100&0+0,0.79+100 */
+    background: linear-gradient(to bottom,  rgba(0,0,0,0) 0%,rgba(2,48,71,0.79) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+
+    @include media-breakpoint-down(lg) {
+      height: 225px;
+    }
+  }
+
+  .hero-logo {
+    padding: 0 17px;
+    background-color: $G-0;
+    border-radius: $radius-medium;
+    display: inline-flex;
+    margin-bottom: 90px;
+
+    @include media-breakpoint-down(lg) {
+      margin-bottom: 35px;
+    }
+  }
+
+  .hero_title {
+    color: $G-0;
+    margin-bottom: 6px;
+    @extend #{'.bold'};
+
+    em,
+    i {
+      font-style: normal;
+      color: $b-highlight-two;
+    }
+
+    p {
+      margin: 0;
+    }
+  }
+
+  .hero-banner {
+    position: absolute;
+    width: 455px;
+    right: $bootstrap-gap;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    z-index: 5;
+
+    @include media-breakpoint-down(lg) {
+      width: calc(100% - 60px);
+      margin: 10px 30px;
+      position: relative;
+      transform: none;
+      right: auto;
+      top: 0;
+    }
+    
+    @include media-breakpoint-only(xl) {
+      right: $bootstrap-gap-xl;
+    }
+
+    @include media-breakpoint-only(lg) {
+      right: $bootstrap-gap-lg;
+    }
+
+    @include media-breakpoint-only(md) {
+      width: 700px;
+      margin: 10px auto;
+    }
+
+    @include media-breakpoint-only(sm) {
+      width: 514px;
+      margin: 10px auto;
+    }
+
+    @include media-breakpoint-only(xs) {
+      width: calc(100% - 30px);
+      margin: 10px 15px;
+    }
+
+    &__box {
+      display: flex;
+      padding: 25px 25px 17px;
+      align-items: center;
+      justify-content: space-between;
+      background-color: rgba($G-0, 0.8);
+      border-radius: $radius-medium;
+      overflow: hidden;
+
+      &:first-child {
+        display: none;
+      }
+
+      &:last-child {
+        @include media-breakpoint-down(lg) {
+          border: 1px dashed rgba($b-primary, 0.3);
+          padding: 20px 25px 15px 20px;
+        }
+
+        .hero-banner__header + p {
+          @include media-breakpoint-only(xs) {
+            @include line-clamp(3);
+          }
+        }
+      }
+
+      .learn-more {
+        text-decoration: underline;
+      }
+
+      .info {
+        padding-right: 25px;
+
+        @include media-breakpoint-only(xs) {
+          padding-right: 0;
+        }
+      }
+    }
+
+    &__header {
+      display: flex;
+      justify-content: space-between;
+      padding: 0 25px 10px 0;
+
+      a {
+        text-decoration: underline;
+      }
+    }
+
+    &__list {
+      padding: 10px 25px 1px 0;
+      gap: 10px;
+      display: flex;
+      flex-direction: column;
+      color: $text-tetriary;
+      margin: 0;
+
+      li {
+        padding-left: 26px;
+        background: url('../../assets/icons/svg/checkbox.svg') center left no-repeat;
+      }
+    }
+
+    &__add-bike {
+      a {
+        width: 115px;
+        height: 115px;
+        justify-content: center;
+        border: 1px dashed $G-3;
+        display: inline-flex;
+        align-items: center;
+        flex-direction: column;
+        gap: 9px;
+        background-color: rgba($G-0, 0.8);
+        border-radius: $radius-small;
+        text-decoration: none;
+        position: relative;
+        overflow: hidden;
+
+        &:before {
+          width: 100%;
+          height: 100%;
+          content: '';
+          filter: blur(10px);
+          position: absolute;
+          left: 0;
+          top: 0;
+        }
+
+        .text {
+          display: flex;
+          flex-direction: column;
+          gap: 2px;
+        }
+      }
+    }
+
+    &__image {
+      margin: 0 -25px -17px 0;
+
+      @include media-breakpoint-only(xs) {
+        width: 115px;
+      }
+    }
+  }
+
+  .swiper {
+    width: auto;
+    height: auto;
+    padding-left: $bootstrap-gap;
+    padding-bottom: 50px;
+
+    @include media-breakpoint-only(xl) {
+      padding-left: $bootstrap-gap-xl;
+    }
+
+    @include media-breakpoint-only(lg) {
+      padding-left: $bootstrap-gap-lg;
+    }
+
+    @include media-breakpoint-down(lg) {
+      padding: 0 30px;
+      margin-top: 135px;
+      overflow: inherit;
+    }
+
+    @include media-breakpoint-only(md) {
+      padding: 0;
+      width: 700px;
+    }
+
+    @include media-breakpoint-only(sm) {
+      padding: 0;
+      width: 514px;
+    }
+
+    @include media-breakpoint-only(xs) {
+      padding: 0 15px;
+    }
+
+    .button {
+      margin-top: 26px;
+      @extend #{'.paragraph','.paragraph-l', '.semibold'};
+    }
+
+    .swiper-slide {
+      padding-right: 60%;
+
+      @include media-breakpoint-down(lg) {
+        padding-right: 0;
+        background-color: $b-primary;
+        padding: 20px;
+        border-radius: $radius-medium;
+      }
+    }
+
+    .swiper-wrapper {
+      align-items: flex-end;
+    }
+  }
+}
+
+.swiper-pagination {
+  position: absolute;
+  bottom: 20px !important;
+  @extend .flex-center;
+
+  @include media-breakpoint-down(lg) {
+    bottom: calc(100% + 10px) !important;
+  }
+
+  .swiper-pagination-bullet {
+    width: 16px;
+    height: 16px;
+    margin: 0 3px;
+    opacity: 0.5;
+    background-color: $G-0;
+
+    &.swiper-pagination-bullet-active {
+      opacity: 1;
+    }
+  }
+}
+
+.siwper-navigation {
+  position: absolute;
+  right: 0;
+  top: 0;
+  display: flex;
+
+  .swiper-button-next,
+  .swiper-button-prev {
+    position: static;
+    margin: 0 0 0 20px;
+    
+    &:after {
+      font-size: 25px;
+      font-weight: bold;
+      color: $G-8;
+    }
+  }
+}
+
+div.quick-order {
+  background-color: #f3f3f3;
+  border: 1px solid #e4e4e4;
+  padding: 10px;
+  margin-bottom: 10px;
+  text-align: center;
+  color: #685a4d;
+}
+
+// span.wpcf7-not-valid-tip {
+//   color: #f00;
+//   font-size: 1em;
+//   font-weight: normal;
+//   display: inline-block;
+// }
+
+// .use-floating-validation-tip span.wpcf7-not-valid-tip {
+//   position: absolute;
+//   top: 20%;
+//   left: 7%;
+//   z-index: 100;
+//   border: 1px solid red;
+//   background: #fff;
+//   padding: .2em .8em;
+//   width: 85%;
+//   text-align: left;
+// }
+
+.wpcf7 input[type="text"].product_sku,
+.wpcf7 input[type="text"].product_name {
+  display: none;
+}
+
+// .wpcf7 p {
+//   clear: both;
+//   height: auto;
+//   overflow: hidden;
+//   margin: 0 10px;
+// }
+
+// .wpcf7 input.wpcf7-submit[type="submit"] {
+//   transition: all .3s ease-in-out;
+//   -moz-transition: all .3s ease-in-out;
+//   -webkit-transition: all .3s ease-in-out;
+//   -o-transition: all .3s ease-in-out;
+//   border: 0;
+//   border-radius: 0;
+// }

@@ -9,9 +9,13 @@ $text-inactive: #B2B2B3;
 // Brand
 $b-primary: #023047;
 $b-secondary: #219EBC;
-$b-twtriary: #8ECAE6;
+$b-tetriary: #8ECAE6;
 $b-highlight-one: #FFB703;
 $b-highlight-two: #FB8500;
+
+// MISC
+$success: #3EAC40;
+$error: #FF5757;
 
 // Greyscale colors
 $G-0:   #FFFFFF;
@@ -25,6 +29,11 @@ $G-5:   #9B9C9E;
 $G-6:   #868788;
 $G-7:   #6F7173;
 $G-8:   #4D4D4D;
+
+// Images sizes
+$product_images: 630px;
+$thumbnail_size: 266px;
+$thumbs_bg: #F0F1F3;
 
 $radius-thin: 4px;
 $radius-small: 8px;
@@ -49,3 +58,5 @@ $container-max-widths: (
 ); 
 
 $bootstrap-gap: calc((100% - 1400px) / 2);
+$bootstrap-gap-xl: calc((100% - 1120px) / 2);
+$bootstrap-gap-lg: calc((100% - 940px) / 2);

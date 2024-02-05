@@ -1,0 +1,12 @@
+.custom-link {
+  color: inherit;
+  
+  svg {
+    transform: rotate(-90deg);
+    margin-left: 9px;
+
+    path {
+      fill: $b-highlight-two;
+    }
+  }
+}

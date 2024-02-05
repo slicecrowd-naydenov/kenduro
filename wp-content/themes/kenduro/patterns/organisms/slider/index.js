@@ -18,8 +18,7 @@ export default class Slider {
     }
 
     this.$el = $(el);
-    this.swiper;
-
+    
     this.events();
   }
 
@@ -33,10 +32,34 @@ export default class Slider {
 
   initializeSlider() {
     this.swiper = new Swiper(this.$el[0], {
+      autoHeight: true,
       pagination: {
         el: this.$el.find('.swiper-pagination')[0],
         clickable: true
       },
+      navigation: {
+        nextEl: this.$el.find('.swiper-button-next')[0],
+        prevEl: this.$el.find('.swiper-button-prev')[0],
+      },
+      breakpoints: {
+        // when window width is >= 320px
+        320: {
+          spaceBetween: 15
+        },
+        // when window width is >= 575px
+        575: {
+          spaceBetween: 130
+        },
+        // when window width is >= 768px
+        768: {
+          spaceBetween: 150,      
+          autoHeight: false
+        },
+        992: {
+          spaceBetween: 30,      
+          autoHeight: false
+        }
+      }
     });
   }
 }
