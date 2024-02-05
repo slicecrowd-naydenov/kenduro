@@ -42,21 +42,21 @@ export default class Slider {
         prevEl: this.$el.find('.swiper-button-prev')[0],
       },
       breakpoints: {
-        // when window width is >= 320px
-        320: {
-          spaceBetween: 15
-        },
-        // when window width is >= 575px
-        575: {
-          spaceBetween: 130
-        },
-        // when window width is >= 768px
-        768: {
-          spaceBetween: 150,      
-          autoHeight: false
-        },
+        // // when window width is >= 320px
+        // 320: {
+        //   spaceBetween: 15
+        // },
+        // // when window width is >= 575px
+        // 575: {
+        //   spaceBetween: 130
+        // },
+        // // when window width is >= 768px
+        // 768: {
+        //   spaceBetween: 150,      
+        //   autoHeight: false
+        // },
         992: {
-          spaceBetween: 30,      
+          // spaceBetween: 0,      
           autoHeight: false
         }
       }

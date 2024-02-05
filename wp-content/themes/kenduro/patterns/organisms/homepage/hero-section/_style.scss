@@ -1,29 +1,14 @@
 #hero-section {
-  padding: 50px 0 0;
+  // padding: 50px 0 0;
   color: $G-0;
-  background: url(../../assets/images/home_hero_teo.jpg) center top no-repeat;
-  background-size: cover;
+  // background: url(../../assets/images/home_hero_teo.jpg) center top no-repeat;
+  // background-size: cover;
   position: relative;
 
-  @include media-breakpoint-down(lg) {
-    background-size: auto 225px;
-    background-position: top center;
-  }
-
-  &:before {
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    left: 0;
-    top: 0;
-    content: '';
-    /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#000000+0,023047+100&0+0,0.79+100 */
-    background: linear-gradient(to bottom,  rgba(0,0,0,0) 0%,rgba(2,48,71,0.79) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-
-    @include media-breakpoint-down(lg) {
-      height: 225px;
-    }
-  }
+  // @include media-breakpoint-down(lg) {
+  //   background-size: auto 225px;
+  //   background-position: top center;
+  // }
 
   .hero-logo {
     padding: 0 17px;
@@ -203,38 +188,38 @@
   }
 
   .swiper {
-    width: auto;
-    height: auto;
-    padding-left: $bootstrap-gap;
-    padding-bottom: 50px;
+    // width: auto;
+    // height: auto;
+    // padding-left: $bootstrap-gap;
+    // padding: 50px 0;
 
-    @include media-breakpoint-only(xl) {
-      padding-left: $bootstrap-gap-xl;
-    }
+    // @include media-breakpoint-only(xl) {
+    //   padding-left: $bootstrap-gap-xl;
+    // }
 
-    @include media-breakpoint-only(lg) {
-      padding-left: $bootstrap-gap-lg;
-    }
+    // @include media-breakpoint-only(lg) {
+    //   padding-left: $bootstrap-gap-lg;
+    // }
 
-    @include media-breakpoint-down(lg) {
-      padding: 0 30px;
-      margin-top: 135px;
-      overflow: inherit;
-    }
+    // @include media-breakpoint-down(lg) {
+      // padding: 0 30px;
+      // margin-top: 135px;
+      // overflow: inherit;
+    // }
 
-    @include media-breakpoint-only(md) {
-      padding: 0;
-      width: 700px;
-    }
+    // @include media-breakpoint-only(md) {
+    //   padding: 0;
+    //   width: 700px;
+    // }
 
-    @include media-breakpoint-only(sm) {
-      padding: 0;
-      width: 514px;
-    }
+    // @include media-breakpoint-only(sm) {
+    //   padding: 0;
+    //   width: 514px;
+    // }
 
-    @include media-breakpoint-only(xs) {
-      padding: 0 15px;
-    }
+    // @include media-breakpoint-only(xs) {
+    //   padding: 0 15px;
+    // }
 
     .button {
       margin-top: 26px;
@@ -242,18 +227,59 @@
     }
 
     .swiper-slide {
-      padding-right: 60%;
+      padding: 50px 0;
+      justify-content: flex-end;
+      min-height: 450px;
+      display: flex;
+      flex-direction: column;
 
       @include media-breakpoint-down(lg) {
-        padding-right: 0;
-        background-color: $b-primary;
-        padding: 20px;
-        border-radius: $radius-medium;
+        min-height: 0;
+        padding-bottom: 0;
       }
-    }
 
-    .swiper-wrapper {
-      align-items: flex-end;
+      .mobile-slide-view {
+        @include media-breakpoint-down(lg) {
+          margin-top: -75px;
+          background-color: $b-primary;
+          padding: 20px;
+          border-radius: $radius-medium;
+        }
+      }
+
+      .slide-image {
+        width: 100%;
+        height: 100%;
+        background-position: center top;
+        background-size: cover;
+        position: absolute;
+        z-index: -2;
+        left: 50%;
+        top: 0;
+        transform: translateX(-50%);
+
+        @include media-breakpoint-down(lg) {
+          height: 225px;
+          position: relative;
+          top: -50px;
+        }
+      }
+
+      &:before {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        left: 0;
+        top: 0;
+        content: '';
+        z-index: -1;
+        /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#000000+0,023047+100&0+0,0.79+100 */
+        background: linear-gradient(to bottom,  rgba(0,0,0,0) 0%,rgba(2,48,71,0.79) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    
+        @include media-breakpoint-down(lg) {
+          height: 225px;
+        }
+      }
     }
   }
 }
@@ -264,7 +290,9 @@
   @extend .flex-center;
 
   @include media-breakpoint-down(lg) {
-    bottom: calc(100% + 10px) !important;
+    top: 170px !important;
+    bottom: auto !important;
+    // bottom: calc(100% + 10px) !important;
   }
 
   .swiper-pagination-bullet {
