@@ -84,7 +84,7 @@ do_action('woocommerce_before_main_content');
 				if (wp_is_mobile()) {
 				?>
 					<!-- Button trigger modal -->
-					<button type="button" class="button" data-toggle="modal" data-target="#filterModal">
+					<button type="button" class="button filter-modal" data-toggle="modal" data-target="#filterModal">
 						Филтри
 					</button>
 

@@ -730,7 +730,7 @@
       }
 
       .column {
-        flex: 1 0 auto;
+        flex: 1 0 50%;
 
         @include media-breakpoint-down(lg) {
           width: 100%;

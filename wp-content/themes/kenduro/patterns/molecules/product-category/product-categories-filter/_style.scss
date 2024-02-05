@@ -46,6 +46,24 @@
   gap: 5px;
 }
 
+.yith-wcan-reset-filters {
+  border-radius: $radius-circle;
+  border: none;
+  @extend #{'.button', '.button-error'};
+  font-size: 0 !important;
+  line-height: 0 !important;
+
+  &:after {
+    display: block;
+    @extend #{'.paragraph', '.paragraph-l'};
+    content: 'Премахни филтрите';
+  }
+
+  @include media-breakpoint-down(lg) {
+    width: 100%;
+  }
+}
+
 .yith-wcan-filters {
   background-color: transparent;
   display: inline-flex;
@@ -130,7 +148,7 @@
     }
   }
 
-  .button {
+  .filter-modal {
     @include media-breakpoint-down(lg) {
       background-image: url('../../assets/icons/svg/filter.svg');
       background-position: center right 12px;

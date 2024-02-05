@@ -40,9 +40,6 @@ defined( 'ABSPATH' ) || exit;
 			</p>
 
 		<?php else : ?>
-			<?php
-	// pretty_dump($order->get_meta_data());
-			?>
 			<div class="custom-section-wrapper">
 				<div class="custom-section">
 					<div>
@@ -119,7 +116,20 @@ defined( 'ABSPATH' ) || exit;
 							До <?php echo $type_delivery; ?>
 						</p>
 						<p class="paragraph paragraph-m">Адрес на доставка</p>
-						<p class="paragraph paragraph-l semibold text_value">гр Благоевград</p>
+						<p class="paragraph paragraph-l semibold text_value">
+							<?php 
+								$address = $order->get_billing_address_1();
+
+								if ($type_delivery === 'Офис') {
+									$address_delivery = str_replace('До офис:', '', $address);
+								} else {
+									$address_delivery = $order->get_billing_city() . ', '. $order->get_billing_address_1();
+								}
+							
+							echo $address_delivery; 
+							
+							?>
+						</p>
 						<p class="paragraph paragraph-m">Начин на плащане</p>
 						<p class="paragraph paragraph-l semibold text_value">
 							<?php echo wp_kses_post( $order->get_payment_method_title() ); ?>
