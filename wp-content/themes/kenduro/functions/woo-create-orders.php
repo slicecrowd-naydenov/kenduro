@@ -263,7 +263,7 @@ function create_CRM_record($order_id, $invoice_id) {
   
   $order = wc_get_order( $order_id );
   
-  $vat_choice = get_post_meta( $order_id, '_invoice_vat_registration', true ) === '' ? false : true;
+  $vat_choice = get_post_meta( $order_id, '_invoice_vat_registration', true ) === 'yes' ? true : false;
   $email_agreement_val = get_post_meta( $order_id, '_email_agreement', true ) === 'yes' ? true : false;
   $viber_agreement_val = get_post_meta( $order_id, '_viber_agreement', true ) === 'yes' ? true : false;
   $item_data = array(

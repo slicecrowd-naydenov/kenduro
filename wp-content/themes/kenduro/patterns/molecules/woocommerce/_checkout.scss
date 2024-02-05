@@ -61,10 +61,18 @@
   .wc-payment-form .form-row {
     flex-direction: column;
   }
+
+  .woocommerce-invalid {
+    label,
+    a {
+      color: $error !important;
+    }
+  }
 }
 
 .woocommerce-checkout {
-  .cart-customlocation {
+  .cart-customlocation,
+  .woocommerce-error {
     display: none !important;
   }
 

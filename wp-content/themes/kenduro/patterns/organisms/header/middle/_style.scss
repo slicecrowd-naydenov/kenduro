@@ -62,10 +62,14 @@
         box-shadow: none;
         outline: none;
         border-radius: $radius-circle !important;
-        color: $text-secondary !important;
+        color: $text-primary !important;
         
         &:focus {
           border-color: $b-primary !important;
+        }
+
+        @include placeholder {
+          color: $text-secondary;
         }
       }
 
