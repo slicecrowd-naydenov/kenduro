@@ -9,16 +9,16 @@
             <img src="<?php echo IMAGES_PATH; ?>/hebo.png" alt="hebo">
           </li>
           <li class="brands-list__item">
-            <img src="<?php echo IMAGES_PATH; ?>/s3.png" alt="hebo">
+            <img src="<?php echo IMAGES_PATH; ?>/s3.png" alt="s3">
           </li>
           <li class="brands-list__item">
-            <img src="<?php echo IMAGES_PATH; ?>/rebel.png" alt="hebo">
+            <img src="<?php echo IMAGES_PATH; ?>/rebel.png" alt="rebel">
           </li>
           <li class="brands-list__item">
-            <img src="<?php echo IMAGES_PATH; ?>/fm_parts.png" alt="hebo">
+            <img src="<?php echo IMAGES_PATH; ?>/fm_parts.png" alt="fm_parts">
           </li>
           <li class="brands-list__item">
-            <img src="<?php echo IMAGES_PATH; ?>/ripin.png" alt="hebo">
+            <img src="<?php echo IMAGES_PATH; ?>/ripin.png" alt="ripin">
           </li>
         </ul>
       </div>

@@ -287,26 +287,27 @@
     display: none;
   }
 
+  .section-title {
+    padding-bottom: 13px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid $G-1-5;
+  }
+
   form.woocommerce-checkout {
     display: flex;
     flex-direction: column;
 
-    .section-title {
-      padding-bottom: 13px;
-      margin-bottom: 10px;
-      border-bottom: 1px solid $G-1-5;
-    }
-
     #customer_details {
       width: auto;
-      background-color: $G-0;
-      padding: 40px 60px;
-      border-radius: $radius-medium;  
       margin: 0;
 
       .form-row:not(.input-checkbox, .notes) {
         margin: 0;
         width: calc(50% - 10px);
+
+        @include media-breakpoint-down(md) {
+          width: 100%;
+        }
 
         &.woocommerce-invalid-required-field {
           .input-text {
@@ -365,6 +366,7 @@
     #custom_invoice_checkbox {      
       #want_invoice_field {
         margin-top: 27px;
+        margin-bottom: 15px;
       }
     }
 
@@ -426,7 +428,6 @@
 
     table {
       background-color: $G-0;
-      padding: 40px 60px;
       border-radius: $radius-medium;  
       margin: 0;
 
@@ -447,6 +448,10 @@
 
       .woocommerce-shipping-totals th {
         padding: 40px 60px 0;
+
+        @include media-breakpoint-down(md) {
+          padding: 40px 20px 0;
+        }
       }
 
       #woo-bg--econt-office-locator,
@@ -457,6 +462,10 @@
 
       #shipping_method {
         padding: 0 60px 50px;
+
+        @include media-breakpoint-down(md) {
+          padding: 0 20px 50px;
+        }
 
         li {
           &:first-child:not(.multiselect__element) {
@@ -471,8 +480,45 @@
             margin-left: 30px;
             position: relative;
 
+            &:before {
+              @extend #{'.paragraph','.paragraph-l'};
+
+              @include media-breakpoint-down(md) {
+                content: 'Офис на Еконт';
+                display: block;
+                padding: 4px 0;
+              }
+            }
+
             @include media-breakpoint-down(xl) {
               margin-left: 0;
+            }
+          }
+
+          &:last-child {
+            .woo-bg--econt-delivery {
+              &:before {
+                @include media-breakpoint-down(md) {
+                  content: 'Адрес'
+                }
+              }
+
+              .multiselect__single {
+
+                &:after {
+                  @extend #{'.paragraph','.paragraph-l'};
+
+                  @include media-breakpoint-down(md) {
+                    position: absolute;
+                    left: -14px;
+                    bottom: -24px;
+                    transform: translateY(100%);
+                    content: '№';
+                    display: block;
+                    padding: 4px 0;
+                  }
+                }
+              }
             }
           }
         }
@@ -482,6 +528,16 @@
 
           @include media-breakpoint-down(xl) {
             padding-left: 0;
+          }
+
+          &:before {
+            @extend #{'.paragraph','.paragraph-l'};
+
+            @include media-breakpoint-down(md) {
+              content: 'Град';
+              display: block;
+              padding: 4px 0;
+            }
           }
         }
 
@@ -616,12 +672,20 @@
             @include media-breakpoint-down(xl) {
               margin-top: 10px;
             }
+
+            @include media-breakpoint-down(md) {
+              margin-top: 40px;
+            }
           }
         }
 
         input[type="radio"]:checked {
           & + label  {
             margin-bottom: 30px; 
+
+            @include media-breakpoint-down(md) {
+              margin-bottom: 42px;
+            }
             
             &:after {
               content: 'На следващия работен ден при поръчка до 16:00 ч.';
@@ -634,9 +698,50 @@
               pointer-events: none;
               font-weight: 400;
               @extend #{'.paragraph','.paragraph-m'};
+
+              @include media-breakpoint-down(md) {
+                max-width: calc(100% - 30px);
+                white-space: break-spaces;
+              }
             }
           } 
-          
+        }
+      }
+    }
+  }
+
+  .custom-section {
+    padding: 40px 60px;
+    background-color: $G-0;
+    border-radius: $radius-medium;
+  
+    @include media-breakpoint-down(md) {
+      padding: 40px 20px;
+    }
+
+    &.column-wrapper {
+      display: flex;
+      flex-direction: row;
+      align-items: baseline;
+      gap: 30px;
+
+      @include media-breakpoint-down(lg) {
+        flex-direction: column;
+      }
+
+      .column {
+        flex: 1 0 auto;
+
+        @include media-breakpoint-down(lg) {
+          width: 100%;
+        }
+
+        .text_value {
+          margin: 3px 0 20px;
+        }
+
+        .section-title {
+          margin-bottom: 20px;
         }
       }
     }
@@ -644,9 +749,6 @@
 
   #payment {
     margin-top: 10px;
-    padding: 40px 60px;
-    background-color: $G-0;
-    border-radius: $radius-medium;
 
     .payment_methods {
       li {

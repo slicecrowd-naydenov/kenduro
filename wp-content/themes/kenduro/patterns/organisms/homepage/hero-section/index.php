@@ -83,7 +83,7 @@
                   ?>
                 </p>
               </div>
-              <img class="hero-banner__image" src="<?php echo IMAGES_PATH; ?>/teo_kabakchiev.png" alt="teo_kabakchiev">
+              <img class="hero-banner__image" src="<?php echo IMAGES_PATH; ?>/teo_kabakchiev_bg.png" alt="teo_kabakchiev">
             </div>
           </div>
         <?php endif; ?>

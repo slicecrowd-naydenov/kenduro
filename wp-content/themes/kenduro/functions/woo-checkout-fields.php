@@ -113,6 +113,10 @@ add_action('woocommerce_checkout_update_order_meta', 'save_custom_invoice_fields
 
 function save_custom_invoice_fields($order_id) {
   if ($_POST['want_invoice']) {
+    if (!empty($_POST['want_invoice'])) {
+      update_post_meta($order_id, '_want_invoice', sanitize_text_field($_POST['want_invoice']));
+    }
+
     if (!empty($_POST['invoice_company_name'])) {
       update_post_meta($order_id, '_invoice_company_name', sanitize_text_field($_POST['invoice_company_name']));
     }
