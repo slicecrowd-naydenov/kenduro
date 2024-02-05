@@ -73,6 +73,7 @@ function trigger_ajax_to_cart() {
         tyre_type.parents('tr').hide();
 
         $('#yith-s, .lapilliUI-Input__field').attr('placeholder', 'Търси продукт');
+        $('.no-results .lapilliUI-Typography__root').html('Няма намерени резултати');
         // $('.lapilliUI-Input__field').attr('placeholder', 'Търси продукт');
       });
 

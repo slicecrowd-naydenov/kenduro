@@ -73,19 +73,12 @@
         }
       }
 
-      .search-result-item__thumbnail {
-        width: 50px !important;
-      }
-
-      .ywcas-search-results-grid {
-        gap: 5px !important;
-      }
-
+      
       #yith-searchsubmit,
       .lapilliUI-Input__endAdornment {
         display: none;
       }
-
+      
       .ywcas-input-field-wrapper {
         border: none !important;
       }
@@ -103,4 +96,14 @@
       display: inline-block;
     }
   }
+}
+
+.ywcas-popover-results {
+  .search-result-item__thumbnail {
+    width: 50px !important;
+  }
+
+  .ywcas-search-results-grid {
+    gap: 5px !important;
+  } 
 }
