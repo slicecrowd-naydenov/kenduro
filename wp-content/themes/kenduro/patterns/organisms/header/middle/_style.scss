@@ -74,6 +74,13 @@
         }
       }
 
+      .lapilliUI-Input__field {
+        @include media-breakpoint-down(lg) {
+          background-color: transparent !important;
+          border: none !important;
+        }
+      }
+
       
       #yith-searchsubmit,
       .lapilliUI-Input__endAdornment {
@@ -82,6 +89,15 @@
       
       .ywcas-input-field-wrapper {
         border: none !important;
+      }
+    }
+
+    .wp-block-yith-search-block {
+      @include media-breakpoint-down(lg) {
+        width: 48px;
+        left: 0;
+        z-index: 5;
+        display: block;
       }
     }
   }
@@ -160,4 +176,47 @@
   .ywcas-search-results-grid {
     gap: 5px !important;
   } 
+}
+
+.ywcas-search-mobile {
+  .ywcas-block-components-search-field {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 15px !important;
+  }
+
+  .mobile-search-close {
+    margin: 0 0px 3px 20px !important;
+
+    & + div {
+      flex: 1 1 auto;
+    }
+  }
+
+  .mobile-search-content {
+    padding: 20px;
+
+    .ywcas-search-results-grid {
+      gap: 5px !important;
+    }
+
+    .css-1st3ua0 {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+    }
+  }
+
+  .ywcas-submit-wrapper {
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-image: url('../../assets/icons/svg/search.svg');
+
+    svg {
+      display: none;
+    }
+  }
 }
