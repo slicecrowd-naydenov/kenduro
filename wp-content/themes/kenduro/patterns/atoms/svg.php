@@ -8,5 +8,7 @@
 	$class = trim( implode( ' ', (array) $args['class'] ) );
 	$class = ($class !== '') ? ' ' . $class : '';
 
-	echo file_get_contents(ICON_PATH . '/' . $args['name'] . '.svg');
+	// echo file_get_contents(ICON_PATH . '/' . $args['name'] . '.svg');
+	$svg_content = file_get_contents(ICON_PATH . '/' . $args['name'] . '.svg');
+	echo str_replace('<svg', '<svg class="' . $class . '"', $svg_content);
 ?>

@@ -30,7 +30,8 @@ export default class MiddleHeader {
     this.search.on('click' , function(e) {
       e.preventDefault();
       e.stopPropagation();
-      $('.yith-ajaxsearchform-container').fadeToggle();
+      $(this).toggleClass('opened');
+      $('.yith-ajaxsearchform-container, .wp-block-yith-search-block').fadeToggle();
     });
   }
 }

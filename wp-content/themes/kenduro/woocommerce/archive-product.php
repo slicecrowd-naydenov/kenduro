@@ -118,14 +118,16 @@ do_action('woocommerce_before_main_content');
 				</div>
 				<?php
 			} else {
-				Load::molecules('product-category/product-category-info/index', [
-					'title' => 'Всички продукти',
-					'class' => 'full-container',
-					'description' => 'Научете повече за нашите продукти.',
-					'cat' => single_term_title('', false),
-					'cat_img_inner' => $cat_inner_image_url
-				]);
-				Load::molecules('product-category/product-categories-view/index');
+				if (!is_search()) {
+					Load::molecules('product-category/product-category-info/index', [
+						'title' => 'Всички продукти',
+						'class' => 'full-container',
+						'description' => 'Научете повече за нашите продукти.',
+						'cat' => single_term_title('', false),
+						'cat_img_inner' => $cat_inner_image_url
+					]);
+					Load::molecules('product-category/product-categories-view/index');
+				}
 			}
 
 			if (woocommerce_product_loop()) {
