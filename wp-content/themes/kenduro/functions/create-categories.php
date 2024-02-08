@@ -67,7 +67,7 @@ function create_woocommerce_categories($filteredData) {
     'hide_empty'   => 0
   ));
 
-  global $ss_ids;
+  $ss_ids = get_field('ss_ids', 'option');
   $main_category_id = $ss_ids['main_category_id'];
   $child_category_id = $ss_ids['child_category_id'];
   $sub_child_category_id = $ss_ids['sub_child_category_id'];

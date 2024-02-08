@@ -37,7 +37,7 @@ function create_order_from_product_ids($product_ids, $product_info) {
 }
 
 function create_sales_record($response) {
-  global $ss_ids;
+  $ss_ids = get_field('ss_ids', 'option');
   $sales_id = $ss_ids['sales'];
   $invoices_id = $ss_ids['invoices'];
   $sales_fields = fetch_column_fields($sales_id);
@@ -243,7 +243,7 @@ function product_quick_order_form() {
 // add_filter('woocommerce_after_add_to_cart_form', 'product_quick_order_form');
 // add_filter('woocommerce_before_checkout_form', 'product_quick_order_form');
 function create_CRM_record($order_id, $invoice_id) {
-  global $ss_ids;
+  $ss_ids = get_field('ss_ids', 'option');
   $crm_id = $ss_ids['crm'];
   $crm_fields = fetch_column_fields($crm_id);
 

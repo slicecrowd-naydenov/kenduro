@@ -3,8 +3,7 @@ require_once ABSPATH . 'wp-admin/includes/media.php';
 require_once ABSPATH . 'wp-admin/includes/file.php';
 require_once ABSPATH . 'wp-admin/includes/image.php';
 add_action('rest_api_init', 'add_get_products_endpoint');
-$ss_ids = get_field('ss_ids', 'option');
-$product_variations = post_column_fields($ss_ids['product_variations']);
+// $product_variations = post_column_fields($ss_ids['product_variations']);
 
 function add_get_products_endpoint() {
   register_rest_route(
@@ -21,7 +20,10 @@ function add_get_products_endpoint() {
 }
 
 function get_all_products($request) {
-  global $product_variations, $fieldsToRemove, $ss_ids;
+  global $fieldsToRemove;
+  $ss_ids = get_field('ss_ids', 'option');
+  $product_variations = post_column_fields($ss_ids['product_variations']);
+
 
   $data = $request->get_json_params();
   $id = $request->get_param('id');
@@ -171,7 +173,7 @@ function is_exist_product($id) {
 function update_product_manually($data, $product_id) {
   $product = wc_get_product($product_id);
   if ($product) {
-    global $ss_ids;
+    $ss_ids = get_field('ss_ids', 'option');
     $product_variations_fields = fetch_column_fields($ss_ids['product_variations']);
     $product_variations_quantity = get_column_field_id('product_variations_quantity', $product_variations_fields);
     $set_regular_price = get_column_field_id('set_regular_price', $product_variations_fields);
@@ -299,7 +301,8 @@ function get_column_field_id($helper_text, $fetch_variation_columns) {
 }
 
 function is_variable_product($id, $product_id_slug, $product_variation_slug) {
-  global $product_variations;
+  $ss_ids = get_field('ss_ids', 'option');
+  $product_variations = post_column_fields($ss_ids['product_variations']);
   $result = false;
 
   foreach ($product_variations['items'] as $product_variation) {
@@ -340,7 +343,8 @@ function process_product_attributes($product_variation, $filters, $filter_arr, $
 }
 
 function create_variation($pid, $term_slug, $product_variations_fields, $attributes_data) {
-  global $product_variations, $ss_ids;
+  $ss_ids = get_field('ss_ids', 'option');
+  $product_variations = post_column_fields($ss_ids['product_variations']);
   $filters = array_filter($product_variations_fields, function($k) {
     return str_starts_with($k['help_text'], 'filter_');
   });
@@ -453,7 +457,8 @@ function add_img_to_gallery($product_id,$image_id_array){
 }
 
 function create_simple_product($pid, $term_slug, $product_fields) {
-  global $product_variations, $ss_ids;
+  $ss_ids = get_field('ss_ids', 'option');
+  $product_variations = post_column_fields($ss_ids['product_variations']);
 	$product_variations_quantity = get_column_field_id('product_variations_quantity', $product_fields);
   // $attr_color = get_column_field_id('attr_color', $product_fields);
 	$product_id_slug = get_column_field_id('product_variation', $product_fields);
@@ -488,7 +493,7 @@ function create_simple_product($pid, $term_slug, $product_fields) {
 
 function create_woocommerce_products($filteredData) {
   // $count = 0;
-  global $ss_ids;
+  $ss_ids = get_field('ss_ids', 'option');
 
   $product_fields = fetch_column_fields($ss_ids['products_app_id']);
   $product_variations_fields = fetch_column_fields($ss_ids['product_variations']);
@@ -584,7 +589,7 @@ function create_woocommerce_products($filteredData) {
 }
 
 function update_woocommerce_product($data, $update_product) {
-  global $ss_ids;
+  $ss_ids = get_field('ss_ids', 'option');
   $product_fields = fetch_column_fields($ss_ids['products_app_id']);    
   $product_variations_fields = fetch_column_fields($ss_ids['product_variations']);
   $product_var_id = get_column_field_id('product_var_id', $product_fields);

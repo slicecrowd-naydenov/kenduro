@@ -22,7 +22,6 @@ function add_custom_query_var($vars) {
 add_filter('query_vars', 'add_custom_query_var');
 
 // declare Global var
-$ss_ids = get_field('ss_ids', 'option');
 $fieldsToRemove = ['deleted_date', 'first_created', 'followed_by', 'ranking', 'last_updated', 'autonumber', 'comments_count', 'description'];
 /**
  * Actions on init

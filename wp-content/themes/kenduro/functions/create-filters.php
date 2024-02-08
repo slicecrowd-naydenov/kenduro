@@ -16,7 +16,8 @@ function add_get_filters_endpoint() {
 }
 
 function get_all_filters($request) {
-  global $ss_ids, $fieldsToRemove;
+  global $fieldsToRemove;
+  $ss_ids = get_field('ss_ids', 'option');
 
   // $data = $request->get_json_params();
   $id = $request->get_param('id');
@@ -97,7 +98,7 @@ function createTerm(string $termName, string $termSlug, string $taxonomy, int $o
 }
 
 function create_woocommerce_filters($filteredData) {
-  global $ss_ids;
+  $ss_ids = get_field('ss_ids', 'option');
   $filter_values = post_column_fields($ss_ids['filter_values']);
   $related_records = get_column_fields_related($ss_ids['filter_values']);
   $existing_ids = array_column($related_records['related_records'], 'id');
