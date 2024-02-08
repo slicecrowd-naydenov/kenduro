@@ -537,6 +537,7 @@ function create_woocommerce_products($filteredData) {
             'is_taxonomy' => '1'
           );
         }
+        update_post_meta($pid, 'rank_math_focus_keyword', strtolower($item[$name_bg]));
 
         // update_post_meta($pid, '_product_attributes', $attributes_data);
         set_values($product_fields, $pid, $item);
@@ -548,6 +549,7 @@ function create_woocommerce_products($filteredData) {
         $simple_product->set_name($item[$name_bg]); // product title
         $simple_product->set_status('publish');
         $p_id = $simple_product->save();
+        update_post_meta($p_id, 'rank_math_focus_keyword', strtolower($item[$name_bg]));
 
         if (!is_wp_error($p_id)) {
           $product_id = $p_id;
