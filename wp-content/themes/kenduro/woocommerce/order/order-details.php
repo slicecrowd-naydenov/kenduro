@@ -14,24 +14,25 @@ use Lean\Load;
  *
  * @see     https://woo.com/document/template-structure/
  * @package WooCommerce\Templates
- * @version 7.8.0
+ * @version 8.5.0
+ *
+ * @var bool $show_downloads Controls whether the downloads table should be rendered.
  */
 
-defined('ABSPATH') || exit;
+defined( 'ABSPATH' ) || exit;
 
-$order = wc_get_order($order_id); // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
+$order = wc_get_order( $order_id ); // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
 
-if (!$order) {
+if ( ! $order ) {
 	return;
 }
 
-$order_items           = $order->get_items(apply_filters('woocommerce_purchase_order_item_types', 'line_item'));
-$show_purchase_note    = $order->has_status(apply_filters('woocommerce_purchase_note_order_statuses', array('completed', 'processing')));
+$order_items           = $order->get_items( apply_filters( 'woocommerce_purchase_order_item_types', 'line_item' ) );
+$show_purchase_note    = $order->has_status( apply_filters( 'woocommerce_purchase_note_order_statuses', array( 'completed', 'processing' ) ) );
 $show_customer_details = is_user_logged_in() && $order->get_user_id() === get_current_user_id();
 $downloads             = $order->get_downloadable_items();
-$show_downloads        = $order->has_downloadable_item() && $order->is_download_permitted();
 
-if ($show_downloads) {
+if ( $show_downloads ) {
 	wc_get_template(
 		'order/order-downloads.php',
 		array(
@@ -104,5 +105,7 @@ do_action('woocommerce_after_order_details', $order);
 ?>
 </div>
 
-
-
+<?php 
+if ( $show_customer_details ) {
+	// wc_get_template( 'order/order-details-customer.php', array( 'order' => $order ) );
+}
