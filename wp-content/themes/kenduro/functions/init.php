@@ -21,6 +21,13 @@ function add_custom_query_var($vars) {
 }
 add_filter('query_vars', 'add_custom_query_var');
 
+/**
+ * Change the Focus Keyword Limit
+ */
+add_filter( 'rank_math/focus_keyword/maxtags', function() {
+  return 20; // Number of Focus Keywords. 
+});
+
 // declare Global var
 $fieldsToRemove = ['deleted_date', 'first_created', 'followed_by', 'ranking', 'last_updated', 'autonumber', 'comments_count', 'description'];
 /**

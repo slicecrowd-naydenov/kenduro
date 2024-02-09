@@ -243,6 +243,7 @@ function set_values($fields, $product_id, $item) {
   
   // update_post_meta($product_id, 'rank_math_title', 'Update Title goes here');
   // update_post_meta($product_id, 'rank_math_description', 'Update Description goes here');
+  // update_post_meta($product_id, '_menu_order', 111);
   $product = wc_get_product($product_id);
   $filtered_data = array();
   $handlesToKeep = array();
@@ -253,6 +254,9 @@ function set_values($fields, $product_id, $item) {
       $product->set_name($item[$field['slug']]);
     } else if ($field['help_text'] === 'set_regular_price') {
       $product->set_regular_price($item[$field['slug']]);
+    } else if ($field['help_text'] === 'product_priority') {
+      $priority = isset($item[$field['slug']]) && $item[$field['slug']] > 0 ? reverse_number($item[$field['slug']]) : 1001;
+      $product->set_menu_order($priority);
     } else if ($field['help_text'] === 'product_description_bg') {
       $html = isset($item[$field['slug']]['html']) ? $item[$field['slug']]['html'] : '';
       $product->set_description($html);
@@ -494,6 +498,12 @@ function create_simple_product($pid, $term_slug, $product_fields) {
   }
 }
 
+function reverse_number($number) {
+  if ($number >= 1 && $number <= 10) {
+    return 11 - $number;
+  }
+}
+
 function create_woocommerce_products($filteredData) {
   // $count = 0;
   $ss_ids = get_field('ss_ids', 'option');
@@ -506,7 +516,11 @@ function create_woocommerce_products($filteredData) {
 	$prduct_sku = get_column_field_id('set_sku', $product_fields);
 	$attr_color = get_column_field_id('color', $product_fields);
 	$name_bg = get_column_field_id('product_name_bg', $product_fields);
+	$product_priority = get_column_field_id('product_priority', $product_fields);
+	$seo_description_bg = get_column_field_id('seo_description_bg', $product_fields);
+	$seo_keywords = get_column_field_id('seo_keywords', $product_fields);
   $product_var_id = get_column_field_id('product_var_id', $product_fields);
+  $priority = isset($item[$product_priority]) && $item[$product_priority] > 0 ? reverse_number($item[$product_priority]) : 1001;
 
   foreach ($filteredData as $item) {
     // $count++;
@@ -525,6 +539,7 @@ function create_woocommerce_products($filteredData) {
 
         $variations->set_name($item[$name_bg]);
         $variations->set_sku($item[$prduct_sku]);
+        $variations->set_menu_order($priority);
         
         $variations->save();
         $pid = $variations->get_id();
@@ -545,7 +560,9 @@ function create_woocommerce_products($filteredData) {
             'is_taxonomy' => '1'
           );
         }
-        update_post_meta($pid, 'rank_math_focus_keyword', strtolower($item[$name_bg]));
+        update_post_meta($pid, 'rank_math_focus_keyword', strtolower($item[$seo_keywords]));
+        update_post_meta($pid, 'rank_math_description', $item[$seo_description_bg]);
+
 
         // update_post_meta($pid, '_product_attributes', $attributes_data);
         set_values($product_fields, $pid, $item);
@@ -556,8 +573,13 @@ function create_woocommerce_products($filteredData) {
         $simple_product = new WC_Product_Simple();
         $simple_product->set_name($item[$name_bg]); // product title
         $simple_product->set_status('publish');
-        $p_id = $simple_product->save();
-        update_post_meta($p_id, 'rank_math_focus_keyword', strtolower($item[$name_bg]));
+        $simple_product->set_menu_order($priority);
+        $p_id = $simple_product->save();     
+
+        update_post_meta($p_id, 'rank_math_focus_keyword', strtolower($item[$seo_keywords]));
+        update_post_meta($p_id, 'rank_math_description', $item[$seo_description_bg]);
+
+        // update_post_meta($p_id, 'menu_order', 1987);
         // update_post_meta($p_id, 'rank_math_title', 'Title goes here');
         // update_post_meta($p_id, 'rank_math_description', 'Description goes here');
 
@@ -598,6 +620,8 @@ function update_woocommerce_product($data, $update_product) {
   $product_fields = fetch_column_fields($ss_ids['products_app_id']);    
   $product_variations_fields = fetch_column_fields($ss_ids['product_variations']);
   $product_var_id = get_column_field_id('product_var_id', $product_fields);
+  $seo_keywords = get_column_field_id('seo_keywords', $product_fields);
+  $seo_description_bg = get_column_field_id('seo_description_bg', $product_fields);
   $set_gallery_image_ids = get_column_field_id('set_gallery_image_ids', $product_fields);
   $is_variation = get_column_field_id('is_variation', $product_variations_fields);
 
@@ -619,6 +643,8 @@ function update_woocommerce_product($data, $update_product) {
         }
         set_values($product_fields, $product_id, $item);
         update_acf($item, $product_id, false);
+        update_post_meta($product_id, 'rank_math_focus_keyword', strtolower($item[$seo_keywords]));
+        update_post_meta($product_id, 'rank_math_description', $item[$seo_description_bg]);
         if (count($item[$set_gallery_image_ids]) === 0) {
           delete_post_thumbnail($product_id);
         }
