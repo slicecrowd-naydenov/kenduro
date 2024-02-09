@@ -240,6 +240,9 @@ function set_values($fields, $product_id, $item) {
     'hide_empty'   => 0
   ));
 
+  
+  // update_post_meta($product_id, 'rank_math_title', 'Update Title goes here');
+  // update_post_meta($product_id, 'rank_math_description', 'Update Description goes here');
   $product = wc_get_product($product_id);
   $filtered_data = array();
   $handlesToKeep = array();
@@ -555,6 +558,8 @@ function create_woocommerce_products($filteredData) {
         $simple_product->set_status('publish');
         $p_id = $simple_product->save();
         update_post_meta($p_id, 'rank_math_focus_keyword', strtolower($item[$name_bg]));
+        // update_post_meta($p_id, 'rank_math_title', 'Title goes here');
+        // update_post_meta($p_id, 'rank_math_description', 'Description goes here');
 
         if (!is_wp_error($p_id)) {
           $product_id = $p_id;

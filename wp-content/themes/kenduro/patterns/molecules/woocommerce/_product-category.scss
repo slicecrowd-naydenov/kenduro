@@ -93,17 +93,21 @@
     li.product {
       flex: 0 0 calc(20% - 16px);
       margin: 0 !important;
+      width: calc(20% - 16px);
 
       @include media-breakpoint-only(lg) {
         flex: 0 0 calc(25% - 15px);
+        width: calc(25% - 15px);
       }
 
       @include media-breakpoint-only(md) {
         flex: 0 0 calc(33% - 11px);
+        width: calc(33% - 11px);
       }
 
       @include media-breakpoint-down(md) {
         flex: 0 0 calc(50% - 5px);
+        width: calc(50% - 5px);
       }
 
       img {
@@ -218,6 +222,7 @@
         text-align: left;
         order: 10;
         color: $b-primary;
+        width: 100%;
         @extend #{'.paragraph','.paragraph-xl', '.semibold'};
         @include line-clamp(2);
       }
