@@ -39,12 +39,14 @@ $main_categories = get_terms($args);
                   ?>
                   <li class="menu-item menu-item-type-post_type menu-item-object-page page_item <?php echo $child_categories ? 'menu-item-has-children' : ''; ?>">
                     <span class="cat-name">
-                      <?php
-                      echo $main_category->name;
-                      if ($child_categories) {
-                        Load::atom('svg', ['name' => 'arrow_down']);
-                      }
-                      ?>
+                      <a href="<?php echo esc_url($category_link); ?>">
+                        <?php
+                        echo $main_category->name;
+                        if ($child_categories) {
+                          Load::atom('svg', ['name' => 'arrow_down']);
+                        }
+                        ?>
+                      </a>
                     </span>
                     <?php if ($child_categories) : ?>
                       <ul class="sub-menu">

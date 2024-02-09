@@ -114,8 +114,32 @@
       padding: 4px 0;
 
       &:hover {
-        .cat-name {
+        .cat-name a {
           color: $b-highlight-two;
+        }
+      }
+
+      .cat-name {
+        padding-right: 16px;
+        @extend #{'.paragraph','.paragraph-l', '.semibold'};
+
+        @include media-breakpoint-down(lg) {
+          width: 100%;
+        }
+
+        svg {
+          @include media-breakpoint-down(lg) {
+            margin-right: 5px;
+            transform: rotate(-90deg);
+          }
+
+          path {
+            fill: $b-primary;
+
+            @include media-breakpoint-down(lg) {
+              fill: $G-5;
+            }
+          }
         }
       }
 
@@ -128,30 +152,6 @@
           }
         }
 
-        .cat-name {
-          padding-right: 16px;
-          @extend #{'.paragraph','.paragraph-l', '.semibold'};
-
-          @include media-breakpoint-down(lg) {
-            width: 100%;
-          }
-
-          svg {
-            @include media-breakpoint-down(lg) {
-              margin-right: 5px;
-              transform: rotate(-90deg);
-            }
-
-            path {
-              fill: $b-primary;
-
-              @include media-breakpoint-down(lg) {
-                fill: $G-5;
-              }
-            }
-          }
-        }
-
         svg {
           position: absolute;
           right: 0;
@@ -160,6 +160,14 @@
 
           @include media-breakpoint-down(lg) {
             transform: rotate(-90deg);
+          }
+        }
+
+        .cat-name {
+          & > a {
+            @include media-breakpoint-down(lg) {
+              pointer-events: none;
+            }
           }
         }
       }
@@ -180,7 +188,16 @@
     .cat-name {
       display: inline-block;
       position: relative;
-      transition: color 0.25s ease;
+
+      & > a {
+        text-decoration: none;
+        transition: color 0.25s ease;
+        padding: 0 !important;
+
+        &:after {
+          display: none !important;
+        }
+      }
     }
 
     .product-of-the-week { 

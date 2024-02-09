@@ -516,11 +516,9 @@ function create_woocommerce_products($filteredData) {
 	$prduct_sku = get_column_field_id('set_sku', $product_fields);
 	$attr_color = get_column_field_id('color', $product_fields);
 	$name_bg = get_column_field_id('product_name_bg', $product_fields);
-	$product_priority = get_column_field_id('product_priority', $product_fields);
 	$seo_description_bg = get_column_field_id('seo_description_bg', $product_fields);
 	$seo_keywords = get_column_field_id('seo_keywords', $product_fields);
   $product_var_id = get_column_field_id('product_var_id', $product_fields);
-  $priority = isset($item[$product_priority]) && $item[$product_priority] > 0 ? reverse_number($item[$product_priority]) : 1001;
 
   foreach ($filteredData as $item) {
     // $count++;
@@ -539,7 +537,6 @@ function create_woocommerce_products($filteredData) {
 
         $variations->set_name($item[$name_bg]);
         $variations->set_sku($item[$prduct_sku]);
-        $variations->set_menu_order($priority);
         
         $variations->save();
         $pid = $variations->get_id();
@@ -573,7 +570,6 @@ function create_woocommerce_products($filteredData) {
         $simple_product = new WC_Product_Simple();
         $simple_product->set_name($item[$name_bg]); // product title
         $simple_product->set_status('publish');
-        $simple_product->set_menu_order($priority);
         $p_id = $simple_product->save();     
 
         update_post_meta($p_id, 'rank_math_focus_keyword', strtolower($item[$seo_keywords]));
