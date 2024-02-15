@@ -9,7 +9,7 @@ if (!is_admin()) {
   include 'create-filters.php';
   include 'ss-create-order.php';
   include 'get-column-fields.php';
-  include 'filter.php';
+  // include 'filter.php';
   include 'woo-recently-viewed-products.php';
   include 'woo-product-images.php';
   include 'woo-header-cart-button.php';
@@ -188,6 +188,8 @@ function update_acf($fields, $id, $is_cat_prefix) {
 
 // filter
 function my_posts_where($where) {
+  // echo $where;
+  // echo '<br>';
   $where = str_replace("meta_key = 'meta_data_$", "meta_key LIKE 'meta_data_%", $where);
 
   return $where;
@@ -284,12 +286,12 @@ add_action('init', 'my_custom_init');
 // 	return $defaults;
 // }
 
-add_filter('woocommerce_output_related_products_args', 'jk_related_products_args', 20);
-function jk_related_products_args($args) {
-  $args['posts_per_page'] = 4; // 4 related products
-  $args['columns'] = 4; // arranged in 2 columns
-  return $args;
-}
+// add_filter('woocommerce_output_related_products_args', 'jk_related_products_args', 20);
+// function jk_related_products_args($args) {
+//   $args['posts_per_page'] = 4; // 4 related products
+//   $args['columns'] = 4; // arranged in 2 columns
+//   return $args;
+// }
 
 // add_action( 'after_setup_theme', 'wpdocs_theme_setup' );
 // function wpdocs_theme_setup() { 

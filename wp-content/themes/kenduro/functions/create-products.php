@@ -84,7 +84,7 @@ function is_variation_id($id) {
   $arr = array(
     'post_type'       => 'product_variation',
     'post_status'     => 'publish',
-    'posts_per_page'  => -1,
+    'posts_per_page'  => 1,
     'meta_query'      => array(
       'relation'    => 'AND',
       array(
@@ -110,7 +110,7 @@ function is_product_id($id) {
   $result = 0;
 
   $arr = array(
-    'posts_per_page' => -1,
+    'posts_per_page' => 1,
     'post_type' => 'product',
     'meta_query'    => array(
       'relation'      => 'AND',
@@ -143,7 +143,7 @@ function is_exist_product($id) {
   $result = 0;
 
   $arr = array(
-    'posts_per_page' => -1,
+    'posts_per_page' => 1,
     'post_type' => 'product',
     'meta_query'    => array(
       'relation'      => 'AND',
@@ -204,7 +204,7 @@ function is_exist_media($id) {
     'post_type'      => 'attachment',
     'post_mime_type' => 'image',
     'post_status'    => 'inherit',
-    'posts_per_page' => - 1,
+    'posts_per_page' => 1,
     'meta_query'      => array(
       'relation'    => 'AND',
       array(

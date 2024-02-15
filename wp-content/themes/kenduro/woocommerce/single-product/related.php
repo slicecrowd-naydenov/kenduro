@@ -43,7 +43,7 @@ $category_id = $innermost_category_id;
 $args = array(
 	'post_type'      => 'product',
 	'post__not_in' => array(get_the_ID()),
-	'posts_per_page' => -1,
+	'posts_per_page' => 5,
 	// 'orderby'        => 'rand',
 	'tax_query'      => array(
 		array(
