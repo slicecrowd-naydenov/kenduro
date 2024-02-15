@@ -2,17 +2,20 @@
 
 use Lean\Load;
 
-include 'create-categories.php';
-include 'create-products.php';
-include 'create-filters.php';
-include 'ss-create-order.php';
-include 'get-column-fields.php';
-include 'filter.php';
-include 'woo-recently-viewed-products.php';
-include 'woo-product-images.php';
-include 'woo-header-cart-button.php';
-include 'woo-checkout-fields.php';
-include 'woo-create-orders.php';
+
+if (!is_admin()) {
+  include 'create-categories.php';
+  include 'create-products.php';
+  include 'create-filters.php';
+  include 'ss-create-order.php';
+  include 'get-column-fields.php';
+  include 'filter.php';
+  include 'woo-recently-viewed-products.php';
+  include 'woo-product-images.php';
+  include 'woo-header-cart-button.php';
+  include 'woo-checkout-fields.php';
+  include 'woo-create-orders.php';
+} 
 
 function add_custom_query_var($vars) {
   $vars[] = 'page';

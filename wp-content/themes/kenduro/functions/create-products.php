@@ -1,7 +1,10 @@
 <?php
-require_once ABSPATH . 'wp-admin/includes/media.php';
-require_once ABSPATH . 'wp-admin/includes/file.php';
-require_once ABSPATH . 'wp-admin/includes/image.php';
+
+if (!is_admin()) {
+  require_once ABSPATH . 'wp-admin/includes/media.php';
+  require_once ABSPATH . 'wp-admin/includes/file.php';
+  require_once ABSPATH . 'wp-admin/includes/image.php';
+}
 add_action('rest_api_init', 'add_get_products_endpoint');
 // $product_variations = post_column_fields($ss_ids['product_variations']);
 
