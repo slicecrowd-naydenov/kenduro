@@ -2,17 +2,17 @@
 import $ from 'jquery';
 
 import { Tab } from 'bootstrap';
-import ShopFilter from './shop';
+// import ShopFilter from './shop';
 import Slider from './slider';
 import MobileNavigation from './header/bottom/index';
 import MiddleHeader from './header/middle/index';
 
 export default () => {
-  const $body = $('body');
+  // const $body = $('body');
 
-  if ($body.hasClass('woocommerce-shop')) {
-    new ShopFilter();
-  }
+  // if ($body.hasClass('woocommerce-shop')) {
+  //   new ShopFilter();
+  // }
 
   $('[data-slider]').each((index, el) => {
     new Slider(el);
