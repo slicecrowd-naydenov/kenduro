@@ -2,140 +2,55 @@
 
 use Lean\Load;
 
-$chosenCat = '';
-$args = array(
-  'taxonomy' => 'product_cat',
-  'parent' => 0,
-  'hide_empty' => true
-);
-$main_categories = get_terms($args);
-
+// $chosenCat = '';
+// $args = array(
+//   'taxonomy' => 'product_cat',
+//   'parent' => 0,
+//   'hide_empty' => true
+// );
+// $main_categories = get_terms($args);
 ?>
 <div id="bottom-section" class="storefront-primary-navigation">
   <div class="container">
     <div class="row">
       <div class="col">
-        <nav id="site-navigation" class="main-navigation" role="navigation" aria-label="Primary Navigation">
-          <button id="site-navigation-menu-toggle" class="menu-toggle" aria-controls="site-navigation" aria-expanded="false"><span>Меню</span></button>
-          <div class="primary-navigation">
-            <div id="mobile-nav" class="mobile-nav">
-              <div class="mobile-nav__search">
-                <?php Load::atom('svg', ['name' => 'search']); ?>
-              </div>
-              <div class="mobile-nav__logo">
-                <?php Load::molecules('logo/index'); ?>
-              </div>
-              <div class="mobile-nav__close">
-                <?php Load::atom('svg', ['name' => 'close']); ?>
-              </div>
-            </div>
-            <?php if ($main_categories) : ?>
-              <ul class="main-menu" aria-expanded="false">
-                <?php foreach ($main_categories as $main_category) : ?>
-                  <?php
-                  $category_link = get_term_link($main_category);
-                  $args['parent'] = $main_category->term_id;
-                  $child_categories = get_terms($args);
-                  ?>
-                  <li class="menu-item menu-item-type-post_type menu-item-object-page page_item <?php echo $child_categories ? 'menu-item-has-children' : ''; ?>">
-                    <span class="cat-name">
-                      <a href="<?php echo esc_url($category_link); ?>">
-                        <?php
-                        echo $main_category->name;
-                        if ($child_categories) {
-                          Load::atom('svg', ['name' => 'arrow_down']);
-                        }
-                        ?>
-                      </a>
-                    </span>
-                    <?php if ($child_categories) : ?>
-                      <ul class="sub-menu">
-                        <li class="sub-menu-head-mobile">
-                          <div class="sub-menu-head-mobile__close">
-                            <?php Load::atom('svg', ['name' => 'arrow_down']); ?>
-                          </div>
-                          <div class="sub-menu-head-mobile__cat"><?php echo $main_category->name; ?></div>
-                        </li>
-                        <li class="sub-menu__item-mobile">
-                          <a href="<?php echo esc_url($category_link); ?>">
-                            Виж всички <?php echo $main_category->name; ?>
-                            <span>
-                              <?php Load::atom('svg', ['name' => 'arrow_down']); ?>
-                            </span>
-                          </a>
-                        </li>
-                        <?php foreach ($child_categories as $child_category) : ?>
-                          <li class="sub-menu__item">
-                            <?php
-                            $child_category_link = get_term_link($child_category);
-                            // get_site_url() . '/product-category/' . $main_category->slug . '/?yith_wcan=1&product_cat=' . $main_category->slug . '+' . $child_category->slug
-                            ?>
-                            <a href="<?php echo esc_url($child_category_link); ?>" class="sub-menu__item-link">
-                              <?php echo $child_category->name ?>
-                              <span>
-                                <?php Load::atom('svg', ['name' => 'arrow_down']); ?>
-                              </span>
-                            </a>
-                            <?php
-                            $args['parent'] = $child_category->term_id;
-                            $sub_child_categories = get_terms($args);
-
-                            if ($sub_child_categories) : ?>
-                              <ul class="sub-sub-menu">
-                                <div class="sub-sub-menu-head-mobile">
-                                  <div class="sub-sub-menu-head-mobile__close">
-                                    <?php Load::atom('svg', ['name' => 'arrow_down']); ?>
-                                  </div>
-                                  <div class="sub-sub-menu-head-mobile__cat"><?php echo $child_category->name; ?></div>
-                                </div>
-                                <li class="sub-sub-menu__item-mobile">
-                                  <a href="<?php echo esc_url($child_category_link); ?>">
-                                    Виж всички <?php echo $child_category->name; ?>
-                                    <span>
-                                      <?php Load::atom('svg', ['name' => 'arrow_down']); ?>
-                                    </span>
-                                  </a>
-                                </li>
-                                <?php foreach ($sub_child_categories as $sub_child_category) : ?>
-                                  <li>
-                                    <?php
-                                    $sub_child_category_link = get_term_link($sub_child_category);
-                                    // get_site_url() . '/product-category/' . $main_category->slug . '/?yith_wcan=1&product_cat=' . $main_category->slug . '+' . $sub_child_category->slug
-                                    ?>
-                                    <a href="<?php echo esc_url($sub_child_category_link); ?>" class="sub-sub-menu__item-link">
-                                      <?php echo $sub_child_category->name ?>
-                                      <span>
-                                        <?php Load::atom('svg', ['name' => 'arrow_down']); ?>
-                                      </span>
-                                    </a>
-                                    <?php
-                                    ?>
-                                  </li>
-                                <?php endforeach; ?>
-                              </ul>
-                            <?php endif; ?>
-                          </li>
-                        <?php endforeach; ?>
-                        <li class="main-category-link">
-                          <a href="<?php echo esc_url($category_link); ?>">
-                            Виж всички продукти в категория "<?php echo $main_category->name; ?>"
-                            <span>
-                              <?php Load::atom('svg', ['name' => 'arrow_down']); ?>
-                            </span>
-                          </a>
-                        </li>
-                        <!-- <li class="product-of-the-week">
-                          <p class="paragraph paragraph-m regular">Prdouct of the week</p>
-                          <?php // echo do_shortcode("[products ids='5420']"); ?> 
-                        </li> -->
-                      </ul>
-                    <?php endif; ?>
-                  </li>
-                <?php endforeach; ?>
-              </ul>
-            <?php endif; ?>
-          </div>
-        </nav>
+        <nav id="site-navigation" class="main-navigation" role="navigation" aria-label="<?php esc_attr_e( 'Primary Navigation', 'storefront' ); ?>">
+          <button id="site-navigation-menu-toggle" class="menu-toggle" aria-controls="site-navigation" aria-expanded="false"><span><?php echo esc_html( apply_filters( 'storefront_menu_toggle_text', __( 'Menu', 'storefront' ) ) ); ?></span></button>
+          <?php
+            wp_nav_menu(
+              array(
+                'theme_location'  => 'primary',
+                'container_class' => 'primary-navigation',
+                'menu_class' => 'main-menu',
+                'items_wrap'      => '<div id="mobile-nav" class="mobile-nav">' .
+                                  '<div class="sub-menu-head-mobile">
+                                    <div class="sub-menu-head-mobile__close"></div>
+                                    <div class="sub-menu-head-mobile__cat"></div>
+                                  </div>' .
+                                '<div class="mobile-nav__search">
+                                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                  <g clip-path="url(#clip0_397_16058)">
+                                  <path d="M6.84199 0C10.6145 0 13.684 3.06949 13.684 6.84199C13.6836 8.36043 13.1751 9.83508 12.2395 11.031L15.9991 14.7907L14.7898 16L11.0301 12.2403C9.83434 13.1755 8.36004 13.6837 6.84199 13.684C3.06949 13.684 0 10.6145 0 6.84199C0 3.06949 3.06949 0 6.84199 0ZM6.84199 1.7105C4.01197 1.7105 1.7105 4.01197 1.7105 6.84199C1.7105 9.67201 4.01197 11.9735 6.84199 11.9735C9.67201 11.9735 11.9735 9.67201 11.9735 6.84199C11.9735 4.01197 9.67201 1.7105 6.84199 1.7105ZM4 4.85866C5.32991 3.71378 7.63727 3.71378 8.96806 4.85866C9.29579 5.13914 9.55572 5.4728 9.73285 5.84035C9.90997 6.20789 10.0008 6.60204 10 7H8.24201C8.24201 6.59717 8.0583 6.21706 7.72517 5.92933C7.06065 5.35841 5.90917 5.35689 5.24114 5.93084L4 4.85866Z" fill="#6F7173"/>
+                                  </g>
+                                  <defs>
+                                  <clipPath id="clip0_397_16058">
+                                  <rect width="16" height="16" fill="white"/>
+                                  </clipPath>
+                                  </defs>
+                                  </svg>
+                                </div>' .
+                                '<div class="mobile-nav__logo">
+                                  <a href="https://kenduro.com"></a>
+                                </div>' .
+                                '<div class="mobile-nav__close">
+                                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                  <path d="M5.41406 4L4 5.41406L10.293 11.707L4 18L5.41406 19.4141L11.707 13.1211L18 19.4141L19.4141 18L13.1211 11.707L19.4141 5.41406L18 4L11.707 10.293L5.41406 4Z" fill="#6F7173"/>
+                                  </svg>
+                                </div></div><ul id="%1$s" class="%2$s">%3$s</ul>'
+              )
+            );
+          ?>
+        </nav><!-- #site-navigation -->
       </div>
     </div>
   </div>

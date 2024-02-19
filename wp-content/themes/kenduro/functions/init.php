@@ -375,3 +375,26 @@ function related_records(&$records, $keyToModify, $existingIds) {
   }
 }
 
+add_filter('nav_menu_submenu_css_class','nav_menu_classes', 10, 3 );
+function nav_menu_classes( $classes, $args, $depth ){
+  foreach ( $classes as $key => $class ) {
+    if ( $depth == 0) {
+      $classes[ $key ] = 'sub-menu';
+    } elseif ( $depth == 1) {
+      $classes[ $key ] = 'sub-sub-menu';
+    }
+  } 
+  return $classes;
+}
+
+function url_get_contents ($Url) {
+  if (!function_exists('curl_init')){ 
+    die('CURL is not installed!');
+  }
+  $ch = curl_init();
+  curl_setopt($ch, CURLOPT_URL, $Url);
+  curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+  $output = curl_exec($ch);
+  curl_close($ch);
+  return $output;
+}
