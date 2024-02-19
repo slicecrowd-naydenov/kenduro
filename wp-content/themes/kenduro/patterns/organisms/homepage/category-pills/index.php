@@ -7,8 +7,18 @@ $args = array(
 );
 $main_categories = get_terms($args);
 
+if ($main_categories) : 
+    // Създайте асоциативен масив, който да съдържа информация за основните категории
+    $category_info = array();
+    foreach ($main_categories as $main_category) {
+        $category_info[$main_category->term_id] = array(
+            'slug' => $main_category->slug,
+            'name' => $main_category->name,
+            'thumbnail_id' => get_term_meta($main_category->term_id, 'thumbnail_id', true),
+        );
+    }
+?>
 
-if ($main_categories) : ?>
 <div class="category-pills">
   <div class="container">
     <div class="row">
@@ -35,16 +45,11 @@ if ($main_categories) : ?>
             <li class="nav-item" role="presentation">
               <button class="paragraph paragraph-l nav-link active" id="pills-all-tab" data-bs-toggle="pill" data-bs-target="#pills-all" type="button" role="tab" aria-controls="pills-all" aria-selected="true">Всички</button>
             </li>
-            <?php foreach ($main_categories as $main_category) :
-              // pretty_dump($main_category);
-              $slug = $main_category->slug;
-            ?>
+            <?php foreach ($category_info as $id => $info) : ?>
               <li class="nav-item" role="presentation">
-                <button class="paragraph paragraph-l nav-link" id="pills-<?php echo $slug; ?>-tab" data-bs-toggle="pill" data-bs-target="#pills-<?php echo $slug; ?>" type="button" role="tab" aria-controls="pills-<?php echo $slug; ?>" aria-selected="false"><?php echo $main_category->name; ?></button>
+                <button class="paragraph paragraph-l nav-link" id="pills-<?php echo $info['slug']; ?>-tab" data-bs-toggle="pill" data-bs-target="#pills-<?php echo $info['slug']; ?>" type="button" role="tab" aria-controls="pills-<?php echo $info['slug']; ?>" aria-selected="false"><?php echo $info['name']; ?></button>
               </li>
-            <?php 
-              endforeach;
-            ?>
+            <?php endforeach; ?>
           </ul>
         </div>
         <hr>
@@ -62,24 +67,21 @@ if ($main_categories) : ?>
               </h4>
             </a>
           </div>
-          <?php foreach ($main_categories as $main_category) :
-            $id = $main_category->term_id;
-            $slug = $main_category->slug;
-            $thumbnail_id = get_term_meta( $main_category->term_id, 'thumbnail_id', true );
-            $image_url = wp_get_attachment_url( $thumbnail_id ); 
-            // pretty_dump($main_category);
-            ?>
-            <div class="tab-pane fade" id="pills-<?php echo $slug; ?>" role="tabpanel" aria-labelledby="pills-<?php echo $slug; ?>-tab">
-              <?php echo do_shortcode("[products category='".$id."' limit='10']");
-              if ($image_url) { ?>             
-                <a href="<?php echo esc_url(get_site_url() . '/product-category/'.$main_category->slug.'/')?>" class="cat-img">
-                  <img src="<?php echo $image_url; ?>" />
-                  <h4>
-                    Разгледайте всички <strong><?php echo $main_category->name; ?></strong> продукти
-                    <?php Load::atom('svg', ['name' => 'arrow_xl']); ?>
-                  </h4>
-                </a>
-              <?php } ?>
+          <?php foreach ($category_info as $id => $info) : ?>
+            <div class="tab-pane fade" id="pills-<?php echo $info['slug']; ?>" role="tabpanel" aria-labelledby="pills-<?php echo $info['slug']; ?>-tab">
+              <?php echo do_shortcode("[products category='".$id."' limit='10']"); ?>
+              <?php 
+              if ($info['thumbnail_id']) : 
+                  $image_url = wp_get_attachment_url($info['thumbnail_id']); 
+              ?>
+                  <a href="<?php echo esc_url(get_site_url() . '/product-category/'.$info['slug'].'/'); ?>" class="cat-img">
+                    <img src="<?php echo $image_url; ?>" />
+                    <h4>
+                      Разгледайте всички <strong><?php echo $info['name']; ?></strong> продукти
+                      <?php Load::atom('svg', ['name' => 'arrow_xl']); ?>
+                    </h4>
+                  </a>
+              <?php endif; ?>
             </div>
           <?php endforeach; ?>
         </div>
