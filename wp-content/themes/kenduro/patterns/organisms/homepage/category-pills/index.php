@@ -8,15 +8,14 @@ $args = array(
 $main_categories = get_terms($args);
 
 if ($main_categories) : 
-    // Създайте асоциативен масив, който да съдържа информация за основните категории
-    $category_info = array();
-    foreach ($main_categories as $main_category) {
-        $category_info[$main_category->term_id] = array(
-            'slug' => $main_category->slug,
-            'name' => $main_category->name,
-            'thumbnail_id' => get_term_meta($main_category->term_id, 'thumbnail_id', true),
-        );
-    }
+  $category_info = array();
+  foreach ($main_categories as $main_category) {
+    $category_info[$main_category->term_id] = array(
+        'slug' => $main_category->slug,
+        'name' => $main_category->name,
+        'thumbnail_id' => get_term_meta($main_category->term_id, 'thumbnail_id', true),
+    );
+  }
 ?>
 
 <div class="category-pills">
@@ -36,11 +35,6 @@ if ($main_categories) :
           <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Всички Продукти
           </button>
-          <!-- <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <a class="dropdown-item" href="#">Action</a>
-            <a class="dropdown-item" href="#">Another action</a>
-            <a class="dropdown-item" href="#">Something else here</a>
-          </div> -->
           <ul class="nav nav-pills dropdown-menu" id="pills-tab" role="tablist" aria-labelledby="dropdownMenuButton">
             <li class="nav-item" role="presentation">
               <button class="paragraph paragraph-l nav-link active" id="pills-all-tab" data-bs-toggle="pill" data-bs-target="#pills-all" type="button" role="tab" aria-controls="pills-all" aria-selected="true">Всички</button>
@@ -72,15 +66,15 @@ if ($main_categories) :
               <?php echo do_shortcode("[products category='".$id."' limit='10']"); ?>
               <?php 
               if ($info['thumbnail_id']) : 
-                  $image_url = wp_get_attachment_url($info['thumbnail_id']); 
+                $image_url = wp_get_attachment_url($info['thumbnail_id']); 
               ?>
-                  <a href="<?php echo esc_url(get_site_url() . '/product-category/'.$info['slug'].'/'); ?>" class="cat-img">
-                    <img src="<?php echo $image_url; ?>" />
-                    <h4>
-                      Разгледайте всички <strong><?php echo $info['name']; ?></strong> продукти
-                      <?php Load::atom('svg', ['name' => 'arrow_xl']); ?>
-                    </h4>
-                  </a>
+                <a href="<?php echo esc_url(get_site_url() . '/product-category/'.$info['slug'].'/'); ?>" class="cat-img">
+                  <img src="<?php echo $image_url; ?>" />
+                  <h4>
+                    Разгледайте всички <strong><?php echo $info['name']; ?></strong> продукти
+                    <?php Load::atom('svg', ['name' => 'arrow_xl']); ?>
+                  </h4>
+                </a>
               <?php endif; ?>
             </div>
           <?php endforeach; ?>

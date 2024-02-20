@@ -36,15 +36,17 @@ export default () => {
     }
   });
 
-  var triggerTabList = [].slice.call(document.querySelectorAll('#pills-tab a'));
-  triggerTabList.forEach(function (triggerEl) {
-    var tabTrigger = new Tab(triggerEl);
-
-    triggerEl.addEventListener('click', function (event) {
-      event.preventDefault();
-      tabTrigger.show();
+  if ($('#pills-tab').length) {
+    var triggerTabList = [].slice.call(document.querySelectorAll('#pills-tab a'));
+    triggerTabList.forEach(function (triggerEl) {
+      var tabTrigger = new Tab(triggerEl);
+  
+      triggerEl.addEventListener('click', function (event) {
+        event.preventDefault();
+        tabTrigger.show();
+      });
     });
-  });
+  }
 
   $('button[data-bs-toggle="pill"]').on('click', function() {
     const selectedPill = $(this).text();
