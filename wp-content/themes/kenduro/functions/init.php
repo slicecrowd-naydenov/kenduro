@@ -398,3 +398,8 @@ function url_get_contents ($Url) {
   curl_close($ch);
   return $output;
 }
+
+/**
+ * Trim zeros in price decimals
+ **/
+add_filter( 'woocommerce_price_trim_zeros', '__return_true' );
