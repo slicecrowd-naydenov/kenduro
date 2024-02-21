@@ -27,6 +27,7 @@ export default class ProductCategoryFilter {
   events() {
     this.changeCategoryLabelView();
     this.filterDropdown();
+    this.clickOutsideHandler();
   }
 
   changeCategoryLabelView() {
@@ -44,6 +45,15 @@ export default class ProductCategoryFilter {
       if (!filterContent.is(':visible')) {
         $(this).toggleClass('active');
         filterContent.slideToggle(200);
+      }
+    });
+  }
+
+  clickOutsideHandler() {
+    console.log('ima filter');
+    $(window).on('click', function(e) {
+      if (!$(e.target).is('.filter-title')) {
+        $('.filter-content').slideUp();
       }
     });
   }

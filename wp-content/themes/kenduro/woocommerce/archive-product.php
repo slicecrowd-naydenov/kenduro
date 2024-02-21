@@ -81,8 +81,25 @@ do_action('woocommerce_before_main_content');
 				<div class="mobile-wrapper">
 				<?php
 				Load::molecules('product-category/product-categories-view/index');
-				if (wp_is_mobile()) {
 				?>
+				</div>
+				<?php
+			} else {
+				if (!is_search()) {
+					Load::molecules('product-category/product-category-info/index', [
+						'title' => 'Всички продукти',
+						'class' => 'full-container',
+						'description' => 'Научете повече за нашите продукти.',
+						'cat' => single_term_title('', false),
+						'cat_img_inner' => $cat_inner_image_url
+					]);
+					Load::molecules('product-category/product-categories-view/index');
+				}
+			}
+
+			if (is_product_category() || is_search()) {
+				if (wp_is_mobile()) {
+					?>
 					<!-- Button trigger modal -->
 					<button type="button" class="button filter-modal" data-toggle="modal" data-target="#filterModal">
 						Филтри
@@ -103,10 +120,6 @@ do_action('woocommerce_before_main_content');
 										Load::molecules('product-category/product-categories-filter/index');
 									?>
 								</div>
-								<!-- <div class="modal-footer">
-									<button type="button" class="button btn-secondary" data-dismiss="modal">Close</button>
-									<button type="button" class="button btn-primary">Save changes</button>
-								</div> -->
 							</div>
 						</div>
 					</div>
@@ -114,21 +127,8 @@ do_action('woocommerce_before_main_content');
 				} else {
 					Load::molecules('product-category/product-categories-filter/index');
 				}
-				?>
-				</div>
-				<?php
-			} else {
-				if (!is_search()) {
-					Load::molecules('product-category/product-category-info/index', [
-						'title' => 'Всички продукти',
-						'class' => 'full-container',
-						'description' => 'Научете повече за нашите продукти.',
-						'cat' => single_term_title('', false),
-						'cat_img_inner' => $cat_inner_image_url
-					]);
-					Load::molecules('product-category/product-categories-view/index');
-				}
 			}
+		
 
 			if (woocommerce_product_loop()) {
 

@@ -9,8 +9,8 @@ function remove_woo_three_support() {
 add_filter('storefront_woocommerce_args', 'bbloomer_resize_storefront_images');
 
 function bbloomer_resize_storefront_images($args) {
-  $args['single_image_width'] = 630;
-  // $args['thumbnail_image_width'] = 335;
+  $args['single_image_width'] = 1260;
+  $args['thumbnail_image_width'] = 500;
   return $args;
 }
 

@@ -360,3 +360,23 @@ input[type="checkbox"] {
     @extend .flex-center;
   }
 }
+
+.wc-block-components-notice-banner {
+  &.is-info {
+    border-color: $b-secondary !important;
+    background-color: rgba($b-secondary, 0.1) !important;
+    
+    svg {
+      background-color: $b-secondary !important;
+    }
+  }
+
+  &.is-error {
+    border-color: $error !important;
+    background-color: rgba($error, 0.1) !important;
+    
+    svg {
+      background-color: $error !important;
+    }
+  }
+}
