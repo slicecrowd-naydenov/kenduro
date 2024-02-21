@@ -24,25 +24,25 @@ use Lean\Load;
         </p>
         <ul class="socials">
           <li>
-            <a href="#">
+            <a href="https://www.instagram.com/kenduro_shop/" target="_blank">
               <?php Load::atom('svg', ['name' => 'instagram']); ?>
             </a>
           </li>
           <li>
-            <a href="#">
+            <a href="https://www.facebook.com/kenduro.shop" target="_blank">
               <?php Load::atom('svg', ['name' => 'facebook']); ?>
             </a>
           </li>
-          <li>
+          <!-- <li>
             <a href="#">
-              <?php Load::atom('svg', ['name' => 'tic-tok']); ?>
+              <?php // Load::atom('svg', ['name' => 'tic-tok']); ?>
             </a>
           </li>
           <li>
             <a href="#">
-              <?php Load::atom('svg', ['name' => 'linkedin']); ?>
+              <?php // Load::atom('svg', ['name' => 'linkedin']); ?>
             </a>
-          </li>
+          </li> -->
         </ul>
       </div>
       <div class="col-md-4 col-12 address-info">

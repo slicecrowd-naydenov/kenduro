@@ -181,6 +181,7 @@
           .sub-menu {
             opacity: 1;
             pointer-events: auto;
+            transition-delay: 0.2s;
           }
         }
 
@@ -309,7 +310,7 @@
       display: flex;
       flex-wrap: wrap;
       padding-bottom: 50px;
-      transition: opacity 0.2s ease;
+      transition: opacity 0.2s ease 0s;
       // min-height: 400px;
       
       &,
