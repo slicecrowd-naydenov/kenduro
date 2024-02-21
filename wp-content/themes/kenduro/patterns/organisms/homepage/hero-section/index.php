@@ -20,7 +20,9 @@ use Lean\Load;
         ?>
           <div class="swiper-slide">
             <?php if ($slide_image) : ?>
-              <div class="slide-image" style="background-image: url(<?php echo esc_attr($slide_image['url']); ?>)"></div>
+              <div class="slide-image">
+                <img src="<?php echo esc_attr($slide_image['url']); ?>" alt="">
+              </div>
             <?php
             endif;
             ?>

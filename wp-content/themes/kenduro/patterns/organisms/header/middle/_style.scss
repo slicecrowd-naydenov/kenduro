@@ -18,6 +18,8 @@
       font-weight: 600;
       margin-right: 30px;
       margin-bottom: 0;
+      display: block;
+      height: 37px;
 
       @include media-breakpoint-down(lg) {
         margin: 0 auto;
