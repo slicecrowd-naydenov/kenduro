@@ -21,7 +21,7 @@ use Lean\Load;
           <div class="swiper-slide">
             <?php if ($slide_image) : ?>
               <div class="slide-image">
-                <img src="<?php echo esc_attr($slide_image['url']); ?>" alt="">
+                <img src="<?php echo esc_attr($slide_image['url']); ?>" alt="" class="no-lazy">
               </div>
             <?php
             endif;

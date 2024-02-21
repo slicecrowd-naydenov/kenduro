@@ -82,6 +82,12 @@
           background-color: transparent !important;
           border: none !important;
         }
+
+        @include media-breakpoint-only(md) {
+          &::placeholder {
+            color: transparent;
+          }
+        }
       }
 
       
@@ -96,9 +102,16 @@
     }
 
     .wp-block-yith-search-block {
-      @include media-breakpoint-down(lg) {
+      @include media-breakpoint-down(md) {
         width: 48px;
         left: 0;
+        z-index: 5;
+        display: block;
+      }
+
+      @include media-breakpoint-only(md) {
+        width: 290px;
+        left: calc((100% - 720px)/ 2);
         z-index: 5;
         display: block;
       }

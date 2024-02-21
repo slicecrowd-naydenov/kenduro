@@ -5,7 +5,7 @@ import { Tab } from 'bootstrap';
 // import ShopFilter from './shop';
 import Slider from './slider';
 import MobileNavigation from './header/bottom/index';
-import MiddleHeader from './header/middle/index';
+// import MiddleHeader from './header/middle/index';
 
 export default () => {
   // const $body = $('body');
@@ -22,9 +22,9 @@ export default () => {
     new MobileNavigation(document.getElementById('site-navigation-menu-toggle'));
   }
 
-  if (MiddleHeader) {
-    new MiddleHeader(document.getElementById('middle-section'));
-  }
+  // if (MiddleHeader) {
+  //   new MiddleHeader(document.getElementById('middle-section'));
+  // }
 
   $('#custom_invoice_fields').hide();
 
