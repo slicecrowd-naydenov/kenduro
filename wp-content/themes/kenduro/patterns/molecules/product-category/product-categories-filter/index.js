@@ -50,11 +50,12 @@ export default class ProductCategoryFilter {
   }
 
   clickOutsideHandler() {
-    console.log('ima filter');
-    $(window).on('click', function(e) {
-      if (!$(e.target).is('.filter-title')) {
-        $('.filter-content').slideUp();
-      }
-    });
+    if ($(window).innerWidth() >= 992) {
+      $(window).on('click', function(e) {
+        if (!$(e.target).is('.filter-title')) {
+          $('.filter-content').slideUp();
+        }
+      });
+    }
   }
 }

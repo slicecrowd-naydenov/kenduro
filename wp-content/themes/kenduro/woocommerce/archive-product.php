@@ -32,6 +32,39 @@ get_header('shop');
  */
 do_action('woocommerce_before_main_content');
 
+function output_filter_modal() {
+	if (wp_is_mobile()) {
+			?>
+			<!-- Button trigger modal -->
+			<button type="button" class="button filter-modal" data-toggle="modal" data-target="#filterModal">
+					Филтри
+			</button>
+
+			<!-- Modal -->
+			<div class="modal fade mobile-modal" id="filterModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+					<div class="modal-dialog modal-dialog-centered" role="document">
+							<div class="modal-content">
+									<div class="modal-header">
+											<h5 class="modal-title" id="exampleModalLongTitle">Филтри</h5>
+											<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+													<?php Load::atom('svg', ['name' => 'close']); ?>
+											</button>
+									</div>
+									<div class="modal-body">
+											<?php
+													Load::molecules('product-category/product-categories-filter/index');
+											?>
+									</div>
+							</div>
+					</div>
+			</div>
+			<?php
+	} else {
+			Load::molecules('product-category/product-categories-filter/index');
+	}
+}
+
+
 ?>
 <div class="container">
 	<div class="row">
@@ -81,6 +114,7 @@ do_action('woocommerce_before_main_content');
 				<div class="mobile-wrapper">
 				<?php
 				Load::molecules('product-category/product-categories-view/index');
+				output_filter_modal()
 				?>
 				</div>
 				<?php
@@ -97,36 +131,11 @@ do_action('woocommerce_before_main_content');
 				}
 			}
 
-			if (is_product_category() || is_search()) {
-				if (wp_is_mobile()) {
-					?>
-					<!-- Button trigger modal -->
-					<button type="button" class="button filter-modal" data-toggle="modal" data-target="#filterModal">
-						Филтри
-					</button>
-
-					<!-- Modal -->
-					<div class="modal fade mobile-modal" id="filterModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-						<div class="modal-dialog modal-dialog-centered" role="document">
-							<div class="modal-content">
-								<div class="modal-header">
-									<h5 class="modal-title" id="exampleModalLongTitle">Филтри</h5>
-									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-										<?php Load::atom('svg', ['name' => 'close']); ?>
-									</button>
-								</div>
-								<div class="modal-body">
-									<?php
-										Load::molecules('product-category/product-categories-filter/index');
-									?>
-								</div>
-							</div>
-						</div>
-					</div>
+			if (is_search()) { ?>
+				<div class="mobile-wrapper">
+					<?php output_filter_modal(); ?>
+				</div>
 				<?php
-				} else {
-					Load::molecules('product-category/product-categories-filter/index');
-				}
 			}
 		
 
