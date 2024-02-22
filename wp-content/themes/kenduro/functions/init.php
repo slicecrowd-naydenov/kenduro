@@ -413,7 +413,7 @@ function featured_product_child_menu_item($item_output, $item, $depth, $args) {
       return $item_output;
     } else {
       $new_output = $item_output;
-      $new_output .= '<div class="product-of-the-week"><p class="paragraph paragraph-m regular">Product of the week</p>'.do_shortcode('[product id='.$featured_product_ID[0].']');'</div>'; // Add custom elems
+      $new_output .= '<div class="product-of-the-week"><p class="paragraph paragraph-m regular">Продукт на седмицата</p>'.do_shortcode('[product id='.$featured_product_ID[0].']');'</div>'; // Add custom elems
     
       return $new_output;
     }
