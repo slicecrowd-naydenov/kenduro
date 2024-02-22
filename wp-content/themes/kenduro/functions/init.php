@@ -403,3 +403,23 @@ function url_get_contents ($Url) {
  * Trim zeros in price decimals
  **/
 add_filter( 'woocommerce_price_trim_zeros', '__return_true' );
+
+function featured_product_child_menu_item($item_output, $item, $depth, $args) {
+  // Check we are on the right menu & right depth
+  $featured_product_ID = get_field('featured_product', 'options');
+  
+  if ($featured_product_ID !== '' && !wp_is_mobile()) {
+    if ($args->theme_location != 'primary' || $depth !== 1 || !in_array('main-category-link', $item->classes)) {
+      return $item_output;
+    } else {
+      $new_output = $item_output;
+      $new_output .= '<div class="product-of-the-week"><p class="paragraph paragraph-m regular">Product of the week</p>'.do_shortcode('[product id='.$featured_product_ID[0].']');'</div>'; // Add custom elems
+    
+      return $new_output;
+    }
+  
+  } else {
+    return $item_output;
+  }
+}
+add_filter('walker_nav_menu_start_el', 'featured_product_child_menu_item', 10, 4);

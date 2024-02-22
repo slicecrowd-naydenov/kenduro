@@ -161,6 +161,15 @@
     position: relative;
     margin: 0;
 
+    &.has-featured-product {
+      .sub-menu {
+        @include media-breakpoint-up(lg) {
+          min-height: 460px;
+          padding-right: 354px;
+        }
+      }
+    }
+
     @include media-breakpoint-down(lg) {
       max-height: none;
       padding: 0;
@@ -269,16 +278,32 @@
     }
 
     .product-of-the-week { 
-      display: none;
+      width: 324px;
+      // display: none;
+      border-radius: 0 $radius-small $radius-small 0;
       padding: 30px;
       position: absolute;
       right: 0;
       top: 0;
       height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 8px;
       background-color: rgba(0,0,0,0.2);
+      
+      @include media-breakpoint-down(lg) {
+        display: none;
+      }
+
+      & > p {
+        color: $G-0;
+      }
 
       ul.products {
         position: static;
+        margin: 0 !important;
+        padding: 0 !important;
         width: 265px;
 
         & > p {
@@ -309,7 +334,6 @@
       padding: 30px;
       display: flex;
       flex-wrap: wrap;
-      padding-bottom: 50px;
       transition: opacity 0.2s ease 0s;
       // min-height: 400px;
       
@@ -367,7 +391,7 @@
         }
       }
 
-      a {
+      a:not(.woocommerce-loop-product__link) {
         width: auto;
         font-size: 14px;
         margin-bottom: 8px;
@@ -403,10 +427,12 @@
 
       .main-category-link {
         @include media-breakpoint-up(lg) {
-          width: calc(100% - 48px);
-          position: absolute;
-          left: 24px;
-          bottom: 24px;
+          width: 100%;
+          position: initial;
+          align-self: end;
+          // position: absolute;
+          // left: 24px;
+          // bottom: 24px;
           padding-top: 15px;
           border-top: 1px solid rgba($G-0-5, 0.1);
         }
@@ -415,7 +441,7 @@
           order: -1;
         }
 
-        a {
+        & > a {
           @include media-breakpoint-up(lg) {
             margin: 0;
             font-weight: normal;
@@ -462,7 +488,7 @@
       margin-left: 0;
       float: none;
 
-      a {
+      a:not(.woocommerce-loop-product__link) {
         @include media-breakpoint-up(lg) {
           color: rgba($G-0, 0.8);
           margin: 0 0 6px;
