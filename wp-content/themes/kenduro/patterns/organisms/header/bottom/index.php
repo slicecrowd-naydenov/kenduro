@@ -10,7 +10,7 @@ use Lean\Load;
 // );
 // $main_categories = get_terms($args);
 $featured_product_ID = get_field('featured_product', 'options');
-$main_menu_class = $featured_product_ID !== '' ? 'has-featured-product' : '';
+$main_menu_class = is_array($featured_product_ID) ? 'has-featured-product' : '';
 ?>
 <div id="bottom-section" class="storefront-primary-navigation">
   <div class="container">
