@@ -407,8 +407,8 @@ add_filter( 'woocommerce_price_trim_zeros', '__return_true' );
 function featured_product_child_menu_item($item_output, $item, $depth, $args) {
   // Check we are on the right menu & right depth
   $featured_product_ID = get_field('featured_product', 'options');
-  
-  if ($featured_product_ID !== '' && !wp_is_mobile()) {
+
+  if (is_array($featured_product_ID) && !wp_is_mobile()) {
     if ($args->theme_location != 'primary' || $depth !== 1 || !in_array('main-category-link', $item->classes)) {
       return $item_output;
     } else {
