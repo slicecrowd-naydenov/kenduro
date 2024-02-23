@@ -74,11 +74,10 @@ defined('ABSPATH') || exit;
 
 						<?php
 
-						$want_invoice = get_post_meta($order->get_id(), '_want_invoice', true) ? true : false;
-						$invoice_company_name = get_post_meta($order->get_id(), '_invoice_company_name', true);
-						$invoice_bulstat = get_post_meta($order->get_id(), '_invoice_bulstat', true);
-						$invoice_vat_registration = get_post_meta($order->get_id(), '_invoice_vat_registration', true);
-						$invoice_vat_number = get_post_meta($order->get_id(), '_invoice_vat_number', true);
+						$want_invoice = get_post_meta($order->get_id(), '_billing_to_company', true) ? true : false;
+						$invoice_company_name = get_post_meta($order->get_id(), '_billing_company_mol', true);
+						$invoice_bulstat = get_post_meta($order->get_id(), '_billing_company_eik', true);
+						$invoice_vat_number = get_post_meta($order->get_id(), '_billing_vat_number', true);
 
 						if ($want_invoice) { ?>
 							<p class="paragraph paragraph-m">Фактура към:</p>
@@ -89,7 +88,7 @@ defined('ABSPATH') || exit;
 								Булстат : <?php echo $invoice_bulstat; ?>
 							</p>
 							<?php
-							if ($invoice_vat_registration === 'yes') : ?>
+							if ($invoice_vat_number !== '') : ?>
 								<p class="paragraph paragraph-l semibold">Регистрирана по ДДС</p>
 								<p class="paragraph paragraph-l semibold">
 									ДДС Номер : <?php echo $invoice_vat_number; ?>

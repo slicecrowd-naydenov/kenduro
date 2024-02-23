@@ -47,6 +47,7 @@ function create_sales_record($response) {
   $sales_quantity_ordered = get_column_field_id('sales_quantity_ordered', $sales_fields);
   $sales_link_to_product_variations = get_column_field_id('sales_link_to_product_variations', $sales_fields);
   $wp_order_id = get_column_field_id('wp_order_id', $sales_fields);
+  $final_price_manual = get_column_field_id('final_price_manual', $sales_fields);
 
   $sales_body = array(
     'items' => array() 
@@ -55,6 +56,7 @@ function create_sales_record($response) {
   foreach ($response['product_info'] as $key => $value) {
     $product_id = $value['product_id'];
     $product = wc_get_product($product_id);
+    $get_product_price = $product->get_price();
     $meta_fields = get_field("meta_data", $product_id);
     $field_id = array();
     if ($product->is_type('variation')) {
@@ -72,7 +74,8 @@ function create_sales_record($response) {
     $item_data = array(
       $sales_quantity_ordered => $value['quantity'],
       $sales_link_to_product_variations => $field_id,
-      $wp_order_id => $response['order_id']
+      $wp_order_id => $response['order_id'],
+      $final_price_manual => $get_product_price
     );
 
     $sales_body['items'][] = $item_data;
@@ -263,7 +266,7 @@ function create_CRM_record($order_id, $invoice_id) {
   
   $order = wc_get_order( $order_id );
   
-  $vat_choice = get_post_meta( $order_id, '_invoice_vat_registration', true ) === 'yes' ? true : false;
+  $vat_choice = get_post_meta( $order_id, '_billing_vat_number', true ) !== '' ? true : false;
   $email_agreement_val = get_post_meta( $order_id, '_email_agreement', true ) === 'yes' ? true : false;
   $viber_agreement_val = get_post_meta( $order_id, '_viber_agreement', true ) === 'yes' ? true : false;
   $item_data = array(
@@ -271,14 +274,14 @@ function create_CRM_record($order_id, $invoice_id) {
     $last_name => $order->get_billing_last_name(),
     $phone_number => $order->get_billing_phone(),
     $email => $order->get_billing_email(),
-    $vat_id => get_post_meta( $order_id, '_invoice_vat_number', true ),
+    $vat_id => get_post_meta( $order_id, '_billing_vat_number', true ),
     $vat_registered => $vat_choice,
     $email_agreement => $email_agreement_val,
     $viber_agreement => $viber_agreement_val,
-    $bulstat => get_post_meta( $order_id, '_invoice_bulstat', true ),
-    $company_phone => get_post_meta( $order_id, '_invoice_phone', true ),
+    $bulstat => get_post_meta( $order_id, '_billing_company_eik', true ),
+    $company_phone => $order->get_billing_phone(),
     $company_name => get_post_meta( $order_id, '_invoice_company_name', true ),
-    $accountable_person => get_post_meta( $order_id, '_invoice_mol', true ),
+    $accountable_person => get_post_meta( $order_id, '_billing_company_mol', true ),
     $link_to_invoices => array($invoice_id)
   );
 

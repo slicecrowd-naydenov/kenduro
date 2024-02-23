@@ -347,35 +347,33 @@
           }
         }
       }
+
+      #woo-billing-to-company_field {
+        width: 100%;
+
+        label {
+          display: flex;
+          flex-direction: row-reverse;
+          justify-content: flex-end;
+
+          span {
+            &:after {
+              content: '';
+            }
+          }
+        }
+      }
     }
 
     #order_review_heading {
       display: none;
     }
 
-    #custom_invoice_fields,
     .woocommerce-billing-fields__field-wrapper {
       display: flex;
       flex-wrap: wrap;
       justify-content: space-between;
       gap: 20px;
-    }
-
-    #custom_invoice_fields,
-    #custom_invoice_checkbox {
-      .form-row {
-        .optional {
-          display: none;
-        }
-
-      }
-    }
-    
-    #custom_invoice_checkbox {      
-      #want_invoice_field {
-        margin-top: 27px;
-        margin-bottom: 15px;
-      }
     }
 
     input {

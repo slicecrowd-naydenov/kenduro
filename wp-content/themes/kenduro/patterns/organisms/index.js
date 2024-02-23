@@ -26,16 +26,6 @@ export default () => {
   //   new MiddleHeader(document.getElementById('middle-section'));
   // }
 
-  $('#custom_invoice_fields').hide();
-
-  $('#want_invoice').change(function () {
-    if ($(this).is(':checked')) {
-      $('#custom_invoice_fields').slideDown();
-    } else {
-      $('#custom_invoice_fields').slideUp();
-    }
-  });
-
   if ($('#pills-tab').length) {
     var triggerTabList = [].slice.call(document.querySelectorAll('#pills-tab a'));
     triggerTabList.forEach(function (triggerEl) {
