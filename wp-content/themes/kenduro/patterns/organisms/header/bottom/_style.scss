@@ -553,7 +553,6 @@
           position: initial;
           align-self: end;
           margin-top: auto;
-          opacity: 1;
           // position: absolute;
           // left: 24px;
           // bottom: 24px;
@@ -570,6 +569,7 @@
             margin: 0;
             font-weight: normal;
             width: auto;
+            opacity: 1;
             color: $G-0;
             padding: 0;
             font-size: 12px;
@@ -625,6 +625,7 @@
         border-radius: $radius-small;
         top: 20px;
         display: flex;
+        flex-wrap: wrap;
         flex-direction: column;
         transition: opacity 0.2s ease;
       }
