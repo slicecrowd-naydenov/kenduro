@@ -164,7 +164,7 @@
     &.has-featured-product {
       .sub-menu {
         @include media-breakpoint-up(lg) {
-          min-height: 460px;
+          min-height: 404px;
           padding-right: 354px;
         }
       }
@@ -212,8 +212,37 @@
               height: 0;
               border-left: 4px solid transparent;
               border-right: 4px solid transparent;
-              border-top: 4px solid $b-primary;
+              border-top: 4px solid $G-5;
               content: '';
+            }
+          }
+
+          &.motors-icon {
+            @include media-breakpoint-up(lg) {
+              padding-left: 20px;
+            }
+
+            & > a {
+              @include media-breakpoint-up(lg) {
+                background-image: url('../../assets/icons/svg/motorcycle.svg');
+                background-position: center left;
+                background-repeat: no-repeat;
+                padding-left: 32px;
+              }
+
+              &:before {
+                @include media-breakpoint-up(lg) {
+                  width: 1px;
+                  height: 24px;
+                  content: '';
+                  display: block !important;
+                  position: absolute;
+                  left: -20px;
+                  top: 50%;
+                  transform: translateY(-50%);
+                  background-color: rgb(199, 199, 199);
+                }
+              }
             }
           }
         }
@@ -222,9 +251,16 @@
 
     .menu-item {
       @include media-breakpoint-down(lg) {
-        margin: 0 !important;
         border-bottom: 1px dashed $G-2;
         padding: 13px 0 13px 5px;
+      }
+
+      &:not(.cat-name, .sub-sub-menu__item) {
+        &:nth-last-child(2) {
+          @include media-breakpoint-up(lg) {
+            margin-bottom: 25px;
+          }
+        }
       }
     }
 
@@ -252,15 +288,22 @@
           }
         }
       }
-    }
 
-    .menu-item:not(.cat-name) {
-      a:after {
-        @include media-breakpoint-up(lg) {
-          display: none;
+      &:not(.cat-name) {
+        & > a:after {
+          @include media-breakpoint-up(lg) {
+            content: '';
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            opacity: 0.1;
+            transition: opacity 0.2s ease;
+          }
         }
       }
     }
+
 
     .cat-name { 
       & > a {
@@ -331,10 +374,16 @@
       // top: calc(100% + 2px);
       background-color: $b-primary;
       border-radius: $radius-small;
-      padding: 30px;
+      padding: 30px 30px 20px;
       display: flex;
       flex-wrap: wrap;
       transition: opacity 0.2s ease 0s;
+
+      @include media-breakpoint-up(lg) {
+        outline: 4px solid rgba($G-0, 0.2);
+        flex-direction: column;
+        gap: 2px;
+      }
       // min-height: 400px;
       
       &,
@@ -379,22 +428,88 @@
         }
       }
 
-
       &__item {
-        flex: 0 0 calc(20% - 5px);
-        margin-bottom: 24px;
+        flex: 0 0 100%;
         padding-right: 24px;
+
+        @include media-breakpoint-up(lg) {
+          width: 345px;
+        } 
 
         @include media-breakpoint-down(lg) {
           flex: none;
           padding-right: 0;
+        }
+
+        &:hover {
+          @include media-breakpoint-up(lg) {
+            & > a:not(.woocommerce-loop-product__link) {
+              opacity: 1;
+              background-color: rgba(0, 0, 0, 0.15);
+
+              &:after {
+                opacity: 1;
+              }
+            }
+          }
+        }
+
+        &.menu-item-has-children {
+          @include media-breakpoint-up(lg) {
+            position: initial;
+
+            &:hover {
+              .sub-sub-menu {
+                opacity: 1;
+                pointer-events: visible;
+              }
+            }
+          }
+        }
+
+        &.stretch {
+          @include media-breakpoint-up(lg) {
+            display: flex;
+            flex: 1 0 100%; 
+            margin-bottom: 6px;
+            background-position: top 55px left 15px;
+            background-repeat: no-repeat;
+            
+            & > a {
+              outline: 2px solid rgba(0, 0, 0, 0.1);
+              padding: 25px 35px 15px 15px !important;
+
+              & + .sub-sub-menu {
+                height: calc(100% - 114px);
+                top: 28px;
+              }
+            }
+            
+            &:hover {
+              & > a {
+                background-color: rgba(0, 0, 0, 0.1);
+              }
+            }
+          }
+
+        }
+
+        &.sherco-icon {
+          @include media-breakpoint-up(lg) {
+            background-image: url('../../assets/images/sherco.png');
+          }
+        }
+
+        &.trss-icon {
+          @include media-breakpoint-up(lg) {
+            background-image: url('../../assets/images/trss.png');
+          }
         }
       }
 
       a:not(.woocommerce-loop-product__link) {
         width: auto;
         font-size: 14px;
-        margin-bottom: 8px;
         padding: 0;
         font-weight: 600;
         color: $G-0;
@@ -402,9 +517,16 @@
         text-decoration: none;
         background-color: transparent;
 
+        @include media-breakpoint-up(lg) {
+          width: 325px;
+          opacity: 0.8;
+          transition: opacity 0.2s ease, background-color 0.2s ease;
+          border-radius: 6px;
+          padding: 9px 35px 9px 15px;
+        }
+
         @include media-breakpoint-down(lg) {
           color: $text-primary;
-          margin: 0;
         }
 
         span {
@@ -430,6 +552,8 @@
           width: 100%;
           position: initial;
           align-self: end;
+          margin-top: auto;
+          opacity: 1;
           // position: absolute;
           // left: 24px;
           // bottom: 24px;
@@ -487,13 +611,37 @@
       position: initial;
       margin-left: 0;
       float: none;
+      
+      @include media-breakpoint-up(lg) {
+        width: calc(100% - 730px);
+        height: calc(100% - 104px);
+        padding: 10px;
+        gap: 1px;
+        opacity: 0;
+        pointer-events: none;
+        position: absolute;
+        left: 375px;
+        background: rgba(0, 0, 0, 0.08);
+        border-radius: $radius-small;
+        top: 20px;
+        display: flex;
+        flex-direction: column;
+        transition: opacity 0.2s ease;
+      }
 
       a:not(.woocommerce-loop-product__link) {
         @include media-breakpoint-up(lg) {
-          color: rgba($G-0, 0.8);
-          margin: 0 0 6px;
-          line-height: 16px;
+          color: rgba($G-0, 0.7);
+          opacity: 1;
           font-weight: 400;
+          transition: color 0.2s ease, background-color 0.2s ease;
+        }
+
+        &:hover {
+          @include media-breakpoint-up(lg) {
+            color: $G-0;
+            background-color: rgba(0, 0, 0, 0.1);
+          }
         }
       }
 
