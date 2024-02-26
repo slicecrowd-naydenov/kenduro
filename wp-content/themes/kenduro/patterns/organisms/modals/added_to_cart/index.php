@@ -4,7 +4,11 @@
     <div class="modal-content">
       <div class="modal-body">
         <div class="img-wrapper">
-          <img class="no-lazy" src="<?php echo esc_url(wc_placeholder_img_src()); ?>" alt="">
+          <?php 
+            $image = wp_get_attachment_image_src( get_post_thumbnail_id( get_the_ID() ), 'single-post-thumbnail' );
+            $image_url = $image ? $image[0] : wc_placeholder_img_src();
+          ?>
+          <img class="no-lazy" src="<?php echo esc_url($image_url); ?>" alt="">
         </div>
         <div>
           <p class="paragraph paragraph-xl primary">Продуктът е добавен в количката ❤️</p>
