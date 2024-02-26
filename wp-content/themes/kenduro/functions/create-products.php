@@ -413,7 +413,7 @@ function create_variation($pid, $term_slug, $product_variations_fields, $attribu
       $variation->save();
 
       $variation_id = $variation->get_id();
-
+      update_post_meta($variation_id, '_rank_math_gtin_code', sprintf("%012d", $variation_id));
       update_post_meta($variation_id, '_my_product_variation_id', $product_variation[$variation_product_id]);
     }
   }
@@ -562,6 +562,7 @@ function create_woocommerce_products($filteredData) {
         }
         update_post_meta($pid, 'rank_math_focus_keyword', strtolower($item[$seo_keywords]));
         update_post_meta($pid, 'rank_math_description', $item[$seo_description_bg]);
+        update_post_meta($pid, '_rank_math_gtin_code', sprintf("%012d", $pid));
 
 
         // update_post_meta($pid, '_product_attributes', $attributes_data);
@@ -577,6 +578,7 @@ function create_woocommerce_products($filteredData) {
 
         update_post_meta($p_id, 'rank_math_focus_keyword', strtolower($item[$seo_keywords]));
         update_post_meta($p_id, 'rank_math_description', $item[$seo_description_bg]);
+        update_post_meta($p_id, '_rank_math_gtin_code', sprintf("%012d", $p_id));
 
         // update_post_meta($p_id, 'menu_order', 1987);
         // update_post_meta($p_id, 'rank_math_title', 'Title goes here');
