@@ -352,6 +352,57 @@ function process_product_attributes($product_variation, $filters, $filter_arr, $
   return $attributes;
 }
 
+function update_variations($pid, $product_variations_fields) {
+  $ss_ids = get_field('ss_ids', 'option');
+  $product_variations = post_column_fields($ss_ids['product_variations']);
+  $product_variations_quantity = get_column_field_id('product_variations_quantity', $product_variations_fields);
+  $parent_product = wc_get_product($pid);
+	$variation_product_id = get_column_field_id('variation_product_id', $product_variations_fields);
+  $set_regular_price = get_column_field_id('set_regular_price', $product_variations_fields);
+  $variation_id_arr = array();
+
+  foreach ($parent_product->get_children() as $variation_id) {
+    $field_id = get_post_meta($variation_id, '_my_product_variation_id', true);
+
+  // Добавете стойностите към масива $variation_id_arr
+    $variation_id_arr[] = array(
+      'id' => $variation_id,
+      'field_id' => $field_id
+    );
+  }
+
+  $field_ids = array_column($variation_id_arr, 'field_id');
+
+  foreach ($product_variations['items'] as $product_variation) {
+    if (in_array($product_variation[$variation_product_id], $field_ids)) {
+      $key = array_search($product_variation[$variation_product_id], $field_ids);
+      // Извличане на 'id' на съответния продукт от $variation_id_arr
+      $product_id = $variation_id_arr[$key]['id'];
+      $variation = wc_get_product($product_id);
+
+      $quantity = isset($product_variation[$product_variations_quantity]) ? $product_variation[$product_variations_quantity] : 0;
+      $stock_status = $quantity > 0 ? 'instock' : 'onbackorder';
+      $manage_stock = $quantity > 0 ? true : false;
+      $delivery_value = $manage_stock ? 'no' : 'notify';
+
+      $sale_price = ''; // One day when we add Sale price in SS we have to replace this string with that field from SS
+
+      $variation->set_manage_stock($manage_stock);
+      $variation->set_stock_status($stock_status);
+      $variation->set_backorders($delivery_value);
+      $variation->set_stock_quantity($quantity);
+
+      $variation->set_price($sale_price ? $sale_price : $product_variation[$set_regular_price]);
+      $variation->set_regular_price($product_variation[$set_regular_price]);
+      $variation->set_sale_price($sale_price ? $sale_price : null);
+      $variation->save();
+
+      // Update other meta data if needed
+      update_post_meta($variation_id, '_rank_math_gtin_code', sprintf("%012d", $variation_id));
+    }
+  }
+}
+
 function create_variation($pid, $term_slug, $product_variations_fields, $attributes_data) {
   $ss_ids = get_field('ss_ids', 'option');
   $product_variations = post_column_fields($ss_ids['product_variations']);
@@ -580,10 +631,6 @@ function create_woocommerce_products($filteredData) {
         update_post_meta($p_id, 'rank_math_description', $item[$seo_description_bg]);
         update_post_meta($p_id, '_rank_math_gtin_code', sprintf("%012d", $p_id));
 
-        // update_post_meta($p_id, 'menu_order', 1987);
-        // update_post_meta($p_id, 'rank_math_title', 'Title goes here');
-        // update_post_meta($p_id, 'rank_math_description', 'Description goes here');
-
         if (!is_wp_error($p_id)) {
           $product_id = $p_id;
         }
@@ -607,6 +654,52 @@ function create_woocommerce_products($filteredData) {
         set_values($product_fields, $p_id, $item);
         update_acf($item, $p_id, false);
         create_simple_product($p_id, $incoming_id, $product_variations_fields);
+      }
+    } else {
+      // if Product exists // UPDATE PRODUCTS
+      if (is_variable_product($incoming_id, $product_id_slug, $product_variation_slug)) {
+        $is_set_color = count($item[$attr_color]) > 0 ? $item[$attr_color][0] : '';
+        $attributes_data = array();
+        if ($is_set_color !== '') {
+          // if is set Attr Color, add Attributes but not create variations
+          wp_set_object_terms($product_id, array($is_set_color), 'pa_'.$ss_ids['filter_-_color_id'], true);
+  
+          $attributes_data['pa_'.$ss_ids['filter_-_color_id']] = array(
+            'name' => 'pa_'.$ss_ids['filter_-_color_id'],
+            'is_visible' => '1',
+            'is_taxonomy' => '1'
+          );
+        }
+
+        // update_post_meta($pid, '_product_attributes', $attributes_data);
+        set_values($product_fields, $product_id, $item);
+        update_acf($item, $product_id, false);
+
+        update_variations($product_id, $product_variations_fields);
+      } else {
+        update_post_meta($product_id, 'rank_math_focus_keyword', strtolower($item[$seo_keywords]));
+        update_post_meta($product_id, 'rank_math_description', $item[$seo_description_bg]);
+        update_post_meta($product_id, '_rank_math_gtin_code', sprintf("%012d", $product_id));
+
+        $is_set_color = count($item[$attr_color]) > 0 ? $item[$attr_color][0] : '';
+        $attributes_data = array();
+        if ($is_set_color !== '') {
+          // if is set Attr Color, add Attributes but not create variations
+          wp_set_object_terms($product_id, array($is_set_color), 'pa_'.$ss_ids['filter_-_color_id'], true);
+  
+          $attributes_data['pa_'.$ss_ids['filter_-_color_id']] = array(
+            'name' => 'pa_'.$ss_ids['filter_-_color_id'],
+            'is_visible' => '1',
+            'is_taxonomy' => '1'
+          );
+        }
+        update_post_meta($product_id, '_product_attributes', $attributes_data);
+
+
+        $item['product_variation_id'] = $item[$product_var_id];
+        set_values($product_fields, $product_id, $item);
+        update_acf($item, $product_id, false);
+        create_simple_product($product_id, $incoming_id, $product_variations_fields);
       }
     }
 
