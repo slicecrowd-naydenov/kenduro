@@ -658,6 +658,9 @@ function create_woocommerce_products($filteredData) {
     } else {
       // if Product exists // UPDATE PRODUCTS
       if (is_variable_product($incoming_id, $product_id_slug, $product_variation_slug)) {
+        update_post_meta($product_id, 'rank_math_focus_keyword', strtolower($item[$seo_keywords]));
+        update_post_meta($product_id, 'rank_math_description', $item[$seo_description_bg]);
+        update_post_meta($product_id, '_rank_math_gtin_code', sprintf("%012d", $product_id));
         $is_set_color = count($item[$attr_color]) > 0 ? $item[$attr_color][0] : '';
         $attributes_data = array();
         if ($is_set_color !== '') {
