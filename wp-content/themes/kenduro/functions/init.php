@@ -32,7 +32,7 @@ add_filter( 'rank_math/focus_keyword/maxtags', function() {
 });
 
 // declare Global var
-$fieldsToRemove = ['deleted_date', 'first_created', 'followed_by', 'ranking', 'last_updated', 'autonumber', 'comments_count', 'description'];
+$fieldsToRemove = ['deleted_date', 'first_created', 'followed_by', 'ranking', 'autonumber', 'comments_count', 'description'];
 /**
  * Actions on init
  */
