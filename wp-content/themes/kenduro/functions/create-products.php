@@ -67,7 +67,7 @@ function get_all_products($request) {
 
   if (!$product_id) {
     // Create product
-    create_woocommerce_products($filteredArrays);
+    process_products_in_chunks($filteredArrays);
   } else {
     // Update product
     $filteredArrays = array_filter($filteredData, function ($item) use ($product_id) {
@@ -675,6 +675,13 @@ function create_woocommerce_products($filteredData) {
     if (!$product_id) {
       return;
     }
+  }
+}
+
+function process_products_in_chunks($filteredData, $chunkSize = 5) {
+  $chunks = array_chunk($filteredData, $chunkSize);
+  foreach ($chunks as $chunk) {
+      create_woocommerce_products($chunk);
   }
 }
 
