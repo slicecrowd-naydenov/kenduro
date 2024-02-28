@@ -104,7 +104,7 @@ function create_sales_record($response) {
     $address_street_number = isset($econt_details['streetNumber']) ? $econt_details['streetNumber'] : '';
     $city = get_post_meta($response['order_id'], '_billing_city', true);
     $econt_delivery_type = $econt_details['type'] === 'address' ? 'rRAy5' : 'uMXsH';
-    $econt_office = $econt_delivery_type === 'uMXsH' ? get_post_meta(7037, '_billing_address_1', true) : '';
+    $econt_office = $econt_delivery_type === 'uMXsH' ? get_post_meta($response['order_id'], '_billing_address_1', true) : '';
 
     $delivery_address_arr = array(
       "location_address" => $address_street,
