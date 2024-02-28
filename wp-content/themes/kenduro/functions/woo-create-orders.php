@@ -44,6 +44,12 @@ function create_sales_record($response) {
   $invoices_fields = fetch_column_fields($invoices_id);
 
   $invoices_items = get_column_field_id('invoices_items', $invoices_fields);
+  $delivery_address_field = get_column_field_id('delivery_address_field', $invoices_fields);
+  $delivery_city = get_column_field_id('delivery_city', $invoices_fields);
+  $delivery_street = get_column_field_id('delivery_street', $invoices_fields);
+  $delivery_street_no = get_column_field_id('delivery_street_no', $invoices_fields);
+  $delivery_type = get_column_field_id('delivery_type', $invoices_fields);
+  $delivery_ekont_office = get_column_field_id('delivery_ekont_office', $invoices_fields);
   $sales_quantity_ordered = get_column_field_id('sales_quantity_ordered', $sales_fields);
   $sales_link_to_product_variations = get_column_field_id('sales_link_to_product_variations', $sales_fields);
   $wp_order_id = get_column_field_id('wp_order_id', $sales_fields);
@@ -92,9 +98,33 @@ function create_sales_record($response) {
         $sales_ids_array[] = $result['id'];
       }
     }
-    $new_data = array(
-      $invoices_items => $sales_ids_array
+
+    $econt_details = get_post_meta($response['order_id'], 'woo_bg_econt_cookie_data', true);
+    $address_street = isset($econt_details['selectedAddress']) ? $econt_details['selectedAddress']['label'] : '';
+    $address_street_number = isset($econt_details['streetNumber']) ? $econt_details['streetNumber'] : '';
+    $city = get_post_meta($response['order_id'], '_billing_city', true);
+    $econt_delivery_type = $econt_details['type'] === 'address' ? 'rRAy5' : 'uMXsH';
+    $econt_office = $econt_delivery_type === 'uMXsH' ? get_post_meta(7037, '_billing_address_1', true) : '';
+
+    $delivery_address_arr = array(
+      "location_address" => $address_street,
+      "location_address2" => $address_street_number,
+      "location_city" => $city,
+      "location_state" => "",
+      "location_zip" => get_post_meta($response['order_id'], '_billing_postcode', true),
+      "location_country" => "Bulgaria",
     );
+
+    $new_data = array(
+      $invoices_items => $sales_ids_array,
+      $delivery_type => $econt_delivery_type,
+      $delivery_city => $city,
+      $delivery_ekont_office => $econt_office,
+      $delivery_street => $address_street,
+      $delivery_street_no => $address_street_number,
+      $delivery_address_field => $delivery_address_arr,
+    );
+
     $invoice_details = create_record_curl($invoices_id, $new_data, '');
 
     if (!is_wp_error($invoice_details)) {

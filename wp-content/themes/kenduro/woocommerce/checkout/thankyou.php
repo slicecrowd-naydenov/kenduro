@@ -78,6 +78,8 @@ defined('ABSPATH') || exit;
 						$invoice_company_name = get_post_meta($order->get_id(), '_billing_company_mol', true);
 						$invoice_bulstat = get_post_meta($order->get_id(), '_billing_company_eik', true);
 						$invoice_vat_number = get_post_meta($order->get_id(), '_billing_vat_number', true);
+						$econt_details = get_post_meta($order->get_id(), 'woo_bg_econt_cookie_data', true);
+						$delivery_type = $econt_details['type'] === 'address' ? "Адрес" : "Офис";
 
 						if ($want_invoice) { ?>
 							<p class="paragraph paragraph-m">Фактура към:</p>
@@ -97,14 +99,8 @@ defined('ABSPATH') || exit;
 							endif;
 						}
 
-						$type_delivery = '';
 						$address_delivery = '';
 						$order_details = $order->get_order_item_totals();
-						foreach ($order_details as $key => $order_detail) {
-							if ($key === 'shipping') {
-								$type_delivery = strpos($order_detail['value'], 'адрес') ? "Адрес" : "Офис";
-							}
-						}
 						?>
 					</div>
 					<div class="column">
@@ -113,14 +109,14 @@ defined('ABSPATH') || exit;
 						<p class="paragraph paragraph-l semibold text_value">ЕКОНТ</p>
 						<p class="paragraph paragraph-m">Тип доставка</p>
 						<p class="paragraph paragraph-l semibold text_value">
-							До <?php echo $type_delivery; ?>
+							До <?php echo $delivery_type; ?>
 						</p>
 						<p class="paragraph paragraph-m">Адрес на доставка</p>
 						<p class="paragraph paragraph-l semibold text_value">
 							<?php
 							$address = $order->get_billing_address_1();
 
-							if ($type_delivery === 'Офис') {
+							if ($delivery_type === 'Офис') {
 								$address_delivery = str_replace('До офис:', '', $address);
 							} else {
 								$address_delivery = $order->get_billing_city() . ', ' . $order->get_billing_address_1();
