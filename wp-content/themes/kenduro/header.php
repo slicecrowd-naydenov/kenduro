@@ -6,6 +6,7 @@
 <head>
 	<meta charset="<?php bloginfo('charset'); ?>">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=0">
+	<meta name="facebook-domain-verification" content="959mi9u8mxe95xoet9djmp9rux5q97" />
 	
 	<title><?php wp_title(); ?></title>
 
