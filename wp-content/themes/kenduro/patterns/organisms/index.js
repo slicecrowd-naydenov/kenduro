@@ -43,6 +43,8 @@ export default () => {
     $('#dropdownMenuButton').text(selectedPill);
   });
 
+  // $('body').addClass(myFunction());
+
   // var triggerEl = document.querySelector('#myTab a[href="#profile"]');
   // Tab.getInstance(triggerEl).show(); // Select tab by name
 
