@@ -205,6 +205,8 @@ function sf_update_woo_flexslider_options( $options ) {
     if ( wp_is_mobile() ) {
       // $options['smoothHeight'] = true;
       $options['controlNav'] = true;
+    } else {
+      $options['controlNav'] = false;
     }
     // $options['animationLoop'] = true;
     // $options['sync'] = '.flex-control-thumbs';
