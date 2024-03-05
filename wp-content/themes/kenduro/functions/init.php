@@ -206,7 +206,7 @@ function sf_update_woo_flexslider_options( $options ) {
       // $options['smoothHeight'] = true;
       $options['controlNav'] = true;
     } else {
-      $options['controlNav'] = false;
+      $options['controlNav'] = 'thumbnails';
     }
     // $options['animationLoop'] = true;
     // $options['sync'] = '.flex-control-thumbs';
