@@ -200,14 +200,9 @@ add_filter( 'woocommerce_single_product_carousel_options', 'sf_update_woo_flexsl
  * Filer WooCommerce Flexslider options - Add Navigation Arrows
  */
 function sf_update_woo_flexslider_options( $options ) {
-
+    pretty_dump(wp_is_mobile());
     $options['directionNav'] = true;
-    if ( wp_is_mobile() ) {
-      // $options['smoothHeight'] = true;
-      $options['controlNav'] = true;
-    } else {
-      $options['controlNav'] = 'thumbnails';
-    }
+    $options['controlNav'] = wp_is_mobile() ? true : 'thumbnails';
     // $options['animationLoop'] = true;
     // $options['sync'] = '.flex-control-thumbs';
     // $options['sync'] = '.flex-control-thumbs';
