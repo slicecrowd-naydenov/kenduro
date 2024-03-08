@@ -723,6 +723,8 @@ function create_woocommerce_products($filteredData) {
 }
 
 function update_attributes($brand, $brand_text, $attrBrand, $color, $attrColor, $pid) {
+  $product = wc_get_product($pid);
+
   $attributes_data = array();
   $is_set_brand = count($brand) > 0 ? $brand[0] : '';
   $is_set_color = count($color) > 0 ? $color[0] : '';
@@ -750,9 +752,9 @@ function update_attributes($brand, $brand_text, $attrBrand, $color, $attrColor, 
     );
   }
   update_post_meta($pid, '_product_attributes', $attributes_data);
-
+  
+  $product->save();
   return $attributes_data;
-  // $product->save();
   // delete_transient('wc_attribute_taxonomies');
   // delete_transient('wc_transients_cache');
 }
@@ -762,13 +764,13 @@ function update_woocommerce_product($data, $update_product) {
   $product_fields = fetch_column_fields($ss_ids['products_app_id']);    
   $product_variations_fields = fetch_column_fields($ss_ids['product_variations']);
   $product_var_id = get_column_field_id('product_var_id', $product_fields);
-  $seo_keywords = get_column_field_id('seo_keywords', $product_fields);
-  $seo_description_bg = get_column_field_id('seo_description_bg', $product_fields);
-  $set_gallery_image_ids = get_column_field_id('set_gallery_image_ids', $product_fields);
+  // $seo_keywords = get_column_field_id('seo_keywords', $product_fields);
+  // $seo_description_bg = get_column_field_id('seo_description_bg', $product_fields);
+  // $set_gallery_image_ids = get_column_field_id('set_gallery_image_ids', $product_fields);
   $is_variation = get_column_field_id('is_variation', $product_variations_fields);
-  $attr_brand = get_column_field_id('brand', $product_fields);
-  $attr_color = get_column_field_id('color', $product_fields);
-  $brand_text = get_column_field_id('brand_text', $product_fields);
+  // $attr_brand = get_column_field_id('brand', $product_fields);
+  // $attr_color = get_column_field_id('color', $product_fields);
+  // $brand_text = get_column_field_id('brand_text', $product_fields);
 
   foreach ($data as $item) {
     $incoming_id = $item['id'];
@@ -784,32 +786,54 @@ function update_woocommerce_product($data, $update_product) {
         // *****Update from Products - Product
         // pretty_dump('tuk sme');
         if (isset($item[$is_variation]) && strtolower($item[$is_variation]) === strtolower('No') || !$product->is_type( 'variable' )) {
+          // Delete and Create new Simple product
           $item['product_variation_id'] = $item[$product_var_id];
-        }
-        set_values($product_fields, $product_id, $item);
-        update_acf($item, $product_id, false);
-        if (!empty($item[$seo_keywords])) {
-          update_post_meta($product_id, 'rank_math_focus_keyword', strtolower($item[$seo_keywords]));
-        }
 
-        if (!empty($item[$seo_description_bg])) {
-          update_post_meta($product_id, 'rank_math_description', $item[$seo_description_bg]);
+          // Delete post which is updated
+          wp_delete_post($product_id, false);
+          delete_transient('wc_transients_cache');
+          // Create again post with updated DATA
+          $p_id = generate_simple_product($item, $ss_ids, $product_fields, $product_variations_fields, $incoming_id);
+
+          if (!is_wp_error($p_id)) {
+            $product_id = $p_id;
+          }
+        } else {
+          // Delete and Create new Variable product
+
+          wp_delete_post($product_id, false);
+          delete_transient('wc_transients_cache');
+          // Create again post with updated DATA
+          $pid = generate_variable_products($item, $ss_ids, $product_fields, $product_variations_fields, $incoming_id);
+
+          if (!is_wp_error($pid)) {
+            $product_id = $pid;
+          }
         }
+        // set_values($product_fields, $product_id, $item);
+        // update_acf($item, $product_id, false);
+        // if (!empty($item[$seo_keywords])) {
+        //   update_post_meta($product_id, 'rank_math_focus_keyword', strtolower($item[$seo_keywords]));
+        // }
+
+        // if (!empty($item[$seo_description_bg])) {
+        //   update_post_meta($product_id, 'rank_math_description', $item[$seo_description_bg]);
+        // }
         
-        if (count($item[$set_gallery_image_ids]) === 0) {
-          delete_post_thumbnail($product_id);
-        }
+        // if (count($item[$set_gallery_image_ids]) === 0) {
+        //   delete_post_thumbnail($product_id);
+        // }
 
-        update_attributes(
-          $item[$attr_brand], 
-          $item[$brand_text], 
-          'brand', 
-          $item[$attr_color], 
-          $ss_ids['filter_-_color_id'], 
-          $product_id
-        );
+        // update_attributes(
+        //   $item[$attr_brand], 
+        //   $item[$brand_text], 
+        //   'brand', 
+        //   $item[$attr_color], 
+        //   $ss_ids['filter_-_color_id'], 
+        //   $product_id
+        // );
 
-        delete_transient('wc_transients_cache');
+        // delete_transient('wc_transients_cache');
       } else if ($product_variation_id !== 0) {
         // *****Update from Product Variations - Product variation
         update_product_manually($item, $product_variation_id);
