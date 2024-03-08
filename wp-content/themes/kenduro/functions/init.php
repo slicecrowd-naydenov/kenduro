@@ -7,6 +7,7 @@ if (!is_admin()) {
   include 'create-categories.php';
   include 'create-products.php';
   include 'create-filters.php';
+  include 'create-brands.php';
   include 'ss-create-order.php';
   include 'get-column-fields.php';
   // include 'filter.php';
@@ -32,7 +33,7 @@ add_filter( 'rank_math/focus_keyword/maxtags', function() {
 });
 
 // declare Global var
-$fieldsToRemove = ['deleted_date', 'first_created', 'followed_by', 'ranking', 'autonumber', 'comments_count', 'description'];
+$fieldsToRemove = ['deleted_date', 'first_created', 'followed_by', 'ranking', 'autonumber', 'comments_count'];
 /**
  * Actions on init
  */

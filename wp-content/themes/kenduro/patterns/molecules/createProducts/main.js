@@ -15,6 +15,7 @@ export default class CreateProducts {
     }
 
     this.createProductsBtn = $('#createProducts');
+    this.createBrandsBtn = $('#createBrands');
     this.updateProductBtn = $('#updateProduct');
     this.updateProductVariationBtn = $('#updateProductVariation');
     this.productFieldsBtn = $('#productFields');
@@ -49,6 +50,22 @@ export default class CreateProducts {
     });
   }
 
+  createBrands() {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const response = await axios({
+          method: 'get',
+          url: `${wpApiSettings.rest_url}ss-data/get-brands/`+$(this.createBrandsBtn).attr('data-brands-id')
+        });
+        console.log('response Brands: ', response);
+        resolve(response);
+      } catch (error) {
+        console.error('Get Products ERROR: ', error);
+        reject(error);
+      }
+    });
+  }
+
   onClickHandler() {
     this.createProductsBtn.on('click', (e) => {
       e.preventDefault();
@@ -63,6 +80,21 @@ export default class CreateProducts {
           alert('Транзиентите са изтрити успешно.');
         }
       });
+    });
+
+    this.createBrandsBtn.on('click', (e) => {
+      e.preventDefault();
+      this.createBrands();
+      // $.ajax({
+      //   type: 'POST',
+      //   url: ajaxurl, // This is WordPress AJAX URL
+      //   data: {
+      //     action: 'clear_woocommerce_transients' // Потвърдете съответния хук
+      //   },
+      //   success: function(response) {
+      //     alert('Транзиентите са изтрити успешно.');
+      //   }
+      // });
     });
   }
 }

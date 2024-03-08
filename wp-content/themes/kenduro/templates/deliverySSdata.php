@@ -1,8 +1,8 @@
 <?php
 
-require_once(ABSPATH . 'wp-admin/includes/media.php');
-require_once(ABSPATH . 'wp-admin/includes/file.php');
-require_once(ABSPATH . 'wp-admin/includes/image.php');
+// require_once(ABSPATH . 'wp-admin/includes/media.php');
+// require_once(ABSPATH . 'wp-admin/includes/file.php');
+// require_once(ABSPATH . 'wp-admin/includes/image.php');
 /* Template Name: Delivery SS data*/
 
 get_header();
@@ -11,6 +11,8 @@ get_header();
 <main>
   <?php $ss_ids = get_field('ss_ids', 'option'); ?>
   <a href="#" id="createProducts" data-products-id="<?php echo esc_attr($ss_ids['products_app_id']); ?>">create Products</a>
+  </br>
+  <a href="#" id="createBrands" data-brands-id="<?php echo esc_attr($ss_ids['filter_brands']); ?>">create Brands</a>
   </br>
   <!-- <a href="#" id="updateProduct">update Product</a> -->
   <!-- </br> -->

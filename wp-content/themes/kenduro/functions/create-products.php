@@ -512,6 +512,8 @@ function reverse_number($number) {
 function generate_variable_products($item, $ss_ids, $product_fields, $product_variations_fields, $incoming_id) {
 	$prduct_sku = get_column_field_id('set_sku', $product_fields);
 	$attr_color = get_column_field_id('color', $product_fields);
+	$attr_brand = get_column_field_id('brand', $product_fields);
+	$brand_text = get_column_field_id('brand_text', $product_fields);
 	$name_bg = get_column_field_id('product_name_bg', $product_fields);
   $seo_description_bg = get_column_field_id('seo_description_bg', $product_fields);
 	$seo_keywords = get_column_field_id('seo_keywords', $product_fields);
@@ -524,18 +526,38 @@ function generate_variable_products($item, $ss_ids, $product_fields, $product_va
   $variations->save();
   $pid = $variations->get_id();
 
-  $is_set_color = count($item[$attr_color]) > 0 ? $item[$attr_color][0] : '';
-  $attributes_data = array();
-  if ($is_set_color !== '') {
-    // if is set Attr Color, add Attributes but not create variations
-    wp_set_object_terms($pid, array($is_set_color), 'pa_'.$ss_ids['filter_-_color_id'], true);
+  // $is_set_color = count($item[$attr_color]) > 0 ? $item[$attr_color][0] : '';
+  // $is_set_brand = count($item[$attr_brand]) > 0 ? $item[$attr_brand][0] : '';
 
-    $attributes_data['pa_'.$ss_ids['filter_-_color_id']] = array(
-      'name' => 'pa_'.$ss_ids['filter_-_color_id'],
-      'is_visible' => '1',
-      'is_taxonomy' => '1'
-    );
-  }
+  $attributes_data = update_attributes(
+    $item[$attr_brand], 
+    $item[$brand_text], 
+    'brand', 
+    $item[$attr_color], 
+    $ss_ids['filter_-_color_id'], 
+    $pid
+  );
+  // if ($is_set_color !== '') {
+  //   // if is set Attr Color, add Attributes but not create variations
+  //   wp_set_object_terms($pid, array($is_set_color), 'pa_'.$ss_ids['filter_-_color_id'], true);
+
+  //   $attributes_data['pa_'.$ss_ids['filter_-_color_id']] = array(
+  //     'name' => 'pa_'.$ss_ids['filter_-_color_id'],
+  //     'is_visible' => '1',
+  //     'is_taxonomy' => '1'
+  //   );
+  // }
+
+  // if ($is_set_brand !== '') {
+  //   // if is set Attr Brand, add Attributes but not create variations
+  //   wp_set_object_terms($pid, array($is_set_brand), 'pa_'.$ss_ids['filter_brands'], true);
+
+  //   $attributes_data['pa_'.$ss_ids['filter_brands']] = array(
+  //     'name' => 'pa_'.$ss_ids['filter_brands'],
+  //     'is_visible' => '1',
+  //     'is_taxonomy' => '1'
+  //   );
+  // }
 
   if (!empty($item[$seo_keywords])) {
     update_post_meta($pid, 'rank_math_focus_keyword', strtolower($item[$seo_keywords]));
@@ -560,6 +582,8 @@ function generate_variable_products($item, $ss_ids, $product_fields, $product_va
 // Create Simple products function
 function generate_simple_product($item, $ss_ids, $product_fields, $product_variations_fields, $incoming_id) {
 	$attr_color = get_column_field_id('color', $product_fields);
+	$attr_brand = get_column_field_id('brand', $product_fields);
+	$brand_text = get_column_field_id('brand_text', $product_fields);
 	$name_bg = get_column_field_id('product_name_bg', $product_fields);
   $seo_description_bg = get_column_field_id('seo_description_bg', $product_fields);
 	$seo_keywords = get_column_field_id('seo_keywords', $product_fields);
@@ -580,20 +604,40 @@ function generate_simple_product($item, $ss_ids, $product_fields, $product_varia
 
   update_post_meta($p_id, '_rank_math_gtin_code', sprintf("%012d", $p_id));
 
-  $is_set_color = count($item[$attr_color]) > 0 ? $item[$attr_color][0] : '';
-  $attributes_data = array();
-  if ($is_set_color !== '') {
-    // if is set Attr Color, add Attributes but not create variations
-    wp_set_object_terms($p_id, array($is_set_color), 'pa_'.$ss_ids['filter_-_color_id'], true);
+  $attributes_data = update_attributes(
+    $item[$attr_brand], 
+    $item[$brand_text], 
+    'brand', 
+    $item[$attr_color], 
+    $ss_ids['filter_-_color_id'], 
+    $p_id
+  );
 
-    $attributes_data['pa_'.$ss_ids['filter_-_color_id']] = array(
-      'name' => 'pa_'.$ss_ids['filter_-_color_id'],
-      'is_visible' => '1',
-      'is_taxonomy' => '1'
-    );
-  }
+  // $is_set_color = count($item[$attr_color]) > 0 ? $item[$attr_color][0] : '';
+  // $is_set_brand = count($item[$attr_brand]) > 0 ? $item[$attr_brand][0] : '';
+  // if ($is_set_color !== '') {
+  //   // if is set Attr Color, add Attributes but not create variations
+  //   wp_set_object_terms($p_id, array($is_set_color), 'pa_'.$ss_ids['filter_-_color_id'], true);
+
+  //   $attributes_data['pa_'.$ss_ids['filter_-_color_id']] = array(
+  //     'name' => 'pa_'.$ss_ids['filter_-_color_id'],
+  //     'is_visible' => '1',
+  //     'is_taxonomy' => '1'
+  //   );
+  // }
+
+  // if ($is_set_brand !== '') {
+  //   // if is set Attr Brand, add Attributes but not create variations
+  //   wp_set_object_terms($p_id, array($is_set_brand), 'pa_'.$ss_ids['filter_brands'], true);
+
+  //   $attributes_data['pa_'.$ss_ids['filter_brands']] = array(
+  //     'name' => 'pa_'.$ss_ids['filter_brands'],
+  //     'is_visible' => '1',
+  //     'is_taxonomy' => '1'
+  //   );
+  // }
+
   update_post_meta($p_id, '_product_attributes', $attributes_data);
-
 
   $item['product_variation_id'] = $item[$product_var_id];
   set_values($product_fields, $p_id, $item);
@@ -678,6 +722,41 @@ function create_woocommerce_products($filteredData) {
   }
 }
 
+function update_attributes($brand, $brand_text, $attrBrand, $color, $attrColor, $pid) {
+  $attributes_data = array();
+  $is_set_brand = count($brand) > 0 ? $brand[0] : '';
+  $is_set_color = count($color) > 0 ? $color[0] : '';
+  // $product = wc_get_product($pid);
+
+  if ($is_set_color !== '') {
+    // if is set Attr Color, add Attributes but not create variations
+    wp_set_object_terms($pid, array($is_set_color), 'pa_'.$attrColor, true);
+
+    $attributes_data['pa_'.$attrColor] = array(
+      'name' => 'pa_'.$attrColor,
+      'is_visible' => '1',
+      'is_taxonomy' => '1'
+    );
+  }
+
+  if ($is_set_brand !== '') {
+    // if is set Attr Brand, add Attributes but not create variations
+    wp_set_object_terms($pid, array($brand_text), 'pa_'.$attrBrand, true);
+
+    $attributes_data['pa_'.$attrBrand] = array(
+      'name' => 'pa_'.$attrBrand,
+      'is_visible' => '1',
+      'is_taxonomy' => '1'
+    );
+  }
+  update_post_meta($pid, '_product_attributes', $attributes_data);
+
+  return $attributes_data;
+  // $product->save();
+  // delete_transient('wc_attribute_taxonomies');
+  // delete_transient('wc_transients_cache');
+}
+
 function update_woocommerce_product($data, $update_product) {
   $ss_ids = get_field('ss_ids', 'option');
   $product_fields = fetch_column_fields($ss_ids['products_app_id']);    
@@ -687,6 +766,9 @@ function update_woocommerce_product($data, $update_product) {
   $seo_description_bg = get_column_field_id('seo_description_bg', $product_fields);
   $set_gallery_image_ids = get_column_field_id('set_gallery_image_ids', $product_fields);
   $is_variation = get_column_field_id('is_variation', $product_variations_fields);
+  $attr_brand = get_column_field_id('brand', $product_fields);
+  $attr_color = get_column_field_id('color', $product_fields);
+  $brand_text = get_column_field_id('brand_text', $product_fields);
 
   foreach ($data as $item) {
     $incoming_id = $item['id'];
@@ -717,6 +799,17 @@ function update_woocommerce_product($data, $update_product) {
         if (count($item[$set_gallery_image_ids]) === 0) {
           delete_post_thumbnail($product_id);
         }
+
+        update_attributes(
+          $item[$attr_brand], 
+          $item[$brand_text], 
+          'brand', 
+          $item[$attr_color], 
+          $ss_ids['filter_-_color_id'], 
+          $product_id
+        );
+
+        delete_transient('wc_transients_cache');
       } else if ($product_variation_id !== 0) {
         // *****Update from Product Variations - Product variation
         update_product_manually($item, $product_variation_id);
