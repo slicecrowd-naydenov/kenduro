@@ -98,8 +98,8 @@ function create_woocommerce_brands($filteredData) {
   foreach ($filteredData as $item) {
     $count++;
 
-    $bannerArr = $item[$exclusive_banner];
-    $logoArr = $item[$exclusive_logo];
+    $bannerArr = isset($item[$exclusive_banner]) ? $item[$exclusive_banner] : array();
+    $logoArr = isset($item[$exclusive_logo]) ? $item[$exclusive_logo] : array();
 
     if (count($bannerArr) > 0) {
       foreach ($bannerArr as $image) {
