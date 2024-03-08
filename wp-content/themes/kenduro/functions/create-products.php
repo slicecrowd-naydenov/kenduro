@@ -185,11 +185,11 @@ function update_product_manually($data, $product_id) {
     $quantity = isset($data[$product_variations_quantity]) && (int)$data[$product_variations_quantity] !== 0 ? (int)$data[$product_variations_quantity] : 0;
     $stock_status = $quantity > 0 ? 'instock' : 'onbackorder';
     $manage_stock = $quantity > 0 ? true : false;
-    $delivery_value = $manage_stock ? 'no' : 'notify';
+    // $delivery_value = $manage_stock ? 'no' : 'notify';
     
     $product->set_manage_stock($manage_stock);
     $product->set_stock_status($stock_status);
-    $product->set_backorders($delivery_value);
+    $product->set_backorders('notify');
     $product->set_stock_quantity($quantity);
     $product->set_regular_price($data[$set_regular_price]);
     $product->save();
@@ -376,9 +376,9 @@ function create_variation($pid, $term_slug, $product_variations_fields, $attribu
   foreach ($product_variations['items'] as $product_variation) {
     if ($product_variation[$product_id_slug][0] === $term_slug) {
       $quantity = isset($product_variation[$product_variations_quantity]) ? $product_variation[$product_variations_quantity] : 0;
-      $stock_status = $quantity > 0 ? 'instock' : 'onbackorder';
-      $manage_stock = $quantity > 0 ? true : false;
-      $delivery_value = $manage_stock ? 'no' : 'notify';
+      // $stock_status = $quantity > 0 ? 'instock' : 'onbackorder';
+      // $manage_stock = $quantity > 0 ? true : false;
+      // $delivery_value = $manage_stock ? 'no' : 'notify';
       // $attributes_data = array();
       $attributes = process_product_attributes($product_variation, $filters, $filter_arr, $filter_values);
       
@@ -402,9 +402,9 @@ function create_variation($pid, $term_slug, $product_variations_fields, $attribu
       $variation = new WC_Product_Variation();
       $variation->set_parent_id($pid);
       $variation->set_attributes($attributes);
-      $variation->set_manage_stock($manage_stock);
-      $variation->set_stock_status($stock_status);
-      $variation->set_backorders($delivery_value);
+      $variation->set_manage_stock(true);
+      // $variation->set_stock_status($stock_status);
+      $variation->set_backorders('notify');
       $variation->set_stock_quantity($quantity);
       // $variation->set_sku($pid);
       $variation->set_price($sale_price ? $sale_price : $product_variation[$set_regular_price]);
@@ -480,9 +480,9 @@ function create_simple_product($pid, $term_slug, $product_fields) {
     // $is_set_color = isset($product_variation[$attr_color]) && $product_variation[$attr_color] !== '';
     if ($product_variation[$product_id_slug][0] === $term_slug) {
       $quantity = isset($product_variation[$product_variations_quantity]) && (int)$product_variation[$product_variations_quantity] !== 0 ? (int)$product_variation[$product_variations_quantity] : 0;
-      $stock_status = $quantity > 0 ? 'instock' : 'onbackorder';
-      $manage_stock = $quantity > 0 ? true : false;
-      $delivery_value = $manage_stock ? 'no' : 'notify';
+      // $stock_status = $quantity > 0 ? 'instock' : 'onbackorder';
+      // $manage_stock = $quantity > 0 ? true : false;
+      // $delivery_value = $manage_stock ? 'no' : 'notify';
   
       // Define the attribute data
       // $attributes_data = array();
@@ -490,9 +490,9 @@ function create_simple_product($pid, $term_slug, $product_fields) {
 
       $sale_price = ''; // One day when we add Sale price in SS we have to replace this string with that field from SS
       
-      update_post_meta($pid, '_manage_stock', $manage_stock);
-      update_post_meta($pid, '_stock_status', $stock_status);
-      update_post_meta($pid, '_backorders', $delivery_value);
+      update_post_meta($pid, '_manage_stock', true);
+      // update_post_meta($pid, '_stock_status', $stock_status);
+      update_post_meta($pid, '_backorders', 'notify');
       update_post_meta($pid, '_stock', $quantity);
       update_post_meta($pid, '_price', $sale_price ? $sale_price : $product_variation[$set_regular_price]);
       update_post_meta($pid, '_regular_price', $product_variation[$set_regular_price]);

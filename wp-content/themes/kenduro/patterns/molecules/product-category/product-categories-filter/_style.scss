@@ -103,6 +103,7 @@
       padding: 8px 10px;
       z-index: 222;
       background-color: $G-0;
+      max-height: 225px;
 
       li {
         border-bottom: 1px solid $G-3;
@@ -199,6 +200,7 @@
       top: 0;
       display: block;
       position: relative;
+      max-height: none;
 
       li {
         border-bottom-style: dashed;
