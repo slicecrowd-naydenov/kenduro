@@ -92,6 +92,8 @@ function create_woocommerce_brands($filteredData) {
   $exclusive_brands = get_column_field_id('exclusive_brands', $filter_brands);
   $exclusive_banner = get_column_field_id('exclusive_banner', $filter_brands);
   $exclusive_logo = get_column_field_id('exclusive_logo', $filter_brands);
+  $banner_id = 0;
+  $logo_id = 0;
   //exclusive_banner 
 
   $count = 1; 
@@ -117,7 +119,7 @@ function create_woocommerce_brands($filteredData) {
     //   break;
     // }
 
-    createBrandTerms($item, 'brand', $item[$exclusive_brands], $count, $banner_id, $logo_id);
+    createBrandTerms($item, 'brand', false, $count, $banner_id, $logo_id);
     // pretty_dump($item[$exclusive_brands]);
   }
 }
