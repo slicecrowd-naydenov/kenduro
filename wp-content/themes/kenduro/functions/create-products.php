@@ -70,11 +70,11 @@ function get_all_products($request) {
     create_woocommerce_products($filteredArrays);
   } else {
     // Update product
-    $item = get_record($id, $product_id);
+    $filteredArrays = get_record($id, $product_id);
     // $filteredArrays = array_filter($filteredData, function ($item) use ($product_id) {
     //   return $item['id'] === $product_id;
     // });
-    update_woocommerce_product($item, $id);
+    update_woocommerce_product($filteredArrays, $id);
   }
 
   return $filteredArrays;
