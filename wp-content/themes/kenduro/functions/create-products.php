@@ -73,7 +73,7 @@ function get_all_products($request) {
     $filteredArrays = array_filter($filteredData, function ($item) use ($product_id) {
       return $item['id'] === $product_id;
     });
-    update_woocommerce_product($filteredArrays, $product_id);
+    update_woocommerce_product($filteredArrays, $id);
   }
 
   return $filteredArrays;
@@ -678,52 +678,56 @@ function create_woocommerce_products($filteredData) {
   }
 }
 
-function update_woocommerce_product($data, $update_product) {
+function update_woocommerce_product($data, $id) {
   $ss_ids = get_field('ss_ids', 'option');
   $product_fields = fetch_column_fields($ss_ids['products_app_id']);    
   $product_variations_fields = fetch_column_fields($ss_ids['product_variations']);
   $product_var_id = get_column_field_id('product_var_id', $product_fields);
-  $seo_keywords = get_column_field_id('seo_keywords', $product_fields);
-  $seo_description_bg = get_column_field_id('seo_description_bg', $product_fields);
-  $set_gallery_image_ids = get_column_field_id('set_gallery_image_ids', $product_fields);
-  $is_variation = get_column_field_id('is_variation', $product_variations_fields);
+  
+  $product_variations_fields = fetch_column_fields($ss_ids['product_variations']);
+  $product_id_slug = get_column_field_id('product_variation', $product_variations_fields);
+  $product_variation_slug = get_column_field_id('is_variation', $product_variations_fields);
 
   foreach ($data as $item) {
     $incoming_id = $item['id'];
-    if ($incoming_id === $update_product) {
-      $product_id = is_exist_product($incoming_id);
-      $product_no_variation_id = is_product_id('["'.$incoming_id.'"]');
-      $product_variation_id = is_variation_id($incoming_id);
-      $product = wc_get_product($product_id);
-      // pretty_dump($product_id);
-      // pretty_dump($product_no_variation_id);
-      // pretty_dump($product_variation_id);
-      if ($product_id !== 0) {
-        // *****Update from Products - Product
-        // pretty_dump('tuk sme');
-        if (isset($item[$is_variation]) && strtolower($item[$is_variation]) === strtolower('No') || !$product->is_type( 'variable' )) {
-          $item['product_variation_id'] = $item[$product_var_id];
-        }
-        set_values($product_fields, $product_id, $item);
-        update_acf($item, $product_id, false);
-        if (!empty($item[$seo_keywords])) {
-          update_post_meta($product_id, 'rank_math_focus_keyword', strtolower($item[$seo_keywords]));
-        }
+    $product_id = is_exist_product($incoming_id);
+    $product_no_variation_id = is_product_id('["'.$incoming_id.'"]');
+    $product_variation_id = is_variation_id($incoming_id);
 
-        if (!empty($item[$seo_description_bg])) {
-          update_post_meta($product_id, 'rank_math_description', $item[$seo_description_bg]);
+    if ($id === $ss_ids['products_app_id']) {
+      // *****Update from Products - Product
+      if (!is_variable_product($incoming_id, $product_id_slug, $product_variation_slug)) {
+        // Delete and Create new Simple product
+        $item['product_variation_id'] = $item[$product_var_id];
+
+        // Delete post which is updated
+        // pretty_dump('asd');
+        wp_delete_post($product_id, false);
+        delete_transient('wc_transients_cache');
+        // Create again post with updated DATA
+        $p_id = generate_simple_product($item, $ss_ids, $product_fields, $product_variations_fields, $incoming_id);
+
+        if (!is_wp_error($p_id)) {
+          $product_id = $p_id;
         }
-        
-        if (count($item[$set_gallery_image_ids]) === 0) {
-          delete_post_thumbnail($product_id);
+      } else {
+        // Delete and Create new Variable product
+
+        wp_delete_post($product_id, false);
+        delete_transient('wc_transients_cache');
+        // Create again post with updated DATA
+        $pid = generate_variable_products($item, $ss_ids, $product_fields, $product_variations_fields, $incoming_id);
+
+        if (!is_wp_error($pid)) {
+          $product_id = $pid;
         }
-      } else if ($product_variation_id !== 0) {
-        // *****Update from Product Variations - Product variation
-        update_product_manually($item, $product_variation_id);
-      } else if ($product_no_variation_id !== 0) {
-        // *****Update from Product Variations - No variation
-        update_product_manually($item, $product_no_variation_id);
-      } 
+      }
+    } else if ($product_variation_id !== 0) {
+      // *****Update from Product Variations - Product variation
+      update_product_manually($item, $product_variation_id);
+    } else if ($product_no_variation_id !== 0) {
+      // *****Update from Product Variations - No variation
+      update_product_manually($item, $product_no_variation_id);
     }
   }
 }
