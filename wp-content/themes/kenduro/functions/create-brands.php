@@ -106,12 +106,16 @@ function create_woocommerce_brands($filteredData) {
       foreach ($bannerArr as $image) {
         $banner_id = getFileURL($image['handle'], $image['metadata']['filename']);
       }
+    } else {
+      $banner_id = 0;
     }
 
     if (count($logoArr) > 0) {
       foreach ($logoArr as $image) {
         $logo_id = getFileURL($image['handle'], $image['metadata']['filename']);
       }
+    } else {
+      $logo_id = 0;
     }
 
     // if ($count >= 5) {

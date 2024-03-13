@@ -262,3 +262,22 @@
     margin-bottom: 23px;
   }
 }
+
+// Brand cat page
+.tax-pa_brand  {
+  .page-title.exclusive {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    .exclusive-banner {
+      position: relative;
+      top: 0;
+      right: 0;
+    }
+  }
+
+  .dropdown {
+    margin-bottom: 23px;
+  }
+}

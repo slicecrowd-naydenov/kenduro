@@ -1,0 +1,254 @@
+.brands {
+  padding: 50px 0 80px !important;
+  border-top: 1px solid $G-1-5;
+
+  &__list {
+    margin: 0;
+    padding: 23px 0 80px;
+    display: flex;
+    gap: 20px;
+    flex-flow: row wrap;
+
+    @include media-breakpoint-between(md, xl) {
+      gap: 15px;
+    }
+
+    @include media-breakpoint-down(md) {
+      gap: 10px;
+    }
+  }
+  
+  &__list-item {
+    height: 140px;
+    flex: 0 0 calc(25% - 15px);
+
+    @include media-breakpoint-between(md, xl) {
+      flex: 0 0 calc(33% - 8px);
+    }
+
+    @include media-breakpoint-down(md) {
+      flex: 0 0 calc(50% - 5px);
+    }
+  }
+
+  &__list-item-link {
+    width: 100%;
+    height: 100%;
+    border: 1px solid $G-1-5;
+    border-radius: $radius-medium;
+    position: relative;
+    transition: border-color 0.2s ease;
+    @extend .flex-center;
+    
+    &:hover {
+      border-color: $b-highlight-two;
+    }
+
+    .exclusive-banner {
+      @include media-breakpoint-down(md) {
+        font-size: 10px;
+      }
+    }
+  }
+}
+
+.exclusive-banner {
+  padding: 5px 11px 5px 9px;
+  gap: 5px;
+  border-radius: 40px;
+  position: absolute;
+  right: 5px;
+  top: 5px;
+  display: flex;
+  background-color: rgba($b-highlight-one, 0.11);
+}
+
+.custom-breadcrumb {
+  display: flex;
+  margin-bottom: 5px;
+
+  @include media-breakpoint-down(md) {
+    margin-top: 25px;
+  }
+
+  a {
+    text-decoration: none;
+    border-bottom: 1px dashed;
+    margin-right: 5px;
+  }
+}
+
+.brand-info {
+  margin-top: 20px;
+  margin-bottom: 30px;
+
+  &.no-exclusive {
+    display: flex;
+
+    @include media-breakpoint-down(xl) {
+      flex-direction: column;
+    }
+
+    .brand-info__image {
+      margin-right: 30px;
+      
+      @include media-breakpoint-down(md) {  
+        margin-bottom: 20px;
+        margin-right: 0;
+      }
+    }
+  }
+
+  &.exclusive {
+    .brand-info__image {
+      position: relative;
+      margin-bottom: 50px;
+
+      @include media-breakpoint-down(md) {
+        display: flex;
+        flex-direction: column-reverse;
+        margin-bottom: 30px;
+      }
+
+      .brand-info__logo {
+        position: absolute;
+        left: 30px;
+        bottom: -20px;
+
+        @include media-breakpoint-down(md) {
+          position: initial;
+          bottom: 0;
+          z-index: 2;
+          margin-top: -15px;
+        }
+
+        @include media-breakpoint-between(md, xl) {
+          width: 200px;
+          height: 100px;
+        }
+      }
+
+      img {
+        @include media-breakpoint-down(md) {
+          margin-left: -15px;
+          margin-right: -15px;
+          max-width: calc(100% + 30px);
+        }
+      }
+    }
+
+    .brand-info__description {
+      padding: 0 30px;
+
+      @include media-breakpoint-down(md) {
+        padding: 0;
+      }
+    }
+
+    a {
+      margin-left: 30px;
+
+      @include media-breakpoint-down(md) {
+        margin-left: 0;
+      }
+    }
+  }
+
+  .brand-info__logo {
+    width: 400px;
+    height: 140px;
+    border: 1px solid $G-1-5;
+    border-radius: $radius-medium;
+    background-color: $G-0;
+    @extend .flex-center;
+
+    @include media-breakpoint-down(sm) {
+      width: 100%;
+    }
+
+    img {
+      max-height: 100%;
+    }
+  }
+
+  .collapse:not(.show) {
+    height: 80px !important;
+    overflow: hidden;
+  
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;  
+  }
+
+  .collapsing {
+    min-height: 80px !important;
+  }
+
+  a.collapsed {
+    display: inline-block;
+    margin-top: 30px;
+  }
+
+  a.collapsed:after  {
+    content: 'Виж още';
+  }
+
+  a:not(.collapsed):after {
+    content: '';
+  }
+
+}
+
+.brand-section {
+  background-color: $G-0;
+  border-radius: $radius-medium;
+  padding: 20px calc(30px - calc(var(--bs-gutter-x) * 0.5));
+  margin: 10px 0;
+
+  @include media-breakpoint-down(sm) {
+    background-color: transparent;
+    padding: 0;
+  }
+
+  & > .col-12 {
+    @include media-breakpoint-down(sm) {
+      padding: 0;
+    }
+  }
+
+  &__products {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .products.columns-5 {
+    margin-top: 20px;
+    margin-bottom: 0 !important;
+    padding-bottom: 0 !important;
+    gap: 10px;
+
+    li.product {
+      flex: 0 0 calc(33% - 6px);
+
+      @include media-breakpoint-down(sm) {
+        flex: 0 0 calc(50% - 5px)
+      }
+    }
+  }
+
+  .brand-info {
+    &__image {
+      margin-bottom: 20px;
+    }
+
+    &__description {
+      @include line-clamp(5);
+    }
+
+    a {
+      display: inline-block;
+      margin-top: 20px;
+    }
+  }
+}
