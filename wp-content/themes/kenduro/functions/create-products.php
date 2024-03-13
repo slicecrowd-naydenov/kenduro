@@ -70,10 +70,11 @@ function get_all_products($request) {
     create_woocommerce_products($filteredArrays);
   } else {
     // Update product
-    $filteredArrays = array_filter($filteredData, function ($item) use ($product_id) {
-      return $item['id'] === $product_id;
-    });
-    update_woocommerce_product($filteredArrays, $id);
+    $item = get_record($id, $product_id);
+    // $filteredArrays = array_filter($filteredData, function ($item) use ($product_id) {
+    //   return $item['id'] === $product_id;
+    // });
+    update_woocommerce_product($item, $id);
   }
 
   return $filteredArrays;
@@ -678,7 +679,7 @@ function create_woocommerce_products($filteredData) {
   }
 }
 
-function update_woocommerce_product($data, $id) {
+function update_woocommerce_product($item, $id) {
   $ss_ids = get_field('ss_ids', 'option');
   $product_fields = fetch_column_fields($ss_ids['products_app_id']);    
   $product_variations_fields = fetch_column_fields($ss_ids['product_variations']);
@@ -688,7 +689,7 @@ function update_woocommerce_product($data, $id) {
   $product_id_slug = get_column_field_id('product_variation', $product_variations_fields);
   $product_variation_slug = get_column_field_id('is_variation', $product_variations_fields);
 
-  foreach ($data as $item) {
+  // foreach ($data as $item) {
     $incoming_id = $item['id'];
     $product_id = is_exist_product($incoming_id);
     $product_no_variation_id = is_product_id('["'.$incoming_id.'"]');
@@ -729,5 +730,5 @@ function update_woocommerce_product($data, $id) {
       // *****Update from Product Variations - No variation
       update_product_manually($item, $product_no_variation_id);
     }
-  }
+  // }
 }
