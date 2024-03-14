@@ -161,7 +161,6 @@ function output_filter_modal() {
 				}
 			} else {
 				// Brand Tax page
-				pretty_dump(strlen($brand_description));
 				?>
 
 				<div class="brand-info <?php echo esc_attr($classes); ?>">

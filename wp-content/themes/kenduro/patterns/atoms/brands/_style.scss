@@ -234,6 +234,22 @@
       @include media-breakpoint-down(sm) {
         flex: 0 0 calc(50% - 5px)
       }
+
+      img {
+        max-height: 210px;
+
+        @include media-breakpoint-only(xl) {
+          max-height: 163px;
+        }
+
+        @include media-breakpoint-between(md, lg) {
+          max-height: 200px;
+        }
+
+        @include media-breakpoint-only(sm) {
+          max-height: 140px;
+        }
+      }
     }
   }
 
