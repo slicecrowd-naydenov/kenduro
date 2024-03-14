@@ -22,7 +22,7 @@
   }
 
   .swiper-pagination {
-    bottom: 0 !important;
+    top: calc(100% - 20px) !important;
 
     .swiper-pagination-bullet {
       background-color: $G-2;

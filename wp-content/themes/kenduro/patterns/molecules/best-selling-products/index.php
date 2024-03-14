@@ -1,4 +1,5 @@
 <?php
+$post_per_slide = wp_is_mobile() ? 2 : 5;
 $args = array(
   'post_type'      => 'product',
   'posts_per_page' => 10,
@@ -34,7 +35,7 @@ if ($best_selling_query->have_posts()) { ?>
                 $product_image = has_post_thumbnail() ? wp_get_attachment_image_src(get_post_thumbnail_id(), 'single-post-thumbnail')[0] : wc_placeholder_img_src();
               ?>
 
-                <?php if ($product_count % 5 === 0) : ?>
+                <?php if ($product_count % $post_per_slide === 0) : ?>
                   <li class="swiper-slide">
 
                     <div class="woocommerce columns-5">
@@ -59,7 +60,7 @@ if ($best_selling_query->have_posts()) { ?>
                         </a>
                       </li>
 
-                      <?php if ($product_count % 5 === 4 || $product_count === $best_selling_query->post_count - 1) : ?>
+                      <?php if ($product_count % $post_per_slide === $post_per_slide - 1 || $product_count === $best_selling_query->post_count - 1) : ?>
                       </ul>
                     </div>
                   </li>
