@@ -106,7 +106,7 @@
       }
 
       .info {
-        padding-right: 25px;
+        padding-right: 15px;
 
         @include media-breakpoint-only(xs) {
           padding-right: 0;
@@ -320,6 +320,10 @@
   .swiper-button-prev {
     position: static;
     margin: 0 0 0 20px;
+
+    @include media-breakpoint-down(sm) {
+      margin-left: 10px;
+    }
     
     &:after {
       font-size: 25px;

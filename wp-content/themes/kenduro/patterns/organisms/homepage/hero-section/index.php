@@ -92,8 +92,7 @@ use Lean\Load;
             <p class="paragraph paragraph-xl semibold primary">Одобрено от Teo ✊</p>
           </div>
           <p class="paragraph paragraph-m regular primary info">
-            <b>Тео Кабакчиев</b>
-            , световноизвестен хард ендуро състезател, ръководи Kenduro.com с непоколебима страст, гарантирайки нашия непоколебим ангажимент към първокласни услуги и качество.
+            <a href="https://kenduro.com">Kenduro.com</a> е изграден със страст и непоколебим ангажимент към първокласни услуги и качество. Щастливи сме, че Тео Кабакчиев, световноизвестен хард ендуро състезател, е част от екипа ни.
             <?php
             // Load::atoms('link/index', [
             //   'text' => 'Learn more',
