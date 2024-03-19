@@ -9,7 +9,7 @@ add_action('rest_api_init', 'add_get_products_endpoint');
 // $product_variations = post_column_fields($ss_ids['product_variations']);
 
 function add_get_products_endpoint() {
-  // create products (+update individually)
+  // create products
   register_rest_route(
     'ss-data',
     '/get-products/(?P<id>[^/]+)(?:/(?P<product_id>[^/]+))?',
@@ -34,6 +34,19 @@ function add_get_products_endpoint() {
       }
     )
   );
+
+  // Update individually product
+  register_rest_route(
+    'ss-data',
+    '/update-product/(?P<id>[^/]+)(?:/(?P<record_id>[^/]+))?',
+    array(
+      'methods' => 'GET',
+      'callback' => 'update_individually_product',
+      'permission_callback' => function () {
+        return true;
+      }
+    )
+  );
 }
 
 function get_all_products($request) {
@@ -44,7 +57,6 @@ function get_all_products($request) {
   $data = $request->get_json_params();
   $id = $request->get_param('id');
   $global_update = $request->get_param('global_update');
-  $product_id = $request->get_param('product_id');
   $external_api_response = post_column_fields($id);
   
   if ($global_update) {
@@ -68,9 +80,7 @@ function get_all_products($request) {
   }
 
   // IMPORTANT -> remove unnecessary IDs from Product
-  if (!$product_id) {
-    related_records($external_api_response['items'], $product_var_id, $existing_ids);
-  }
+  related_records($external_api_response['items'], $product_var_id, $existing_ids);
 
   foreach ($product_variations['items'] as $variation) {
     if (isset($variation[$product_variation]) && is_array($variation[$product_variation])) {
@@ -88,17 +98,20 @@ function get_all_products($request) {
     return in_array($item['id'], $outputArray);
   });
 
-  if (!$product_id) {
-    // Create product
-    create_woocommerce_products($filteredArrays, $global_update);
-  } else {
-    // Update product
-    $filteredArrays = get_record($id, $product_id);
-    // $filteredArrays = array_filter($filteredData, function ($item) use ($product_id) {
-    //   return $item['id'] === $product_id;
-    // });
-    update_woocommerce_product($filteredArrays, $id);
-  }
+  // Create product
+  create_woocommerce_products($filteredArrays, $global_update);
+  
+  return $filteredArrays;
+}
+
+
+function update_individually_product($request) {
+  $id = $request->get_param('id');
+  $record_id = $request->get_param('record_id');
+
+  $filteredArrays = get_record($id, $record_id);
+
+  update_woocommerce_product($filteredArrays, $id);
 
   return $filteredArrays;
 }
