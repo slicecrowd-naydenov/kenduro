@@ -9,9 +9,23 @@ add_action('rest_api_init', 'add_get_products_endpoint');
 // $product_variations = post_column_fields($ss_ids['product_variations']);
 
 function add_get_products_endpoint() {
+  // create products (+update individually)
   register_rest_route(
     'ss-data',
     '/get-products/(?P<id>[^/]+)(?:/(?P<product_id>[^/]+))?',
+    array(
+      'methods' => 'GET',
+      'callback' => 'get_all_products',
+      'permission_callback' => function () {
+        return true;
+      }
+    )
+  );
+
+  // Global update products
+  register_rest_route(
+    'ss-data',
+    '/update-products/(?P<id>[^/]+)(?:/(?P<global_update>[^/]+))?',
     array(
       'methods' => 'GET',
       'callback' => 'get_all_products',
@@ -27,11 +41,20 @@ function get_all_products($request) {
   $ss_ids = get_field('ss_ids', 'option');
   $product_variations = post_column_fields($ss_ids['product_variations']);
 
-
   $data = $request->get_json_params();
   $id = $request->get_param('id');
+  $global_update = $request->get_param('global_update');
   $product_id = $request->get_param('product_id');
   $external_api_response = post_column_fields($id);
+  
+  if ($global_update) {
+    $batch_products = $ss_ids['create_products_per_request'] ? $ss_ids['create_products_per_request'] : 5;
+    $has_offset = isset($_COOKIE['productLimit']) ? $_COOKIE['productLimit'] + ($batch_products - 1) : 0;
+    $productOffset = $has_offset;
+    setcookie("productLimit", $productOffset);
+    $external_api_response = post_column_fields_limit($id, $batch_products, $productOffset); // 3, 2
+  } 
+
   $related_records = get_column_fields_related($id);
   $product_variations_fields = fetch_column_fields($ss_ids['product_variations']);
   $product_fields = fetch_column_fields($ss_ids['products_app_id']);
@@ -67,7 +90,7 @@ function get_all_products($request) {
 
   if (!$product_id) {
     // Create product
-    create_woocommerce_products($filteredArrays);
+    create_woocommerce_products($filteredArrays, $global_update);
   } else {
     // Update product
     $filteredArrays = get_record($id, $product_id);
@@ -648,7 +671,7 @@ function generate_simple_product($item, $ss_ids, $product_fields, $product_varia
   return $p_id;
 }
 
-function create_woocommerce_products($filteredData) {
+function create_woocommerce_products($filteredData, $globalUpdate) {
   // $count = 0;
   $ss_ids = get_field('ss_ids', 'option');
   $product_fields = fetch_column_fields($ss_ids['products_app_id']);
@@ -692,7 +715,8 @@ function create_woocommerce_products($filteredData) {
       $ss_timestamp = $ss_updated_product_date->getTimestamp();
       $woo_updated_product_date = $product->get_data()['date_modified'];
       $woo_timestamp = $woo_updated_product_date->getTimestamp();
-      if ($ss_timestamp >= $woo_timestamp) {
+      if ($ss_timestamp >= $woo_timestamp || $globalUpdate !== null) {
+        // if Smartsuite product record is updated after Woo product last updated or if we have $globalUpdate
         if (is_variable_product($incoming_id, $product_id_slug, $product_variation_slug)) {
           // Delete post which is updated
           wp_delete_post($product_id, false);

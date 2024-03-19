@@ -4,15 +4,25 @@
  */
 
 get_header();
+?>
+<div class="container">
+	<div class="row">
+		<div class="col">
+			<?php
+			if (have_posts()) :
+				/* Start the Loop */
+				while (have_posts()) :
+					the_post();
+					the_content();
 
-if ( have_posts() ) :
-	/* Start the Loop */
-	while ( have_posts() ) :
-		the_post();
+				/* Page content here */
 
-		/* Post content here */
+				endwhile; // End of the loop.
+			endif;
+			?>
 
-	endwhile; // End of the loop.
-endif;
-
+		</div>
+	</div>
+</div>
+<?php
 get_footer();

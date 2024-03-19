@@ -12,6 +12,8 @@ get_header();
   <?php $ss_ids = get_field('ss_ids', 'option'); ?>
   <a href="#" id="createProducts" data-products-id="<?php echo esc_attr($ss_ids['products_app_id']); ?>">create Products</a>
   </br>
+  <a href="#" id="updateProducts" data-products-id="<?php echo esc_attr($ss_ids['products_app_id']); ?>">update Products</a>
+  </br>
   <a href="#" id="createBrands" data-brands-id="<?php echo esc_attr($ss_ids['filter_brands']); ?>">create Brands</a>
   </br>
   <!-- <a href="#" id="updateProduct">update Product</a> -->
