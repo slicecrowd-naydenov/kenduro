@@ -1,0 +1,783 @@
+.dsk-page {
+  background-color: $G-0-5;
+
+  &.step-1 {
+    .finance-calculator {
+      @extend .semibold;
+      &:before,
+      .circle:after {
+        background-color: $b-highlight-two;
+      }
+    }
+
+    .dsk_row_bottom {
+      order: 8;
+    }
+
+    .dsk_row_footer {
+      order: 9;
+    }
+  }
+
+  &.step-2 {
+    .finance-calculator {
+      &:before,
+      &:after {
+        background-color: $b-highlight-two;
+      }
+
+      .circle {
+        border-color: $b-highlight-two;
+      }
+    }
+
+    .private-data {
+      @extend .semibold;
+      &:before,
+      .circle:after {
+        background-color: $b-highlight-two;
+      }
+    }
+
+    .dsk_row_bottom {
+      order: 9;
+
+      @include media-breakpoint-down(md) {
+        gap: 10px;
+      }
+    }
+
+    .dsk_row_footer {
+      order: 8;
+
+      & > div {
+        position: relative;
+        display: flex;
+
+        input {
+          display: block;
+          position: absolute;
+          left: 0;
+          top: 0;
+          width: 44px;
+          transform: scale(1);
+          height: 100%;
+          z-index: 22;
+          opacity: 0;
+          cursor: pointer;
+        }
+
+        a {
+          margin-left: -10px;
+          @extend #{'.paragraph','.paragraph-m', '.regular', '.primary'};
+        }
+      }
+    }
+
+    .dsk-steps {
+      margin-bottom: 70px;
+
+      & + div {
+        .dsk_table_caption {
+          margin: 0 30px -70px;
+          padding: 0;
+
+          @include media-breakpoint-down(md) {
+            margin: 0 10px -150px;
+          }
+        }
+  
+        form {
+          padding-top: 130px;
+
+          @include media-breakpoint-down(md) {
+            padding-top: 180px;
+          }
+        }
+      }
+    }
+  }
+
+  &.step-3 {
+    .finance-calculator {
+      &:before,
+      &:after {
+        background-color: $b-highlight-two;
+      }
+
+      .circle {
+        border-color: $b-highlight-two;
+      }
+    }
+
+    .private-data {
+      &:before,
+      &:after {
+        background-color: $b-highlight-two;
+      }
+
+      .circle {
+        border-color: $b-highlight-two;
+      }
+    }
+
+    .request-sent {
+      @extend .semibold;
+      &:before,
+      .circle:after {
+        background-color: $b-highlight-two;
+      }
+    }
+
+    .dsk-sent {
+      padding: 30px 30px 0;
+      border-radius: $radius-medium;
+      background-color: $G-0;
+      margin-bottom: 100px;
+      display: flex;
+      flex-direction: column;
+
+      .button-primary-orange {
+        margin: 50px auto;
+        min-width: 253px;
+        height: 44px;
+        @extend .flex-center;
+
+        @include media-breakpoint-down(md) {
+          // display: block;
+          width: 100%;
+        }
+      }
+
+      @include media-breakpoint-down(md) {
+        padding: 10px 10px 0;
+      }
+
+      .dsk_table_subcaption {
+        height: 42px;
+        border-radius: $radius-medium;
+        background-color: $success;
+        color: $G-0;
+        margin-bottom: 50px;
+        position: relative;
+        @extend #{'.flex-center', '.paragraph','.paragraph-l', '.regular'};
+
+        &:before {
+          width: 12px;
+          height: 9px;
+          content: '';
+          display: block;
+          margin-right: 10px;
+          background: url('../../assets/icons/svg/checkbox_white.svg') center center no-repeat;
+          background-size: cover;
+        }
+      }
+
+      table{
+        background-color: transparent;
+        box-shadow: 0 0 0 1px $G-1;
+        border: none !important;
+        border-radius: $radius-medium;
+        overflow: hidden;
+
+        & + .dsk_table_caption {
+          display: none;
+        }
+
+        td {
+          border-color: $G-1 !important;
+          background-color: transparent !important;
+          font-size: 14px !important;
+          line-height: 22px !important;
+          padding: 10px 20px !important;
+          font-weight: 400 !important;
+          text-align: left !important;
+
+          @include media-breakpoint-down(md) {
+            padding: 10px !important;
+          }
+        }
+
+        tbody {
+          tr {
+            &:first-child {
+              td { 
+                background-color: $G-1 !important;
+                color: $text-primary !important;
+                font-size: 16px !important;
+                line-height: 22px !important;
+                font-weight: 600 !important;
+                text-align: center !important;
+              }
+            }
+
+            &:nth-child(2) {
+              td { 
+                padding: 10px 0;
+                color: $text-primary !important;
+                font-size: 16px !important;
+                line-height: 22px !important;
+                font-weight: 600 !important;
+                text-align: center !important;
+              }
+            }
+
+            &:nth-child(8),
+            &:nth-child(10),
+            &:nth-child(18) {
+              background-color: $G-1 !important;
+
+              td {
+                height: 42px !important;
+              }
+            }
+
+            &:nth-child(9),
+            &:nth-child(14) {
+              td {
+                font-weight: 700 !important;
+                color: $text-primary !important;
+              }
+            }
+
+            &:last-child {
+              td {
+                padding: 20px !important;
+                background-color: rgba($success, 0.1) !important;
+                color: $text-primary !important;
+                border-top: 1px solid rgba($success, 0.15) !important;
+                font-size: 16px !important;
+                line-height: 22px !important;
+                font-weight: 600 !important;
+                text-align: center !important;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .dsk_logo_big {
+    display: none;
+  }
+
+  .dsk_table_caption {
+    display: flex;
+    padding-right: 50%;
+    align-items: center;
+    position: relative;
+    margin-bottom: 70px;
+    font-family: $primary-font !important;
+    @extend #{'.h3', '.semibold'};
+
+    @include media-breakpoint-down(md) {
+      padding-top: 70px !important;
+      padding-right: 0 !important;
+      justify-content: center;
+    }
+
+    &:after {
+      position: absolute;
+      right: 0;
+      top: 50%; 
+      transform: translateY(-50%);
+      width: 194px;
+      height: 40px;
+      content: '';
+      background: url('../../assets/icons/svg/dsk-credit_big.svg') center center no-repeat;
+      background-size: cover;
+
+      @include media-breakpoint-down(md) {
+        top: 10px;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+    }
+  }
+
+  form {
+    padding: 30px 30px 18px;
+    border-radius: $radius-medium;
+    margin-bottom: 100px;
+    background-color: $G-0;
+
+    @include media-breakpoint-down(md) {
+      padding: 10px;
+    }
+
+    * {
+      font-family: $primary-font !important;
+    }
+
+    .dsk_body {
+      box-shadow: none;
+      background-color: transparent;
+      flex-wrap: wrap;
+      gap: 20px;
+      flex-direction: row;
+      position: relative;
+
+      @include media-breakpoint-down(md) {
+        gap: 10px;
+      }
+
+      .dsk_button_preizcisli {
+        width: calc(33% - 11px);
+        position: absolute;
+        right: 0;
+        top: 25px;
+        height: 40px;
+        border-color: $G-1-5;
+        box-shadow: none;
+        flex-direction: row-reverse;
+        @extend #{'.button', '.button-secondary-grey', '.paragraph', '.paragraph-l', '.flex-center'};
+
+        @include media-breakpoint-only(md) {
+          width: calc(33% - 14px);
+        }
+
+        @include media-breakpoint-only(xl) {
+          flex: 0 0 calc(33% - 12px);
+        }
+
+        @include media-breakpoint-down(md) {
+          width: 40%;
+          margin-left: 10px;
+          position: relative;
+          top: 0;
+        }
+
+        &:after {
+          width: 13px;
+          height: 13px;
+          display: block;
+          margin-right: 10px;
+          content: '';
+          background: url('../../assets/icons/svg/refresh-icon.svg') center center no-repeat;
+          background-size: cover;
+
+          @include media-breakpoint-down(md) {
+            display: none;
+          }
+        }
+      }
+
+      .dsk_row {
+        flex: 0 0 calc(33% - 11px);
+        width: 33%;
+        flex-direction: column;
+        padding: 0;
+
+        @include media-breakpoint-only(md) {
+          flex: 0 0 calc(33% - 14px);
+        }
+
+        @include media-breakpoint-only(xl) {
+          flex: 0 0 calc(33% - 12px);
+        }
+
+        @include media-breakpoint-down(md) {
+          flex: 0 0 100%;
+        }
+
+        .dsk_column_left {
+          color: $text-primary;
+          margin-bottom: 4px;
+          @extend #{'.paragraph','.paragraph-l', '.regular'};
+        }
+
+        &:nth-child(1) {
+          order: 0;
+        }
+
+        &:nth-child(2) {
+          order: 2;
+        }
+
+        &:nth-child(3) {
+          order: 3;
+        }
+
+        &:nth-child(4) {
+          order: 1;
+          flex: 0 0 calc(66% - 1px);
+
+          @include media-breakpoint-down(md) {
+            flex: 0 0 100%;
+          }
+
+          @include media-breakpoint-only(xl) {
+            flex: 0 0 calc(66% - 2px);
+          }
+
+          .dsk_column_left,
+          .dsk_column_right {
+            width: calc(50% - 10px);
+
+            @include media-breakpoint-down(md) {
+              width: 100%;
+            }
+          }
+        }
+
+        &:nth-child(5) {
+          order: 4;
+        }
+
+        &:nth-child(6) {
+          order: 5;
+        }
+
+        &:nth-child(7) {
+          order: 6;
+        }
+
+        &:nth-child(8) {
+          order: 7;
+        }
+
+        &:nth-child(2),
+        &:nth-child(3),
+        &:nth-child(5),
+        &:nth-child(6),
+        &:nth-child(7),
+        &:nth-child(8) {
+          background-color: $G-0-5;
+          border-radius: $radius-small;
+          padding: 10px 20px;
+
+          input {
+            height: auto;
+            border: none;
+            text-align: left;
+            background-color: transparent;
+            color: $text-primary;
+            padding: 0;
+            box-shadow: none;
+            margin: 0;
+            @extend #{'.h3', '.semibold'};
+          }
+        }
+
+        &:nth-child(1) input,
+        &:nth-child(4) select {
+          height: 40px;
+          box-shadow: none;
+          padding-left: 12px;
+          padding-right: 8px;
+          background-color: $G-0;
+          border: 1px solid $G-1-5;
+          border-radius: $radius-small;
+          transition: border-color 0.25s ease;
+          text-align: left;
+          margin-bottom: 20px;
+          @extend #{'.paragraph', '.paragraph-xl', '.primary'};
+
+          @include media-breakpoint-down(md) {
+            margin-bottom: 0;
+          }
+
+          &:focus {
+            outline: none;
+            border-color: $b-primary !important;
+          }
+        }
+
+        input {
+          width: 100%;
+        }
+      }
+
+      .dsk_hr {
+        display: none;
+      }
+
+      .dsk_row_bottom {
+        border-top: 1px solid $G-1-5;
+        border-bottom: 1px solid $G-1-5;
+        padding: 20px 0;
+        background: transparent;
+        flex-direction: row-reverse;
+        justify-content: space-between;
+        margin-top: -10px;
+        margin-bottom: 10px;
+        border-radius: 0;
+
+        @include media-breakpoint-down(md) {
+          flex-direction: column;
+          margin-top: 0;
+        }
+
+        & > p,
+        .dsk_version {
+          display: none;
+        }
+
+        .dsk_btn {
+          min-width: calc(33% - 11px);
+          box-shadow: none;
+
+          @include media-breakpoint-only(md) {
+            min-width: calc(33% - 14px);
+          }
+  
+          @include media-breakpoint-only(xl) {
+            min-width: calc(33% - 12px);
+          }
+
+          @include media-breakpoint-down(md) {
+            width: 100%;
+          }
+        }
+
+        #back_dskcredit {
+          @extend #{'.button', '.button-secondary-grey', '.paragraph', '.paragraph-l'};
+        }
+
+        #buy_dskcredit {
+          @extend #{'.button', '.button-primary-orange', '.paragraph', '.paragraph-l'};
+        }
+      }
+
+      .dsk_row_footer {
+        padding: 0;
+
+        .dsk_span {
+          @extend #{'.paragraph', '.paragraph-m', '.secondary'};
+        }
+      }
+
+      .dsk_row_buy {
+        padding: 0 !important;
+        flex: 0 0 calc(50% - 10px);
+
+        @include media-breakpoint-down(md) {
+          flex: 0 0 100%;
+        }
+
+        .dsk_column {
+          color: $text-primary;
+          margin-bottom: 4px;
+          @extend #{'.paragraph','.paragraph-l', '.regular'};
+        }
+
+        input {
+          height: 40px;
+          box-shadow: none;
+          padding-left: 12px;
+          padding-right: 8px;
+          background-color: $G-0;
+          border: 1px solid $G-1-5;
+          border-radius: $radius-small;
+          transition: border-color 0.25s ease;
+          text-align: left;
+          @extend #{'.paragraph', '.paragraph-xl', '.primary'};
+
+          &:focus {
+            outline: none;
+            border-color: $b-primary !important;
+          }
+        }
+      }
+    }
+  }
+}
+
+.dsk_table_img {
+	position: absolute;
+  bottom: 110px;
+  width: 100%;
+  max-width: none;
+  padding: 10px 0;
+  border-top: 1px solid $G-1-5;
+  border-bottom: 1px solid $G-1-5;
+  display: block;
+
+  @include media-breakpoint-down(xl) {
+    position: relative;
+    bottom: auto;
+    margin-top: 10px;
+  }
+
+  tbody {
+    display: flex;
+    flex-direction: row-reverse;
+    gap: 10px;
+
+    @include media-breakpoint-only(xs) {
+      flex-direction: column-reverse;
+    }
+
+    tr {
+      flex: 1 1 50%;
+      display: flex;
+      align-items: center;
+
+      &:first-child {
+        td.dsk_button_table {
+          border: 1px solid $b-highlight-two;
+          padding: 10px 5px;
+          border-radius: $radius-small;
+          height: 60px;
+          overflow: hidden;
+          position: relative;
+          transition: all 0.2s ease;
+          @extend .flex-center;
+
+          &:hover {
+            @include media-breakpoint-up(xl) {
+              box-shadow: 0 0 0 2px $b-highlight-two;
+            }
+          }
+
+          &:before {
+            content: 'Купи на изплащане';
+            display: inline-block;
+            @extend #{'.paragraph','.paragraph-l', '.semibold'};
+            line-height: 37px;
+            border-right: 1px solid $G-1-5;
+            padding-right: 10px;
+            margin-right: 8px;
+
+            @include media-breakpoint-between(lg, large) {
+              font-size: 12px;
+            }
+
+            @include media-breakpoint-only(sm) {
+              font-size: 12px;
+            }
+          }
+
+          &:after {
+            width: 97px;
+            height: 20px;
+            content: '';
+            display: inline-block;
+            background: url('../../assets/icons/svg/dsk-credit.svg') center center no-repeat;
+            background-size: cover;
+
+            @include media-breakpoint-between(lg, large) {
+              width: 74px;
+              height: 15px;
+            }
+
+            @include media-breakpoint-only(sm) {
+              width: 74px;
+              height: 15px;
+            }
+          }
+    
+          img {
+            opacity: 0;
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+          }
+        }
+      }
+
+      &:last-child {
+        td.dsk_button_table {
+          &:before {
+            content: 'Или пък купи на изплащане';
+            display: inline-block;
+            @extend #{'.paragraph','.paragraph-m', '.semibold'};
+          }
+
+          p {
+            color: $text-primary;
+            font-family: $primary-font;
+            margin: 0;
+            @extend #{'.h4', '.semibold'};
+          }
+        }
+      }
+
+      td {
+        width: 100%;
+        background-color: transparent !important;
+      }
+    }
+  }
+}
+
+.dsk_table {
+	display: none !important;
+}
+
+.woocommerce-variation-add-to-cart {
+  .dsk_table_img {
+    bottom: -200px;
+
+    @include media-breakpoint-only(xl) {
+      bottom: -93px;
+    }
+
+    @include media-breakpoint-only(lg) {
+      bottom: 0;
+    }
+
+    @include media-breakpoint-down(lg) {
+      top: 100%;
+      bottom: auto;
+      position: absolute;
+    }
+  }
+}
+
+.dsk-steps {
+  margin: 50px 0 0;
+  padding: 0;
+  display: flex;
+  margin-bottom: 20px;
+
+  &__item {
+    flex: 0 0 33%;
+    text-align: center;
+    position: relative;
+    padding-top: 16px;
+
+    &:before,
+    &:after {
+      width: calc(50% - 10px);
+      height: 1px;
+      background-color: $G-1-5;
+      position: absolute;
+      top: 0;
+      content: '';
+    }
+
+    &:before {
+      left: 0;
+    }
+
+    &:after {
+      right: 0;
+    }
+
+    .circle {
+      width: 22px;
+      height: 22px;
+      position: absolute;
+      background-color: $G-0;
+      border: 1px solid $G-1-5;
+      border-radius: $radius-circle;
+      left: 50%;
+      top: -11px;
+      transform: translateX(-50%);
+
+      &:after {
+        width: 12px;
+        height: 12px;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        border-radius: $radius-circle;
+        transform: translate(-50%, -50%);
+        content: '';
+      }
+    }
+  }
+}
