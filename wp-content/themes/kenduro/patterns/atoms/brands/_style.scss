@@ -19,7 +19,9 @@
   }
   
   &__list-item {
-    height: 140px;
+    // height: 140px;
+    display: flex;
+    flex-direction: column;
     flex: 0 0 calc(25% - 15px);
 
     @include media-breakpoint-between(md, xl) {
@@ -28,6 +30,16 @@
 
     @include media-breakpoint-down(md) {
       flex: 0 0 calc(50% - 5px);
+    }
+
+    &:hover {
+      .brands__list-item-link {
+        border-color: $b-highlight-two;
+      }
+
+      .brand_name {
+        color: $b-highlight-two;
+      }
     }
   }
 
@@ -38,17 +50,20 @@
     border-radius: $radius-medium;
     position: relative;
     transition: border-color 0.2s ease;
+    overflow: hidden;
     @extend .flex-center;
-    
-    &:hover {
-      border-color: $b-highlight-two;
-    }
 
     .exclusive-banner {
       @include media-breakpoint-down(md) {
         font-size: 10px;
       }
     }
+  }
+
+  .brand_name {
+    padding-top: 7px;
+    text-decoration: none;
+    transition: color 0.2s ease;
   }
 }
 

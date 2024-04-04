@@ -27,6 +27,7 @@ get_header();
             if (!empty($terms)) {
               foreach ($terms as $term) {
                 $term_id = $term->term_id;
+                $term_name = $term->name;
                 $term_link = get_term_link($term);
                 $meta_fields = get_term_meta($term_id);
                 $is_exclusive = isset($meta_fields['exclusive_brand']) && $meta_fields['exclusive_brand'][0];
@@ -44,6 +45,7 @@ get_header();
                       </p>
                     <?php endif; ?>
                   </a>
+                  <a href="<?php echo esc_attr($term_link); ?>" class="paragraph paragraph-xl brand_name"><?php echo $term_name; ?></a>
                 </li>
                 <?php
               }
