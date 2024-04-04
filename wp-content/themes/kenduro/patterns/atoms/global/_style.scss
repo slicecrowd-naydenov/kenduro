@@ -267,7 +267,20 @@ h4,
   }
 }
 
-.onsale,
+.onsale {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  border-radius: 5px;
+  padding: 4px 6px;
+  background-color: $b-highlight-one;
+  border: none;
+  color: $text-primary;
+  z-index: 3;
+  @extend #{'.paragraph', '.paragraph-m', '.semibold'};
+}
+
+// .onsale,
 .grecaptcha-badge,
 .woocommerce-notices-wrapper,
 .ywcas-outofstock-badge {
