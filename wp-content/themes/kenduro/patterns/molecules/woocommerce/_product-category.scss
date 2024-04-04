@@ -230,6 +230,32 @@
       .price {
         color: $b-highlight-two;
         margin: 0 0 4px;
+        
+        display: flex;
+        flex-wrap: wrap;
+        font-size: 0;
+        text-align: left;
+        column-gap: 10px;
+
+        br {
+          display: none;
+        }
+
+        & > del {
+          margin: 0;
+          color: $text-tetriary;
+          @extend #{'.paragraph','.paragraph-xl'};
+
+          ins {
+            margin: 0;
+          }
+        }
+
+        & > ins {
+          margin: 0;
+          order: -1;
+          @extend #{'.paragraph','.paragraph-xl', '.semibold'};
+        }
       }
 
       .woosw-btn-has-icon {
