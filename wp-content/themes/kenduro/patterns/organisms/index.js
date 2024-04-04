@@ -43,6 +43,13 @@ export default () => {
     $('#dropdownMenuButton').text(selectedPill);
   });
 
+  if ($('.product-gallery-section').length) {
+    setTimeout(() => {
+      const wooProductGallery = $('.woocommerce-product-gallery').width();
+      $('.product-gallery-section').find('.onsale').css('left', `calc(${wooProductGallery}px - 30px)`);
+    }, 500);
+  }
+
   // $('body').addClass(myFunction());
 
   // var triggerEl = document.querySelector('#myTab a[href="#profile"]');

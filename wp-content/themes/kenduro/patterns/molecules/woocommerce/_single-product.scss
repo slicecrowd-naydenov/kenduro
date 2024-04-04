@@ -43,6 +43,12 @@
           padding: 0;
           background-color: transparent;
         }
+
+        .onsale {
+          top: 30px;
+          margin-right: 30px;
+          right: auto;
+        }
     
         .woocommerce-product-gallery,
         .summary {
@@ -434,6 +440,7 @@
             height: 88px;
             padding: 10px;
             flex-direction: column-reverse;
+            font-size: 0;
             @extend .flex-center;
 
             @include media-breakpoint-only(lg) {
