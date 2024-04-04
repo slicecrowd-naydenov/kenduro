@@ -84,7 +84,7 @@ function custom_code_after_product_data_tabs() {
 					<div class="brand-info__description paragrap paragraph-l">
 						<?php echo $brand_description; ?>
 					</div>
-					<a href="<?php echo esc_attr($term_link); ?>" class="paragrap paragraph-l">Виж всички продукти от <?php echo brand_text(); ?></a>
+					<!-- <a href="<?php // echo esc_attr($term_link); ?>" class="paragrap paragraph-l">Виж всички продукти от <?php // echo brand_text(); ?></a> -->
 				</div>
 
 
@@ -93,12 +93,12 @@ function custom_code_after_product_data_tabs() {
 				<div class="brand-section__products">
 					<div>Популярни от <strong><?php echo brand_text(); ?></strong></div>
 					<?php
-						Load::atoms('link/index', [
-							'text' => 'Разгледай всички',
-							'class' => 'underline',
-							'url' => $term_link,
-							'icon' => 'arrow_down'
-						]); 
+						// Load::atoms('link/index', [
+						// 	'text' => 'Разгледай всички',
+						// 	'class' => 'underline',
+						// 	'url' => $term_link,
+						// 	'icon' => 'arrow_down'
+						// ]); 
 					?>
 				</div>
 				<div class="woocommerce columns-5">

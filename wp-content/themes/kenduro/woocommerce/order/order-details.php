@@ -72,13 +72,13 @@ if ( $show_downloads ) {
 	
 				<?php do_action('woocommerce_order_details_after_order_table_items', $order); ?>
 		</div>
-		<div id="custom-total">
+		<!-- <div id="custom-total">
 			<span class="paragraph paragraph-xl primary semibold">Крайна цена</span>
 			<h2 class="primary semibold">
-				<span id="total"><?php echo wp_kses_post($order->get_data()['total']); ?></span>
+				<span id="total"><?php // echo wp_kses_post($order->get_data()['total']); ?></span>
 				лв.
 			</h2>
-		</div>
+		</div> -->
 		<a class="button hide-show-cart" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="true" aria-controls="collapseExample">
 			<span class="text show-cart">
 				Покажи количката
