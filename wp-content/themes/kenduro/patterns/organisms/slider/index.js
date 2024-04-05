@@ -37,27 +37,32 @@ export default class Slider {
         el: this.$el.find('.swiper-pagination')[0],
         clickable: true
       },
+      spaceBetween: this.$el.attr('data-space-between') ? this.$el.attr('data-space-between') : 0,
+      slidesPerView: this.$el.attr('data-slider-per-view') ? this.$el.attr('data-slider-per-view') : 'auto',
       navigation: {
         nextEl: this.$el.find('.swiper-button-next')[0],
         prevEl: this.$el.find('.swiper-button-prev')[0],
       },
       breakpoints: {
         // // when window width is >= 320px
-        // 320: {
-        //   spaceBetween: 15
-        // },
+        320: {
+          slidesPerView: this.$el.attr('data-slider-per-view-mobile') ? this.$el.attr('data-slider-per-view-mobile') : 'auto',
+          // spaceBetween: 15
+        },
         // // when window width is >= 575px
         // 575: {
         //   spaceBetween: 130
         // },
         // // when window width is >= 768px
-        // 768: {
-        //   spaceBetween: 150,      
-        //   autoHeight: false
-        // },
+        768: {
+          slidesPerView: this.$el.attr('data-slider-per-view-tablet') ? this.$el.attr('data-slider-per-view-tablet') : 'auto'
+        },
         992: {
           // spaceBetween: 0,      
           autoHeight: false
+        },
+        1200: {
+          slidesPerView: this.$el.attr('data-slider-per-view') ? this.$el.attr('data-slider-per-view') : 'auto'
         }
       }
     });

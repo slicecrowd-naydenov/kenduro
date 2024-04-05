@@ -40,6 +40,9 @@ $terms = get_terms($args);
                 <li class="brands__list-item <?php echo esc_attr($exclusive_class); ?>">
                   <a href="<?php echo esc_attr($term_link); ?>" class="brands__list-item-link">
                     <img src="<?php echo esc_attr($term_logo)?>" />
+                  </a>
+                  <a href="<?php echo esc_attr($term_link); ?>" class="paragraph paragraph-xl brand_name">
+                    <?php echo $term_name; ?>
                     <?php if ($is_exclusive) : ?>
                       <p class="paragraph paragraph-m exclusive-banner">
                         <?php Load::atom('svg', ['name' => 'star-filled']); ?>
@@ -47,7 +50,6 @@ $terms = get_terms($args);
                       </p>
                     <?php endif; ?>
                   </a>
-                  <a href="<?php echo esc_attr($term_link); ?>" class="paragraph paragraph-xl brand_name"><?php echo $term_name; ?></a>
                 </li>
                 <?php
               }

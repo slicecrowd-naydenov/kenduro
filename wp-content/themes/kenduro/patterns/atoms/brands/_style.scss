@@ -63,21 +63,25 @@
       }
     }
   }
+}
 
-  .brand_name {
-    padding-top: 7px;
-    text-decoration: none;
-    transition: color 0.2s ease;
-  }
+.brand_name {
+  padding-top: 7px;
+  text-decoration: none;
+  transition: color 0.2s ease;
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 .exclusive-banner {
   padding: 5px 11px 5px 9px;
   gap: 5px;
   border-radius: 40px;
-  position: absolute;
-  right: 5px;
-  top: 5px;
+  // position: absolute;
+  // right: 5px;
+  // top: 5px;
   display: flex;
   background-color: rgba($b-highlight-one, 0.11);
 }
