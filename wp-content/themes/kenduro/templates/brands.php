@@ -7,7 +7,7 @@ get_header();
 $args = array(
   'taxonomy' => 'pa_brand',
   'orderby' => 'name', 
-  'hide_empty' => false
+  'hide_empty' => true
 );
 
 $terms = get_terms($args);
