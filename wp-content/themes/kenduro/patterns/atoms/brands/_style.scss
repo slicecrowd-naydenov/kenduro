@@ -41,6 +41,10 @@
         color: $b-highlight-two;
       }
     }
+
+    &.exclusive-brand {
+      order: -1;
+    }
   }
 
   &__list-item-link {
@@ -170,11 +174,12 @@
   }
 
   .brand-info__logo {
-    width: 400px;
+    width: 333px;
     height: 140px;
     border: 1px solid $G-1-5;
     border-radius: $radius-medium;
     background-color: $G-0;
+    overflow: hidden;
     @extend .flex-center;
 
     @include media-breakpoint-down(sm) {
@@ -183,6 +188,12 @@
 
     img {
       max-height: 100%;
+    }
+
+    & + img {
+      @include media-breakpoint-up(md) {
+        border-radius: $radius-medium;
+      }
     }
   }
 

@@ -3,6 +3,14 @@
 use Lean\Load;
 
 get_header();
+
+$args = array(
+  'taxonomy' => 'pa_brand',
+  'orderby' => 'name', 
+  'hide_empty' => false
+);
+
+$terms = get_terms($args);
 ?>
 
 <div class="brands" id="primary">
@@ -17,12 +25,6 @@ get_header();
 				</div>
         <ul class="brands__list">
           <?php
-            $args = array(
-              'taxonomy' => 'pa_brand',
-              'hide_empty' => true
-            );
-            
-            $terms = get_terms($args);
 
             if (!empty($terms)) {
               foreach ($terms as $term) {
@@ -33,9 +35,9 @@ get_header();
                 $is_exclusive = isset($meta_fields['exclusive_brand']) && $meta_fields['exclusive_brand'][0];
                 $term_logo_id = $meta_fields['exclusive_logo'][0];
                 $term_logo = wp_get_attachment_url($term_logo_id);
-
+                $exclusive_class = $is_exclusive ? 'exclusive-brand' : '';
                 ?>
-                <li class="brands__list-item">
+                <li class="brands__list-item <?php echo esc_attr($exclusive_class); ?>">
                   <a href="<?php echo esc_attr($term_link); ?>" class="brands__list-item-link">
                     <img src="<?php echo esc_attr($term_logo)?>" />
                     <?php if ($is_exclusive) : ?>

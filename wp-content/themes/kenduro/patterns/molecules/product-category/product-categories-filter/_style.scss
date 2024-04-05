@@ -105,6 +105,10 @@
       background-color: $G-0;
       max-height: 225px;
 
+      @include media-breakpoint-up(xl) {
+        overflow: auto;
+      }
+
       li {
         border-bottom: 1px solid $G-3;
 
