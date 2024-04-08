@@ -28,15 +28,15 @@
 
     .brands__list-item {
       flex: none;
-      height: 140px;
+      height: 170px;
 
       @include media-breakpoint-down(md) {
-        min-height: 140px;
+        min-height: 170px;
         flex: 0 0 100%;
       }
 
       img {
-        max-height: 100%;
+        object-fit: cover;
       }
     }
   }
