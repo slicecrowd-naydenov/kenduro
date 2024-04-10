@@ -2,36 +2,74 @@
   height: 100vh !important;
 }
 
-#child_cat {
-  .filter-item.checkbox.active.level-0 > label, 
-  .filter-item.checkbox.level-0 > label, 
-  .filter-item.level-0.active .filter-items .filter-items, 
-  .filter-item.level-1.active .filter-items,
-  .filter-item.level-0:not(.active) .filter-item.level-1:not(.active) > label {
-    display: none;
-  }
-  // .filter-item.checkbox.level-0.no-color:not(.active),
-  // .filter-item.checkbox.level-0.no-color.active > label,
-  // .filter-items.filter-checkbox.level-1 .filter-items.filter-checkbox.level-1 {
-  //   display: none;
-  // }
-
+.storefront-sorting {
+  display: none !important;
 }
 
-#sub_child_cat {
-  .filter-item.checkbox.active.level-0 > label,
-  .filter-item.checkbox.active.level-0 > .filter-items.level-1 > li > label,
-  .filter-item.level-0:not(.active) > label,
-  .filter-item.level-0:not(.active) > .filter-items.level-1 > .filter-item.active > label,
-  .filter-item.level-0:not(.active) > .filter-items.level-1 > .filter-item:not(.active) > label {
-    display: none;
-  }
-  // .filter-item.checkbox.level-0.no-color:not(.active),
-  // .filter-item.checkbox.level-0.no-color.active > label,
-  // .filter-item.checkbox.level-0.no-color.active > .filter-items.filter-checkbox.level-1 > .filter-item.checkbox.level-1.no-color > label {
-  //   display: none;
-  // }
+.wpfFilterWrapper {
+  border-bottom: 1px solid;
 }
+
+.custom_cat_filters {
+  margin: 0 0 20px;
+  padding: 0 0 10px;
+  border-bottom: 1px solid;
+}
+// #wpfBlock_1,
+// #wpfBlock_2 {
+//   ul.wpfFilterVerScroll {
+//     li {
+//       ul {
+//         display: none;
+//       }
+//     }
+//   }
+// }
+
+// #wpfBlock_3 {
+//   ul.wpfFilterVerScroll {
+//     & > li {
+//       & > label {
+//         display: none;
+//       }
+
+//       ul {
+//         margin: 0;
+//       }
+//     }
+//   }
+// }
+
+// #child_cat {
+//   .filter-item.checkbox.active.level-0 > label, 
+//   .filter-item.checkbox.level-0 > label, 
+//   .filter-item.level-0.active .filter-items .filter-items, 
+//   .filter-item.level-1.active .filter-items,
+//   .filter-item.level-0:not(.active) .filter-item.level-1:not(.active) > label {
+//     display: none;
+//   }
+//   // .filter-item.checkbox.level-0.no-color:not(.active),
+//   // .filter-item.checkbox.level-0.no-color.active > label,
+//   // .filter-items.filter-checkbox.level-1 .filter-items.filter-checkbox.level-1 {
+//   //   display: none;
+//   // }
+
+// }
+
+// #sub_child_cat {
+//   .filter-item.checkbox.active.level-0 > label,
+//   .filter-item.checkbox.active.level-0 > .filter-items.level-1 > li > label,
+//   .filter-item.level-0:not(.active) > label,
+//   .filter-item.level-0:not(.active) > .filter-items.level-1 > .filter-item.active > label,
+//   .filter-item.level-0:not(.active) > .filter-items.level-1 > .filter-item:not(.active) > label {
+//     display: none;
+//   }
+//   // .filter-item.checkbox.level-0.no-color:not(.active),
+//   // .filter-item.checkbox.level-0.no-color.active > label,
+//   // .filter-item.checkbox.level-0.no-color.active > .filter-items.filter-checkbox.level-1 > .filter-item.checkbox.level-1.no-color > label {
+//   //   display: none;
+//   // }
+// }
 
 #child_cat,
 #sub_child_cat {
@@ -46,83 +84,87 @@
   gap: 5px;
 }
 
-.yith-wcan-reset-filters {
-  border-radius: $radius-circle;
-  border: none;
-  @extend #{'.button', '.button-error'};
-  font-size: 0 !important;
-  line-height: 0 !important;
-
-  &:after {
-    display: block;
-    @extend #{'.paragraph', '.paragraph-l'};
-    content: 'Премахни филтрите';
-  }
-
-  @include media-breakpoint-down(lg) {
-    width: 100%;
-  }
+#preset_2006 {
+  display: none;
 }
 
-.yith-wcan-filters {
-  background-color: transparent;
-  display: inline-flex;
-  margin: 0;
+// .yith-wcan-reset-filters {
+//   border-radius: $radius-circle;
+//   border: none;
+//   @extend #{'.button', '.button-error'};
+//   font-size: 0 !important;
+//   line-height: 0 !important;
 
-  form {
-    display: flex;
-    gap: 5px;
-  }
+//   &:after {
+//     display: block;
+//     @extend #{'.paragraph', '.paragraph-l'};
+//     content: 'Премахни филтрите';
+//   }
 
-  .yith-wcan-filter {
-    position: relative;
-    margin-bottom: 0;
+//   @include media-breakpoint-down(lg) {
+//     width: 100%;
+//   }
+// }
 
-    .filter-title {
-      color: $text-primary;
-      padding-right: 12px;
-      background: url('../../assets/icons/svg/arrow_down.svg') center right 12px no-repeat;
-      background-size: 6px;
-      transition: color 0.25s ease;
-      margin-bottom: 23px;
-      padding: 5px 25px 5px 18px;
-      border: 1px solid rgba($b-primary, 0.2);
-      border-radius: $radius-circle;
-      cursor: pointer;
-      @extend #{'.paragraph','.paragraph-m', '.tetriary'};
-    }
+// .yith-wcan-filters {
+//   background-color: transparent;
+//   display: inline-flex;
+//   margin: 0;
 
-    .filter-content {
-      display: none;
-      border: 1px solid $G-3;
-      border-radius: $radius-medium;
-      position: absolute;
-      min-width: 215px;
-      left: 0;
-      top: calc(100% - 20px);
-      padding: 8px 10px;
-      z-index: 222;
-      background-color: $G-0;
-      max-height: 225px;
+//   form {
+//     display: flex;
+//     gap: 5px;
+//   }
 
-      @include media-breakpoint-up(xl) {
-        overflow: auto;
-      }
+//   .yith-wcan-filter {
+//     position: relative;
+//     margin-bottom: 0;
 
-      li {
-        border-bottom: 1px solid $G-3;
+//     .filter-title {
+//       color: $text-primary;
+//       padding-right: 12px;
+//       background: url('../../assets/icons/svg/arrow_down.svg') center right 12px no-repeat;
+//       background-size: 6px;
+//       transition: color 0.25s ease;
+//       margin-bottom: 23px;
+//       padding: 5px 25px 5px 18px;
+//       border: 1px solid rgba($b-primary, 0.2);
+//       border-radius: $radius-circle;
+//       cursor: pointer;
+//       @extend #{'.paragraph','.paragraph-m', '.tetriary'};
+//     }
 
-        &:last-child {
-          border: none;
-        }
+//     .filter-content {
+//       display: none;
+//       border: 1px solid $G-3;
+//       border-radius: $radius-medium;
+//       position: absolute;
+//       min-width: 215px;
+//       left: 0;
+//       top: calc(100% - 20px);
+//       padding: 8px 10px;
+//       z-index: 222;
+//       background-color: $G-0;
+//       max-height: 225px;
 
-        label {
-          margin: 0;
-        }
-      }
-    }
-  }
-}
+//       @include media-breakpoint-up(xl) {
+//         overflow: auto;
+//       }
+
+//       li {
+//         border-bottom: 1px solid $G-3;
+
+//         &:last-child {
+//           border: none;
+//         }
+
+//         label {
+//           margin: 0;
+//         }
+//       }
+//     }
+//   }
+// }
 
 .home {
   #cat-filters {
