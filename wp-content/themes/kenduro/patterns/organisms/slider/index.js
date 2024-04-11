@@ -43,6 +43,12 @@ export default class Slider {
         nextEl: this.$el.find('.swiper-button-next')[0],
         prevEl: this.$el.find('.swiper-button-prev')[0],
       },
+      speed: 800,
+      autoplay: {
+        delay: 3000,
+        pauseOnMouseEnter: true,
+      },
+      loop: true,
       breakpoints: {
         // // when window width is >= 320px
         320: {

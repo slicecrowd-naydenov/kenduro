@@ -460,3 +460,23 @@ function featured_product_child_menu_item($item_output, $item, $depth, $args) {
   }
 }
 add_filter('walker_nav_menu_start_el', 'featured_product_child_menu_item', 10, 4);
+
+
+// YITH show placeholder if missing image when we searching products
+add_filter('ywcas_searching_result_data','ywcas_searching_result_data_fix_thumb', 10, 5);
+function ywcas_searching_result_data_fix_thumb( $search_result_data, $query_string, $lang, $post_type, $category ) {
+
+foreach( $search_result_data as $item => $values ) {
+  if ( 'product' === $values['post_type'] ) {
+    if ( empty( $values['thumbnail']['small'] ) ) {
+      $search_result_data[$item]['thumbnail']['small'] = wc_placeholder_img_src();
+    }
+    
+    if ( empty( $values['thumbnail']['big'] ) ) {
+      $search_result_data[$item]['thumbnail']['big'] = wc_placeholder_img_src();
+    }
+  }
+}
+
+return $search_result_data;
+}
