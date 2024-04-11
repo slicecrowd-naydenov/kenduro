@@ -62,7 +62,14 @@ function create_sales_record($response) {
   foreach ($response['product_info'] as $key => $value) {
     $product_id = $value['product_id'];
     $product = wc_get_product($product_id);
-    $get_product_price = $product->get_price();
+    $sale_price = $product->get_price(); 
+    /**
+    * Get the discount price of a product
+    * @param $sale_price float|integer
+    * @param $product object[wc_get_product($product_id))]|integer
+    * @return float|integer
+    */
+    $sale_price = apply_filters('advanced_woo_discount_rules_get_product_discount_price', $sale_price, $product);
     $meta_fields = get_field("meta_data", $product_id);
     $field_id = array();
     if ($product->is_type('variation')) {
@@ -81,7 +88,7 @@ function create_sales_record($response) {
       $sales_quantity_ordered => $value['quantity'],
       $sales_link_to_product_variations => $field_id,
       $wp_order_id => $response['order_id'],
-      $final_price_manual => $get_product_price
+      $final_price_manual => round($sale_price, 2)
     );
 
     $sales_body['items'][] = $item_data;
