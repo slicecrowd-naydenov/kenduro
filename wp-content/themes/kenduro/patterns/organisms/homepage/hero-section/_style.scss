@@ -15,7 +15,9 @@
     background-color: $G-0;
     border-radius: $radius-medium;
     display: inline-flex;
-    margin-bottom: 90px;
+    height: 55px;
+    align-items: center;
+    margin-bottom: 150px;
 
     @include media-breakpoint-down(lg) {
       margin-bottom: 35px;
