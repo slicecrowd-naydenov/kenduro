@@ -45,7 +45,7 @@ export default class Slider {
       },
       speed: 800,
       autoplay: {
-        delay: 3000,
+        delay: 5000,
         pauseOnMouseEnter: true,
       },
       loop: true,
