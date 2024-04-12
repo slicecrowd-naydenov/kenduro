@@ -38,7 +38,6 @@ if ($get_product_cat !== null) {
 	$product_cat_ID = $cat->term_id;
 }
 
-
 $parent_IDS = array();
 $current_cat = get_term_by('id', $product_cat_ID, 'product_cat');
 $current_cat_ID =  null;
@@ -50,7 +49,6 @@ if ($current_cat) {
 	while ($parent_cat !== null) {
 		$parent_IDS[] = $parent_cat->term_id;
 		$parent_cat = $parent_cat->parent !== 0 ? get_term_by('id', $parent_cat->parent, 'product_cat') : null;
-		
 	}
 }
 
@@ -79,17 +77,12 @@ $terms_args = array(
 
 $taxonomies = get_terms( $terms_args );
 
-$list_categories = function($taxonomies, $temp_arr) use ($parent_IDS, $get_brand, &$list_categories) {
+$list_categories = function($taxonomies, $temp_arr) use ($parent_IDS, $get_brand, &$list_categories, $get_product_cat) {
 	if ( !empty( $taxonomies ) || !is_wp_error( $taxonomies ) ) {
-		// pretty_dump($parent_IDS);
 		$cat_html = '<p class="paragraph paragraph-xl semibold cat-head active-cat">Основни Категории</p><ul class="product-cat-filter">';
 		$added_all = false;
 		foreach ($taxonomies as $tax) {
-			if (!$added_all) {
-				$cat_html .= '<li class="all-cats"><a href="'.esc_url(get_site_url().'/brand\/'.$get_brand).'" class="paragraph paragraph-l">Всички</a></li>';
-				$added_all = true;
-			}
-			$term_link = esc_url(get_site_url().'/brand\/'.$get_brand.'/?product_cat='.$tax->slug);
+			$term_link = esc_url(get_site_url());
 			$active_class = '';
 			$product_args = array(
 				'post_type' => 'product',
@@ -101,15 +94,30 @@ $list_categories = function($taxonomies, $temp_arr) use ($parent_IDS, $get_brand
 						'field'    => 'slug',
 						'terms'    => $tax->slug,
 						'operator' => 'IN',
-					),
-					array(
-						'taxonomy' => 'pa_brand',
-						'field'    => 'slug',
-						'terms'    => $get_brand,
-						'operator' => 'IN',
-					),
+					)
 				),
 			);
+
+			$see_all_cat_link = esc_url(get_site_url());
+			
+			if ($get_brand === null) {
+				$term_link = esc_url(get_site_url().'/product-category\/'.$tax->slug);
+				$see_all_cat_link = esc_url(get_site_url().'/shop');
+			} else {
+				$term_link = esc_url(get_site_url().'/brand\/'.$get_brand.'/?product_cat='.$tax->slug);
+				$see_all_cat_link = esc_url(get_site_url().'/brand\/'.$get_brand);
+				$product_args['tax_query'][] = array(
+					'taxonomy' => 'pa_brand',
+					'field'    => 'slug',
+					'terms'    => $get_brand,
+					'operator' => 'IN',
+				);
+			}
+
+			if (!$added_all) {
+				$cat_html .= '<li class="all-cats"><a href="'.$see_all_cat_link.'" class="paragraph paragraph-l">Всички</a></li>';
+				$added_all = true;
+			}
 		
 			$q = new WP_Query( $product_args );
 		
