@@ -186,6 +186,9 @@
     border: 1px solid rgba($b-primary, 0.1);
     border-radius: $radius-small;
     padding: 6px 10px 6px 18px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    overflow: hidden;
 
     .wfpTitle { 
       height: auto;
@@ -220,6 +223,7 @@
     ul {
       margin-top: 8px;
       margin-bottom: 3px;
+      padding-top: 25px;
     }
 
     .wpfCheckbox {
@@ -266,6 +270,18 @@
         }
       }
     }
+
+    &.wpfNotActive {
+      .wpfBlockClear {
+        &:after {
+          opacity: 1;
+        }
+
+        &:before {
+          border-color: $G-5;
+        }
+      }
+    }
   }
 
   .wpfClearButton.wpfButton {
@@ -277,9 +293,59 @@
     min-height: auto;
     border-radius: 8px;
     right: 0;
-    top: -54px;
+    top: -45px;
     left: 74px;
     @extend #{'.paragraph','.paragraph-m', '.regular'};
+  }
+
+  .wpfBlockClear {
+    display: block !important;
+    position: absolute;
+    left: 0;
+    top: calc(100% + 9px);
+    color: rgba($text-primary, 0.8) !important;
+    z-index: 5;
+    padding-left: 28px;
+    transition: color 0.2s ease;
+    @extend #{'.paragraph','.paragraph-l', '.regular'};
+
+    &:before {
+      width: 18px;
+      height: 18px;
+      display: block;
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      border-radius: $radius-thin;
+      border: 1px solid $G-3;
+      transition: border-color 0.2s ease;
+      margin: 0 !important;
+      content: '' !important;
+    }
+
+    &:after {
+      width: 8px;
+      height: 8px;
+      display: block;
+      position: absolute;
+      left: 5px;
+      top: 50%;
+      transform: translateY(-50%);
+      border-radius: 2px;
+      background: $b-primary;
+      opacity: 0;
+      transition: opacity 0.2s ease;
+      content: '' !important;
+    }
+
+    &:hover {
+      color: $text-primary !important;
+
+      &:before {
+        border-color: $G-5;
+      }
+    }
   }
 }
 

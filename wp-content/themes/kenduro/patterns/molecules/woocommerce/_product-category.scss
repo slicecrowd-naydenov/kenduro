@@ -337,6 +337,7 @@ ul.products {
 
   .filter-sidebar {
     flex: 0 0 264px;
+    padding: 0 20px 13px 0;
 
     p:nth-of-type(4):not(.filters),
     ul:nth-of-type(4) {
@@ -371,6 +372,10 @@ ul.products {
             color: $G-0;
           }
         }
+
+        &.all:not(&:nth-of-type(1)) {
+          display: none !important;
+        }
       }
     }
   }
@@ -397,7 +402,7 @@ ul.products {
     content: "";
     position: absolute;
     width: 12px;
-    height: 9px;
+    height: 8px;
     top: 5px;
     // transform: translateY(-50%);
     transform: rotate(-90deg);

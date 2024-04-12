@@ -81,9 +81,14 @@ $taxonomies = get_terms( $terms_args );
 
 $list_categories = function($taxonomies, $temp_arr) use ($parent_IDS, $get_brand, &$list_categories) {
 	if ( !empty( $taxonomies ) || !is_wp_error( $taxonomies ) ) {
-		// pretty_dump($taxonomies);
+		// pretty_dump($parent_IDS);
 		$cat_html = '<p class="paragraph paragraph-xl semibold cat-head active-cat">Основни Категории</p><ul class="product-cat-filter">';
+		$added_all = false;
 		foreach ($taxonomies as $tax) {
+			if (!$added_all) {
+				$cat_html .= '<li class="all-cats"><a href="'.esc_url(get_site_url().'/brand\/'.$get_brand).'" class="paragraph paragraph-l">Всички</a></li>';
+				$added_all = true;
+			}
 			$term_link = esc_url(get_site_url().'/brand\/'.$get_brand.'/?product_cat='.$tax->slug);
 			$active_class = '';
 			$product_args = array(
@@ -314,11 +319,7 @@ function output_filter_modal() {
 				<div class="filter-sidebar">
 			<?php
 				$list_categories($taxonomies, array());
-			// if (count($show_categories) > 0) :
-				?>
-				<!-- <ul class="custom_cat_filters"> -->
-					<?php // echo implode('', $show_categories); ?>
-				<!-- </ul> -->
+			?>
 				<p class="paragraph paragraph-xl semibold cat-head active-cat filters">Филтри</p>
 			<?php
 			// endif;		
