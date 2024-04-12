@@ -265,13 +265,6 @@ function output_filter_modal() {
 						'cat' => single_term_title('', false),
 						'cat_img_inner' => $cat_inner_image_url
 					]);
-					?>
-					<div class="mobile-wrapper">
-					<?php
-					Load::molecules('product-category/product-categories-view/index');
-					?>
-					</div>
-					<?php
 				} else {
 					if (!is_search()) {
 						Load::molecules('product-category/product-category-info/index', [
