@@ -282,7 +282,7 @@ function output_filter_modal() {
 							'cat' => single_term_title('', false),
 							'cat_img_inner' => $cat_inner_image_url
 						]);
-						Load::molecules('product-category/product-categories-view/index');
+						// Load::molecules('product-category/product-categories-view/index');
 					}
 				}
 			} else {
@@ -310,9 +310,6 @@ function output_filter_modal() {
 			}
 
 			if (is_search()) { ?>
-				<div class="mobile-wrapper">
-					<?php output_filter_modal(); ?>
-				</div>
 				<?php
 			}
 			?>
