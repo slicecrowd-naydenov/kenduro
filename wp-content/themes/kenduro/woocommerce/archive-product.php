@@ -81,10 +81,11 @@ $taxonomies = get_terms( $terms_args );
 
 $list_categories = function($taxonomies, $temp_arr) use ($parent_IDS, $get_brand, &$list_categories) {
 	if ( !empty( $taxonomies ) || !is_wp_error( $taxonomies ) ) {
-		$cat_html = '<ul>';
+		// pretty_dump($taxonomies);
+		$cat_html = '<p class="paragraph paragraph-xl semibold cat-head active-cat">Основни Категории</p><ul class="product-cat-filter">';
 		foreach ($taxonomies as $tax) {
 			$term_link = esc_url(get_site_url().'/brand\/'.$get_brand.'/?product_cat='.$tax->slug);
-	
+			$active_class = '';
 			$product_args = array(
 				'post_type' => 'product',
 				'posts_per_page' => 1,
@@ -112,12 +113,13 @@ $list_categories = function($taxonomies, $temp_arr) use ($parent_IDS, $get_brand
 				if (in_array($tax->term_id, $parent_IDS)) {
 					// pretty_dump($tax->term_id);
 					$next_category = $tax->term_id;
-					$tax_name = '<b>'.$tax->name.'</b>';
+					// $tax_name = '<b class="active">'.$tax->name.'</b>';
+					$active_class = 'active';
 				} else {
-					$tax_name = $tax->name;
-					
+					// $tax_name = $tax->name;
+					$active_class = '';
 				}
-				$cat_html .= '<li><a href="'.$term_link.'">'.$tax_name.'</a></li>';
+				$cat_html .= '<li class="'.$active_class.'"><a href="'.$term_link.'" class="paragraph paragraph-l">'.$tax->name.'</a></li>';
 			}
 			wp_reset_postdata();
 		}
@@ -311,12 +313,13 @@ function output_filter_modal() {
 			<div class="filter-content-wrapper">
 				<div class="filter-sidebar">
 			<?php
-			$list_categories($taxonomies, array());
+				$list_categories($taxonomies, array());
 			// if (count($show_categories) > 0) :
 				?>
 				<!-- <ul class="custom_cat_filters"> -->
 					<?php // echo implode('', $show_categories); ?>
 				<!-- </ul> -->
+				<p class="paragraph paragraph-xl semibold cat-head active-cat filters">Филтри</p>
 			<?php
 			// endif;		
 			echo do_shortcode('[wpf-filters id=1]');
