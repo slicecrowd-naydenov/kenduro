@@ -50,6 +50,17 @@ export default () => {
     }, 500);
   }
 
+  $('.filter-sidebar').find('.active').each(function() {
+    const activeCat = $( this ).text();
+
+    $(this).closest('.product-cat-filter').next().text(activeCat);
+  });
+
+  $('.cat-head').on('click', function() {
+    $(this).toggleClass('active-cat'); 
+    $(this).next().slideToggle();
+  });
+
   // $('body').addClass(myFunction());
 
   // var triggerEl = document.querySelector('#myTab a[href="#profile"]');

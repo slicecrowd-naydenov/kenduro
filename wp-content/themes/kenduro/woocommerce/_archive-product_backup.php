@@ -23,128 +23,6 @@ defined('ABSPATH') || exit;
 // echo single_term_title();
 get_header('shop');
 
-// if (isset($_GET['product_cat'])) 
-// sanitize_title($_GET['product_cat']);
-global $wp_query;
-$query_vars = $wp_query->query_vars;
-
-$get_brand = isset($query_vars['pa_brand']) ? $query_vars['pa_brand'] : null;
-$get_product_cat = isset($query_vars['product_cat']) ? $query_vars['product_cat'] : null;
-$product_cat_ID = 0;
-
-if ($get_product_cat !== null) {
-	$product_cat_slug = sanitize_title($get_product_cat);
-	$cat = get_term_by('slug', $product_cat_slug, 'product_cat');
-	$product_cat_ID = $cat->term_id;
-}
-
-
-$parent_IDS = array();
-$current_cat = get_term_by('id', $product_cat_ID, 'product_cat');
-$current_cat_ID =  null;
-
-if ($current_cat) {
-	$parent_IDS[] = $current_cat->term_id;
-	$parent_cat = $current_cat->parent !== 0 ? get_term_by('id', $current_cat->parent, 'product_cat') : null;
-
-	while ($parent_cat !== null) {
-		$parent_IDS[] = $parent_cat->term_id;
-		$parent_cat = $parent_cat->parent !== 0 ? get_term_by('id', $parent_cat->parent, 'product_cat') : null;
-		
-	}
-}
-
-if ($current_cat_ID !== null) {
-	do {
-		$parent_IDS[] = $current_cat_ID;
-		$temp_cat = get_term_by('id', $current_cat_ID, 'product_cat');
-		$current_cat_ID = null;
-		if ($temp_cat) {	
-			if ($temp_cat->parent === 0) {
-				$current_cat_ID = $temp_cat->term_id;
-			} else {
-				$current_cat_ID = $temp_cat->parent;
-			}
-		} 
-
-	} while ($current_cat_ID !== null);
-}
-
-$terms_args = array(
-	'taxonomy'     => 'product_cat',
-	'hide_empty'   => 1,
-	'hierarchical' => 1,
-	'parent'			 => 0
-);
-
-$taxonomies = get_terms( $terms_args );
-
-$list_categories = function($taxonomies, $temp_arr) use ($parent_IDS, $get_brand, &$list_categories) {
-	if ( !empty( $taxonomies ) || !is_wp_error( $taxonomies ) ) {
-		// pretty_dump($taxonomies);
-		$cat_html = '<p class="paragraph paragraph-xl semibold cat-head active-cat">Основни Категории</p><ul class="product-cat-filter">';
-		foreach ($taxonomies as $tax) {
-			$term_link = esc_url(get_site_url().'/brand\/'.$get_brand.'/?product_cat='.$tax->slug);
-			$active_class = '';
-			$product_args = array(
-				'post_type' => 'product',
-				'posts_per_page' => 1,
-				'tax_query' => array(
-					'relation' => 'AND',
-					array(
-						'taxonomy' => 'product_cat',
-						'field'    => 'slug',
-						'terms'    => $tax->slug,
-						'operator' => 'IN',
-					),
-					array(
-						'taxonomy' => 'pa_brand',
-						'field'    => 'slug',
-						'terms'    => $get_brand,
-						'operator' => 'IN',
-					),
-				),
-			);
-		
-			$q = new WP_Query( $product_args );
-		
-			if ($q->post_count > 0) {
-				
-				if (in_array($tax->term_id, $parent_IDS)) {
-					// pretty_dump($tax->term_id);
-					$next_category = $tax->term_id;
-					// $tax_name = '<b class="active">'.$tax->name.'</b>';
-					$active_class = 'active';
-				} else {
-					// $tax_name = $tax->name;
-					$active_class = '';
-				}
-				$cat_html .= '<li class="'.$active_class.'"><a href="'.$term_link.'" class="paragraph paragraph-l">'.$tax->name.'</a></li>';
-			}
-			wp_reset_postdata();
-		}
-		$cat_html .= '</ul>';
-		$temp_arr[] = $cat_html;
-		if (isset($next_category)) {
-
-			$terms_args = array(
-				'taxonomy'     => 'product_cat',
-				'hide_empty'   => 1,
-				'hierarchical' => 1,
-				'parent'			 => $next_category
-			);
-			
-			$taxonomies = get_terms( $terms_args );
-
-			$list_categories($taxonomies, $temp_arr);
-		} else {
-			echo implode('', $temp_arr);
-		}
-	}
-
-	
-};
-
 /**
  * Hook: woocommerce_before_main_content.
  *
@@ -199,10 +77,81 @@ function output_filter_modal() {
 	}
 }
 
+
 ?>
 <div class="container">
 	<div class="row">
 		<div class="col">
+			
+		<?php
+
+
+
+
+$args = array(
+	'post_type'      => 'product',
+	'posts_per_page' => -1,
+	'tax_query' => array(
+		array(
+			'taxonomy' => 'pa_brand',
+			'field' => 'slug',
+			'terms' => 'hebo'
+		)
+	)
+);
+
+// pretty_dump($_GET);
+
+$products_query = new WP_Query($args);
+
+$product_ids = array();
+if ($products_query->have_posts()) {
+	while ($products_query->have_posts()) {
+		$products_query->the_post();
+		$product_ids[] = get_the_ID();
+	}
+}
+// Reset post data
+wp_reset_postdata();
+// pretty_dump(wp_get_term_taxonomy_parent_id(2417, 'product_cat'));
+// Step 2: Get categories associated with the product(s)
+$main_categories = array();
+$child_categories = array();
+// $wp_terms = array();
+foreach ($product_ids as $product_id) {
+	$terms = wp_get_post_terms($product_id, 'product_cat');
+
+	foreach ($terms as $term) {
+		// pretty_dump($term)
+		// pretty_dump($term->name . ' / id: ' . $term->term_id . ' / parent_id: ' . $term->parent);
+
+		// if (in_array($term['parent'], $categories)) {
+
+		// }
+		// $categories[] = $term->term_id;
+		// $wp_terms[] = $term;
+		if ($term->parent === 0) {
+			$main_categories[] = $term->term_id;
+			// $term->name . ' / id: ' . $term->term_id . ' / parent_id: ' . $term->parent;
+		} else {
+			$child_categories[] = $term->term_id; // Добавяне на подкатегориите в $sub_categories
+		}
+	}
+}
+// Remove duplicate categories
+$main_categories = array_unique($main_categories);
+// pretty_dump($main_categories);
+$child_categories = array_unique($child_categories);
+
+// pretty_dump($child_categories);
+// pretty_dump(get_queried_object());
+
+?>
+
+
+
+
+
 			<?php
 			if (is_product_category()) :
 				if (category_has_parent()) :
@@ -298,7 +247,7 @@ function output_filter_modal() {
 						<a class="collapsed paragraph paragraph-l" data-toggle="collapse" href="#collapseSummary" aria-expanded="false" aria-controls="collapseSummary"></a>
 					</div>
 				</div>
-				<?php // Load::molecules('product-category/product-categories-view/index'); 
+				<?php Load::molecules('product-category/product-categories-view/index'); 
 
 
 			}
@@ -312,17 +261,76 @@ function output_filter_modal() {
 			?>
 			<div class="filter-content-wrapper">
 				<div class="filter-sidebar">
-			<?php
-				$list_categories($taxonomies, array());
-			// if (count($show_categories) > 0) :
-				?>
-				<!-- <ul class="custom_cat_filters"> -->
-					<?php // echo implode('', $show_categories); ?>
-				<!-- </ul> -->
-				<p class="paragraph paragraph-xl semibold cat-head active-cat filters">Филтри</p>
-			<?php
-			// endif;		
-			echo do_shortcode('[wpf-filters id=1]');
+					
+<p class="paragraph paragraph-xl semibold">Основни категории</p>
+<ul class="custom_cat_filters">
+<li>
+			<a href="<?php echo get_site_url().'/brand/hebo/' ?>">Всички</a>
+		</li>
+<?php
+$child_cat_IDS = array();
+// $sub_child_cat_IDS = array();
+foreach ($main_categories as $main_cat) {
+	foreach ($child_categories as $child_cat) {
+		$child = get_term_by('id', $child_cat, 'product_cat');
+		$term = get_queried_object();
+
+		// pretty_dump('$child_cat = ' . $child_cat . ' / $child->parent = ' . $child->parent  . ' / $term->term_id = ' . $term->term_id . ' / $main_cat : ' . $main_cat);
+
+
+		if ($child->parent === $term->term_id) {
+			$child_cat_IDS[] = $child_cat;
+		} 
+		// else if ($child_cat !== $child->parent && $child->parent !== $term->term_id) {
+		// 	$sub_child_cat_IDS[] = $child_cat;
+		// }
+	}
+
+	$term = get_term_by('id', $main_cat, 'product_cat');
+	?>
+		<li>
+			<a href="<?php echo get_site_url().'/brand/hebo/?product_cat='.$term->slug; ?>"><?php echo $term->name; ?></a>
+		</li>
+	<?php
+}
+$child_cat_IDS = array_unique($child_cat_IDS);
+
+// pretty_dump(array_unique($sub_child_cat_IDS));
+?>
+</ul>
+
+<?php if ($child_cat_IDS) : 
+		$term = get_queried_object();	
+	?>
+<p class="paragraph paragraph-xl semibold"><?php echo $term->name; ?></p>
+
+<ul class="custom_cat_filters">
+<?php
+foreach ($child_cat_IDS as $child_cat) {
+	$term = get_term_by('id', $child_cat, 'product_cat');
+
+	// foreach ($child_categories as $c) {
+	// 	$child = get_term_by('id', $c, 'product_cat');
+	// 	$term = get_queried_object();
+
+
+	// 	if ($child->parent === $term->term_id) {
+	// 		$sub_child_cat_IDS[] = $c;
+	// 	}
+	// }
+	
+	?>
+		<li>
+			<a href="<?php echo get_site_url().'/brand/hebo/?product_cat='.$term->slug; ?>"><?php echo $term->name; ?></a>
+		</li>
+	<?php
+}
+?>
+</ul>
+
+<?php endif; 
+// pretty_dump(array_unique($sub_child_cat_IDS));
+echo do_shortcode('[wpf-filters id=1]');
 // echo do_shortcode('[yith_wcan_filters slug="sidebar-filters"]'); 
 ?>
 
