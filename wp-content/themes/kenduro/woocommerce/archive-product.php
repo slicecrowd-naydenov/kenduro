@@ -167,9 +167,9 @@ $list_categories = function($taxonomies, $temp_arr) use ($parent_IDS, $get_brand
  */
 do_action('woocommerce_before_main_content');
 
-if ( is_tax( 'pa_brand' ) ) {
-	$term = get_queried_object();
-	$term_id = $term->term_id;
+if ( $get_brand !== null ) {
+	$cur_term = get_term_by('slug', $get_brand, 'pa_brand');
+	$term_id = $cur_term->term_id;
 	$meta_fields = get_term_meta($term_id);
 	$is_exclusive = isset($meta_fields['exclusive_brand']) && $meta_fields['exclusive_brand'][0];
 	$term_logo_id = $meta_fields['exclusive_logo'][0];
@@ -218,12 +218,12 @@ function output_filter_modal() {
 		<div class="col">
 			<?php
 			if (is_product_category()) :
-				if (category_has_parent()) :
+				if (category_has_parent() && $get_brand === null) :
 					woocommerce_breadcrumb();
 				endif;
 			endif;
 
-			if ( is_tax( 'pa_brand' ) ) { ?>
+			if ( $get_brand !== null ) { ?>
 				<div class="custom-breadcrumb">
 					<a href="<?php echo esc_attr(get_site_url().'/brands')?>" class="paragraph paragraph-l">Производители</a>
 					<span>/</span>
@@ -233,9 +233,14 @@ function output_filter_modal() {
 				<?php if (apply_filters('woocommerce_show_page_title', true)) : ?>
 					<!-- .woocommerce-products-header__title -->
 					<h4 class="page-title semibold <?php echo esc_attr($classes); ?>">
-						<?php woocommerce_page_title(); 
+						<?php 
+							if ($get_brand !== null) {
+								echo $cur_term->name;
+							} else {
+								woocommerce_page_title(); 
+							}
 						
-						if (is_tax( 'pa_brand' ) && $is_exclusive) : ?>
+						if ($get_brand !== null && $is_exclusive) : ?>
 							<p class="paragraph paragraph-m regular exclusive-banner">
 								<?php Load::atom('svg', ['name' => 'star-filled']); ?>
 								Ексклузивен партньор
@@ -264,7 +269,7 @@ function output_filter_modal() {
 			}
 			$cat_inner_image_url = get_field('inner_cat_thumbnail', 'product_cat_' . $outermost_parent_id);
 
-			if ( !is_tax( 'pa_brand' ) ) {
+			if ( $get_brand === null ) {
 				if (is_product_category()) {
 					Load::molecules('product-category/product-category-info/index', [
 						'title' => 'Научете повече за ',
@@ -308,25 +313,7 @@ function output_filter_modal() {
 
 
 			}
-
-			if (is_search()) { ?>
-				<?php
-			}
-			?>
-			<div class="filter-content-wrapper">
-				<div class="filter-sidebar">
-			<?php
-				$list_categories($taxonomies, array());
-			?>
-				<p class="paragraph paragraph-xl semibold cat-head active-cat filters">Филтри</p>
-			<?php
-			// endif;		
-			echo do_shortcode('[wpf-filters id=1]');
-// echo do_shortcode('[yith_wcan_filters slug="sidebar-filters"]'); 
-?>
-
-				</div>
-				<?php
+			
 			if (woocommerce_product_loop()) {
 
 				/**
@@ -337,7 +324,28 @@ function output_filter_modal() {
 				 * @hooked woocommerce_catalog_ordering - 30
 				 */
 				do_action('woocommerce_before_shop_loop');
+				?>
+				<div class="filter-content-wrapper">
+					<?php  if (wp_is_mobile()) { ?>
+					<div class="mobile-wrapper">
+						<?php 
+							Load::molecules('product-category/product-categories-view/index'); 
+							output_filter_modal();
+						?>
+					</div>
 
+					<?php } else { ?>
+
+					<div class="filter-sidebar">
+						<?php
+							$list_categories($taxonomies, array());
+						?>
+						<p class="paragraph paragraph-xl semibold cat-head active-cat filters">Филтри</p>
+						<?php echo do_shortcode('[wpf-filters id=1]'); ?>
+	
+					</div>
+					<?php
+					}
 				woocommerce_product_loop_start();
 
 				if (wc_get_loop_prop('total')) {
@@ -360,6 +368,11 @@ function output_filter_modal() {
 				 *
 				 * @hooked woocommerce_pagination - 10
 				 */
+				?>
+			<!-- END of .filter-content-wrapper -->
+
+</div>
+				<?php
 				do_action('woocommerce_after_shop_loop');
 			} else {
 				/**
@@ -371,7 +384,6 @@ function output_filter_modal() {
 			}
 
 			?>
-			</div>
 
 <?php
 

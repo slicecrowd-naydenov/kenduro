@@ -2,7 +2,8 @@
   height: 100vh !important;
 }
 
-.storefront-sorting {
+.storefront-sorting,
+.wpfSlugWrapper {
   display: none !important;
 }
 
@@ -296,6 +297,14 @@
     top: -45px;
     left: 74px;
     @extend #{'.paragraph','.paragraph-m', '.regular'};
+
+    @include media-breakpoint-down(lg) {
+      position: relative;
+      display: block !important;
+      top: 0;
+      width: 100%;
+      left: 0;
+    }
   }
 
   .wpfBlockClear {
@@ -404,7 +413,8 @@
   }
 
   .modal-body {
-    height: calc(100vh - 200px);
+    height: auto;
+    max-height: calc(100vh - 250px);
     flex-direction: column;
     align-items: baseline;
     gap: 15px;

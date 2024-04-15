@@ -79,17 +79,6 @@ ul.products {
     display: none;
   }
 
-  & + .storefront-sorting {
-    display: flex;
-    margin: 0;
-    border-top: 1px solid $G-1-5;
-
-    nav {
-      padding-top: 20px;
-      margin-bottom: 30px;
-    }
-  }
-
   &.columns-5 {
     li.product {
       flex: 0 0 calc(20% - 16px);
@@ -312,7 +301,8 @@ ul.products {
 }
 
 // Brand cat page
-.tax-pa_brand  {
+.tax-pa_brand,
+.archive  {
   .page-title.exclusive {
     display: flex;
     align-items: center;
@@ -324,10 +314,6 @@ ul.products {
       right: 0;
     }
   }
-
-  .dropdown {
-    margin-bottom: 23px;
-  }
 }
 
 .filter-content-wrapper {
@@ -335,6 +321,20 @@ ul.products {
   flex-direction: row;
   gap: 10px;
   margin-top: 30px;
+
+  @include media-breakpoint-down(lg) {
+    flex-direction: column;
+  }
+
+  & + .storefront-sorting {
+    display: flex !important;
+    margin: 0 0 0 274px;
+
+    nav {
+      padding-top: 20px;
+      margin-bottom: 30px;
+    }
+  }
 
   .filter-sidebar {
     flex: 0 0 264px;
