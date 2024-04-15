@@ -402,7 +402,7 @@ function output_filter_modal() {
     
     <?php 
       Load::molecules('exclusive-brands/index');
-      Load::molecules('best-selling-products/index'); 
+      // Load::molecules('best-selling-products/index'); 
 			// echo do_shortcode('[recently_viewed_products]');
 /**
  * Hook: woocommerce_after_main_content.

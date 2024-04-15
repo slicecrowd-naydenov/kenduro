@@ -91,8 +91,8 @@ ul.products {
       }
 
       @include media-breakpoint-only(md) {
-        flex: 0 0 calc(33% - 11px);
-        width: calc(33% - 11px);
+        flex: 0 0 calc(33% - 12px);
+        width: calc(33% - 12px);
       }
 
       @include media-breakpoint-down(md) {
@@ -109,8 +109,8 @@ ul.products {
       width: calc(25% - 15px);
 
       @include media-breakpoint-only(md) {
-        flex: 0 0 calc(33% - 11px);
-        width: calc(33% - 11px);
+        flex: 0 0 calc(33% - 12px);
+        width: calc(33% - 12px);
       }
 
       @include media-breakpoint-down(md) {
@@ -322,7 +322,7 @@ ul.products {
   gap: 10px;
   margin-top: 30px;
 
-  @include media-breakpoint-down(lg) {
+  @include media-breakpoint-down(xl) {
     flex-direction: column;
   }
 

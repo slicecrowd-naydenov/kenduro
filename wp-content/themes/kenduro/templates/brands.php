@@ -73,7 +73,7 @@ $terms = get_terms($args);
 
   <?php 
     Load::molecules('exclusive-brands/index');
-    Load::molecules('best-selling-products/index'); 
+    // Load::molecules('best-selling-products/index'); 
   ?>
 </div>
 

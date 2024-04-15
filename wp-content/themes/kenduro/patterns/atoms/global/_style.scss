@@ -246,12 +246,6 @@ h4,
     margin: 0;
   }
 
-  .nav-pills {
-    @include media-breakpoint-up(lg) {
-      margin-top: 30px;
-    }
-  }
-
   .product-category-info.full-container  {
     @include media-breakpoint-down(lg) {
       display: none;

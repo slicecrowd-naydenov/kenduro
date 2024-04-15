@@ -39,7 +39,7 @@ get_header();
     
     <?php 
       Load::molecules('exclusive-brands/index');
-      Load::molecules('best-selling-products/index'); 
+      // Load::molecules('best-selling-products/index'); 
     ?>
 </main>
 <?php
