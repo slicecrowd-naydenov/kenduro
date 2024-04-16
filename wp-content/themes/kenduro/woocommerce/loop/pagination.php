@@ -43,11 +43,11 @@ if ($total <= 1) {
 		endif;
 		?>
 		<a href="<?php echo esc_url(str_replace('%#%', $current - 1, $base)); ?>" class="button button-secondary-blue <?php echo esc_attr($has_prev_link ? 'enable' : 'disable'); ?>">
-			<span>Previous page</span>
+			<span>Предишна</span>
 		</a>
-		<p class="paragraph paragraph-l tetriary semibold">Page <?php echo $current; ?> of <?php echo $total; ?></p>
+		<p class="paragraph paragraph-l tetriary semibold">Страница <?php echo $current; ?> от <?php echo $total; ?></p>
 		<a href="<?php echo esc_url(str_replace('%#%', $current + 1, $base)); ?>" class="button button-secondary-blue <?php echo esc_attr($has_next_link ? 'enable' : 'disable'); ?>">
-			<span>Next page</span>
+			<span>Следваща</span>
 		</a>
 	</div>
 
@@ -61,8 +61,8 @@ if ($total <= 1) {
 				'add_args'  => false,
 				'current'   => max(1, $current),
 				'total'     => $total,
-				'prev_text' => 'Previus Page',
-				'next_text' => 'Next Page',
+				'prev_text' => 'Предишна',
+				'next_text' => 'Следваща',
 				'type'      => 'list',
 				'end_size'  => 3,
 				'mid_size'  => 3,
