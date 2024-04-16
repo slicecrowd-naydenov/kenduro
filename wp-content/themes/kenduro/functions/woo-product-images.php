@@ -47,21 +47,21 @@ function add_product_tab( $tabs ) {
 add_filter( 'woocommerce_output_related_products_args', 'bbloomer_change_number_related_products', 9999 );
  
 function bbloomer_change_number_related_products( $args ) {
- $args['posts_per_page'] = 5; // # of related products
- $args['columns'] = 5; // # of columns per row
+ $args['posts_per_page'] = 4; // # of related products
+ $args['columns'] = 4; // # of columns per row
  return $args;
 }
 
-remove_action( 'woocommerce_before_shop_loop_item_title', 'woocommerce_template_loop_product_thumbnail', 10);
-add_action( 'woocommerce_before_shop_loop_item_title', 'woocommerce_template_loop_product_thumbnail', 10);
+// remove_action( 'woocommerce_before_shop_loop_item_title', 'woocommerce_template_loop_product_thumbnail', 10);
+// add_action( 'woocommerce_before_shop_loop_item_title', 'woocommerce_template_loop_product_thumbnail', 10);
 
-/**
-* WooCommerce Loop Product Thumbs
-**/
-if ( ! function_exists( 'woocommerce_template_loop_product_thumbnail' ) ) {
-  function woocommerce_template_loop_product_thumbnail() {
-    echo "<div class='wc-img-wrapper'>";
-    echo woocommerce_get_product_thumbnail();
-    echo "</div>";
-  }
-}
+// /**
+// * WooCommerce Loop Product Thumbs
+// **/
+// if ( ! function_exists( 'woocommerce_template_loop_product_thumbnail' ) ) {
+//   function woocommerce_template_loop_product_thumbnail() {
+//     echo "<div class='wc-img-wrapper'>";
+//     echo woocommerce_get_product_thumbnail();
+//     echo "</div>";
+//   }
+// }

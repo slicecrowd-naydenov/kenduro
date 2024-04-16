@@ -2,36 +2,75 @@
   height: 100vh !important;
 }
 
-#child_cat {
-  .filter-item.checkbox.active.level-0 > label, 
-  .filter-item.checkbox.level-0 > label, 
-  .filter-item.level-0.active .filter-items .filter-items, 
-  .filter-item.level-1.active .filter-items,
-  .filter-item.level-0:not(.active) .filter-item.level-1:not(.active) > label {
-    display: none;
-  }
-  // .filter-item.checkbox.level-0.no-color:not(.active),
-  // .filter-item.checkbox.level-0.no-color.active > label,
-  // .filter-items.filter-checkbox.level-1 .filter-items.filter-checkbox.level-1 {
-  //   display: none;
-  // }
-
+.storefront-sorting,
+.wpfSlugWrapper {
+  display: none !important;
 }
 
-#sub_child_cat {
-  .filter-item.checkbox.active.level-0 > label,
-  .filter-item.checkbox.active.level-0 > .filter-items.level-1 > li > label,
-  .filter-item.level-0:not(.active) > label,
-  .filter-item.level-0:not(.active) > .filter-items.level-1 > .filter-item.active > label,
-  .filter-item.level-0:not(.active) > .filter-items.level-1 > .filter-item:not(.active) > label {
-    display: none;
-  }
-  // .filter-item.checkbox.level-0.no-color:not(.active),
-  // .filter-item.checkbox.level-0.no-color.active > label,
-  // .filter-item.checkbox.level-0.no-color.active > .filter-items.filter-checkbox.level-1 > .filter-item.checkbox.level-1.no-color > label {
-  //   display: none;
-  // }
+.wpfFilterWrapper {
+  border-bottom: 1px solid;
 }
+
+.custom_cat_filters {
+  margin: 0 0 20px;
+  padding: 0 0 10px;
+  border-bottom: 1px solid;
+}
+// #wpfBlock_1,
+// #wpfBlock_2 {
+//   ul.wpfFilterVerScroll {
+//     li {
+//       ul {
+//         display: none;
+//       }
+//     }
+//   }
+// }
+
+// #wpfBlock_3 {
+//   ul.wpfFilterVerScroll {
+//     & > li {
+//       & > label {
+//         display: none;
+//       }
+
+//       ul {
+//         margin: 0;
+//       }
+//     }
+//   }
+// }
+
+// #child_cat {
+//   .filter-item.checkbox.active.level-0 > label, 
+//   .filter-item.checkbox.level-0 > label, 
+//   .filter-item.level-0.active .filter-items .filter-items, 
+//   .filter-item.level-1.active .filter-items,
+//   .filter-item.level-0:not(.active) .filter-item.level-1:not(.active) > label {
+//     display: none;
+//   }
+//   // .filter-item.checkbox.level-0.no-color:not(.active),
+//   // .filter-item.checkbox.level-0.no-color.active > label,
+//   // .filter-items.filter-checkbox.level-1 .filter-items.filter-checkbox.level-1 {
+//   //   display: none;
+//   // }
+
+// }
+
+// #sub_child_cat {
+//   .filter-item.checkbox.active.level-0 > label,
+//   .filter-item.checkbox.active.level-0 > .filter-items.level-1 > li > label,
+//   .filter-item.level-0:not(.active) > label,
+//   .filter-item.level-0:not(.active) > .filter-items.level-1 > .filter-item.active > label,
+//   .filter-item.level-0:not(.active) > .filter-items.level-1 > .filter-item:not(.active) > label {
+//     display: none;
+//   }
+//   // .filter-item.checkbox.level-0.no-color:not(.active),
+//   // .filter-item.checkbox.level-0.no-color.active > label,
+//   // .filter-item.checkbox.level-0.no-color.active > .filter-items.filter-checkbox.level-1 > .filter-item.checkbox.level-1.no-color > label {
+//   //   display: none;
+//   // }
+// }
 
 #child_cat,
 #sub_child_cat {
@@ -46,79 +85,274 @@
   gap: 5px;
 }
 
-.yith-wcan-reset-filters {
-  border-radius: $radius-circle;
-  border: none;
-  @extend #{'.button', '.button-error'};
-  font-size: 0 !important;
-  line-height: 0 !important;
+#preset_2006 {
+  display: none;
+}
 
-  &:after {
-    display: block;
-    @extend #{'.paragraph', '.paragraph-l'};
-    content: 'Премахни филтрите';
-  }
+// .yith-wcan-reset-filters {
+//   border-radius: $radius-circle;
+//   border: none;
+//   @extend #{'.button', '.button-error'};
+//   font-size: 0 !important;
+//   line-height: 0 !important;
 
-  @include media-breakpoint-down(lg) {
-    width: 100%;
+//   &:after {
+//     display: block;
+//     @extend #{'.paragraph', '.paragraph-l'};
+//     content: 'Премахни филтрите';
+//   }
+
+//   @include media-breakpoint-down(xl) {
+//     width: 100%;
+//   }
+// }
+
+// .yith-wcan-filters {
+//   background-color: transparent;
+//   display: inline-flex;
+//   margin: 0;
+
+//   form {
+//     display: flex;
+//     gap: 5px;
+//   }
+
+//   .yith-wcan-filter {
+//     position: relative;
+//     margin-bottom: 0;
+
+//     .filter-title {
+//       color: $text-primary;
+//       padding-right: 12px;
+//       background: url('../../assets/icons/svg/arrow_down.svg') center right 12px no-repeat;
+//       background-size: 6px;
+//       transition: color 0.25s ease;
+//       margin-bottom: 23px;
+//       padding: 5px 25px 5px 18px;
+//       border: 1px solid rgba($b-primary, 0.2);
+//       border-radius: $radius-circle;
+//       cursor: pointer;
+//       @extend #{'.paragraph','.paragraph-m', '.tetriary'};
+//     }
+
+//     .filter-content {
+//       display: none;
+//       border: 1px solid $G-3;
+//       border-radius: $radius-medium;
+//       position: absolute;
+//       min-width: 215px;
+//       left: 0;
+//       top: calc(100% - 20px);
+//       padding: 8px 10px;
+//       z-index: 222;
+//       background-color: $G-0;
+//       max-height: 225px;
+
+//       @include media-breakpoint-up(xl) {
+//         overflow: auto;
+//       }
+
+//       li {
+//         border-bottom: 1px solid $G-3;
+
+//         &:last-child {
+//           border: none;
+//         }
+
+//         label {
+//           margin: 0;
+//         }
+//       }
+//     }
+//   }
+// }
+
+.wpfPreview {
+  width: 110px !important;
+  margin: auto !important;
+
+  .woobewoo-filter-loader.spinner {
+    width: 110px;
+    height: 110px;
+    animation-duration: 2.5s;
+    background-repeat: no-repeat;
+    background-image: url('../../assets/icons/svg/logo.svg')
   }
 }
 
-.yith-wcan-filters {
-  background-color: transparent;
-  display: inline-flex;
-  margin: 0;
+.wpfMainWrapper {
+  top: 9px;
 
-  form {
-    display: flex;
-    gap: 5px;
-  }
+  .wpfFilterWrapper[data-filter-type] {
+    border: 1px solid rgba($b-primary, 0.1);
+    border-radius: $radius-small;
+    padding: 6px 10px 6px 18px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    overflow: hidden;
 
-  .yith-wcan-filter {
-    position: relative;
-    margin-bottom: 0;
-
-    .filter-title {
-      color: $text-primary;
-      padding-right: 12px;
-      background: url('../../assets/icons/svg/arrow_down.svg') center right 12px no-repeat;
-      background-size: 6px;
-      transition: color 0.25s ease;
-      margin-bottom: 23px;
-      padding: 5px 25px 5px 18px;
-      border: 1px solid rgba($b-primary, 0.2);
-      border-radius: $radius-circle;
-      cursor: pointer;
-      @extend #{'.paragraph','.paragraph-m', '.tetriary'};
+    .wfpTitle { 
+      height: auto;
+      line-height: 24px;
+      @extend #{'.paragraph','.paragraph-l', '.regular'};
     }
 
-    .filter-content {
-      display: none;
-      border: 1px solid $G-3;
-      border-radius: $radius-medium;
-      position: absolute;
-      min-width: 215px;
-      left: 0;
-      top: calc(100% - 20px);
-      padding: 8px 10px;
-      z-index: 222;
-      background-color: $G-0;
-      max-height: 225px;
+    .wpfFilterTitle {
+      position: relative;
+    }
 
-      @include media-breakpoint-up(xl) {
-        overflow: auto;
+    .wpfTitleToggle {
+      width: 8px;
+      height: 4px;
+      position: absolute;
+      right: 5px;
+      top: 10px;
+      transform: rotate(-90deg);
+      background-image: url('../../assets/icons/svg/arrow_primary.svg');
+      transition: transform 0.2s ease;
+
+
+      &.fa-minus {
+        transform: rotate(0deg);
       }
 
-      li {
-        border-bottom: 1px solid $G-3;
+      &:before {
+        display: none;
+      }
+    }
 
-        &:last-child {
-          border: none;
+    ul {
+      margin-top: 8px;
+      margin-bottom: 3px;
+      padding-top: 25px;
+    }
+
+    .wpfCheckbox {
+      label {
+        width: 18px !important;
+        height: 18px !important;
+        margin: 3px 0 0;
+  
+        &:before {
+          border-radius: $radius-thin;
+          border-color: $G-3 !important;
+          transition: border-color 0.2s ease;
+        }
+      }
+
+      input[type="checkbox"] {        
+        &:checked {
+          & + label::before {
+            background-image:  url('../../assets/images/checked.png') !important;
+            background-size: 8px 8px !important;
+            background-repeat: no-repeat !important;
+            background-position: center center !important;
+            border-color: $G-5 !important;
+          }
+        }
+      }
+      
+    }
+
+    .wpfFilterTaxNameWrapper {
+      opacity: 0.8;
+      transition: opacity 0.2s ease;
+      @extend #{'.paragraph','.paragraph-l', '.regular'};
+    }
+
+    li {
+      &:hover {
+        .wpfFilterTaxNameWrapper {
+          opacity: 1;
         }
 
-        label {
-          margin: 0;
+        .wpfCheckbox label:before {
+          border-color: $G-5 !important;
         }
+      }
+    }
+
+    &.wpfNotActive {
+      .wpfBlockClear {
+        &:after {
+          opacity: 1;
+        }
+
+        &:before {
+          border-color: $G-5;
+        }
+      }
+    }
+  }
+
+  .wpfClearButton.wpfButton {
+    // width: auto;
+    line-height: 20px;
+    position: absolute;
+    text-transform: inherit;
+    padding: 3px 9px;
+    min-height: auto;
+    border-radius: 8px;
+    right: 0;
+    top: -45px;
+    left: 74px;
+    @extend #{'.paragraph','.paragraph-m', '.regular'};
+
+    @include media-breakpoint-down(xl) {
+      position: relative;
+      display: block !important;
+      top: 0;
+      width: 100%;
+      left: 0;
+    }
+  }
+
+  .wpfBlockClear {
+    display: block !important;
+    position: absolute;
+    left: 0;
+    top: calc(100% + 9px);
+    color: rgba($text-primary, 0.8) !important;
+    z-index: 5;
+    padding-left: 28px;
+    transition: color 0.2s ease;
+    @extend #{'.paragraph','.paragraph-l', '.regular'};
+
+    &:before {
+      width: 18px;
+      height: 18px;
+      display: block;
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      border-radius: $radius-thin;
+      border: 1px solid $G-3;
+      transition: border-color 0.2s ease;
+      margin: 0 !important;
+      content: '' !important;
+    }
+
+    &:after {
+      width: 8px;
+      height: 8px;
+      display: block;
+      position: absolute;
+      left: 5px;
+      top: 50%;
+      transform: translateY(-50%);
+      border-radius: 2px;
+      background: $b-primary;
+      opacity: 0;
+      transition: opacity 0.2s ease;
+      content: '' !important;
+    }
+
+    &:hover {
+      color: $text-primary !important;
+
+      &:before {
+        border-color: $G-5;
       }
     }
   }
@@ -135,11 +369,11 @@
 }
 
 .mobile-wrapper {
-  @include media-breakpoint-down(lg) {
+  @include media-breakpoint-down(xl) {
     margin-bottom: 28px;
   }
 
-  @include media-breakpoint-down(lg) {
+  @include media-breakpoint-down(xl) {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -147,14 +381,14 @@
   }
 
   .dropdown {
-    @include media-breakpoint-down(lg) {
+    @include media-breakpoint-down(xl) {
       margin-bottom: 0;
       flex: 0 0 calc(50% - 5px);
     }
   }
 
   .filter-modal {
-    @include media-breakpoint-down(lg) {
+    @include media-breakpoint-down(xl) {
       background-image: url('../../assets/icons/svg/filter.svg');
       background-position: center right 12px;
       background-repeat: no-repeat;
@@ -179,7 +413,8 @@
   }
 
   .modal-body {
-    height: calc(100vh - 200px);
+    height: auto;
+    max-height: calc(100vh - 250px);
     flex-direction: column;
     align-items: baseline;
     gap: 15px;

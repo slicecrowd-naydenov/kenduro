@@ -6,6 +6,7 @@ import { Tab } from 'bootstrap';
 import Slider from './slider';
 import MobileNavigation from './header/bottom/index';
 // import MiddleHeader from './header/middle/index';
+import SidebarFilter from './sidebar_filter/index';
 
 export default () => {
   // const $body = $('body');
@@ -20,6 +21,10 @@ export default () => {
   
   if (MobileNavigation) {
     new MobileNavigation(document.getElementById('site-navigation-menu-toggle'));
+  }
+  
+  if ($('.filter-content-wrapper').length) {
+    new SidebarFilter($('.filter-content-wrapper'));
   }
 
   // if (MiddleHeader) {
