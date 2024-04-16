@@ -80,7 +80,7 @@ if ($related_prod) :
 		</div>
 		<hr>
 
-		<?php echo do_shortcode('[products ids="' . implode(',', $related_prod) . '" limit="5"]'); ?>
+		<?php echo do_shortcode('[products ids="' . implode(',', $related_prod) . '" limit="5" columns="5"]'); ?>
 
 	</section>
 <?php
