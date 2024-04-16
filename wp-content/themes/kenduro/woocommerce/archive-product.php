@@ -32,6 +32,8 @@ $get_brand = isset($query_vars['pa_brand']) ? $query_vars['pa_brand'] : null;
 $get_product_cat = isset($query_vars['product_cat']) ? $query_vars['product_cat'] : null;
 $product_cat_ID = 0;
 
+$is_brand_page = $get_brand !== null ? 'brand_page' : 'cat_page';
+
 if ($get_product_cat !== null) {
 	$product_cat_slug = sanitize_title($get_product_cat);
 	$cat = get_term_by('slug', $product_cat_slug, 'product_cat');
@@ -325,7 +327,7 @@ function output_filter_modal() {
 				 */
 				do_action('woocommerce_before_shop_loop');
 				?>
-				<div class="filter-content-wrapper">
+				<div class="filter-content-wrapper <?php echo esc_attr($is_brand_page); ?>">
 					<?php  if (wp_is_mobile()) { ?>
 					<div class="mobile-wrapper">
 						<?php 

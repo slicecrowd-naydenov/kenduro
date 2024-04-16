@@ -17,7 +17,7 @@ $args = array(
 );
 
 $best_selling_query = new WP_Query($args);
-
+// do_shortcode('[products limit="10" columns="5" best_selling="true" ]
 if ($best_selling_query->have_posts()) { ?>
   <div class="best-selling">
     <div class="container">

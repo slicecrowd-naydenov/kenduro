@@ -71,7 +71,8 @@ ul.products {
   }
 
   &:before,
-  &:after {
+  &:after,
+  & + .woocommerce-pagination {
     display: none !important;
   }
 
@@ -325,6 +326,20 @@ ul.products {
 
   @include media-breakpoint-down(xl) {
     flex-direction: column;
+    align-items: initial;
+  }
+
+  &.brand_page {
+    .wpfFilterWrapper[data-slug="brand"] {
+      display: none !important;
+    }
+  }
+
+  & + .woocommerce-pagination {
+    width: calc(100% - 274px);
+    padding-top: 20px;
+    margin-bottom: 30px;
+    margin-left: 274px;
   }
 
   & + .storefront-sorting {
