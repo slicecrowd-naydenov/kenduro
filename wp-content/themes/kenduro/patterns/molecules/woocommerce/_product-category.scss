@@ -340,11 +340,20 @@ ul.products {
     padding-top: 20px;
     margin-bottom: 30px;
     margin-left: 274px;
+
+    @include media-breakpoint-down(xl) {
+      width: 100%;
+      margin-left: 0;
+    }
   }
 
   & + .storefront-sorting {
     display: flex !important;
     margin: 0 0 0 274px;
+
+    @include media-breakpoint-down(xl) {
+      margin-left: 0;
+    }
 
     nav {
       padding-top: 20px;
