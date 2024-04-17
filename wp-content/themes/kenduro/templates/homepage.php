@@ -4,7 +4,17 @@ use Lean\Load;
 /* Template Name: Home*/
 
 get_header();
+$product = wc_get_product(8608);
+$woo_updated_product_date = $product->get_data()['date_modified'];
+$woo_timestamp = $woo_updated_product_date->getTimestamp();
 
+$timestamp = strtotime('2024-03-19T11:27:12.743000Z');
+$ss_updated_product_date = new WC_DateTime(date('Y-m-d H:i:s', $timestamp), new DateTimeZone('UTC'));
+$ss_timestamp = $ss_updated_product_date->getTimestamp();
+
+
+pretty_dump($woo_updated_product_date);
+pretty_dump($ss_updated_product_date);
 ?>
 <main id="primary">
   <?php 
