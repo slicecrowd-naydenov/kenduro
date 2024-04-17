@@ -191,7 +191,13 @@
     }
   }
 
-  
+  .ywcas-category-result {
+    a {
+      p {
+        color: $b-highlight-two;
+      }
+    }
+  }
 
   .ywcas-search-results-grid {
     gap: 5px !important;

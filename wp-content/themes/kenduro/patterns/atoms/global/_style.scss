@@ -264,6 +264,10 @@ h4,
 .tax-pa_brand {
   #primary {
     padding-top: 50px;
+
+    @include media-breakpoint-down(lg) {
+      padding-top: 0;
+    }
   }
 
   .wpfFilterWrapper[data-slug="brand"] {
@@ -353,31 +357,31 @@ input[type="checkbox"] {
   }
 }
 
-.cmplz-cookiebanner {
-  .cmplz-close {
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-image: url('../../assets/icons/svg/close.svg');
+// .cmplz-cookiebanner {
+//   .cmplz-close {
+//     background-size: cover;
+//     background-repeat: no-repeat;
+//     background-image: url('../../assets/icons/svg/close.svg');
 
-    svg {
-      display: none !important;
-    }
+//     svg {
+//       display: none !important;
+//     }
 
-  }
+//   }
 
-  .cmplz-btn {
-    padding: 10px 20px !important;
-    font-size: 14px !important;
-  }
+//   .cmplz-btn {
+//     padding: 10px 20px !important;
+//     font-size: 14px !important;
+//   }
 
-  .cmplz-category {
-    border-radius: $radius-medium;
-  }
+//   .cmplz-category {
+//     border-radius: $radius-medium;
+//   }
 
-  .cmplz-icon {
-    @extend .flex-center;
-  }
-}
+//   .cmplz-icon {
+//     @extend .flex-center;
+//   }
+// }
 
 .wc-block-components-notice-banner {
   &.is-info {
