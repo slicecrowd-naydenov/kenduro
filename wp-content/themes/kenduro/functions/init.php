@@ -135,7 +135,7 @@ function post_column_fields($id) {
   return json_decode(wp_remote_retrieve_body($response), true);
 }
 
-function post_column_fields_limit($id, $limit = 2, $offset = 0) {
+function post_column_fields_limit($id, $limit = 5, $offset = 0) {
   $response = wp_remote_request(
     'https://app.smartsuite.com/api/v1/applications/' . $id . '/records/list/?limit='.$limit.'&offset='.$offset,
     array(

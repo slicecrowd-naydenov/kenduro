@@ -25,7 +25,7 @@ function add_get_products_endpoint() {
   // Global update products
   register_rest_route(
     'ss-data',
-    '/update-products/(?P<id>[^/]+)(?:/(?P<global_update>[^/]+))?',
+    '/update-products/(?P<limit>[^/]+)(?:/(?P<offset>[^/]+))?',
     array(
       'methods' => 'GET',
       'callback' => 'get_all_products',
@@ -49,25 +49,57 @@ function add_get_products_endpoint() {
   );
 }
 
+// $l = 5;
+$o = 0;
+
+function create_batch_products($r) {
+  
+  $limit = $r->get_param('limit');
+  $offset = $r->get_param('offset');
+  $external_api_response = post_column_fields_limit('64fffa49372b0c1543d60c35', $limit, $offset);
+
+  return $external_api_response;
+}
+
+// $create_batch_products = function($l = 5, $o = 0) use(&$create_batch_products) {
+//   // $id = $r->get_param('id');
+//   $external_api_response = post_column_fields_limit('64fffa49372b0c1543d60c35', $l, $o);
+//   $total = 20;
+
+//   if (!is_wp_error($external_api_response)) {
+//     $o += $l;
+
+//     if ($o >= $total) {
+//       return; // All products get
+//     }
+
+//     $create_batch_products($l, $o);
+//   } else {
+//     return 'ERRRRORRR';
+//   }
+
+//   return $external_api_response;
+// };
+
 function get_all_products($request) {
   global $fieldsToRemove;
   $ss_ids = get_field('ss_ids', 'option');
   $product_variations = post_column_fields($ss_ids['product_variations']);
 
   $data = $request->get_json_params();
-  $id = $request->get_param('id');
-  $global_update = $request->get_param('global_update');
-  $external_api_response = post_column_fields($id);
+  $limit = $request->get_param('limit');
+  $offset = $request->get_param('offset');
+  $external_api_response = post_column_fields_limit($ss_ids['products_app_id'], $limit, $offset);
   
-  if ($global_update) {
-    $batch_products = $ss_ids['create_products_per_request'] ? $ss_ids['create_products_per_request'] : 5;
-    $has_offset = isset($_COOKIE['productLimit']) ? $_COOKIE['productLimit'] + ($batch_products - 1) : 0;
-    $productOffset = $has_offset;
-    setcookie("productLimit", $productOffset);
-    $external_api_response = post_column_fields_limit($id, $batch_products, $productOffset); // 3, 2
-  } 
+  // if ($global_update) {
+  //   $batch_products = $ss_ids['create_products_per_request'] ? $ss_ids['create_products_per_request'] : 5;
+  //   $has_offset = isset($_COOKIE['productLimit']) ? $_COOKIE['productLimit'] + ($batch_products - 1) : 0;
+  //   $productOffset = $has_offset;
+  //   setcookie("productLimit", $productOffset);
+  //   $external_api_response = post_column_fields_limit($id, $batch_products, $productOffset); // 3, 2
+  // } 
 
-  $related_records = get_column_fields_related($id);
+  $related_records = get_column_fields_related($ss_ids['products_app_id']);
   $product_variations_fields = fetch_column_fields($ss_ids['product_variations']);
   $product_fields = fetch_column_fields($ss_ids['products_app_id']);
   $product_variation = get_column_field_id('product_variation', $product_variations_fields);
@@ -99,11 +131,10 @@ function get_all_products($request) {
   });
 
   // Create product
-  create_woocommerce_products($filteredArrays, $global_update);
+  create_woocommerce_products($filteredArrays);
   
   return $filteredArrays;
 }
-
 
 function update_individually_product($request) {
   $id = $request->get_param('id');
@@ -684,7 +715,7 @@ function generate_simple_product($item, $ss_ids, $product_fields, $product_varia
   return $p_id;
 }
 
-function create_woocommerce_products($filteredData, $globalUpdate) {
+function create_woocommerce_products($filteredData) {
   // $count = 0;
   $ss_ids = get_field('ss_ids', 'option');
   $product_fields = fetch_column_fields($ss_ids['products_app_id']);
@@ -728,7 +759,7 @@ function create_woocommerce_products($filteredData, $globalUpdate) {
       $ss_timestamp = $ss_updated_product_date->getTimestamp();
       $woo_updated_product_date = $product->get_data()['date_modified'];
       $woo_timestamp = $woo_updated_product_date->getTimestamp();
-      if ($ss_timestamp >= $woo_timestamp || $globalUpdate !== null) {
+      if ($ss_timestamp >= $woo_timestamp) {
         // if Smartsuite product record is updated after Woo product last updated or if we have $globalUpdate
         if (is_variable_product($incoming_id, $product_id_slug, $product_variation_slug)) {
           // Delete post which is updated

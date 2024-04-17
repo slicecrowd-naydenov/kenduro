@@ -24,6 +24,10 @@ export default class CreateProducts {
     this.filterValuesBtn = $('#filterValues');
     this.ssData;
 
+    this.$total = null;
+    this.$max_requests = 3;
+    this.$err_count = 0;
+
     this.events();
   }
   
@@ -51,21 +55,58 @@ export default class CreateProducts {
     });
   }
 
-  updateProduct() {
+  updateProduct($limit = 2, $offset = 0, $total = null) {
     return new Promise(async (resolve, reject) => {
       try {
         const response = await axios({
           method: 'get',
-          url: `${wpApiSettings.rest_url}ss-data/update-products/`+$(this.updateProductsBtn).attr('data-products-id')+'/update'
+          url: `${wpApiSettings.rest_url}ss-data/update-products/`+$limit+'/'+$offset
         });
-        console.log('response Products: ', response);
+        
+        this.$err_count = 0;
+        this.$total = 50; // response.data.total
+        // console.log('total: ', response.data.total);
+        $offset += $limit;
+        // console.log('offset: ', $offset);
+        console.log('res: ', response);
+        if ($offset >= this.$total) {
+          return; // All products get
+        }
+        
+        this.updateProduct($limit, $offset, $total);
+
         resolve(response);
       } catch (error) {
         console.error('Get Products ERROR: ', error);
+        this.$err_count += 1;
+
+        if (this.$err_count >= this.$max_requests) {
+          return; // Stop
+        }
+
+        this.updateProduct($limit, $offset, $total); 
+
         reject(error);
       }
     });
   }
+  
+
+  // makeRequest($limit, $offset = 0, $total = null) {
+  //   return new Promise(async (resolve, reject) => {
+  //     try {
+  //       const response = await axios({
+  //         method: 'get',
+  //         url: `${wpApiSettings.rest_url}ss-data/update-products/`+$(this.updateProductsBtn).attr('data-products-id')+'/update'
+  //       });
+  //       console.log('response Products: ', response);
+  //       resolve(response);
+  //     } catch (error) {
+  //       console.error('Get Products ERROR: ', error);
+  //       reject(error);
+  //     }
+  //   });
+  // }
 
   createBrands() {
     return new Promise(async (resolve, reject) => {
@@ -101,7 +142,7 @@ export default class CreateProducts {
 
     this.updateProductsBtn.on('click', (e) => {
       e.preventDefault();
-      this.updateProduct();
+      this.updateProduct(5);
       $.ajax({
         type: 'POST',
         url: ajaxurl, // This is WordPress AJAX URL
