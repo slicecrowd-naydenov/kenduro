@@ -93,7 +93,7 @@ function get_all_products($request) {
 
   if (!$product_id) {
     // Create product
-    create_woocommerce_products($filteredArrays, $global_update);
+    create_woocommerce_products($filteredArrays);
   } else {
     // Update product
     $filteredArrays = get_record($id, $product_id);
