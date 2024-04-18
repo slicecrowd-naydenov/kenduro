@@ -21,6 +21,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 global $product;
+pretty_dump($product);
 // $product = wc_get_product();
 ?>
 <div class="custom-stock">
@@ -47,7 +48,7 @@ global $product;
 	<span class="woocommerce-variation-sku-number paragraph paragraph-m">
 		Продукт № : 
 		<span class="sku-value">
-			<?php echo $product->get_sku();	?>
+			<?php //echo $product->get_sku();	?>
 		</span>
 	</span>
 </div>
