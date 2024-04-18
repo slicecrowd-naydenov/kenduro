@@ -74,6 +74,7 @@ function trigger_ajax_to_cart() {
 
         $('body').find('#yith-s, .lapilliUI-Input__field').attr('placeholder', 'Търси продукт');
         // $('.lapilliUI-Input__field').attr('placeholder', 'Търси продукт');
+        $('.sku-value').html($('.sku').text());
       });
 
       let productEl = '';
