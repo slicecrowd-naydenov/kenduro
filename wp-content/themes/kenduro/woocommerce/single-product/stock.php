@@ -47,21 +47,7 @@ $product = wc_get_product();
 	<span class="woocommerce-variation-sku-number paragraph paragraph-m">
 		Продукт № : 
 		<span class="sku-value">
-			<?php 
-				if ( !$product->is_type( 'variable' ) ) {
-					echo $product->get_sku();
-						// For variable products, get the SKU of the selected variation
-						// $default_attributes = $product;
-						// pretty_dump($product);
-                
-						// Get the default variation ID based on the default attributes
-						// $variation_id = wc_get_default_variation_id( $product, $default_attributes );
-						
-						// Get the SKU of the default variation
-						// $variation = wc_get_product( $variation_id );
-						// echo $variation->get_sku();
-				} 
-				?>
+			<?php echo $product->get_sku();	?>
 		</span>
 	</span>
 </div>
