@@ -28,7 +28,7 @@ function add_get_products_endpoint() {
     '/update-products/(?P<limit>[^/]+)(?:/(?P<offset>[^/]+))?',
     array(
       'methods' => 'GET',
-      'callback' => 'get_all_products',
+      'callback' => 'mass_update_create_products',
       'permission_callback' => function () {
         return true;
       }
@@ -49,39 +49,64 @@ function add_get_products_endpoint() {
   );
 }
 
-// $l = 5;
-$o = 0;
+function get_all_products($request) {
+  global $fieldsToRemove;
+  $ss_ids = get_field('ss_ids', 'option');
+  $product_variations = post_column_fields($ss_ids['product_variations']);
 
-function create_batch_products($r) {
-  
-  $limit = $r->get_param('limit');
-  $offset = $r->get_param('offset');
-  $external_api_response = post_column_fields_limit('64fffa49372b0c1543d60c35', $limit, $offset);
+  $id = $request->get_param('id');
+  $product_id = $request->get_param('product_id');
+  $external_api_response = post_column_fields($id);
 
-  return $external_api_response;
+  $related_records = get_column_fields_related($id);
+  $product_variations_fields = fetch_column_fields($ss_ids['product_variations']);
+  $product_fields = fetch_column_fields($ss_ids['products_app_id']);
+  $product_variation = get_column_field_id('product_variation', $product_variations_fields);
+  $product_var_id = get_column_field_id('product_var_id', $product_fields);
+  $existing_ids = array_column($related_records['related_records'], 'id');
+  $outputArray = array();
+
+  if (is_wp_error($external_api_response)) {
+    return $external_api_response;
+  }
+
+  // IMPORTANT -> remove unnecessary IDs from Product
+  if (!$product_id) {
+    related_records($external_api_response['items'], $product_var_id, $existing_ids);
+  }
+
+  foreach ($product_variations['items'] as $variation) {
+    if (isset($variation[$product_variation]) && is_array($variation[$product_variation])) {
+      foreach ($variation[$product_variation] as $value) {
+        if (!in_array($value, $outputArray)) {
+          $outputArray[] = $value;
+        }
+      }
+    }
+  }
+
+  $filteredData = filter_items($external_api_response['items'], $fieldsToRemove);
+
+  $filteredArrays = array_filter($filteredData, function ($item) use ($outputArray) {
+    return in_array($item['id'], $outputArray);
+  });
+
+  if (!$product_id) {
+    // Create product
+    create_woocommerce_products($filteredArrays, $global_update);
+  } else {
+    // Update product
+    $filteredArrays = get_record($id, $product_id);
+    // $filteredArrays = array_filter($filteredData, function ($item) use ($product_id) {
+    //   return $item['id'] === $product_id;
+    // });
+    update_woocommerce_product($filteredArrays, $id);
+  }
+
+  return $filteredArrays;
 }
 
-// $create_batch_products = function($l = 5, $o = 0) use(&$create_batch_products) {
-//   // $id = $r->get_param('id');
-//   $external_api_response = post_column_fields_limit('64fffa49372b0c1543d60c35', $l, $o);
-//   $total = 20;
-
-//   if (!is_wp_error($external_api_response)) {
-//     $o += $l;
-
-//     if ($o >= $total) {
-//       return; // All products get
-//     }
-
-//     $create_batch_products($l, $o);
-//   } else {
-//     return 'ERRRRORRR';
-//   }
-
-//   return $external_api_response;
-// };
-
-function get_all_products($request) {
+function mass_update_create_products($request) {
   global $fieldsToRemove;
   $ss_ids = get_field('ss_ids', 'option');
   $product_variations = post_column_fields($ss_ids['product_variations']);
@@ -268,12 +293,12 @@ function update_product_manually($data, $product_id) {
 	  // $delivery_time = get_column_field_id('delivery_time', $product_variations_fields);
 
     $quantity = isset($data[$product_variations_quantity]) && (int)$data[$product_variations_quantity] !== 0 ? (int)$data[$product_variations_quantity] : 0;
-    $stock_status = $quantity > 0 ? 'instock' : 'onbackorder';
-    $manage_stock = $quantity > 0 ? true : false;
+    // $stock_status = $quantity > 0 ? 'instock' : 'onbackorder';
+    // $manage_stock = $quantity > 0 ? true : false;
     // $delivery_value = $manage_stock ? 'no' : 'notify';
     
-    $product->set_manage_stock($manage_stock);
-    $product->set_stock_status($stock_status);
+    $product->set_manage_stock(true);
+    // $product->set_stock_status($stock_status);
     $product->set_backorders('notify');
     $product->set_stock_quantity($quantity);
     $product->set_regular_price($data[$set_regular_price]);
@@ -459,7 +484,7 @@ function create_variation($pid, $term_slug, $product_variations_fields, $attribu
   });
 
   foreach ($product_variations['items'] as $product_variation) {
-    if ($product_variation[$product_id_slug][0] === $term_slug) {
+    if (!empty($product_variation[$product_id_slug]) && $product_variation[$product_id_slug][0] === $term_slug) {
       $quantity = isset($product_variation[$product_variations_quantity]) ? $product_variation[$product_variations_quantity] : 0;
       // $stock_status = $quantity > 0 ? 'instock' : 'onbackorder';
       // $manage_stock = $quantity > 0 ? true : false;

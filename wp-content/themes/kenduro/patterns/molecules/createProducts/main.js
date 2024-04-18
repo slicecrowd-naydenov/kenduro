@@ -39,21 +39,21 @@ export default class CreateProducts {
     this.onClickHandler();
   }
 
-  createProduct() {
-    return new Promise(async (resolve, reject) => {
-      try {
-        const response = await axios({
-          method: 'get',
-          url: `${wpApiSettings.rest_url}ss-data/get-products/`+$(this.createProductsBtn).attr('data-products-id')
-        });
-        console.log('response Products: ', response);
-        resolve(response);
-      } catch (error) {
-        console.error('Get Products ERROR: ', error);
-        reject(error);
-      }
-    });
-  }
+  // createProduct() {
+  //   return new Promise(async (resolve, reject) => {
+  //     try {
+  //       const response = await axios({
+  //         method: 'get',
+  //         url: `${wpApiSettings.rest_url}ss-data/get-products/`+$(this.createProductsBtn).attr('data-products-id')
+  //       });
+  //       console.log('response Products: ', response);
+  //       resolve(response);
+  //     } catch (error) {
+  //       console.error('Get Products ERROR: ', error);
+  //       reject(error);
+  //     }
+  //   });
+  // }
 
   updateProduct($limit = 2, $offset = 0, $total = null) {
     return new Promise(async (resolve, reject) => {
@@ -125,24 +125,27 @@ export default class CreateProducts {
   }
 
   onClickHandler() {
-    this.createProductsBtn.on('click', (e) => {
-      e.preventDefault();
-      this.createProduct();
-      $.ajax({
-        type: 'POST',
-        url: ajaxurl, // This is WordPress AJAX URL
-        data: {
-          action: 'clear_woocommerce_transients' // Потвърдете съответния хук
-        },
-        success: function(response) {
-          alert('Транзиентите са изтрити успешно.');
-        }
-      });
-    });
+    // this.createProductsBtn.on('click', (e) => {
+    //   e.preventDefault();
+    //   this.createProduct();
+    //   $.ajax({
+    //     type: 'POST',
+    //     url: ajaxurl, // This is WordPress AJAX URL
+    //     data: {
+    //       action: 'clear_woocommerce_transients' // Потвърдете съответния хук
+    //     },
+    //     success: function(response) {
+    //       alert('Транзиентите са изтрити успешно.');
+    //     }
+    //   });
+    // });
 
     this.updateProductsBtn.on('click', (e) => {
       e.preventDefault();
-      this.updateProduct(5);
+      var offset = this.updateProductsBtn.attr('data-offset');
+      var limit = this.updateProductsBtn.attr('data-limit');
+
+      this.updateProduct(parseInt(limit), parseInt(offset));
       $.ajax({
         type: 'POST',
         url: ajaxurl, // This is WordPress AJAX URL

@@ -4,7 +4,7 @@ import CreateCategories from './createCategories/main';
 
 export default () => {
   if (CreateProducts) {
-    new CreateProducts(document.getElementById('createProducts'));
+    new CreateProducts(document.getElementById('updateProducts'));
   }
   
   if (CreateCategories) {
