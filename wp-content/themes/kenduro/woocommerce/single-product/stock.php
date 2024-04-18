@@ -21,7 +21,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 global $product;
-$product = wc_get_product();
+// $product = wc_get_product();
 ?>
 <div class="custom-stock">
 	<p class="stock paragraph paragraph-m <?php echo esc_attr( $class ); ?>">
