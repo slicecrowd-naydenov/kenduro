@@ -21,7 +21,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 global $product;
-pretty_dump($product);
+// pretty_dump($product);
 // $product = wc_get_product();
 ?>
 <div class="custom-stock">
