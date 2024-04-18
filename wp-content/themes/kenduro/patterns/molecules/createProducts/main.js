@@ -64,12 +64,12 @@ export default class CreateProducts {
         });
         
         this.$err_count = 0;
-        this.$total = 50; // response.data.total
-        // console.log('total: ', response.data.total);
+        $total = response.data.total_items; // response.data.total
         $offset += $limit;
-        // console.log('offset: ', $offset);
+        console.log('offset: ', $offset);
+        console.log('total: ', $total);
         console.log('res: ', response);
-        if ($offset >= this.$total) {
+        if ($offset >= $total) {
           return; // All products get
         }
         

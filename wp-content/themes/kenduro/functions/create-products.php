@@ -108,8 +108,10 @@ function get_all_products($request) {
   $outputArray = array();
 
   if (is_wp_error($external_api_response)) {
-    return $external_api_response;
-  }
+    // return $external_api_response;
+    $error_message = $external_api_response->get_error_message();
+    return $error_message;
+  } 
 
   // IMPORTANT -> remove unnecessary IDs from Product
   related_records($external_api_response['items'], $product_var_id, $existing_ids);
@@ -131,9 +133,24 @@ function get_all_products($request) {
   });
 
   // Create product
-  create_woocommerce_products($filteredArrays);
   
-  return $filteredArrays;
+  $create_products = create_woocommerce_products($filteredArrays);
+  $response = array();
+  
+  if (!is_wp_error($create_products)) {
+    $response = array(
+      'total_items' => $external_api_response['total'],
+      'products' => $filteredArrays
+    );
+  } else {
+    $error_message = $create_products->get_error_message();
+    $response = array(
+      'total_items' => $external_api_response['total'],
+      'error' => $error_message
+    );
+  }
+  
+  return $response;
 }
 
 function update_individually_product($request) {
@@ -715,13 +732,14 @@ function generate_simple_product($item, $ss_ids, $product_fields, $product_varia
   return $p_id;
 }
 
-function create_woocommerce_products($filteredData) {
+function create_woocommerce_products($filteredData): ?object {
   // $count = 0;
   $ss_ids = get_field('ss_ids', 'option');
   $product_fields = fetch_column_fields($ss_ids['products_app_id']);
   $product_variations_fields = fetch_column_fields($ss_ids['product_variations']);
   $product_id_slug = get_column_field_id('product_variation', $product_variations_fields);
   $product_variation_slug = get_column_field_id('is_variation', $product_variations_fields);
+  $response = new stdClass();
 
   foreach ($filteredData as $item) {
     // $count++;
@@ -786,9 +804,17 @@ function create_woocommerce_products($filteredData) {
     }
 
     if (!$product_id) {
-      return;
+      continue;
     }
+
+    $response->success = true;
   }
+
+  if (!isset($response->success)) {
+    $response->success = false;
+  }
+
+  return $response;
 }
 
 function update_attributes($brand, $brand_text, $attrBrand, $color, $attrColor, $pid) {

@@ -10,7 +10,7 @@ get_header();
 ?>
 <main>
   <?php $ss_ids = get_field('ss_ids', 'option'); ?>
-  <a href="#" id="createProducts" data-products-id="<?php echo esc_attr($ss_ids['products_app_id']); ?>">create Products</a>
+  <!-- <a href="#" id="createProducts" data-products-id="<?php // echo esc_attr($ss_ids['products_app_id']); ?>">create Products</a> -->
   </br>
   <a href="#" id="updateProducts" data-products-id="<?php echo esc_attr($ss_ids['products_app_id']); ?>">update Products</a>
   </br>
