@@ -764,6 +764,7 @@ function create_woocommerce_products($filteredData): ?object {
   $product_variations_fields = fetch_column_fields($ss_ids['product_variations']);
   $product_id_slug = get_column_field_id('product_variation', $product_variations_fields);
   $product_variation_slug = get_column_field_id('is_variation', $product_variations_fields);
+  $create_product = get_column_field_id('create_product', $product_fields);
   $response = new stdClass();
 
   foreach ($filteredData as $item) {
@@ -775,54 +776,57 @@ function create_woocommerce_products($filteredData): ?object {
     //   break;
     // }
 
-    if (!$product_id) {
-      // if Product no exists
-      if (is_variable_product($incoming_id, $product_id_slug, $product_variation_slug)) {
-        $pid = generate_variable_products($item, $ss_ids, $product_fields, $product_variations_fields, $incoming_id);
-
-        if (!is_wp_error($pid)) {
-          $product_id = $pid;
-        }
-        
-      } else {
-        $p_id = generate_simple_product($item, $ss_ids, $product_fields, $product_variations_fields, $incoming_id);
-
-        if (!is_wp_error($p_id)) {
-          $product_id = $p_id;
-        }
-      }
-    } else {
-      // if Product exists // UPDATE PRODUCTS
-      $product = wc_get_product($product_id);
-      $iso_date = $item['last_updated']['on'];
-
-      // Transform ISO 8601 format in Unix timestamp
-      $timestamp = strtotime($iso_date);
-      $ss_updated_product_date = new WC_DateTime(date('Y-m-d H:i:s', $timestamp), new DateTimeZone('UTC'));
-      $ss_timestamp = $ss_updated_product_date->getTimestamp();
-      $woo_updated_product_date = $product->get_data()['date_modified'];
-      $woo_timestamp = $woo_updated_product_date->getTimestamp();
-      if ($ss_timestamp >= $woo_timestamp) {
-        // if Smartsuite product record is updated after Woo product last updated or if we have $globalUpdate
+    // Check if in Products tab "Create product" Field is cheched, if YES, then we create/update product
+    if ($item[$create_product]) {
+      if (!$product_id) {
+        // if Product no exists
         if (is_variable_product($incoming_id, $product_id_slug, $product_variation_slug)) {
-          // Delete post which is updated
-          wp_delete_post($product_id, false);
-          delete_transient('wc_transients_cache');
-          // Create again post with updated DATA
           $pid = generate_variable_products($item, $ss_ids, $product_fields, $product_variations_fields, $incoming_id);
-
+  
           if (!is_wp_error($pid)) {
             $product_id = $pid;
           }
+          
         } else {
-          // Delete post which is updated
-          wp_delete_post($product_id, false);
-          delete_transient('wc_transients_cache');
-          // Create again post with updated DATA
           $p_id = generate_simple_product($item, $ss_ids, $product_fields, $product_variations_fields, $incoming_id);
-
+  
           if (!is_wp_error($p_id)) {
             $product_id = $p_id;
+          }
+        }
+      } else {
+        // if Product exists // UPDATE PRODUCTS
+        $product = wc_get_product($product_id);
+        $iso_date = $item['last_updated']['on'];
+  
+        // Transform ISO 8601 format in Unix timestamp
+        $timestamp = strtotime($iso_date);
+        $ss_updated_product_date = new WC_DateTime(date('Y-m-d H:i:s', $timestamp), new DateTimeZone('UTC'));
+        $ss_timestamp = $ss_updated_product_date->getTimestamp();
+        $woo_updated_product_date = $product->get_data()['date_modified'];
+        $woo_timestamp = $woo_updated_product_date->getTimestamp();
+        if ($ss_timestamp >= $woo_timestamp) {
+          // if Smartsuite product record is updated after Woo product last updated or if we have $globalUpdate
+          if (is_variable_product($incoming_id, $product_id_slug, $product_variation_slug)) {
+            // Delete post which is updated
+            wp_delete_post($product_id, false);
+            delete_transient('wc_transients_cache');
+            // Create again post with updated DATA
+            $pid = generate_variable_products($item, $ss_ids, $product_fields, $product_variations_fields, $incoming_id);
+  
+            if (!is_wp_error($pid)) {
+              $product_id = $pid;
+            }
+          } else {
+            // Delete post which is updated
+            wp_delete_post($product_id, false);
+            delete_transient('wc_transients_cache');
+            // Create again post with updated DATA
+            $p_id = generate_simple_product($item, $ss_ids, $product_fields, $product_variations_fields, $incoming_id);
+  
+            if (!is_wp_error($p_id)) {
+              $product_id = $p_id;
+            }
           }
         }
       }
