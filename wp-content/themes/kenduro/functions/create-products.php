@@ -109,28 +109,14 @@ function get_all_products($request) {
 function mass_update_create_products($request) {
   global $fieldsToRemove;
   $ss_ids = get_field('ss_ids', 'option');
-  $product_variations = post_column_fields($ss_ids['product_variations']);
-
-  $data = $request->get_json_params();
   $limit = $request->get_param('limit');
   $offset = $request->get_param('offset');
-  $external_api_response = post_column_fields_limit($ss_ids['products_app_id'], $limit, $offset);
   
-  // if ($global_update) {
-  //   $batch_products = $ss_ids['create_products_per_request'] ? $ss_ids['create_products_per_request'] : 5;
-  //   $has_offset = isset($_COOKIE['productLimit']) ? $_COOKIE['productLimit'] + ($batch_products - 1) : 0;
-  //   $productOffset = $has_offset;
-  //   setcookie("productLimit", $productOffset);
-  //   $external_api_response = post_column_fields_limit($id, $batch_products, $productOffset); // 3, 2
-  // } 
-
+  $external_api_response = post_column_fields_limit($ss_ids['products_app_id'], $limit, $offset);
   $related_records = get_column_fields_related($ss_ids['products_app_id']);
-  $product_variations_fields = fetch_column_fields($ss_ids['product_variations']);
   $product_fields = fetch_column_fields($ss_ids['products_app_id']);
-  $product_variation = get_column_field_id('product_variation', $product_variations_fields);
   $product_var_id = get_column_field_id('product_var_id', $product_fields);
   $existing_ids = array_column($related_records['related_records'], 'id');
-  $outputArray = array();
 
   if (is_wp_error($external_api_response)) {
     // return $external_api_response;
@@ -141,31 +127,19 @@ function mass_update_create_products($request) {
   // IMPORTANT -> remove unnecessary IDs from Product
   related_records($external_api_response['items'], $product_var_id, $existing_ids);
 
-  foreach ($product_variations['items'] as $variation) {
-    if (isset($variation[$product_variation]) && is_array($variation[$product_variation])) {
-      foreach ($variation[$product_variation] as $value) {
-        if (!in_array($value, $outputArray)) {
-          $outputArray[] = $value;
-        }
-      }
-    }
-  }
 
   $filteredData = filter_items($external_api_response['items'], $fieldsToRemove);
 
-  $filteredArrays = array_filter($filteredData, function ($item) use ($outputArray) {
-    return in_array($item['id'], $outputArray);
-  });
 
   // Create product
   
-  $create_products = create_woocommerce_products($filteredArrays);
+  $create_products = create_woocommerce_products($filteredData);
   $response = array();
   
   if (!is_wp_error($create_products)) {
     $response = array(
       'total_items' => $external_api_response['total'],
-      'products' => $filteredArrays
+      'products' => $filteredData
     );
   } else {
     $error_message = $create_products->get_error_message();
@@ -427,6 +401,7 @@ function is_variable_product($id, $product_id_slug, $product_variation_slug) {
 
   foreach ($product_variations['items'] as $product_variation) {
     if (
+      !empty($product_variation[$product_id_slug]) && 
       $product_variation[$product_id_slug][0] === $id && 
       strtolower($product_variation[$product_variation_slug]) === strtolower('Yes')
     ) {
@@ -588,7 +563,7 @@ function create_simple_product($pid, $term_slug, $product_fields) {
   
   foreach ($product_variations['items'] as $product_variation) {
     // $is_set_color = isset($product_variation[$attr_color]) && $product_variation[$attr_color] !== '';
-    if ($product_variation[$product_id_slug][0] === $term_slug) {
+    if (!empty($product_variation[$product_id_slug]) && $product_variation[$product_id_slug][0] === $term_slug) {
       $quantity = isset($product_variation[$product_variations_quantity]) && (int)$product_variation[$product_variations_quantity] !== 0 ? (int)$product_variation[$product_variations_quantity] : 0;
       // $stock_status = $quantity > 0 ? 'instock' : 'onbackorder';
       // $manage_stock = $quantity > 0 ? true : false;
