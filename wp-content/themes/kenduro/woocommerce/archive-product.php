@@ -1,7 +1,4 @@
 <?php
-
-use Lean\Load;
-
 /**
  * The Template for displaying product archives, including the main shop page which is a post type archive
  *
@@ -13,18 +10,15 @@ use Lean\Load;
  * happen. When this occurs the version of the template file will be bumped and
  * the readme will list any important changes.
  *
- * @see https://docs.woocommerce.com/document/template-structure/
+ * @see https://woocommerce.com/document/template-structure/
  * @package WooCommerce\Templates
- * @version 3.4.0
+ * @version 8.6.0
  */
 
-defined('ABSPATH') || exit;
-// $category = get_queried_object();
-// echo single_term_title();
-get_header('shop');
+use Lean\Load;
 
-// if (isset($_GET['product_cat'])) 
-// sanitize_title($_GET['product_cat']);
+defined( 'ABSPATH' ) || exit;
+
 global $wp_query;
 $query_vars = $wp_query->query_vars;
 
@@ -126,7 +120,6 @@ $list_categories = function($taxonomies, $temp_arr) use ($parent_IDS, $get_brand
 			if ($q->post_count > 0) {
 				
 				if (in_array($tax->term_id, $parent_IDS)) {
-					// pretty_dump($tax->term_id);
 					$next_category = $tax->term_id;
 					// $tax_name = '<b class="active">'.$tax->name.'</b>';
 					$active_class = 'active';
@@ -156,18 +149,9 @@ $list_categories = function($taxonomies, $temp_arr) use ($parent_IDS, $get_brand
 			echo implode('', $temp_arr);
 		}
 	}
-
-	
 };
 
-/**
- * Hook: woocommerce_before_main_content.
- *
- * @hooked woocommerce_output_content_wrapper - 10 (outputs opening divs for the content)
- * @hooked woocommerce_breadcrumb - 20
- * @hooked WC_Structured_Data::generate_website_data() - 30
- */
-do_action('woocommerce_before_main_content');
+$classes = '';
 
 if ( $get_brand !== null ) {
 	$cur_term = get_term_by('slug', $get_brand, 'pa_brand');
@@ -214,6 +198,25 @@ function output_filter_modal() {
 	}
 }
 
+get_header( 'shop' );
+
+/**
+ * Hook: woocommerce_before_main_content.
+ *
+ * @hooked woocommerce_output_content_wrapper - 10 (outputs opening divs for the content)
+ * @hooked woocommerce_breadcrumb - 20
+ * @hooked WC_Structured_Data::generate_website_data() - 30
+ */
+do_action( 'woocommerce_before_main_content' );
+
+/**
+ * Hook: woocommerce_shop_loop_header.
+ *
+ * @since 8.6.0
+ *
+ * @hooked woocommerce_product_taxonomy_archive_header - 10
+ */
+// do_action( 'woocommerce_shop_loop_header' );
 ?>
 <div class="container">
 	<div class="row">
@@ -315,8 +318,8 @@ function output_filter_modal() {
 
 
 			}
-			
-			if (woocommerce_product_loop()) {
+
+			if ( woocommerce_product_loop() ) {
 
 				/**
 				 * Hook: woocommerce_before_shop_loop.
@@ -325,9 +328,9 @@ function output_filter_modal() {
 				 * @hooked woocommerce_result_count - 20
 				 * @hooked woocommerce_catalog_ordering - 30
 				 */
-				do_action('woocommerce_before_shop_loop');
+				do_action( 'woocommerce_before_shop_loop' );
 				?>
-				<div class="filter-content-wrapper <?php echo esc_attr($is_brand_page); ?>">
+					<div class="filter-content-wrapper <?php echo esc_attr($is_brand_page); ?>">
 					<?php  if (wp_is_mobile()) { ?>
 					<div class="mobile-wrapper">
 						<?php 
@@ -350,16 +353,16 @@ function output_filter_modal() {
 					}
 				woocommerce_product_loop_start();
 
-				if (wc_get_loop_prop('total')) {
-					while (have_posts()) {
+				if ( wc_get_loop_prop( 'total' ) ) {
+					while ( have_posts() ) {
 						the_post();
 
 						/**
 						 * Hook: woocommerce_shop_loop.
 						 */
-						do_action('woocommerce_shop_loop');
+						do_action( 'woocommerce_shop_loop' );
 
-						wc_get_template_part('content', 'product');
+						wc_get_template_part( 'content', 'product' );
 					}
 				}
 
@@ -371,52 +374,53 @@ function output_filter_modal() {
 				 * @hooked woocommerce_pagination - 10
 				 */
 				?>
-			<!-- END of .filter-content-wrapper -->
-
-</div>
-				<?php
-				do_action('woocommerce_after_shop_loop');
+				<!-- END of .filter-content-wrapper -->
+	
+	</div>
+					<?php
+				do_action( 'woocommerce_after_shop_loop' );
 			} else {
 				/**
 				 * Hook: woocommerce_no_products_found.
 				 *
 				 * @hooked wc_no_products_found - 10
 				 */
-				do_action('woocommerce_no_products_found');
+				do_action( 'woocommerce_no_products_found' );
 			}
-
 			?>
 
-<?php
+			<?php
+			
+						// echo do_shortcode('[wrvp_recently_viewed_products number_of_products_in_row="4" posts_per_page="4"]');
+									Load::molecules('product-category/product-category-info/index', [
+										'title' => '<span class="highlighted">K</span>enduro е изработен от Teo',
+										'class' => 'full-width-container',
+										'description' => 'Тео Кабакчиев, световноизвестен хард ендуро състезател, ръководи Kenduro.com с непоколебима страст, гарантирайки нашия непоколебим ангажимент към услуги и качество от най-високо ниво.'
+									]);
+			
+									// echo do_shortcode('[products limit="12" columns="5" best_selling="true"]');
+								?>
+							</div>
+						</div>
+					</div>
+					
+					<?php 
+						Load::molecules('exclusive-brands/index');
+						// Load::molecules('best-selling-products/index'); 
+						// echo do_shortcode('[recently_viewed_products]');
 
-			// echo do_shortcode('[wrvp_recently_viewed_products number_of_products_in_row="4" posts_per_page="4"]');
-            Load::molecules('product-category/product-category-info/index', [
-              'title' => '<span class="highlighted">K</span>enduro е изработен от Teo',
-              'class' => 'full-width-container',
-              'description' => 'Тео Кабакчиев, световноизвестен хард ендуро състезател, ръководи Kenduro.com с непоколебима страст, гарантирайки нашия непоколебим ангажимент към услуги и качество от най-високо ниво.'
-            ]);
-
-            // echo do_shortcode('[products limit="12" columns="5" best_selling="true"]');
-          ?>
-        </div>
-      </div>
-    </div>
-    
-    <?php 
-      Load::molecules('exclusive-brands/index');
-      // Load::molecules('best-selling-products/index'); 
-			// echo do_shortcode('[recently_viewed_products]');
 /**
  * Hook: woocommerce_after_main_content.
  *
  * @hooked woocommerce_output_content_wrapper_end - 10 (outputs closing divs for the content)
  */
-do_action('woocommerce_after_main_content');
+do_action( 'woocommerce_after_main_content' );
 
 /**
  * Hook: woocommerce_sidebar.
  *
  * @hooked woocommerce_get_sidebar - 10
  */
-do_action('woocommerce_sidebar');
-get_footer('shop');
+do_action( 'woocommerce_sidebar' );
+
+get_footer( 'shop' );
