@@ -109,7 +109,7 @@ function get_record($tableId, $recordId) {
   );
 
   if (is_wp_error($response)) {
-    return new WP_Error('api_error', 'Error fetching data from get_column_fields', array('status' => 500));
+    return new WP_Error('api_error', 'Error fetching data from get_record', array('status' => 500));
   }
 
   return json_decode(wp_remote_retrieve_body($response), true);
@@ -129,13 +129,35 @@ function post_column_fields($id) {
   );
 
   if (is_wp_error($response)) {
-    return new WP_Error('api_error', 'Error fetching data from get_column_fields', array('status' => 500));
+    return new WP_Error('api_error', 'Error fetching data from post_column_fields', array('status' => 500));
   }
 
   return json_decode(wp_remote_retrieve_body($response), true);
 }
 
 function post_column_fields_limit($id, $limit = 5, $offset = 0) {
+  $ss_fields = get_field('ss_fields', 'option');
+  $link_to_product_variations = $ss_fields['link_to_product_variations'];
+  $upload_update_to_wordpress = $ss_fields['upload_update_to_wordpress'];
+  
+  $body = json_encode(array(
+    "filter" => array(
+      "operator" => "and",
+      "fields" => array(
+        array(
+          "field" => $link_to_product_variations,  // Field: Link to Product Variations
+          "comparison" => "is_not_empty",
+          "value" => ""
+        ),
+        array(
+          "field" => $upload_update_to_wordpress,  // Field: Upload/Update to Wordpress
+          "comparison" => "is",
+          "value" => true
+        )
+      )
+    )
+  ));
+
   $response = wp_remote_request(
     'https://app.smartsuite.com/api/v1/applications/' . $id . '/records/list/?limit='.$limit.'&offset='.$offset,
     array(
@@ -145,11 +167,12 @@ function post_column_fields_limit($id, $limit = 5, $offset = 0) {
         'Authorization' => 'Token 2570295cb9c1e4c7f81d46ed046c09bf43fd5740',
         'ACCOUNT-ID' => 'sd0y91s2',
       ),
+      'body' => $body
     )
   );
 
   if (is_wp_error($response)) {
-    return new WP_Error('api_error', 'Error fetching data from get_column_fields', array('status' => 500));
+    return new WP_Error('api_error', 'Error fetching data from post_column_fields_limit', array('status' => 500));
   }
 
   return json_decode(wp_remote_retrieve_body($response), true);
@@ -169,7 +192,7 @@ function get_column_fields_related($id) {
   );
 
   if (is_wp_error($response)) {
-    return new WP_Error('api_error', 'Error fetching data from get_column_fields', array('status' => 500));
+    return new WP_Error('api_error', 'Error fetching data from get_column_fields_related', array('status' => 500));
   }
 
   return json_decode(wp_remote_retrieve_body($response), true);
