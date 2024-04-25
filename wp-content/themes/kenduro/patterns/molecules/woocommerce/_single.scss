@@ -1,0 +1,138 @@
+.single {
+  background-color: $G-0-5;
+
+  .single-content-wrapper {
+    padding-top: 40px;
+
+    h1,
+    h2:not(.woocommerce-loop-product__title),
+    h3,
+    h4,
+    h5,
+    h6 {
+      margin-top: 20px !important;
+    }
+  
+    ul {
+      margin: 0;
+      padding: 0 0 0 15px;
+      list-style: disc;
+    }
+  
+    img:not(.attachment-post-thumbnail, .attachment-woocommerce_thumbnail) {
+      margin: 40px 0 20px;
+      border-radius: $radius-medium;
+    }
+
+    p {
+      margin: 10px 0 0 0;
+    }
+
+    .featured-image {
+      border: 1px solid $G-0;
+      overflow: hidden;
+      border-radius: $radius-medium;
+      box-shadow: 0px 3px 6px 0px #0F0F0F1A, 20px 29px 154px 0px #0F0F0F33;
+    }
+
+    .content-wrapper {
+      display: flex;
+      gap: 10px;
+
+      .content {
+        width: 1000px;
+        margin: -85px 20px 0;
+        padding: 0 50px 50px;
+        background-color: $G-0;
+        border-radius: $radius-medium;
+
+        .content-nav {
+          padding: 30px 0;
+          margin-bottom: 20px;
+          border-bottom: 1px dashed rgba($b-primary, 0.3);
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+
+          .storefront-breadcrumb {
+            padding: 0;
+            margin: 0;
+
+            .woocommerce-breadcrumb {
+              font-size: 0;
+
+              * {
+                color: $text-primary !important;
+                @extend #{'.paragraph', '.paragraph-xl'};
+              }
+
+              .breadcrumb-separator {
+                &:after {
+                  content: '/';
+                  color: $text-primary !important;
+                  opacity: 1;
+                  font-weight: 700;
+                }
+              }
+
+              a:first-child {
+                display: none;
+
+                & + .breadcrumb-separator {
+                  display: none;
+
+                  & + a {
+                    padding: 4px 15px 4px 33px;
+                    background-color: rgba($b-primary, 0.1);
+                    border-radius: $radius-circle;
+                    position: relative;
+                    font-weight: 700;
+
+                    &:before {
+                      width: 8px;
+                      height: 4px;
+                      content: '';
+                      position: absolute;
+                      top: 50%;
+                      left: 10px;
+                      transform: translateY(-50%) rotate(90deg);
+                      background: url('../../assets/icons/svg/arrow_primary.svg') center center no-repeat;
+                      background-size: cover;
+                    }
+                  }
+                }
+              }
+            }
+          }
+
+          .share-box {
+            @extend .flex-center;
+
+            ul {
+              margin: 0 0 0 20px;
+              padding: 0;
+              display: flex;
+              gap: 10px;
+              list-style: none;
+            }
+          }
+        }
+      }
+    }
+
+    .wp-caption {
+      img {
+        margin-bottom: 10px;
+      }
+
+      .wp-caption-text {
+        padding: 0;
+        text-align: center;
+        font-style: normal;
+        margin-bottom: 20px;
+        border: none;
+        @extend #{'.paragraph', '.paragraph-m', '.tetriary'};
+      }
+    }
+  }
+}
