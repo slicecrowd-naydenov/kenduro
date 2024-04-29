@@ -131,7 +131,7 @@ ul.products {
         max-height: 207px;
       }
 
-      @include media-breakpoint-between(md, lg) {
+      @include media-breakpoint-between(md, xl) {
         max-height: 219px;
       }
     }

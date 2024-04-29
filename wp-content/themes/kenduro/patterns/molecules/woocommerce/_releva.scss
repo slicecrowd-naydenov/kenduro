@@ -1,0 +1,21 @@
+.rlv-custom-layout-slider {
+  margin-top: 50px;
+  
+  .products {
+    flex-wrap: nowrap;
+  }
+  
+  .title {
+    margin-bottom: 22px;
+  }
+  
+  .swiper {
+    padding-top: 55px;
+    margin-top: -55px;
+    padding-bottom: 20px;
+  }
+  
+  .swiper-pagination {
+    top: -30px;
+  }
+}
