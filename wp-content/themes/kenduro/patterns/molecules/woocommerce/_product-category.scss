@@ -361,7 +361,7 @@ ul.products {
     }
   }
 
-  .filter-sidebar {
+  .filter-sidebar:not(.mobile-wrapper) {
     flex: 0 0 264px;
     padding: 0 20px 13px 0;
 
@@ -401,6 +401,38 @@ ul.products {
 
         &.all:not(&:nth-of-type(1)) {
           display: none !important;
+        }
+      }
+    }
+  }
+
+  .dropdown {
+    .nav-pills {
+      .cat-head {
+        font-size: 14px;
+        border-bottom-style: solid;
+      }
+
+      ul {
+        margin: 0;
+        padding: 0;
+
+        li {
+          border-bottom: 1px dashed rgba($b-primary, 0.15);
+
+          &:last-of-type {
+            border: none;
+          }
+
+          &.active {
+            a {
+              color: $b-highlight-two;
+            }
+          }
+
+          a {
+            text-decoration: none;
+          }
         }
       }
     }

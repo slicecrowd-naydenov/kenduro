@@ -57,10 +57,11 @@
     overflow: hidden;
     @extend .flex-center;
 
-    .exclusive-banner {
-      @include media-breakpoint-down(md) {
-        font-size: 10px;
-      }
+  }
+
+  .exclusive-banner {
+    @include media-breakpoint-down(md) {
+      font-size: 10px;
     }
   }
 }
@@ -73,6 +74,11 @@
   display: flex;
   align-items: center;
   gap: 10px;
+
+  @include media-breakpoint-down(md) {
+    flex-direction: column-reverse;
+    align-items: baseline;
+  }
 }
 
 .exclusive-banner {

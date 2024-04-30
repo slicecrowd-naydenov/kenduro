@@ -332,9 +332,20 @@ do_action( 'woocommerce_before_main_content' );
 				?>
 					<div class="filter-content-wrapper <?php echo esc_attr($is_brand_page); ?>">
 					<?php  if (wp_is_mobile()) { ?>
-					<div class="mobile-wrapper">
-						<?php 
-							Load::molecules('product-category/product-categories-view/index'); 
+					<div class="mobile-wrapper filter-sidebar">
+						<div class="dropdown">
+						<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-haspopup="true" aria-expanded="false">
+							Категории
+						</button>
+						<ul class="nav nav-pills product-categories-view dropdown-menu" role="tablist" aria-labelledby="dropdownMenuButton">
+							<?php 
+							$list_categories($taxonomies, array());
+							?>
+						</ul>
+						</div>
+
+							<?php
+							// Load::molecules('product-category/product-categories-view/index'); 
 							output_filter_modal();
 						?>
 					</div>
