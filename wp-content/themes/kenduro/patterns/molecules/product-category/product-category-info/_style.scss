@@ -43,6 +43,18 @@
 
   &.discount-container {
     background-image: url('../../assets/images/discounts@2x.jpg');
+
+    .product-category-info__text {
+      color: $text-primary;
+    }
+
+    svg {
+      display: none;
+    }
+
+    h3 {
+      padding-top: 40px;
+    }
   }
 
 

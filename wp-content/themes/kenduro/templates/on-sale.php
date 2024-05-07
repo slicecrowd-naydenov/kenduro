@@ -9,6 +9,7 @@ get_header();
   <div class="container">
     <div class="row">
       <div class="col">
+        <h3>Промоции</h3>
         <?php
           Load::molecules('product-category/product-category-info/index', [
             'title' => 'Разгледайте настоящите промоции в Kenduro',
