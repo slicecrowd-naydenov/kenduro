@@ -318,6 +318,13 @@
           color: $b-highlight-two;
         }
       }
+
+      &.promotion-link {
+        a {
+          padding-left: 32px;
+          background: url('../../assets/icons/svg/award_star.svg') center left no-repeat;
+        }
+      }
     }
 
     .product-of-the-week { 
