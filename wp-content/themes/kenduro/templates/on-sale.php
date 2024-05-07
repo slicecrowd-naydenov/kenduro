@@ -1,6 +1,6 @@
 <?php
 /* Template Name: On sale */
-// use Lean\Load;
+use Lean\Load;
 
 get_header();
 ?>
@@ -9,6 +9,15 @@ get_header();
   <div class="container">
     <div class="row">
       <div class="col">
+        <?php
+          Load::molecules('product-category/product-category-info/index', [
+            'title' => 'Разгледайте детайлно нашите намалени продукти.',
+            'class' => 'full-container',
+            // 'description' => 'Разгледайте детайлно нашите намалени продукти.',
+            // 'cat' => 'намалени продукти',
+            // 'cat_img_inner' => $cat_inner_image_url
+          ]);
+        ?>
         <?php echo do_shortcode('[awdr_sale_items_list columns="5" per_page="20"]'); ?>
       </div>
     </div>
