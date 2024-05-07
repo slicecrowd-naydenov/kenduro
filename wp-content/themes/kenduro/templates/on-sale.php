@@ -9,7 +9,7 @@ get_header();
   <div class="container">
     <div class="row">
       <div class="col">
-        <?php echo do_shortcode('[awdr_sale_items_list columns="5"]'); ?>
+        <?php echo do_shortcode('[awdr_sale_items_list columns="5" per_page="20"]'); ?>
       </div>
     </div>
   </div>
