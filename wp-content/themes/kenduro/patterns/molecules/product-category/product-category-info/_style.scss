@@ -25,9 +25,9 @@
     }
   }
 
-  &.full-container {
-    height: 345px;
-    background-image: url('../../assets/images/categories/Image=Color_For=All_Products@2x.jpg');
+  &.full-container,
+  &.discount-container {
+    height: 200px;
     background-position: center bottom;
     background-repeat: no-repeat;
     text-align: center;
@@ -36,6 +36,15 @@
       display: none;
     }
   }
+
+  &.full-container {
+    background-image: url('../../assets/images/categories/Image=Color_For=All_Products@2x.jpg');
+  }
+
+  &.discount-container {
+    background-image: url('../../assets/images/discounts@2x.jpg');
+  }
+
 
   &.full-width-container {
     position: relative;

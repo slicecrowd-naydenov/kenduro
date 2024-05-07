@@ -281,6 +281,16 @@ h4,
   .product-category-info {
     margin-bottom: 30px;
   }
+
+  .products {
+    & + .storefront-sorting {
+      display: block !important;
+
+      .woocommerce-pagination {
+        padding-top: 20px;
+      }
+    }
+  }
 }
 
 .onsale {

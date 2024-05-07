@@ -11,8 +11,8 @@ get_header();
       <div class="col">
         <?php
           Load::molecules('product-category/product-category-info/index', [
-            'title' => 'Разгледайте детайлно нашите намалени продукти.',
-            'class' => 'full-container',
+            'title' => 'Разгледайте настоящите промоции в Kenduro',
+            'class' => 'discount-container',
             // 'description' => 'Разгледайте детайлно нашите намалени продукти.',
             // 'cat' => 'намалени продукти',
             // 'cat_img_inner' => $cat_inner_image_url
