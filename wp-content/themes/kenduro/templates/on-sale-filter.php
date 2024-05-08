@@ -10,7 +10,17 @@ get_header();
     <div class="row">
       <div class="col">
         <h3>Промоции</h3>
-					<div class="mobile-wrapper filter-sidebar">
+        <?php
+          Load::molecules('product-category/product-category-info/index', [
+            'title' => 'Разгледайте настоящите промоции в Kenduro',
+            'class' => 'discount-container',
+            // 'description' => 'Разгледайте детайлно нашите намалени продукти.',
+            // 'cat' => 'намалени продукти',
+            // 'cat_img_inner' => $cat_inner_image_url
+          ]);
+        ?>
+				<div class="filter-content-wrapper">
+          <div class="mobile-wrapper filter-sidebar">
             <?php
               if (wp_is_mobile()) {
                 ?>
@@ -43,16 +53,8 @@ get_header();
               }
             ?>
           </div>
-          <?php
-            Load::molecules('product-category/product-category-info/index', [
-              'title' => 'Разгледайте настоящите промоции в Kenduro',
-              'class' => 'discount-container',
-              // 'description' => 'Разгледайте детайлно нашите намалени продукти.',
-              // 'cat' => 'намалени продукти',
-              // 'cat_img_inner' => $cat_inner_image_url
-            ]);
-        ?>
-        <?php echo do_shortcode('[awdr_sale_items_list columns="5" per_page="20"]'); ?>
+          <?php echo do_shortcode('[awdr_sale_items_list columns="5" per_page="20"]'); ?>
+        </div>
       </div>
     </div>
   </div>
