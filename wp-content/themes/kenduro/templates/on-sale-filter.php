@@ -25,7 +25,7 @@ get_header();
 							// $list_categories($taxonomies, array());
 						?>
 						<p class="paragraph paragraph-xl semibold cat-head active-cat filters">Филтри</p>
-						<?php echo do_shortcode('[wpf-filters id=1]'); ?>
+						<?php echo do_shortcode('[wpf-filters id=2]'); ?>
 	
 					</div>
           <?php echo do_shortcode('[awdr_sale_items_list columns="4" per_page="20"]'); ?>
