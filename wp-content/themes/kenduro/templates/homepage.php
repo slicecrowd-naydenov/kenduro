@@ -24,7 +24,7 @@ get_header();
     <div class="container">
       <div class="row">
         <div class="col">
-        <div id="#releva-custom-block"></div>
+        <div id="releva-custom-block"></div>
           <?php
             Load::molecules('product-category/product-category-info/index', [
               'title' => '<span class="highlighted">K</span>enduro е изработен от Teo',
