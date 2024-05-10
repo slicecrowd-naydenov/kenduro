@@ -139,6 +139,9 @@ function post_column_fields_limit($id, $limit = 5, $offset = 0) {
   $ss_fields = get_field('ss_fields', 'option');
   $link_to_product_variations = $ss_fields['link_to_product_variations'];
   $upload_update_to_wordpress = $ss_fields['upload_update_to_wordpress'];
+
+  $last_date_mass_update = get_field('last_date_mass_update', 'option') ? get_field('last_date_mass_update', 'option') : date("Y-m-d"); 
+  $date_today = date("Y-m-d");
   
   $body = json_encode(array(
     "filter" => array(
@@ -153,6 +156,17 @@ function post_column_fields_limit($id, $limit = 5, $offset = 0) {
           "field" => $upload_update_to_wordpress,  // Field: Upload/Update to Wordpress
           "comparison" => "is",
           "value" => true
+        ),
+        array(
+          "field" => "last_updated",
+          "comparison" => "is",
+          "value" => array(
+            "date_mode" => "date_range",
+            "date_mode_value" => array(
+              "lower"=> $last_date_mass_update,
+              "upper"=> $date_today
+            )
+          )
         )
       )
     )

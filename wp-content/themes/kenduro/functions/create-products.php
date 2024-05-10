@@ -771,16 +771,16 @@ function create_woocommerce_products($filteredData): ?object {
         }
       } else {
         // if Product exists // UPDATE PRODUCTS
-        $product = wc_get_product($product_id);
-        $iso_date = $item['last_updated']['on'];
+        // $product = wc_get_product($product_id);
+        // $iso_date = $item['last_updated']['on'];
   
         // Transform ISO 8601 format in Unix timestamp
-        $timestamp = strtotime($iso_date);
-        $ss_updated_product_date = new WC_DateTime(date('Y-m-d H:i:s', $timestamp), new DateTimeZone('UTC'));
-        $ss_timestamp = $ss_updated_product_date->getTimestamp();
-        $woo_updated_product_date = $product->get_data()['date_modified'];
-        $woo_timestamp = $woo_updated_product_date->getTimestamp();
-        if ($ss_timestamp >= $woo_timestamp) {
+        // $timestamp = strtotime($iso_date);
+        // $ss_updated_product_date = new WC_DateTime(date('Y-m-d H:i:s', $timestamp), new DateTimeZone('UTC'));
+        // $ss_timestamp = $ss_updated_product_date->getTimestamp();
+        // $woo_updated_product_date = $product->get_data()['date_modified'];
+        // $woo_timestamp = $woo_updated_product_date->getTimestamp();
+        // if ($ss_timestamp >= $woo_timestamp) {
           // if Smartsuite product record is updated after Woo product last updated or if we have $globalUpdate
           if (is_variable_product($incoming_id, $product_id_slug, $product_variation_slug)) {
             // Delete post which is updated
@@ -803,7 +803,7 @@ function create_woocommerce_products($filteredData): ?object {
               $product_id = $p_id;
             }
           }
-        }
+        // }
       }
     }
 
@@ -813,6 +813,9 @@ function create_woocommerce_products($filteredData): ?object {
 
     $response->success = true;
   }
+
+  // Update last date with current date
+  update_field('last_date_mass_update', date("Y-m-d"), 'option');
 
   if (!isset($response->success)) {
     $response->success = false;
