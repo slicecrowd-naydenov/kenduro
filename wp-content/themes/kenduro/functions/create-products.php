@@ -151,13 +151,9 @@ function mass_update_create_products($request) {
     );
   }
 
-  // pretty_dump(gettype((int)$offset) . ' - ' . (int)$offset . '<==>' . gettype((int)$external_api_response['total']) . ' - ' . (int)$external_api_response['total']);
   if ((int)$offset + $get_offset_val >= (int)$external_api_response['total']) {
     // Update last date with current date
-    // pretty_dump('yes');
     update_field('last_date_mass_update', date("Y-m-d"), 'option');
-  } else {
-    // pretty_dump('NO');
   }
   
   return $response;
