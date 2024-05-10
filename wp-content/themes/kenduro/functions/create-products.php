@@ -111,7 +111,9 @@ function mass_update_create_products($request) {
   $ss_ids = get_field('ss_ids', 'option');
   $limit = $request->get_param('limit');
   $offset = $request->get_param('offset');
-  
+  $get_offset_val = get_field('limit_product', 'option') ? get_field('limit_product', 'option') : 5;
+
+
   $external_api_response = post_column_fields_limit($ss_ids['products_app_id'], $limit, $offset);
   $related_records = get_column_fields_related($ss_ids['products_app_id']);
   $product_fields = fetch_column_fields($ss_ids['products_app_id']);
@@ -147,6 +149,15 @@ function mass_update_create_products($request) {
       'total_items' => $external_api_response['total'],
       'error' => $error_message
     );
+  }
+
+  // pretty_dump(gettype((int)$offset) . ' - ' . (int)$offset . '<==>' . gettype((int)$external_api_response['total']) . ' - ' . (int)$external_api_response['total']);
+  if ((int)$offset + $get_offset_val >= (int)$external_api_response['total']) {
+    // Update last date with current date
+    // pretty_dump('yes');
+    update_field('last_date_mass_update', date("Y-m-d"), 'option');
+  } else {
+    // pretty_dump('NO');
   }
   
   return $response;
@@ -813,9 +824,6 @@ function create_woocommerce_products($filteredData): ?object {
 
     $response->success = true;
   }
-
-  // Update last date with current date
-  update_field('last_date_mass_update', date("Y-m-d"), 'option');
 
   if (!isset($response->success)) {
     $response->success = false;
