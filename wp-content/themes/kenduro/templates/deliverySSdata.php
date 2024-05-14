@@ -28,7 +28,7 @@ get_header();
           data-limit="<?php echo $limit; ?>"
         >update Products</a>
         Последно ъпдейтвани на: 
-        <b><?php echo get_field('last_date_mass_update', 'option'); ?></b>
+        <b><?php echo get_field('last_date_mass_update', 'option'); ?> </b>(YYYY-MM-DD)
         </br>
         <hr>
         <p class="paragraph paragraph-xl">Ъпдейтва/създава марки:</p>
