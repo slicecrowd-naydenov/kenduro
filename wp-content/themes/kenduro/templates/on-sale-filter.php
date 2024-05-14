@@ -36,7 +36,8 @@ get_header();
 					</div>
           <?php 
             // echo do_shortcode('[awdr_sale_items_list columns="4" per_page="20"]'); 
-            echo do_shortcode('[products category="tyres-wheels,navigations"]');
+            // echo do_shortcode('[products category="tyres-wheels,navigations"]');
+            echo do_shortcode('[products ids="12267, 12262, 12255, 12251"]')
           ?>
           <?php // echo do_shortcode('[wpf-products]'); ?>
         </div>
