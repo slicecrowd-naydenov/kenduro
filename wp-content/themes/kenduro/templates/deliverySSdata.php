@@ -27,6 +27,8 @@ get_header();
           data-offset="<?php echo $offset; ?>" 
           data-limit="<?php echo $limit; ?>"
         >update Products</a>
+        Последно ъпдейтвани на: 
+        <?php echo get_field('last_date_mass_update', 'option'); ?>
         </br>
         <hr>
         <p class="paragraph paragraph-xl">Ъпдейтва/създава марки:</p>
@@ -58,6 +60,8 @@ get_header();
           class="button button-primary-orange"
           data-filters-id="<?php echo esc_attr($ss_ids['filters_id']); ?>"
         >create Filters</a>
+        </br>
+        <hr>
       </div>
     </div>
   </div>

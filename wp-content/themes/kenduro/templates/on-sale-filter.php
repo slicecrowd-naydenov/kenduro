@@ -5,6 +5,12 @@ use Lean\Load;
 get_header();
 ?>
 
+<style>
+.on-sale .filter-content-wrapper .woocommerce {
+  width: 100%;
+}
+</style>
+
 <div class="on-sale" id="primary">
   <div class="container">
     <div class="row">
@@ -28,7 +34,11 @@ get_header();
 						<?php echo do_shortcode('[wpf-filters id=2]'); ?>
 	
 					</div>
-          <?php echo do_shortcode('[awdr_sale_items_list columns="4" per_page="20"]'); ?>
+          <?php 
+            echo do_shortcode('[awdr_sale_items_list columns="4" per_page="20"]'); 
+            // echo do_shortcode('[products category="tyres-wheelsss,motocross-enduro-clothing"]');
+          ?>
+          <?php // echo do_shortcode('[wpf-products]'); ?>
         </div>
       </div>
     </div>
