@@ -97,7 +97,7 @@
   .woocommerce {
     padding-top: 30px;
 
-    input:not(#want_invoice),
+    input:not(#want_invoice, .wpcf7-submit),
     textarea {
       height: 40px;
       box-shadow: none;

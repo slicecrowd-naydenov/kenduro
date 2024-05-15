@@ -11,7 +11,7 @@ get_header();
 
 if(have_posts()) : ?>
 
-	<h1 class="archive-title">Блог: <?php single_cat_title( '', false ); ?></h1>
+	<h1 class="archive-title"><?php echo single_cat_title( '', false ); ?>:</h1>
 
 <?php while(have_posts()) : the_post(); ?>
 
