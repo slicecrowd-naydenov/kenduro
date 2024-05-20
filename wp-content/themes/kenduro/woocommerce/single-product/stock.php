@@ -25,11 +25,7 @@ global $product;
 $delivery_time_text = '';
 $ss_delivery_time_text = '';
 
-if ($product->is_type('variable')) {
-	$variation_ids = $product->get_children();
-	
-	$delivery_time_text = get_post_meta($variation_ids[0], '_my_delivery_time_text', true);
-} else {
+if ($product->is_type('simple')) {
 	$meta_data = get_field('meta_data', $product->get_id()); // $product_id е ID-то на продукта, за който искате да вземете полето
 	if ($meta_data) {
 		// Използване на array_column за създаване на асоциативен масив с ключовете и стойностите
@@ -43,6 +39,10 @@ if ($product->is_type('variable')) {
 			$delivery_time_text = 'Ще се свържем с Вас';
 		}
 	} 
+} else {
+	$variation_ids = $product->get_children();
+	
+	$delivery_time_text = get_post_meta($variation_ids[0], '_my_delivery_time_text', true);
 }
 
 switch ($delivery_time_text) {
