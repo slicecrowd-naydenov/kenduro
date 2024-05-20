@@ -49,6 +49,15 @@ function add_get_products_endpoint() {
   );
 }
 
+function getInnermostValue($array) {
+  // Докато стойността на текущия елемент е масив, продължаваме да навлизаме навътре
+  while (is_array($array)) {
+    $array = reset($array);
+  }
+
+  return $array;
+}
+
 function get_all_products($request) {
   global $fieldsToRemove;
   $ss_ids = get_field('ss_ids', 'option');
@@ -460,6 +469,7 @@ function create_variation($pid, $term_slug, $product_variations_fields, $attribu
   $attr_color = get_column_field_id('attr_color', $product_variations_fields);
   $variation_product_id = get_column_field_id('variation_product_id', $product_variations_fields);
   $set_regular_price = get_column_field_id('set_regular_price', $product_variations_fields);
+  $delivery_time_text = get_column_field_id('delivery_time_text', $product_variations_fields);
 
   $filters = array_filter($product_variations_fields, function($k) {
     return str_starts_with($k['help_text'], 'filter_');
@@ -508,6 +518,9 @@ function create_variation($pid, $term_slug, $product_variations_fields, $attribu
       update_post_meta($variation_id, '_sku', $variation_id);
       update_post_meta($variation_id, '_rank_math_gtin_code', sprintf("%012d", $variation_id));
       update_post_meta($variation_id, '_my_product_variation_id', $product_variation[$variation_product_id]);
+      if (getInnermostValue($product_variation[$delivery_time_text]) !== null || '') {
+        update_post_meta($variation_id, '_my_delivery_time_text', getInnermostValue($product_variation[$delivery_time_text]));
+      }
     }
   }
 }
@@ -567,6 +580,7 @@ function create_simple_product($pid, $term_slug, $product_fields) {
 	$product_id_slug = get_column_field_id('product_variation', $product_fields);
   $set_regular_price = get_column_field_id('set_regular_price', $product_fields);
   $product_variation_sku = get_column_field_id('product_variation_sku', $product_fields);
+  $delivery_time_text = get_column_field_id('delivery_time_text', $product_fields);
   
   foreach ($product_variations['items'] as $product_variation) {
     // $is_set_color = isset($product_variation[$attr_color]) && $product_variation[$attr_color] !== '';
@@ -590,6 +604,27 @@ function create_simple_product($pid, $term_slug, $product_fields) {
       update_post_meta($pid, '_regular_price', $product_variation[$set_regular_price]);
       update_post_meta($pid, '_sale_price', $sale_price ? $sale_price : null);
       update_post_meta($pid, '_sku', $product_variation[$product_variation_sku]);
+
+
+      // Add Delivery time field
+      // Repeater name field
+      $field_name = 'meta_data';
+
+      // Delivery current records in Repeater field
+      $rows = get_field($field_name, $pid);
+
+      if (!$rows) {
+        $rows = [];
+      }
+
+      // Add new record
+      $delivery_time_value = getInnermostValue($product_variation[$delivery_time_text]) !== null || '' ? getInnermostValue($product_variation[$delivery_time_text]) : '';
+      $rows[] = [
+        'key' => 'delivery_time',
+        'value' => $delivery_time_value
+      ];
+
+      update_field($field_name, $rows, $pid);
     }
   }
 }
@@ -613,6 +648,7 @@ function generate_variable_products($item, $ss_ids, $product_fields, $product_va
   $variations = new WC_Product_Variable();
 
   $variations->set_name($item[$name_bg]);
+  $variations->set_slug($item['title']);
   $variations->set_sku($item[$prduct_sku]);
   
   $variations->save();
@@ -684,6 +720,7 @@ function generate_simple_product($item, $ss_ids, $product_fields, $product_varia
   $simple_product = new WC_Product_Simple();
   $simple_product->set_name($item[$name_bg]); // product title
   $simple_product->set_status('publish');
+  $simple_product->set_slug($item['title']);
   $p_id = $simple_product->save();     
 
   if (!empty($item[$seo_keywords])) {

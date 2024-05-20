@@ -5,13 +5,14 @@
  */
 
 get_header();
+
 $url = $_SERVER['REDIRECT_URL'];
-$is_dsk = $url === '/dsk/' || $url === '/dskbuy' || $url === '/dsksend';
+$is_dsk = $url === '/dsk' || $url === '/dskbuy' || $url === '/dsksend';
 $dsk_classes_cols = $is_dsk ? 'col-xl-8 offset-xl-2' : '';
 
 $dsk_classes = '';
 switch ($url) {
-	case '/dsk/':
+	case '/dsk':
 		$dsk_classes = 'step-1';
 		break;
 

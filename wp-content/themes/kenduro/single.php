@@ -45,7 +45,7 @@ if (have_posts()) {
 
 								if (!empty($current_post_categories)) {
 								?>
-									<ul class="sidebar__posts">
+									<ul class="blog-post-list">
 										<?php
 										$current_category_id = $current_post_categories[0]->term_id;
 
@@ -66,8 +66,12 @@ if (have_posts()) {
 													<a href="<?php echo esc_attr(the_permalink()); ?>">
 														<?php
 														if (has_post_thumbnail()) {
-															the_post_thumbnail('medium_large');
-														}
+															?>
+																<div class="thumb">
+																	<?php the_post_thumbnail('medium_large'); ?>
+																</div>
+															<?php
+															}
 
 														echo '<p class="paragraph paragraph-xl semibold post-title">' . get_the_title(get_post()->ID) . '</p>';
 														// Извеждане на описание

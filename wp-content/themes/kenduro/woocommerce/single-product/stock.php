@@ -21,28 +21,64 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 global $product;
-// pretty_dump($product);
-// $product = wc_get_product();
+
+$delivery_time_text = '';
+$ss_delivery_time_text = '';
+
+if ($product->is_type('variable')) {
+	$variation_ids = $product->get_children();
+	
+	$delivery_time_text = get_post_meta($variation_ids[0], '_my_delivery_time_text', true);
+} else {
+	$meta_data = get_field('meta_data', $product->get_id()); // $product_id е ID-то на продукта, за който искате да вземете полето
+	if ($meta_data) {
+		// Използване на array_column за създаване на асоциативен масив с ключовете и стойностите
+		$meta_data_keys = array_column($meta_data, 'value', 'key');
+
+		// Проверка дали съществува ключът 'delivery_time' и извличане на стойността му
+		if (isset($meta_data_keys['delivery_time'])) {
+			$delivery_time_value = $meta_data_keys['delivery_time'];
+			$delivery_time_text = esc_html($delivery_time_value);
+		} else {
+			$delivery_time_text = 'Ще се свържем с Вас';
+		}
+	} 
+}
+
+switch ($delivery_time_text) {
+	case "В момента няма наличност":
+		$ss_delivery_time_text = "В момента няма наличност";
+		break;
+	case "Ще се свържем с вас":
+		$ss_delivery_time_text = "Наличност : ще се свържем с вас";
+		break;
+	case "1 Ден (утре)":
+		$ss_delivery_time_text = "Може да бъде доставено утре!";
+		break;
+	default:
+		$ss_delivery_time_text = "Доставка ".$delivery_time_text;
+}
+
 ?>
 <div class="custom-stock">
 	<p class="stock paragraph paragraph-m <?php echo esc_attr( $class ); ?>">
 		<?php // echo wp_kses_post( $availability );
 			Load::atom('svg', ['name' => 'checkbox']);
+			echo $ss_delivery_time_text;
+			// if ($class === 'in-stock') {
+			// 	// echo '<b>In stock</b>';
+			// 	echo 'Може да бъде доставено утре !';
+			// }
 	
-			if ($class === 'in-stock') {
-				// echo '<b>In stock</b>';
-				echo 'Може да бъде доставено утре !';
-			}
-	
-			if ($class === 'out-of-stock') {
-				// echo '<b>Out of stock</b>';
-				echo 'Не може да бъде доставен на следващия ден';
-			}
+			// if ($class === 'out-of-stock') {
+			// 	// echo '<b>Out of stock</b>';
+			// 	echo 'Не може да бъде доставен на следващия ден';
+			// }
 
-			if ($class === 'available-on-backorder') {
-				// echo '<b>In Backorder</b>';
-				echo 'Може да бъде доставен след 3-6 дни';
-			}
+			// if ($class === 'available-on-backorder') {
+			// 	// echo '<b>In Backorder</b>';
+			// 	echo 'Може да бъде доставен след 3-6 дни';
+			// }
 		?>
 	</p>
 	<span class="woocommerce-variation-sku-number paragraph paragraph-m">

@@ -413,6 +413,18 @@ function variation_settings_fields($loop, $variation_data, $variation) {
       'value'       => get_post_meta($variation->ID, '_my_product_variation_id', true)
     )
   );
+
+  // New Text Field for Delivery Time
+  woocommerce_wp_text_input(
+    array(
+      'id'          => '_my_delivery_time_text[' . $variation->ID . ']',
+      'label'       => __('Delivery Time', 'woocommerce'),
+      'placeholder' => '3-6 дни',
+      'desc_tip'    => 'true',
+      'description' => __('Enter Delivery Time here.', 'woocommerce'),
+      'value'       => get_post_meta($variation->ID, '_my_delivery_time_text', true)
+    )
+  );
 }
 /**
  * Save new fields for variations
@@ -423,6 +435,14 @@ function save_variation_settings_fields($post_id) {
   $my_custom_field = $_POST['_my_product_variation_id'][$post_id];
   if (!empty($my_custom_field)) {
     update_post_meta($post_id, '_my_product_variation_id', esc_attr($my_custom_field));
+  }
+
+  // New Text Field for Delivery Time
+  if (isset($_POST['_my_delivery_time_text'][$post_id])) {
+    $delivery_time_text = $_POST['_my_delivery_time_text'][$post_id];
+    if (!empty($delivery_time_text)) {
+      update_post_meta($post_id, '_my_delivery_time_text', esc_attr($delivery_time_text));
+    }
   }
 
 }
@@ -438,6 +458,9 @@ add_filter('woocommerce_available_variation', 'load_variation_settings_fields');
 function load_variation_settings_fields($variations) {
   // Text Field
   $variations['my_custom_field'] = get_post_meta($variations['variation_id'], '_my_product_variation_id', true);
+
+  // New Text Field for Delivery Time
+  $variations['delivery_time_text'] = get_post_meta($variations['variation_id'], '_my_delivery_time_text', true);
 
   return $variations;
 }
