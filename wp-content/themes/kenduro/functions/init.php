@@ -194,7 +194,7 @@ function post_column_fields_limit($id, $limit = 5, $offset = 0) {
 
 function get_column_fields_related($id) {
   $response = wp_remote_request(
-    'https://app.smartsuite.com/api/v1/applications/' . $id . '/records/records_with_related/',
+    'https://app.smartsuite.com/api/v1/applications/' . $id . '/records/records_with_related/?nojsoncompress',
     array(
       'method' => 'GET',
       'headers' => array(
