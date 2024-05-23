@@ -41,39 +41,7 @@ function my_custom_init() {
   add_theme_support('post-thumbnails');
   register_custom_menus();
   custom_posts_init();
-  // add_get_categories_endpoint();
-  // add_get_products_endpoint();
-  // get_column_fields_endpoint();
-  // add_get_filters_endpoint();
 }
-
-// function get_external_api_response($id, $data) {
-//   $url = 'https://app.smartsuite.com/api/v1/applications/' . $id . '/records/list/';
-
-//   $headers = array(
-//     'Content-Type: application/json',
-//     'Authorization: Token 2570295cb9c1e4c7f81d46ed046c09bf43fd5740',
-//     'ACCOUNT-ID: sd0y91s2',
-//   );
-
-//   $ch = curl_init($url);
-
-//   curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-//   curl_setopt($ch, CURLOPT_POST, true);
-//   curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
-//   curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-
-//   $response = curl_exec($ch);
-
-//   if (curl_errno($ch)) {
-//       return new WP_Error('api_error', 'Error fetching data from get_external_api_response: ' . curl_error($ch), array('status' => 500));
-//   }
-
-//   curl_close($ch);
-
-//   return json_decode($response, true);
-// }
-
 
 function get_column_fields($id) {
   $response = wp_remote_request(
@@ -241,29 +209,6 @@ function update_acf($fields, $id, $is_cat_prefix) {
   }
 }
 
-// function fetch_records_in_app($app_id) {
-//   $url = 'http://localhost:3003/api/v1/applications/'.$app_id.'/records/list/';
-
-//   $response = wp_remote_post($url, array(
-//     'body' => json_encode(array()),
-//     'headers' => array(
-//       'Content-Type' => 'application/json',
-//       'Authorization' => 'Token 2570295cb9c1e4c7f81d46ed046c09bf43fd5740',
-//       'ACCOUNT-ID' => 'sd0y91s2'
-//     ),
-//   ));
-
-//   if (is_wp_error($response)) {
-//     echo 'Error fetching data from REST API: ' . $response->get_error_message();
-//     return;
-//   }
-
-//   $body = wp_remote_retrieve_body($response);
-//   $data = json_decode($body, true);
-
-//   return $data;
-// }
-
 // filter
 function my_posts_where($where) {
   // echo $where;
@@ -348,30 +293,6 @@ function custom_pagination($numpages = '', $pagerange = '', $paged = '') {
 
 add_filter('posts_where', 'my_posts_where');
 add_action('init', 'my_custom_init');
-
-/**
- * Change the breadcrumb separator
- */
-// add_filter( 'woocommerce_breadcrumb_defaults', 'wcc_change_breadcrumb_delimiter' );
-// add_filter( 'woocommerce_breadcrumb_defaults', 'wcc_change_breadcrumb_delimiter', 20 );
-// function wcc_change_breadcrumb_delimiter( $defaults ) {
-// 	// Change the breadcrumb delimeter from '/' to '>'
-// 	$defaults['delimiter'] = ' &#47; ';
-// 	return $defaults;
-// }
-
-// add_filter('woocommerce_output_related_products_args', 'jk_related_products_args', 20);
-// function jk_related_products_args($args) {
-//   $args['posts_per_page'] = 4; // 4 related products
-//   $args['columns'] = 4; // arranged in 2 columns
-//   return $args;
-// }
-
-// add_action( 'after_setup_theme', 'wpdocs_theme_setup' );
-// function wpdocs_theme_setup() { 
-//   add_image_size( 'category_thumb', 0, 180, true );
-// }
-
 
 function category_has_parent() {
   $category = get_queried_object();

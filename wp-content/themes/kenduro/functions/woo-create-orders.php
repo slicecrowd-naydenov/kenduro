@@ -1,41 +1,5 @@
 <?php
-add_action('rest_api_init', 'register_custom_endpoint');
-
-function register_custom_endpoint() {
-  register_rest_route('custom/v1', '/create-woo-order/', array(
-    'methods' => 'POST',
-    'callback' => 'handle_create_woo_order',
-    'permission_callback' => function ($request) {
-      return check_valid_nonce($request);
-    }
-  ));
-}
-
-function create_order_from_product_ids($product_ids, $product_info) {
-  $order = wc_create_order();
-
-  foreach ($product_ids as $product_id) {
-    $product = wc_get_product($product_id);
-
-    if ($product) {
-      $key = array_search($product->get_name(), array_column($product_info, 'product_name'));
-      $quantity = $product_info[$key]['quantity'];
-      $order->add_product($product, $quantity);
-    }
-  }
-  // $address = array(
-  //   "phone" => $client_phone,
-  //   "email" => $client_email,
-  // );
-
-  $order->calculate_totals();
-  // $order->set_address($address, 'billing');
-  // $order->update_status('quick-order');
-  $order_id = $order->save();
-
-  return $order_id;
-}
-
+// pretty_dump('test');
 function create_sales_record($response) {
   $ss_ids = get_field('ss_ids', 'option');
   $sales_id = $ss_ids['sales'];
@@ -63,12 +27,6 @@ function create_sales_record($response) {
     $product_id = $value['product_id'];
     $product = wc_get_product($product_id);
     $sale_price = $product->get_price(); 
-    /**
-    * Get the discount price of a product
-    * @param $sale_price float|integer
-    * @param $product object[wc_get_product($product_id))]|integer
-    * @return float|integer
-    */
     $sale_price = apply_filters('advanced_woo_discount_rules_get_product_discount_price', $sale_price, $product);
     $meta_fields = get_field("meta_data", $product_id);
     $field_id = array();
@@ -93,7 +51,6 @@ function create_sales_record($response) {
 
     $sales_body['items'][] = $item_data;
   }
-
 
   $sales_results = create_record_curl($sales_id, $sales_body, 'bulk/');
   if (!is_wp_error($sales_results)) {
@@ -144,144 +101,6 @@ function create_sales_record($response) {
   }
 }
 
-function handle_create_woo_order($data) {
-  if (isset($data['action'])) {
-    $product_info = isset($data['product_info']) ? $data['product_info'] : array();
-    $product_ids = isset($data['product_ids']) && is_array($data['product_ids']) ? $data['product_ids'] : array();
-    // $client_phone = isset($data['client_phone']) ? $data['client_phone'] : '';
-    // $client_email = isset($data['client_email']) ? $data['client_email'] : '';
-
-    if (!empty($product_ids)) {
-      $order_id = create_order_from_product_ids($product_ids, $product_info);
-
-      $response = array(
-        'order_id' => $order_id,
-        'product_info' => $product_info
-      );
-      create_sales_record($response);
-      wp_send_json($response);
-    } else {
-      wp_send_json('error');
-    }
-  } else {
-    return array('error' => 'Липсват необходимите данни за заявката.');
-  }
-}
-
-// Woocommerce Quick Order Form
-function formatProduct($item) {
-  return $item['product_name'] . ' / ' . $item['quantity'] . 'бр.';
-}
-
-function encodedValue($value) {
-  return json_encode($value);
-}
-
-function create_order_ajax_script($contactFormId, $data, $product_titles) {
-?>
-  <script>
-    (function($) {
-      var variation_id = 0;
-      var order_response = <?php echo encodedValue($data); ?>;
-      $(".hidden_product_name").val("<?php echo $product_titles; ?>");
-
-      $('.single_variation_wrap').on('show_variation', function(event, variation) {
-        variation_id = $('.variation_id').val();
-        order_response.product_ids = [variation_id];
-        order_response.product_info[0].product_id = variation_id;
-        console.log('order_response: ', order_response);
-      });
-      document.addEventListener('wpcf7mailsent', function(event) {
-        console.log("wpcf7mailsent event: ", event);
-        
-        order_response.client_phone = $('input[name="client-phone-number"]').val();
-        order_response.client_email = $('input[name="client-email"]').val();
-        // order_response.product_info[0].quantity = $('input[aria-label="Product quantity"]').val();
-        if ('<?php echo $contactFormId; ?>' == event.detail.contactFormId) {
-          $.ajax({
-            type: 'POST',
-            url: `${wpApiSettings.rest_url}custom/v1/create-woo-order/`,
-            beforeSend: function(xhr) {
-              xhr.setRequestHeader('X-WP-Nonce', wpApiSettings.nonce);
-            },
-            data: order_response,
-            success: function(response) {
-              console.log('Поръчката беше създадена успешно!', response);
-            }
-          });
-        }
-      }, false);
-      document.addEventListener('wpcf7submit', function(event) {
-        var inputs = event.detail.inputs;
-        console.log("wpcf7submit: ", inputs);
-      }, false);
-      document.addEventListener('wpcf7spam', function(event) {
-        var inputs = event.detail.inputs;
-        console.log("wpcf7spam: ", inputs);
-      }, false);
-      document.addEventListener('wpcf7invalid', function(event) {
-        var inputs = event.detail.inputs;
-        console.log("wpcf7invalid: ", inputs);
-      }, false);
-      document.addEventListener('wpcf7mailfailed', function(event) {
-        var inputs = event.detail.inputs;
-        console.log("wpcf7mailfailed: ", inputs);
-        console.log("wpcf7mailfailed event: ", event);
-      }, false);
-    })(jQuery);
-  </script>
-  <?php
-}
-
-function product_quick_order_form() {
-  echo do_shortcode('[contact-form-7 id="7a3ed1e" title="Quick order"]');
-
-  if (is_checkout()) {
-    $cart_items = WC()->cart->get_cart();
-
-    $product_info = array();
-    $product_ids = [];
-    foreach ($cart_items as $cart_item_key => $cart_item) {
-      $product = $cart_item['data'];
-      $product_id = $product->get_id();
-
-      $product_info[] = array(
-        'product_id' => $product_id,
-        'product_name' => $product->get_name(),
-        'quantity' => $cart_item['quantity']
-      );
-      $product_ids[] = $product_id;
-    }
-    $product_names_string = implode('; ', array_map('formatProduct', $product_info));
-
-    $data = array(
-      'action' => 'create_order_with_multiple_products',
-      'product_ids' => $product_ids,
-      'product_info' => $product_info
-    );
-    create_order_ajax_script('2140', $data, $product_names_string);
-  } else {
-    global $product;
-    $product_id = $product->get_id();
-    $product_title = $product->get_title();
-
-    $data = array(
-      'action' => 'create_order',
-      'product_ids' => array($product_id),
-      'product_info' => array(
-        0 => array(
-          'product_id' => $product_id,
-          'product_name' => $product_title,
-          'quantity' => 1
-        )
-      )
-    );
-    create_order_ajax_script('2140', $data, $product_title);
-  }
-}
-
-// add_filter('woocommerce_after_add_to_cart_form', 'product_quick_order_form');
-// add_filter('woocommerce_before_checkout_form', 'product_quick_order_form');
 function create_CRM_record($order_id, $invoice_id) {
   $ss_ids = get_field('ss_ids', 'option');
   $crm_id = $ss_ids['crm'];
@@ -301,24 +120,24 @@ function create_CRM_record($order_id, $invoice_id) {
   $accountable_person = get_column_field_id('accountable_person', $crm_fields);
   $link_to_invoices = get_column_field_id('link_to_invoices', $crm_fields);
   
-  $order = wc_get_order( $order_id );
+  $order = wc_get_order($order_id);
   
-  $vat_choice = get_post_meta( $order_id, '_billing_vat_number', true ) !== '' ? true : false;
-  $email_agreement_val = get_post_meta( $order_id, '_email_agreement', true ) === 'yes' ? true : false;
-  $viber_agreement_val = get_post_meta( $order_id, '_viber_agreement', true ) === 'yes' ? true : false;
+  $vat_choice = get_post_meta($order_id, '_billing_vat_number', true) !== '' ? true : false;
+  $email_agreement_val = get_post_meta($order_id, '_email_agreement', true) === 'yes' ? true : false;
+  $viber_agreement_val = get_post_meta($order_id, '_viber_agreement', true) === 'yes' ? true : false;
   $item_data = array(
     $first_name => $order->get_billing_first_name(),
     $last_name => $order->get_billing_last_name(),
     $phone_number => $order->get_billing_phone(),
     $email => $order->get_billing_email(),
-    $vat_id => get_post_meta( $order_id, '_billing_vat_number', true ),
+    $vat_id => get_post_meta($order_id, '_billing_vat_number', true),
     $vat_registered => $vat_choice,
     $email_agreement => $email_agreement_val,
     $viber_agreement => $viber_agreement_val,
-    $bulstat => get_post_meta( $order_id, '_billing_company_eik', true ),
+    $bulstat => get_post_meta($order_id, '_billing_company_eik', true),
     $company_phone => $order->get_billing_phone(),
-    $company_name => get_post_meta( $order_id, '_invoice_company_name', true ),
-    $accountable_person => get_post_meta( $order_id, '_billing_company_mol', true ),
+    $company_name => get_post_meta($order_id, '_invoice_company_name', true),
+    $accountable_person => get_post_meta($order_id, '_billing_company_mol', true),
     $link_to_invoices => array($invoice_id)
   );
 
@@ -328,18 +147,51 @@ function create_CRM_record($order_id, $invoice_id) {
     $error_message = $CRM_results->get_error_message();
     echo "Грешка при изпълнение на заявката: $error_message";
   }
-
 }
 
-add_action('woocommerce_thankyou', 'success_message_after_payment');
-function success_message_after_payment($order_id) {
+// Schedule a task to create a sale record
+function schedule_create_sales_record($order_id) {
+  $hook = 'create_sales_record_event_' . $order_id;
+  if (!wp_next_scheduled($hook, array($order_id))) {
+    wp_schedule_single_event(time(), $hook, array($order_id));
+    // error_log("Scheduled $hook for order ID: $order_id");
+  }
+}
+add_action('woocommerce_thankyou', 'schedule_create_sales_record');
+
+// Execute the task of creating a sale record
+function execute_create_sales_record($order_id) {
   $checkout_response = checkout_success_sent_form($order_id);
   $is_synced = get_field('sync_order_with_smartsuite', $order_id);
   if (get_post_type($order_id) == "shop_order" && $is_synced === NULL) {
     create_sales_record($checkout_response);
+    // error_log("Executed create_sales_record_event for order ID: $order_id");
   }
 }
 
+// Register dynamic hook
+add_action('init', function() {
+  $orders = wc_get_orders(array(
+    'limit' => -1,
+    'status' => 'any',
+    'return' => 'ids',
+  ));
+
+  foreach ($orders as $order_id) {
+    add_action('create_sales_record_event_' . $order_id, 'execute_create_sales_record', 10, 1);
+  }
+});
+
+// Function to manually schedule a task to create a sale record
+// We have to invoke this function in some page -> reschedule_sales_record_event(9284);
+function reschedule_sales_record_event($order_id) {
+  $hook = 'create_sales_record_event_' . $order_id;
+  wp_clear_scheduled_hook($hook, array($order_id));
+  wp_schedule_single_event(time(), $hook, array($order_id)); // Планирайте изпълнението след 10 секунди
+  error_log("Rescheduled $hook for order ID: $order_id");
+}
+
+// Function to create a record after completing an order
 function checkout_success_sent_form($order_id) {
   $order = wc_get_order( $order_id );
   $items = $order->get_items();
@@ -371,3 +223,4 @@ function checkout_success_sent_form($order_id) {
 
   return $data;
 }
+?>
