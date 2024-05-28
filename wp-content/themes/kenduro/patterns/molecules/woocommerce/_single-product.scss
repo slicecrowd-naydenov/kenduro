@@ -737,6 +737,30 @@
       }
     }
 
+    .content-footer {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 27px;
+
+      @include media-breakpoint-down(md) {
+        flex-direction: column;
+        gap: 5px;
+      }
+
+      p {
+        @include media-breakpoint-down(md) {
+          margin: 0;
+        }
+      }
+
+      .button-primary-orange,
+      .button-secondary-grey {
+        margin-top: 0;
+      }
+    }
+
+
     .paragraph {
       @include media-breakpoint-down(md) {
         margin-bottom: 20px;

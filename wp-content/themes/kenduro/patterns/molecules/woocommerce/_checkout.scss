@@ -71,6 +71,110 @@
 }
 
 .woocommerce-checkout {
+  .preloader {
+    backdrop-filter: blur(2px);
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    background-color: rgba(0, 0, 0, 0.1);
+    z-index: 1991;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.2s ease, visibility 0.2s ease;
+    @extend .flex-center;
+
+    
+    &__content {
+      max-width: 535px;
+      text-align: center;
+      padding: 80px 28px 30px;
+      border-radius: $radius-medium;
+      gap: 28px;
+      display: flex;
+      flex-direction: column;
+      background-color: $G-0;
+      box-shadow: 0px 3px 6px 0px #0F0F0F1A, 0px 9px 24px 0px #0F0F0F33;
+      position: relative;
+      
+      @include media-breakpoint-down(sm) {
+        max-width: calc(100% - 30px);
+        padding: 80px 20px 30px;
+      }
+
+      svg {
+        width: 150px;
+        height: 150px;
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        top: -30px;
+        pointer-events: none;
+      }
+    }
+  }
+
+  // .dot-flashing {
+  //   position: relative;
+  //   width: 24px;
+  //   height: 24px;
+  //   margin: 0 auto;
+  //   border-radius: $radius-circle;
+  //   background-color: rgba($b-highlight-two, 0.5);
+  //   animation: dot-flashing 1s infinite linear alternate;
+  //   animation-delay: 0.5s;
+
+  //   &::before,
+  //   &::after {
+  //     content: "";
+  //     display: inline-block;
+  //     position: absolute;
+  //     top: 0;
+  //     width: 24px;
+  //     height: 24px;
+  //     border-radius: $radius-circle;
+  //   }
+
+  //   &:before {
+  //     left: -34px;
+  //     background-color: $b-highlight-two;
+  //     animation: dot-flashing 1s infinite alternate;
+  //     animation-delay: 0s;
+  //   }
+
+  //   &:after {
+  //     left: 34px;
+  //     background-color: rgba($b-highlight-two, 0.2);
+  //     animation: dot-flashing 0.5s infinite alternate;
+  //     animation-delay: 1s;
+  //   }
+  // }
+
+  // @keyframes dot-flashing {
+  //   0% {
+  //     background-color: $b-highlight-two;
+  //   }
+  //   50%{
+  //     background-color: rgba($b-highlight-two, 0.5);
+  //   }
+    
+  //   100% {
+  //     background-color: rgba($b-highlight-two, 0.2);
+  //   }
+  // }
+
+  .processing {
+    .preloader {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .blockUI.blockOverlay {
+      display: none !important;
+    }
+  }
+
   .cart-customlocation,
   .woocommerce-error {
     display: none !important;
@@ -96,6 +200,10 @@
 
   .woocommerce {
     padding-top: 30px;
+
+    .blockUI.blockOverlay {
+      height: 100% !important;
+    }
 
     input:not(#want_invoice, .wpcf7-submit),
     textarea {
@@ -440,6 +548,7 @@
       background-color: $G-0;
       border-radius: $radius-medium;  
       margin: 0;
+      position: relative;
 
       tr,
       td,
@@ -759,6 +868,7 @@
 
   #payment {
     margin-top: 10px;
+    position: relative !important;
 
     .payment_methods {
       li {

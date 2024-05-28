@@ -1,4 +1,6 @@
 <?php
+use Lean\Load;
+
 /**
  * Checkout Form
  *
@@ -30,7 +32,14 @@ if ( ! $checkout->is_registration_enabled() && $checkout->is_registration_requir
 ?>
 
 <form name="checkout" method="post" class="checkout woocommerce-checkout" action="<?php echo esc_url( wc_get_checkout_url() ); ?>" enctype="multipart/form-data">
-
+	<div class="preloader">
+		<div class="preloader__content">
+			<!-- <div class="dot-flashing"></div> -->
+			<?php Load::atom('svg', ['name' => 'motion-blur']); ?>
+			<p class="paragraph paragraph-xl semibold">Обработваме поръчката, моля изчакайте ...</p>
+			<p class="paragraph paragraph-l">Не затваряйте този прозорец, преди да сте получили потвърждение. Не е бавен сайта, бавен ви е интернета 😎</p>
+		</div>
+	</div>
 	<?php if ( $checkout->get_checkout_fields() ) : ?>
 
 		<?php do_action( 'woocommerce_checkout_before_customer_details' ); ?>
