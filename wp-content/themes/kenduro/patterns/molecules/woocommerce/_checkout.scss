@@ -84,7 +84,6 @@
     visibility: hidden;
     transition: opacity 0.2s ease, visibility 0.2s ease;
     @extend .flex-center;
-
     
     &__content {
       max-width: 535px;
@@ -112,6 +111,13 @@
         top: -30px;
         pointer-events: none;
       }
+    }
+  }
+
+  .multiselect__spinner {
+    &:before,
+    &:after {
+      border-top-color: $b-highlight-two !important; 
     }
   }
 
