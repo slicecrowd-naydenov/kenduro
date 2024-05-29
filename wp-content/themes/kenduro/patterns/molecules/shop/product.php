@@ -37,7 +37,7 @@
           </div>
         </div>
       </div>
-      <div class="wp-block-button wc-block-grid__product-add-to-cart"><a href="?add-to-cart=<?php echo $args['id'] ?>" aria-label="Add <?php echo $args['title'] ?> to your cart" data-quantity="1" data-product_id="<?php echo $args['id'] ?>" data-product_sku="" rel="nofollow" class="wp-block-button__link add_to_cart_button ajax_add_to_cart" style="background-color: <?php echo $args['bg_pattern']; ?>">Buy Now</a></div>
+      <div class="wp-block-button wc-block-grid__product-add-to-cart"><a href="?add-to-cart=<?php echo $args['id'] ?>" aria-label="Add <?php echo $args['title'] ?> to your cart" data-quantity="1" data-product_id="<?php echo $args['id'] ?>" data-product_sku="" rel="nofollow" class="wp-block-button__link add_to_cart_button" style="background-color: <?php echo $args['bg_pattern']; ?>">Buy Now</a></div>
     </div>
     <?php if ($args['description']) { ?>
       <div class="wc-block-grid__product-info-description">
