@@ -375,6 +375,13 @@ input[type="checkbox"] {
   }
 }
 
+// add to any share buttons
+
+#a2a_copy_link_icon,
+#a2a_copy_link_copied {
+  background-color: $b-highlight-two !important;
+}
+
 // .cmplz-cookiebanner {
 //   .cmplz-close {
 //     background-size: cover;
