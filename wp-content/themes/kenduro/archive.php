@@ -86,7 +86,7 @@ $is_blog_cat = $current_cat->name === 'Блог' ? 'active' : '';
 									<a href="<?php echo esc_attr(the_permalink()); ?>">
 										<?php
 										if (has_post_thumbnail()) {
-											$thumb_size = $count === 1 ? 'large' : 'medium_large';
+											$thumb_size = $count === 1 ? 'full' : 'medium_large';
 										?>
 											<div class="thumb">
 												<?php if ($count === 1) : ?>
