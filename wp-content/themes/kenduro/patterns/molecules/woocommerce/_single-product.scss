@@ -23,6 +23,18 @@
     }
 
     div.product {
+
+      &.product-type-simple {
+        .dsk_table_img {
+          position: inherit;
+          bottom: 0;
+          margin-top: 20px;
+        }
+
+        .product-gallery-section  {
+          align-items: flex-start;
+        }
+      }
       .product-gallery-section {
         display: flex;
         gap: 30px;
@@ -37,6 +49,7 @@
         @include media-breakpoint-down(lg) {
           margin-top: 30px;
           flex-direction: column;
+          position: relative;
         }
 
         @include media-breakpoint-down(md) {
@@ -48,6 +61,13 @@
           top: 30px;
           margin-right: 30px;
           right: auto;
+
+          @include media-breakpoint-down(sm) {
+            left: auto !important;
+            right: 10px;
+            margin: 0;
+            top: 10px;
+          }
         }
     
         .woocommerce-product-gallery,
