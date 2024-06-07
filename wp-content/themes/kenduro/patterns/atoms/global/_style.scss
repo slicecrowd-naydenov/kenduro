@@ -317,7 +317,7 @@ h4,
 input[type="checkbox"] {
   display: none;
 
-  & + span,
+  & + span:not(.wapf-label-text),
   & + a {
     margin-left: 0;
     position: relative;
@@ -373,6 +373,13 @@ input[type="checkbox"] {
       opacity: 1;
     }
   }
+}
+
+// add to any share buttons
+
+#a2a_copy_link_icon,
+#a2a_copy_link_copied {
+  background-color: $b-highlight-two !important;
 }
 
 // .cmplz-cookiebanner {

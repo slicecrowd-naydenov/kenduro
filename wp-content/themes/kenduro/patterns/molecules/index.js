@@ -1,6 +1,7 @@
 import CreateProducts from './createProducts/main';
 import CreateCategories from './createCategories/main';
 // import FilterPrice from './filter-price';
+import SearchField from './blog/main';
 
 export default () => {
   if (CreateProducts) {
@@ -9,6 +10,10 @@ export default () => {
   
   if (CreateCategories) {
     new CreateCategories(document.getElementById('createCategories'));
+  }
+
+  if (SearchField) {
+    new SearchField(document.getElementById('search-field'));
   }
 
   // if (FilterPrice) {

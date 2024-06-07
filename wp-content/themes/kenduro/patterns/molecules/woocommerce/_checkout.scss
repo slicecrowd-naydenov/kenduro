@@ -340,6 +340,28 @@
   button.button {
     display: none;
   }
+
+  .variation {
+    dt {
+      position: relative;
+      display: inline;
+
+      &:after {
+        width: 4px;
+        display: block;
+        background: $G-0-5;
+        content: '';
+        height: 100%;
+        position: absolute;
+        right: 0;
+        top: 0;
+      }
+    }
+
+    dd {
+      display: none;
+    } 
+  }
 }
 
 .hide-show-cart {
