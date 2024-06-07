@@ -74,7 +74,8 @@ function trigger_ajax_to_cart() {
             let additionalTaxTimeout;
             clearTimeout(additionalTaxTimeout);
             additionalTaxTimeout = setTimeout(() => {
-              let totalNum = parseFloat(wapf_grand_total.text());
+              let totalString = wapf_grand_total.text();
+              let totalNum = parseFloat(totalString.replace(/,/g, '').replace(/[^\d.]/g, ''));
               let percentDiscount = onsale.text();
 
               // remove sign '%' and transform it into number
@@ -83,8 +84,10 @@ function trigger_ajax_to_cart() {
               // Calculation of the final amount after the discount
               let finalTotal = totalNum * (1 + discountValue);
 
-              custom_price_box.find('del ins bdi').html(wapf_grand_total.text());
-              custom_price_box.find('> ins bdi').html(finalTotal.toFixed(2) + ' лв.');
+              let formattedTotal = finalTotal.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+
+              custom_price_box.find('del ins bdi').html(totalString);
+              custom_price_box.find('> ins bdi').html(formattedTotal + ' лв.');
             }, 0);
           } else {
             // if don't have discount
