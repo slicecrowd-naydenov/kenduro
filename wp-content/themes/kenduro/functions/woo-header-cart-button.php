@@ -28,6 +28,9 @@ function trigger_ajax_to_cart() {
 ?>
   <script type="text/javascript">
     (function($) {
+      if ($('.single-product').length) {
+        $('.dsk_btn_click').removeClass('single_add_to_cart_button');
+      }
       const custom_price_box = $('.custom-price-box');
       $('body').on('added_to_cart', function() {
         // let imgPath = $('.woocommerce-product-gallery__image').find('.wp-post-image').attr('src');
