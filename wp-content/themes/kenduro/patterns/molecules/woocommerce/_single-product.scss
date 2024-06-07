@@ -295,7 +295,8 @@
             width: 100%;
           }
           
-          .single_add_to_cart_button {
+          .single_add_to_cart_button,
+          .dsk_btn_click {
             width: 100%;
 
             @include media-breakpoint-down(xl) {
@@ -624,12 +625,14 @@
             }
 
             .single_add_to_cart_button,
+            .dsk_btn_click,
             .custom-price-box {
               border-radius: $radius-medium;
               flex: 0 1 calc(50% - 5px);
             }
 
-            .single_add_to_cart_button {
+            .single_add_to_cart_button,
+            .dsk_btn_click {
               &:before {
                 border-radius: $radius-medium;
               }
