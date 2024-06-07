@@ -28,6 +28,7 @@ function trigger_ajax_to_cart() {
 ?>
   <script type="text/javascript">
     (function($) {
+      const custom_price_box = $('.custom-price-box');
       $('body').on('added_to_cart', function() {
         // let imgPath = $('.woocommerce-product-gallery__image').find('.wp-post-image').attr('src');
         // $('#addedToCart').find('img').attr('src', imgPath);
@@ -55,11 +56,44 @@ function trigger_ajax_to_cart() {
         }
 
         if ($('.woocommerce-variation-price').html() !== '') {
-          $('.custom-price-box').html($('.woocommerce-variation-price').html());
+          custom_price_box.html($('.woocommerce-variation-price').html());
         }
       });
 
       $(document).ready(function($) {
+        // Change price if we have selected additional product (like Garmin cart) in Product
+        const onsale = $('.onsale');
+        const wapf_grand_total = $('.wapf-grand-total');
+        $('.wapf-input').on('input', function() {
+          // if (this.checked)
+          if (onsale.length) {
+            // if have discount
+            let additionalTaxTimeout;
+            clearTimeout(additionalTaxTimeout);
+            additionalTaxTimeout = setTimeout(() => {
+              let totalNum = parseFloat(wapf_grand_total.text());
+              let percentDiscount = onsale.text();
+
+              // remove sign '%' and transform it into number
+              let discountValue = parseFloat(percentDiscount) / 100;
+
+              // Calculation of the final amount after the discount
+              let finalTotal = totalNum * (1 + discountValue);
+
+              custom_price_box.find('del ins bdi').html(wapf_grand_total.text());
+              custom_price_box.find('> ins bdi').html(finalTotal.toFixed(2) + ' лв.');
+            }, 0);
+          } else {
+            // if don't have discount
+
+            let additionalTaxTimeout;
+            clearTimeout(additionalTaxTimeout);
+            additionalTaxTimeout = setTimeout(() => {
+              custom_price_box.find('bdi').html(wapf_grand_total.text());
+            }, 0);
+          }
+        });
+
         let variation_option = $('.cfvsw-swatches-option');
         if (variation_option.hasClass('cfvsw-swatches-disabled')) {
           variation_option.removeClass('cfvsw-swatches-disabled');
@@ -123,7 +157,7 @@ function trigger_ajax_to_cart() {
 
               let total = $('#total').text();
               let sum = total - productPrice;
-              let updatedTotal = Number(sum.toFixed(2))
+              let updatedTotal = Number(sum.toFixed(2));
               $('#total').text(updatedTotal);
             }
           }))

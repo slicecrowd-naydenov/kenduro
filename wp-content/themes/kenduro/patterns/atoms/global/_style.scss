@@ -317,7 +317,7 @@ h4,
 input[type="checkbox"] {
   display: none;
 
-  & + span,
+  & + span:not(.wapf-label-text),
   & + a {
     margin-left: 0;
     position: relative;

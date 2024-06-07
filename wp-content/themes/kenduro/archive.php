@@ -75,51 +75,60 @@ $is_blog_cat = $current_cat->name === 'Блог' ? 'active' : '';
 									}
 								}
 								?>
-							</ul>
-							<?php echo do_shortcode('[wpdreams_ajaxsearchlite]'); ?>
+							</ul>							
+							<div id="search-field" class="search-field">
+								<input type="text" placeholder="Търси в Кендуро Блог">
+							</div>
 						</div>
-						<ul class="blog-post-list">
+						<div id="main">
+							<div id="search-results">
+								<ul class="blog-post-list">
 
-							<?php $count = 1;
-							while (have_posts()) : the_post(); ?>
-								<li class="blog-post-list__item item<?php echo $count; ?>">
-									<a href="<?php echo esc_attr(the_permalink()); ?>">
-										<?php
-										if (has_post_thumbnail()) {
-											$thumb_size = $count === 1 ? 'full' : 'medium_large';
-										?>
-											<div class="thumb">
-												<?php if ($count === 1) : ?>
-													<p class="paragraph paragraph-m semibold newest-blog-article">Най-новото от Кендуро Блог</p>
-												<?php endif;
-												the_post_thumbnail($thumb_size); 
+									<?php $count = 1;
+									while (have_posts()) : the_post(); ?>
+										<li class="blog-post-list__item">
+											<a href="<?php echo esc_attr(the_permalink()); ?>">
+												<?php
+												if (has_post_thumbnail()) {
+													$thumb_size = $count === 1 ? 'full' : 'medium_large';
 												?>
-											</div>
-										<?php
-										}
-
-										echo '<p class="paragraph paragraph-xl semibold post-title">' . get_the_title() . '</p>';
-										// get the post content     
-										if ($count === 1) {
-											$content = get_the_content(); ?>
-											<?php
-											// get the first 80 words from the content and added to the $abstract variable
-											preg_match('/^([^.!?\s]*[\.!?\s]+){0,120}/', strip_tags($content), $abstract);
-												// pregmatch will return an array and the first 80 chars will be in the first element 
-												echo '<p class="paragraph paragraph-l post-excerpt">' . $abstract[0] . '...</p>';
-										} else {
-											echo '<p class="paragraph paragraph-l post-excerpt">' . get_the_excerpt() . '</p>';
-										}
-										?>
-										<span class="learn-more">
-											Виж повече
-											<?php Load::atom('svg', ['name' => 'arrow_orange']); ?>
-										</span>
-									</a>
-								</li>
-							<?php $count++;
-							endwhile; ?>
-						</ul>
+													<div class="thumb">
+														<?php if ($count === 1) : ?>
+															<p class="paragraph paragraph-m semibold newest-blog-article">Най-новото от Кендуро Блог</p>
+														<?php endif;
+														the_post_thumbnail($thumb_size); 
+														?>
+													</div>
+												<?php
+												}
+												?>
+												<div class="title-wrapper">
+													<?php
+													echo '<p class="paragraph paragraph-xl semibold post-title">' . get_the_title() . '</p>';
+													// get the post content     
+													if ($count === 1) {
+														$content = get_the_content(); ?>
+														<?php
+														// get the first 80 words from the content and added to the $abstract variable
+														preg_match('/^([^.!?\s]*[\.!?\s]+){0,120}/', strip_tags($content), $abstract);
+															// pregmatch will return an array and the first 80 chars will be in the first element 
+															echo '<p class="paragraph paragraph-l post-excerpt">' . $abstract[0] . '...</p>';
+													} else {
+														echo '<p class="paragraph paragraph-l post-excerpt">' . get_the_excerpt() . '</p>';
+													}
+													?>
+													<span class="learn-more">
+														Виж повече
+														<?php Load::atom('svg', ['name' => 'arrow_orange']); ?>
+													</span>
+												</div>
+											</a>
+										</li>
+									<?php $count++;
+									endwhile; ?>
+								</ul>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
