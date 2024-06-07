@@ -26,8 +26,8 @@ function create_sales_record($response) {
   foreach ($response['product_info'] as $key => $value) {
     $product_id = $value['product_id'];
     $product = wc_get_product($product_id);
-    $sale_price = $product->get_price(); 
-    $sale_price = apply_filters('advanced_woo_discount_rules_get_product_discount_price', $sale_price, $product);
+    // $sale_price = $product->get_price(); 
+    // $sale_price = apply_filters('advanced_woo_discount_rules_get_product_discount_price', $sale_price, $product);
     $meta_fields = get_field("meta_data", $product_id);
     $field_id = array();
     if ($product->is_type('variation')) {
@@ -46,7 +46,7 @@ function create_sales_record($response) {
       $sales_quantity_ordered => $value['quantity'],
       $sales_link_to_product_variations => $field_id,
       $wp_order_id => $response['order_id'],
-      $final_price_manual => round($sale_price, 2)
+      $final_price_manual => $value['product_total']
     );
 
     $sales_body['items'][] = $item_data;
@@ -199,6 +199,7 @@ function checkout_success_sent_form($order_id) {
   
   $product_info = array();
   foreach ($items as $item_key => $item) {
+    pretty_dump($item['total']);
     $product_data = $item->get_data();
     $id = $product_data['product_id'];
     $product = wc_get_product($id);
@@ -212,7 +213,8 @@ function checkout_success_sent_form($order_id) {
     $product_info[] = array(
       'product_id' => $product_id,
       'product_name' => $product_data['name'],
-      'quantity' => $product_data['quantity']
+      'quantity' => $product_data['quantity'],
+      'product_total' => $item['total']
     );
   }
   
