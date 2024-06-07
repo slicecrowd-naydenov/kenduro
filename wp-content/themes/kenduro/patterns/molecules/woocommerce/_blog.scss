@@ -241,8 +241,13 @@
 
     .posts-nav {
       display: flex;
-      align-items: flex-end;
+      align-items: center;
       justify-content: space-between;
+      margin-top: 35px;
+
+      .nav-pills {
+        margin-top: 0;
+      }
     }
 
     #search-field {
@@ -288,6 +293,7 @@
     // flex-wrap: wrap; 
 
     &__item {
+      min-height: 365px;
       position: relative;
       margin-bottom: 20px;
 

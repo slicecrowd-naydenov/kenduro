@@ -71,7 +71,7 @@ export default class SearchField {
 
         axios({
           method: 'post',
-          url: 'http://kenduro.test/graphql',
+          url: `${wpApiSettings.site_url}/graphql`,
           data: JSON.stringify({ query: query }),
           headers: {
             'content-type': 'application/json; charset=UTF-8'
