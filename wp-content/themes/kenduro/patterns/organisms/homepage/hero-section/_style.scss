@@ -235,7 +235,10 @@
       }
 
       .mobile-slide-view {
+        max-width: 600px;
+
         @include media-breakpoint-down(lg) {
+          max-width: none;
           margin-top: -75px;
           background-color: $b-primary;
           padding: 20px;

@@ -21,7 +21,19 @@ if (have_posts()) {
 						<div class="content-wrapper woocommerce-checkout">
 							<div class="content">
 								<div class="content-nav">
-									<?php woocommerce_breadcrumb(); ?>
+									<div class="post-category">
+										<a href="<?php echo esc_attr(get_site_url().'/blog'); ?>" class="post-category__main">Блог</a>
+										<?php 
+											$allcategory = get_the_category(); 
+											foreach ($allcategory as $category) {
+												if ($category->cat_name !== 'Блог') {
+										?>
+													<a class="post-category__secondary" href="<?php echo esc_attr(get_category_link($category->term_id)); ?>">#<?php echo $category->cat_name; ?></a>
+										<?php 
+												}
+											}
+										?>
+									</div>
 									<div class="share-box">
 										<p class="paragraph paragraph-l">Сподели:</p>
 										<?php echo do_shortcode('[addtoany]');?>
