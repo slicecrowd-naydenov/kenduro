@@ -84,7 +84,7 @@
         border-radius: $radius-medium;
 
         @include media-breakpoint-down(lg) {
-          width: auto;
+          width: 100%;
           flex: auto;
           margin: -15px 0 0 0;
           padding: 0 15px 15px;
