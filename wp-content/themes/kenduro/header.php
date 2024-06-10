@@ -23,7 +23,9 @@ t.src=v;s=b.getElementsByTagName(e)[0];
 s.parentNode.insertBefore(t,s)}(window,document,'script',
 'https://connect.facebook.net/en_US/fbevents.js');
  fbq('init', '951338676594370'); 
-fbq('track', 'PageView');
+ fbq('track', 'PageView');
+ fbq('track', 'AddToCart');
+ fbq('track', 'ViewContent');
 </script>
 <noscript>
  <img height="1" width="1" 
