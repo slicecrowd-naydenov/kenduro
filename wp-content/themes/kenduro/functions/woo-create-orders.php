@@ -225,26 +225,4 @@ function checkout_success_sent_form($order_id) {
 
   return $data;
 }
-
-function my_custom_head_items( $items, $invoice ) {
-  // Change the 'date' item
-  if ( isset( $items['date'] ) ) {
-    $items['date']['value'] = date_i18n( 'M d, Y', strtotime( $invoice->woo_order->get_date_modified() ) );
-  }
-
-  // Change the 'date-of-tax' item
-  if ( isset( $items['date-of-tax'] ) ) {
-    $items['date-of-tax']['value'] = date_i18n( 'M d, Y', strtotime( $invoice->woo_order->get_date_modified() ) );
-  }
-
-  // Change the 'due-date' item
-  if ( isset( $items['due-date'] ) ) {
-    $items['due-date']['value'] = date_i18n( 'M d, Y', strtotime( $invoice->woo_order->get_date_modified() ) );
-  }
-
-  // Return the modified items
-  return $items;
-}
-add_filter( 'woo_bg/invoice/head_items', 'my_custom_head_items', 10, 2 );
-
 ?>
