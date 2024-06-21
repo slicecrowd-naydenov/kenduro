@@ -1,4 +1,4 @@
-name: Deploy to SuperHosting
+name: Deploy to Jump.bg
 
 env:
   APP_PRODUCTION: public_html
