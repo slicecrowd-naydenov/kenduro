@@ -9,7 +9,7 @@
   
   $terms = get_terms($args);
 ?>
-<div class="exclusive-brands">
+<div class="exclusive-brands"> 
   <div class="container">
     <div class="row">
       <div class="col">
