@@ -1,7 +1,7 @@
 name: Deploy to SuperHosting
 
 env:
-  APP_PRODUCTION: kenduro.com
+  APP_PRODUCTION: public_html
   APP_STAGING: staging.kenduro.com
 
 on:
