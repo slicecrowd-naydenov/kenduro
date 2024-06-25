@@ -199,7 +199,6 @@ function checkout_success_sent_form($order_id) {
   
   $product_info = array();
   foreach ($items as $item_key => $item) {
-    pretty_dump($item['total']);
     $product_data = $item->get_data();
     $id = $product_data['product_id'];
     $product = wc_get_product($id);

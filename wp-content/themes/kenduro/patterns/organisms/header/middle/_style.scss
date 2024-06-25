@@ -226,6 +226,10 @@
 
     .ywcas-search-results-grid {
       gap: 5px !important;
+
+      .ywcas-badge {
+        display: none !important; 
+      }
     }
 
     .css-1st3ua0 {
