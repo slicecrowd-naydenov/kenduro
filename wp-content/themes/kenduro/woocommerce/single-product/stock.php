@@ -64,7 +64,11 @@ switch ($delivery_time_text) {
 	<p class="stock paragraph paragraph-m <?php echo esc_attr( $class ); ?>">
 		<?php // echo wp_kses_post( $availability );
 			Load::atom('svg', ['name' => 'checkbox']);
-			echo $ss_delivery_time_text;
+		?>
+			<span>
+				<?php echo $ss_delivery_time_text; ?>
+			</span>
+			<?php
 			// if ($class === 'in-stock') {
 			// 	// echo '<b>In stock</b>';
 			// 	echo 'Може да бъде доставено утре !';
@@ -109,7 +113,7 @@ jQuery(document).ready(function($) {
 				delivery_message = "Доставка " + delivery_time_text;
 		}
 
-		$('.custom-stock .stock').text(delivery_message);
+		$('.custom-stock .stock span').text(delivery_message);
 	});
 });
 </script>
