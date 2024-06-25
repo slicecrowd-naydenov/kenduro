@@ -41,6 +41,8 @@ if ($product->is_type('simple')) {
 	} 
 } else {
 	$variation_ids = $product->get_children();
+
+	pretty_dump($variation_ids);
 	
 	$delivery_time_text = get_post_meta($variation_ids[0], '_my_delivery_time_text', true);
 }
@@ -88,3 +90,29 @@ switch ($delivery_time_text) {
 		</span>
 	</span>
 </div>
+
+<script type="text/javascript">
+jQuery(document).ready(function($) {
+	$('.variations_form').on('found_variation', function(event, variation) {
+		console.log('variation: ', variation.delivery_time_text);
+		var delivery_time_text = variation.delivery_time_text;
+		var delivery_message;
+
+		switch (delivery_time_text) {
+			case "В момента няма наличност":
+				delivery_message = "В момента няма наличност";
+				break;
+			case "Ще се свържем с вас":
+				delivery_message = "Наличност : ще се свържем с вас";
+				break;
+			case "1 Ден (утре)":
+				delivery_message = "Може да бъде доставено утре!";
+				break;
+			default:
+				delivery_message = "Доставка " + delivery_time_text;
+		}
+
+		$('.custom-stock .stock').text(delivery_message);
+	});
+});
+</script>
