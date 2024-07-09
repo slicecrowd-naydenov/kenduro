@@ -461,3 +461,17 @@ foreach( $search_result_data as $item => $values ) {
 
 return $search_result_data;
 }
+
+function filter_loop_shop_per_page( $products ) {
+  if ( wp_is_mobile() ) {
+      $products = 6;
+  } else {
+      $products = 16;
+  }
+
+  // OR shorthand
+  $products = wp_is_mobile() ? 6 : 16;
+
+  return $products;
+}
+add_filter( 'loop_shop_per_page', 'filter_loop_shop_per_page', 10, 1 );
