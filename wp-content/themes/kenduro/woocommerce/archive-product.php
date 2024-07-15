@@ -302,9 +302,9 @@ do_action( 'woocommerce_before_main_content' );
 				<div class="brand-info <?php echo esc_attr($classes); ?>">
 					<div class="brand-info__image">
 						<div class="brand-info__logo">
-							<img src="<?php echo esc_attr($term_logo)?>" />
+							<img src="<?php echo esc_attr($term_logo)?>" class="no-lazy" alt="" />
 						</div>
-						<img src="<?php echo esc_attr($term_banner)?>" />
+						<img class="no-lazy" src="<?php echo esc_attr($term_banner)?>" alt="" />
 					</div>
 					<div>
 						<div class="brand-info__description collapse paragraph paragraph-l" id="collapseSummary">
