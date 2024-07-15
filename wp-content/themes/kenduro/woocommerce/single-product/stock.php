@@ -69,7 +69,7 @@ if ($product->is_type('simple')) {
     $var_id = $variation->get_id();
 		$variation_stock_data[$var_id] = $stock_quantity;
 	}
-
+	// това е необходимо за вземане на количеството на вариацията
 	wp_add_inline_script('wc-add-to-cart-variation', 'var variationStockData = ' . json_encode($variation_stock_data) . ';', 'before');
 
 
@@ -123,36 +123,3 @@ switch ($delivery_time_text) {
 		</span>
 	</span>
 </div>
-
-<script type="text/javascript">
-jQuery(document).ready(function($) {
-	$('.variations_form').on('found_variation', function(event, variation) {
-		// console.log(variation);
-		console.log(variationStockData);
-		
-		var delivery_time_text = variation.delivery_time_text;
-		var delivery_message;
-		var quantity = variationStockData[variation.variation_id];
-		
-		if (quantity > 0) {
-			delivery_message = "Може да бъде доставено утре!";
-		} else {
-			switch (delivery_time_text) {
-				case "В момента няма наличност":
-					delivery_message = "В момента няма наличност";
-					break;
-				case "Ще се свържем с вас":
-					delivery_message = "Наличност : ще се свържем с вас";
-					break;
-				case "1 Ден (утре)":
-					delivery_message = "Може да бъде доставено утре!";
-					break;
-				default:
-					delivery_message = "Доставка " + delivery_time_text;
-			}
-		}
-
-		$('.custom-stock .stock span').text(delivery_message);
-	});
-});
-</script>

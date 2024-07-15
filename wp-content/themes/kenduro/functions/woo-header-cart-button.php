@@ -61,6 +61,31 @@ function trigger_ajax_to_cart() {
         if ($('.woocommerce-variation-price').html() !== '') {
           custom_price_box.html($('.woocommerce-variation-price').html());
         }
+
+        // Логика за stock message:
+        var delivery_time_text = variation.delivery_time_text;
+        var delivery_message;
+        var quantity = variationStockData[variation.variation_id];
+        
+        if (quantity > 0) {
+          delivery_message = "Може да бъде доставено утре!";
+        } else {
+          switch (delivery_time_text) {
+            case "В момента няма наличност":
+              delivery_message = "В момента няма наличност";
+              break;
+            case "Ще се свържем с вас":
+              delivery_message = "Наличност : ще се свържем с вас";
+              break;
+            case "1 Ден (утре)":
+              delivery_message = "Може да бъде доставено утре!";
+              break;
+            default:
+              delivery_message = "Доставка " + delivery_time_text;
+          }
+        }
+
+        $('.custom-stock .stock span').text(delivery_message);
       });
 
       $(document).ready(function($) {
