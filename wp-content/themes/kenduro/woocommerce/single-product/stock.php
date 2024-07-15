@@ -22,6 +22,21 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 global $product;
 
+// pretty_dump($product->is_type('variable'));
+// if (is_product()) {
+	// if ($product->is_type('variable')) {
+		// $variations = $product->get_available_variations();
+		// pretty_dump($product);
+// 		// $variation_stock_data = array();
+
+// 		// foreach ($variations as $variation) {
+// 		//   $variation_stock_data[$variation['variation_id']] = $variation['max_qty'];
+// 		// }
+
+// 		// wp_add_inline_script('wc-add-to-cart-variation', 'var variationStockData = ' . json_encode($variation_stock_data) . ';', 'before');
+	// }
+// }
+
 $delivery_time_text = '';
 $ss_delivery_time_text = '';
 
@@ -30,17 +45,33 @@ if ($product->is_type('simple')) {
 	if ($meta_data) {
 		// Използване на array_column за създаване на асоциативен масив с ключовете и стойностите
 		$meta_data_keys = array_column($meta_data, 'value', 'key');
-
-		// Проверка дали съществува ключът 'delivery_time' и извличане на стойността му
-		if (isset($meta_data_keys['delivery_time'])) {
-			$delivery_time_value = $meta_data_keys['delivery_time'];
-			$delivery_time_text = esc_html($delivery_time_value);
+		$prod = wc_get_product($product->get_id());
+    $stock_quantity = $prod->get_stock_quantity();
+		if ($stock_quantity > 0) {
+			$delivery_time_text = '1 Ден (утре)';
 		} else {
-			$delivery_time_text = 'Ще се свържем с Вас';
+			// Проверка дали съществува ключът 'delivery_time' и извличане на стойността му
+			if (isset($meta_data_keys['delivery_time'])) {
+				$delivery_time_value = $meta_data_keys['delivery_time'];
+				$delivery_time_text = esc_html($delivery_time_value);
+			} else {
+				$delivery_time_text = 'Ще се свържем с Вас';
+			}
 		}
 	} 
 } else {
 	$variation_ids = $product->get_children();
+
+	$variation_stock_data = array();
+	foreach ($variation_ids as $variation_id) {
+		$variation = wc_get_product($variation_id);
+    $stock_quantity = $variation->get_stock_quantity();
+    $var_id = $variation->get_id();
+		$variation_stock_data[$var_id] = $stock_quantity;
+	}
+
+	wp_add_inline_script('wc-add-to-cart-variation', 'var variationStockData = ' . json_encode($variation_stock_data) . ';', 'before');
+
 
 	$delivery_time_text = get_post_meta($variation_ids[0], '_my_delivery_time_text', true);
 }
@@ -96,21 +127,29 @@ switch ($delivery_time_text) {
 <script type="text/javascript">
 jQuery(document).ready(function($) {
 	$('.variations_form').on('found_variation', function(event, variation) {
+		// console.log(variation);
+		console.log(variationStockData);
+		
 		var delivery_time_text = variation.delivery_time_text;
 		var delivery_message;
-
-		switch (delivery_time_text) {
-			case "В момента няма наличност":
-				delivery_message = "В момента няма наличност";
-				break;
-			case "Ще се свържем с вас":
-				delivery_message = "Наличност : ще се свържем с вас";
-				break;
-			case "1 Ден (утре)":
-				delivery_message = "Може да бъде доставено утре!";
-				break;
-			default:
-				delivery_message = "Доставка " + delivery_time_text;
+		var quantity = variationStockData[variation.variation_id];
+		
+		if (quantity > 0) {
+			delivery_message = "Може да бъде доставено утре!";
+		} else {
+			switch (delivery_time_text) {
+				case "В момента няма наличност":
+					delivery_message = "В момента няма наличност";
+					break;
+				case "Ще се свържем с вас":
+					delivery_message = "Наличност : ще се свържем с вас";
+					break;
+				case "1 Ден (утре)":
+					delivery_message = "Може да бъде доставено утре!";
+					break;
+				default:
+					delivery_message = "Доставка " + delivery_time_text;
+			}
 		}
 
 		$('.custom-stock .stock span').text(delivery_message);
