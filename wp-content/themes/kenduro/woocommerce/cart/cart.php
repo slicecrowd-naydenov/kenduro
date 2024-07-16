@@ -172,7 +172,7 @@ do_action('woocommerce_before_cart'); ?>
 			<div id="custom-total">
 				<span class="paragraph paragraph-xl primary semibold">Крайна цена</span>
 				<h2 class="primary semibold">
-					<span id="total"><?php echo WC()->cart->get_cart_total(); ?></span>
+					<span id="total"><?php echo WC()->cart->get_cart_total(); ?></span>лв.
 				</h2>
 			</div>
 		<?php

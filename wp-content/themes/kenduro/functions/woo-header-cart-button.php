@@ -144,6 +144,12 @@ function trigger_ajax_to_cart() {
 
       let productEl = '';
       const confirmationModal = $('#deleteProductConfirmation');
+      const totalEl = $('#total');
+      
+      if (totalEl.length) {
+        totalEl.find('bdi span').remove();
+      }
+
       $('.remove').on('click', function(event) {
         event.preventDefault();
         event.stopPropagation();
@@ -173,7 +179,7 @@ function trigger_ajax_to_cart() {
         if (!productEl) {
           return;
         }
-        
+
         fetch(productEl.href)
           .then(((res) => {
             console.log('OK!', res);
@@ -186,10 +192,10 @@ function trigger_ajax_to_cart() {
                 .end()  //again go back to selected element
                 .text();
 
-              let total = $('#total').text();
+              let total = totalEl.text();
               let sum = total - productPrice;
               let updatedTotal = Number(sum.toFixed(2));
-              $('#total').text(updatedTotal);
+              totalEl.text(updatedTotal);
             }
           }))
           .catch((err) => {
