@@ -26,6 +26,35 @@ get_header();
           ]);
         ?>
 				<div class="filter-content-wrapper">
+          <?php if (get_option('wdr_on_sale_list')) { 
+            $promo_products = get_option('wdr_on_sale_list')['list'];   
+            $promo_product_ids = implode(',', $promo_products);
+            ?>
+
+          <div class="products-wrapper">
+            <?php 
+              echo do_shortcode('[products ids="'.$promo_product_ids.'" limit="12" columns="4" paginate="true"]');
+            ?>
+            </div>
+            <div class="filter-sidebar">
+              <?php
+                // $list_categories($taxonomies, array());
+              ?>
+              <p class="paragraph paragraph-xl semibold cat-head active-cat filters">Филтри</p>
+              <?php echo do_shortcode('[wpf-filters id=2]'); ?>
+
+            </div>  
+          </div>
+        <?php
+          } else { ?>
+          <div class="products-wrapper">
+          <?php 
+            // echo do_shortcode('[awdr_sale_items_list columns="4" per_page="20"]'); 
+            echo do_shortcode('[products]');
+            // echo do_shortcode('[products ids="12527, 12538, 12522, 12534, 12869"]');
+            // echo do_shortcode('[products attribute="pa_brand" terms="garmin"]');
+          ?>
+          </div>
           <div class="filter-sidebar">
 						<?php
 							// $list_categories($taxonomies, array());
@@ -34,13 +63,7 @@ get_header();
 						<?php echo do_shortcode('[wpf-filters id=2]'); ?>
 	
 					</div>
-          <?php 
-            echo do_shortcode('[awdr_sale_items_list columns="4" per_page="20"]'); 
-            // echo do_shortcode('[products category="tyres-wheels,navigations"]');
-            // echo do_shortcode('[products ids="12527, 12538, 12522, 12534, 12869"]');
-            // echo do_shortcode('[products attribute="pa_brand" terms="garmin"]');
-          ?>
-          <?php // echo do_shortcode('[wpf-products]'); ?>
+          <?php }// echo do_shortcode('[wpf-products]'); ?>
         </div>
       </div>
     </div>
