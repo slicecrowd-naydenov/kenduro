@@ -35,16 +35,7 @@ get_header();
             <?php 
               echo do_shortcode('[products ids="'.$promo_product_ids.'" limit="12" columns="4" paginate="true"]');
             ?>
-            </div>
-            <div class="filter-sidebar">
-              <?php
-                // $list_categories($taxonomies, array());
-              ?>
-              <p class="paragraph paragraph-xl semibold cat-head active-cat filters">Филтри</p>
-              <?php echo do_shortcode('[wpf-filters id=2]'); ?>
-
-            </div>  
-          </div>
+            </div> 
         <?php
           } else { ?>
           <div class="products-wrapper">
@@ -55,15 +46,15 @@ get_header();
             // echo do_shortcode('[products attribute="pa_brand" terms="garmin"]');
           ?>
           </div>
-          <div class="filter-sidebar">
-						<?php
-							// $list_categories($taxonomies, array());
-						?>
-						<p class="paragraph paragraph-xl semibold cat-head active-cat filters">Филтри</p>
-						<?php echo do_shortcode('[wpf-filters id=2]'); ?>
-	
-					</div>
           <?php }// echo do_shortcode('[wpf-products]'); ?>
+          <div class="filter-sidebar">
+            <?php
+              // $list_categories($taxonomies, array());
+            ?>
+            <p class="paragraph paragraph-xl semibold cat-head active-cat filters">Филтри</p>
+            <?php echo do_shortcode('[wpf-filters id=2]'); ?>
+
+          </div> 
         </div>
       </div>
     </div>
