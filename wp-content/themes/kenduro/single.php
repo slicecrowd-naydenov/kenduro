@@ -6,8 +6,23 @@ use Lean\Load;
  */
 
 get_header();
+
 if (have_posts()) {
 	while (have_posts()) {
+	
+		$featured_posts = get_field('suggested_products');
+		if( $featured_posts ): 
+			$ids = array(); 
+			foreach( $featured_posts as $post ): 
+				setup_postdata($post);
+				$ids[] = $post;
+			endforeach;
+
+			$random_ids = array_rand($ids, 2);
+    	$selected_ids = $ids[$random_ids[0]] . ',' . $ids[$random_ids[1]];
+				// Reset the global post object so that the rest of the page works correctly.
+			wp_reset_postdata();
+		endif;
 ?>
 
 	<div id="primary">
@@ -110,7 +125,7 @@ if (have_posts()) {
 
 								?>
 								<h4 class="sidebar__title semibold">От Кендуро с любов ❤️</h4>
-								<?php echo do_shortcode('[products limit="2" columns="1"]')?>
+								<?php echo do_shortcode('[products limit="2" columns="1" ids="'.$selected_ids.'"]')?>
 
 							</div>
 						</div>

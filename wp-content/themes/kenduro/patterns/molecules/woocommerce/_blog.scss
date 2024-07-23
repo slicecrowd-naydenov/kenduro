@@ -39,6 +39,10 @@
         margin: 0;
         padding: 0 0 0 15px;
         list-style: disc;
+
+        &.products {
+          padding: 0;
+        }
       }
     
       img:not(.attachment-post-thumbnail, .attachment-woocommerce_thumbnail) {
@@ -88,6 +92,26 @@
           flex: auto;
           margin: -15px 0 0 0;
           padding: 0 15px 15px;
+        }
+
+        table {
+          .woocommerce {
+            padding-top: 0 !important;
+
+            ul.products {
+              margin-bottom: 0 !important;
+            }
+
+            li.product {
+              margin-bottom: 0 !important;
+            }
+          }
+
+          td {
+            &:first-child {
+              width: 33%;
+            }
+          }
         }
 
         .content-nav {
