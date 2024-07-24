@@ -62,7 +62,9 @@ if (have_posts()) {
 								?>
 							</div>
 							<div class="sidebar woocommerce">
-								<?php echo do_shortcode('[contact-form-7 id="817a8d2" title="Newssletter"]'); ?>
+								<div class="wpcf7 js">
+									<div id="omnisend-embedded-v2-66a0d83c1b6b3377bbd50c3f"></div>
+								</div>
 								<h4 class="sidebar__title semibold">Разгледай също</h4>
 
 								<?php

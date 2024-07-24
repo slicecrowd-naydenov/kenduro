@@ -95,6 +95,10 @@
         }
 
         table {
+          @include media-breakpoint-down(sm) {
+            margin-bottom: 35px; 
+          }
+
           .woocommerce {
             padding-top: 0 !important;
 
@@ -104,12 +108,29 @@
 
             li.product {
               margin-bottom: 0 !important;
+
+              @include media-breakpoint-down(sm) {
+                width: 100%;
+              }
+            }
+          }
+
+          tr {
+            @include media-breakpoint-down(sm) {
+              display: flex;
+              flex-direction: column;
             }
           }
 
           td {
             &:first-child {
               width: 33%;
+
+            }
+            
+            @include media-breakpoint-down(sm) {
+              width: 100% !important;
+              padding: 0;
             }
           }
         }

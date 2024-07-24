@@ -27,7 +27,9 @@ $is_blog_cat = $current_cat->name === 'Блог' ? 'active' : '';
 							<p class="paragraph paragraph-xl">Бъди информиран за всичко в ендурото</p>
 						</div>
 						<div class="right woocommerce">
-							<?php echo do_shortcode('[contact-form-7 id="817a8d2" title="Newssletter"]'); ?>
+							<div class="wpcf7 js">
+								<div id="omnisend-embedded-v2-66a0d83c1b6b3377bbd50c3f"></div>
+							</div>
 						</div>
 					</div>
 				</div>
