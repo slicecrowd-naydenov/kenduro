@@ -32,11 +32,11 @@ function get_all_column_fields($request) {
 function get_filtered_column_fields($fields) {
   $filtered_data = array();
   foreach ($fields as $field) {
-    if (isset($field["params"]["help_text"]) && $field["params"]["help_text"] !== "") {
+    if ($field["params"]["help_doc"] !== null && $field["params"]["help_doc"]['preview'] !== '') {
       $filtered_item = array(
         "slug" => $field["slug"],
         "label" => $field["label"],
-        "help_text" => $field["params"]["help_text"],
+        "help_text" => $field["params"]["help_doc"]['preview'],
       );
       $filtered_data[] = $filtered_item;
     }
