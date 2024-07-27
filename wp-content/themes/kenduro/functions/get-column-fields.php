@@ -32,11 +32,15 @@ function get_all_column_fields($request) {
 function get_filtered_column_fields($fields) {
   $filtered_data = array();
   foreach ($fields as $field) {
-    if ($field["params"]["help_doc"] !== null && $field["params"]["help_doc"]['preview'] !== '') {
+    // if ($field["params"]["help_doc"] !== null && $field["params"]["help_doc"]['preview'] !== '') {
+    if (array_key_exists('help_doc', $field["params"]) && $field["params"]["help_doc"] !== null && $field["params"]["help_doc"]['preview'] !== '') {
+      $preview_text = $field["params"]["help_doc"]['preview'];
+      $html_text = $field["params"]["help_doc"]['html'];
+
       $filtered_item = array(
         "slug" => $field["slug"],
         "label" => $field["label"],
-        "help_text" => $field["params"]["help_doc"]['preview'],
+        "help_text" => $preview_text ? $preview_text : strip_tags($html_text)
       );
       $filtered_data[] = $filtered_item;
     }

@@ -647,7 +647,7 @@ function generate_variable_products($item, $ss_ids, $product_fields, $product_va
 
   $variations = new WC_Product_Variable();
 
-  $variations->set_name($item['s3d48a1624']);
+  $variations->set_name($item[$name_bg]);
   $variations->set_slug($item['title']);
   $variations->set_sku($item[$prduct_sku]);
   
@@ -718,7 +718,7 @@ function generate_simple_product($item, $ss_ids, $product_fields, $product_varia
   $product_var_id = get_column_field_id('product_var_id', $product_fields);
 
   $simple_product = new WC_Product_Simple();
-  $simple_product->set_name($item['s3d48a1624']); // product title
+  $simple_product->set_name($item[$name_bg]); // product title
   $simple_product->set_status('publish');
   $simple_product->set_slug($item['title']);
   $p_id = $simple_product->save();     
