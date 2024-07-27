@@ -3,6 +3,10 @@
 use Lean\Load;
 
 get_header();
+$wccs_products = new WCCS_Products();
+$promo_products = $wccs_products->get_discounted_products();
+$promo_product_ids = implode(',', $promo_products);
+
 ?>
 
 <div class="on-sale" id="primary">
@@ -18,8 +22,10 @@ get_header();
             // 'cat' => 'намалени продукти',
             // 'cat_img_inner' => $cat_inner_image_url
           ]);
+
+          // echo do_shortcode('[wccs_discounted_products]');
+          echo do_shortcode('[products ids="'.$promo_product_ids.'" limit="12" columns="4" paginate="true"]');
         ?>
-        <?php echo do_shortcode('[awdr_sale_items_list columns="5" per_page="20"]'); ?>
       </div>
     </div>
   </div>
