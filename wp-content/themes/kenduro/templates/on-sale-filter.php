@@ -13,14 +13,15 @@ get_header();
 
 <?php
 global $wpdb;
+$wccs_products = new WCCS_Products();
 
 $parent_IDS = array();
-// $promo_products = get_option('wdr_on_sale_list')['list']; // Вашият масив с продуктови ID-та
-$promo_products = $promo_products = array(9374 , 9372 , 9370 );
+// $promo_products = get_option('wdr_on_sale_list')['list']; // Discounted products provided from Discount rules pugin
+// $promo_products = $promo_products = array(9374 , 9372 , 9370 );
+$promo_products = $wccs_products->get_discounted_products();
 $selected_category_id = isset($_GET['category']) ? intval($_GET['category']) : 0;
 $current_cat = $selected_category_id ? get_term_by('ID', $selected_category_id, 'product_cat') : null;
 $current_cat_ID =  null;
-
 
 if ( !empty($promo_products) ) {
   
@@ -44,7 +45,6 @@ if ( !empty($promo_products) ) {
   $main_categories = array();
   $main_categories_arr = array();
   $sub_categories_arr = array();
-
   // Създаване на асоциативни масиви за категориите
   foreach ( $results as $category ) {
     if ( $category->parent == 0 ) {
@@ -218,33 +218,11 @@ $promo_product_ids = implode(',', $promo_products);
           ]);
         ?>
 				<div class="filter-content-wrapper">
-          <?php if (get_option('wdr_on_sale_list')) { 
-            // $promo_products = get_option('wdr_on_sale_list')['list'];   
-            // $promo_product_ids = implode(',', $promo_products);
-            ?>
-
           <div class="products-wrapper">
-            <?php 
-              echo do_shortcode('[products ids="'.$promo_product_ids.'" limit="12" columns="4" paginate="true"]');
-            ?>
+            <?php echo do_shortcode('[products ids="'.$promo_product_ids.'" limit="12" columns="4" paginate="true"]'); ?>
             </div> 
-        <?php
-          } else { ?>
-          <div class="products-wrapper">
-          <?php 
-            // echo do_shortcode('[awdr_sale_items_list columns="4" per_page="20"]'); 
-            // echo do_shortcode('[products]');
-            echo do_shortcode('[products ids="'.$promo_product_ids.'"]');
-            // echo do_shortcode('[products ids="12527, 12538, 12522, 12534, 12869"]');
-            // echo do_shortcode('[products attribute="pa_brand" terms="garmin"]');
-          ?>
-          </div>
-          <?php }// echo do_shortcode('[wpf-products]'); ?>
           <div class="filter-sidebar">
-            <?php
-            
-              $list_categories($main_categories_arr, array());
-            ?>
+            <?php $list_categories($main_categories_arr, array()); ?>
             <p class="paragraph paragraph-xl semibold cat-head active-cat filters">Филтри</p>
             <?php echo do_shortcode('[wpf-filters id=2]'); ?>
 
