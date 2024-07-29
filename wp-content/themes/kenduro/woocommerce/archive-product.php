@@ -19,7 +19,7 @@ use Lean\Load;
 
 defined( 'ABSPATH' ) || exit;
 
-global $wp_query;
+global $wp_query, $wp;
 $query_vars = $wp_query->query_vars;
 
 $get_brand = isset($query_vars['pa_brand']) ? $query_vars['pa_brand'] : null;
@@ -27,6 +27,7 @@ $get_product_cat = isset($query_vars['product_cat']) ? $query_vars['product_cat'
 $product_cat_ID = 0;
 
 $is_brand_page = $get_brand !== null ? 'brand_page' : 'cat_page';
+$on_sale = isset($_GET['on-sale']);
 
 if ($get_product_cat !== null) {
 	$product_cat_slug = sanitize_title($get_product_cat);
@@ -37,6 +38,33 @@ if ($get_product_cat !== null) {
 $parent_IDS = array();
 $current_cat = get_term_by('id', $product_cat_ID, 'product_cat');
 $current_cat_ID =  null;
+
+$promo_link = esc_url(home_url( $wp->request ).'?on-sale');
+$promo_checked = '';
+
+if ($on_sale) {
+
+	$wccs_products = new WCCS_Products();
+	$promo_products = $wccs_products->get_discounted_products();
+	$ids_placeholder = implode(',', array_map('intval', $promo_products));
+
+	// pretty_dump($current_cat);
+	$products_args = array(
+		'post_type'     => 'product', // we want to get products
+		'post__in'  => $promo_products,
+		'tax_query'     => array(
+			array(
+				'taxonomy' => 'product_cat', // the product taxonomy
+				'field'    => 'term_id', // we want to use the term_id not slug
+				'terms'    => $product_cat_ID, // here we enter the ID of the current term *this is where the magic happens*
+			),
+		),
+	);
+
+	$products_on_sale = new WP_Query( $products_args );
+	$promo_link = esc_url(home_url( $wp->request ));
+	$promo_checked = "checked";
+}
 
 if ($current_cat) {
 	$parent_IDS[] = $current_cat->term_id;
@@ -358,26 +386,56 @@ do_action( 'woocommerce_before_main_content' );
 						?>
 						<p class="paragraph paragraph-xl semibold cat-head active-cat filters">Филтри</p>
 						<?php echo do_shortcode('[wpf-filters id=1]'); ?>
+
+						<?php 
+						if ($on_sale) { ?>
+						<label class="checkbox promo-products-filter">
+							<input type="checkbox" <?php echo esc_attr($promo_checked); ?>>
+							<span class="optional"></span> 
+							<a href="<?php echo $promo_link; ?>">Промо продукти</a>
+						</label>
+						<?php } ?>
 	
 					</div>
 					<?php
 					}
+					if ($on_sale) {
+						if ( $products_on_sale->have_posts() ) {
+							echo do_shortcode('[products category="'.$product_cat_slug.'" columns="4" ids="'.$ids_placeholder.'"]');
+							// while ( $products_on_sale->have_posts() ) : $products_on_sale->the_post();
+						
+							// // pretty_dump(get_the_ID());
+							// /**
+							//  * Hook: woocommerce_shop_loop.
+							//  */
+							// do_action( 'woocommerce_shop_loop' );
+		
+							// wc_get_template_part( 'content', 'product' );
+						
+							// endwhile; // end of the loop.
+						} else {
+							do_action( 'woocommerce_no_products_found' );
+						}
+					} else {
+
 				woocommerce_product_loop_start();
 
 				if ( wc_get_loop_prop( 'total' ) ) {
-					while ( have_posts() ) {
-						the_post();
+						while ( have_posts() ) {
+							the_post();
 
-						/**
-						 * Hook: woocommerce_shop_loop.
-						 */
-						do_action( 'woocommerce_shop_loop' );
+							/**
+							 * Hook: woocommerce_shop_loop.
+							 */
+							do_action( 'woocommerce_shop_loop' );
 
-						wc_get_template_part( 'content', 'product' );
+							wc_get_template_part( 'content', 'product' );
+						}
 					}
+					woocommerce_product_loop_end();
 				}
 
-				woocommerce_product_loop_end();
+				
 
 				/**
 				 * Hook: woocommerce_after_shop_loop.
@@ -435,3 +493,4 @@ do_action( 'woocommerce_after_main_content' );
 do_action( 'woocommerce_sidebar' );
 
 get_footer( 'shop' );
+remove_action('pre_get_posts', 'filter_products_on_sale');

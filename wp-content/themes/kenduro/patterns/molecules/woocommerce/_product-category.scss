@@ -329,8 +329,28 @@ ul.products {
     flex-direction: row;
   } 
 
+  .woocommerce {
+    width: 100%;
+  }
+
   .products-wrapper {
     width: 100%;
+  }
+
+  .promo-products-filter {
+    margin: 20px 0;
+
+    input[type="checkbox"]:checked + span:after {
+      width: 8px;
+      height: 8px;
+      left: 5px;
+    }
+
+    a {
+      text-decoration: none;
+      opacity: 0.8;
+      @extend #{'.paragraph','.paragraph-l'};
+    }
   }
 
   @include media-breakpoint-down(xl) {
