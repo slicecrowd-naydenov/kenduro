@@ -5,12 +5,6 @@ use Lean\Load;
 get_header();
 ?>
 
-<style>
-.on-sale .filter-content-wrapper .woocommerce {
-  width: 100%;
-}
-</style>
-
 <?php
 global $wpdb;
 $wccs_products = new WCCS_Products();
@@ -111,7 +105,7 @@ $list_categories = function($taxonomies, $temp_arr) use ($parent_IDS, &$list_cat
 			);
 
       $term_link = esc_url('?category='.$tax->term_id);
-      $see_all_cat_link = esc_url(get_site_url().'/promo-filter');
+      $see_all_cat_link = esc_url(get_site_url().'/promotions');
 			
 
 			if (!$added_all) {
@@ -221,12 +215,55 @@ $promo_product_ids = implode(',', $promo_products);
           <div class="products-wrapper">
             <?php echo do_shortcode('[products ids="'.$promo_product_ids.'" limit="12" columns="4" paginate="true"]'); ?>
             </div> 
+            <?php  if (wp_is_mobile()) { ?>
+					<div class="mobile-wrapper filter-sidebar">
+						<div class="dropdown">
+						<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-haspopup="true" aria-expanded="false">
+							Категории
+						</button>
+						<ul class="nav nav-pills product-categories-view dropdown-menu" role="tablist" aria-labelledby="dropdownMenuButton">
+							<?php 
+							$list_categories($main_categories_arr, array());
+							?>
+						</ul>
+						</div>
+
+							<!-- // Load::molecules('product-category/product-categories-view/index'); 
+							// output_filter_modal(); -->
+            <!-- Button trigger modal -->
+            <button type="button" class="button filter-modal" data-toggle="modal" data-target="#filterModal">
+              Филтри
+            </button>
+        
+            <!-- Modal -->
+            <div class="modal fade mobile-modal" id="filterModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Филтри</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <?php Load::atom('svg', ['name' => 'close']); ?>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <?php echo do_shortcode('[wpf-filters id=2]'); ?>
+                  </div>
+                </div>
+              </div>
+            </div>
+					</div>
+
+					<?php } else { ?>
           <div class="filter-sidebar">
             <?php $list_categories($main_categories_arr, array()); ?>
             <p class="paragraph paragraph-xl semibold cat-head active-cat filters">Филтри</p>
             <?php echo do_shortcode('[wpf-filters id=2]'); ?>
 
           </div> 
+          
+					<?php
+					}
+          ?>
         </div>
       </div>
     </div>

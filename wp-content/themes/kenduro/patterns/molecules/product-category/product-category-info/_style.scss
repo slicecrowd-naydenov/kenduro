@@ -55,6 +55,16 @@
     h3 {
       padding-top: 40px;
     }
+
+    & ~ .filter-content-wrapper {
+      @include media-breakpoint-down(xl) {
+        flex-direction: column-reverse !important;
+      }
+
+      .woocommerce  {
+        width: 100%;
+      }
+    }
   }
 
 
