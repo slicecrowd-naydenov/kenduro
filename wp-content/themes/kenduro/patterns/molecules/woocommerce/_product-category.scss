@@ -324,10 +324,10 @@ ul.products {
   gap: 10px;
   margin-top: 30px;
 
-  &.cat_page,
-  &.brand_page {
-    flex-direction: row;
-  } 
+  // &.cat_page,
+  // &.brand_page {
+  //   flex-direction: row;
+  // } 
 
   .woocommerce {
     width: 100%;
@@ -354,7 +354,7 @@ ul.products {
   }
 
   @include media-breakpoint-down(xl) {
-    flex-direction: column !important; 
+    flex-direction: column-reverse !important; 
     align-items: initial;
   }
 
