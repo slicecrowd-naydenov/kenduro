@@ -346,7 +346,10 @@ do_action( 'woocommerce_before_main_content' );
 
 
 			}
+?>
+			<div class="filter-content-wrapper <?php echo esc_attr($is_brand_page); ?>">
 
+			<?php
 			if ( woocommerce_product_loop() ) {
 
 				/**
@@ -357,10 +360,7 @@ do_action( 'woocommerce_before_main_content' );
 				 * @hooked woocommerce_catalog_ordering - 30
 				 */
 				do_action( 'woocommerce_before_shop_loop' );
-				?>
-					<div class="filter-content-wrapper <?php echo esc_attr($is_brand_page); ?>">
-						
-					<?php
+
 					if ($on_sale) {
 						if ( $products_on_sale->have_posts() ) {
 							echo do_shortcode('[products category="'.$product_cat_slug.'" limit="12" columns="4" paginate="true" ids="'.$ids_placeholder.'"]');
