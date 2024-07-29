@@ -388,7 +388,7 @@ do_action( 'woocommerce_before_main_content' );
 						<?php echo do_shortcode('[wpf-filters id=1]'); ?>
 
 						<?php 
-						if ($on_sale) { ?>
+						if ($get_product_cat !== null) { ?>
 						<label class="checkbox promo-products-filter">
 							<input type="checkbox" <?php echo esc_attr($promo_checked); ?>>
 							<span class="optional"></span> 
