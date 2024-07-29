@@ -401,7 +401,7 @@ do_action( 'woocommerce_before_main_content' );
 					}
 					if ($on_sale) {
 						if ( $products_on_sale->have_posts() ) {
-							echo do_shortcode('[products category="'.$product_cat_slug.'" columns="4" ids="'.$ids_placeholder.'"]');
+							echo do_shortcode('[products category="'.$product_cat_slug.'" limit="12" columns="4" paginate="true" ids="'.$ids_placeholder.'"]');
 							// while ( $products_on_sale->have_posts() ) : $products_on_sale->the_post();
 						
 							// // pretty_dump(get_the_ID());
