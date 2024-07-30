@@ -463,11 +463,11 @@ return $search_result_data;
 }
 
 function filter_loop_shop_per_page( $products ) {
-  if ( wp_is_mobile() ) {
-      $products = 6;
-  } else {
-      $products = 16;
-  }
+  // if ( wp_is_mobile() ) {
+  //     $products = 6;
+  // } else {
+  //     $products = 16;
+  // }
 
   // OR shorthand
   $products = wp_is_mobile() ? 6 : 16;
