@@ -367,36 +367,36 @@ do_action( 'woocommerce_before_main_content' );
 				do_action( 'woocommerce_before_shop_loop' );
 				?>
 					<div class="filter-content-wrapper <?php echo esc_attr($is_brand_page); ?>">
-						<?php
-						if ($on_sale) {
-							if ( $products_on_sale->have_posts() ) {
-								echo do_shortcode('[products category="'.$product_cat_slug.'" limit="16" columns="4" paginate="true" ids="'.$ids_placeholder.'"]');
-								// while ( $products_on_sale->have_posts() ) : $products_on_sale->the_post();
-	
-								// // pretty_dump(get_the_ID());
-								// /**
-								//  * Hook: woocommerce_shop_loop.
-								//  */
-								// do_action( 'woocommerce_shop_loop' );
-	
-								// wc_get_template_part( 'content', 'product' );
-	
-								// endwhile; // end of the loop.
+						<div class="products-wrapper">
+							<?php
+							if ($on_sale) {
+								if ( $products_on_sale->have_posts() ) {
+									echo do_shortcode('[products category="'.$product_cat_slug.'" limit="16" columns="4" paginate="true" ids="'.$ids_placeholder.'"]');
+									// while ( $products_on_sale->have_posts() ) : $products_on_sale->the_post();
+		
+									// // pretty_dump(get_the_ID());
+									// /**
+									//  * Hook: woocommerce_shop_loop.
+									//  */
+									// do_action( 'woocommerce_shop_loop' );
+		
+									// wc_get_template_part( 'content', 'product' );
+		
+									// endwhile; // end of the loop.
+								} else {
+									do_action( 'woocommerce_no_products_found' );
+								}
 							} else {
-								do_action( 'woocommerce_no_products_found' );
+								echo do_shortcode('[products category="'.$product_cat_slug.'" limit="16" columns="4" paginate="true"]');
+								/**
+								 * Hook: woocommerce_after_shop_loop.
+								 *
+								 * @hooked woocommerce_pagination - 10
+								 */
 							}
-						} else {
-							echo do_shortcode('[products category="'.$product_cat_slug.'" limit="16" columns="4" paginate="true"]');
-
-			
-							/**
-							 * Hook: woocommerce_after_shop_loop.
-							 *
-							 * @hooked woocommerce_pagination - 10
-							 */
-						}
 
 								?>
+						</div>
 					<?php  if (wp_is_mobile()) { ?>
 					<div class="mobile-wrapper filter-sidebar">
 						<div class="dropdown">
