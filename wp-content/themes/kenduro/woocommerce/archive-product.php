@@ -19,7 +19,8 @@ use Lean\Load;
 
 defined( 'ABSPATH' ) || exit;
 
-global $wp_query;
+global $wp_query, $wp;
+$on_sale = isset($_GET['on-sale']);
 $query_vars = $wp_query->query_vars;
 
 $get_brand = isset($query_vars['pa_brand']) ? $query_vars['pa_brand'] : null;
@@ -62,6 +63,33 @@ if ($current_cat_ID !== null) {
 		} 
 
 	} while ($current_cat_ID !== null);
+}
+
+$promo_link = esc_url(home_url( $wp->request ).'?on-sale');
+$promo_checked = '';
+
+if ($on_sale) {
+
+	$wccs_products = new WCCS_Products();
+	$promo_products = $wccs_products->get_discounted_products();
+	$ids_placeholder = implode(',', array_map('intval', $promo_products));
+
+	// pretty_dump($current_cat);
+	$products_args = array(
+		'post_type'     => 'product', // we want to get products
+		'post__in'  => $promo_products,
+		'tax_query'     => array(
+			array(
+				'taxonomy' => 'product_cat', // the product taxonomy
+				'field'    => 'term_id', // we want to use the term_id not slug
+				'terms'    => $product_cat_ID, // here we enter the ID of the current term *this is where the magic happens*
+			),
+		),
+	);
+
+	$products_on_sale = new WP_Query( $products_args );
+	$promo_link = esc_url(home_url( $wp->request ));
+	$promo_checked = "checked";
 }
 
 $terms_args = array(
@@ -166,7 +194,7 @@ if ( $get_brand !== null ) {
 	$classes = $is_exclusive ? 'exclusive' : 'no-exclusive';
 }
 
-function output_filter_modal() {
+function output_filter_modal($get_product_cat, $promo_checked, $promo_link) {
 	if (wp_is_mobile()) {
 		?>
 		<!-- Button trigger modal -->
@@ -187,6 +215,14 @@ function output_filter_modal() {
 					<div class="modal-body">
 						<?php
 							Load::molecules('product-category/product-categories-filter/index');
+							
+							if ($get_product_cat !== null) : ?>
+								<label class="checkbox promo-products-filter">
+									<input type="checkbox" <?php echo esc_attr($promo_checked); ?>>
+									<span class="optional"></span> 
+									<a href="<?php echo $promo_link; ?>">Промо продукти</a>
+								</label>
+							<?php endif;
 						?>
 					</div>
 				</div>
@@ -332,28 +368,33 @@ do_action( 'woocommerce_before_main_content' );
 				?>
 					<div class="filter-content-wrapper <?php echo esc_attr($is_brand_page); ?>">
 						<?php
-							woocommerce_product_loop_start();
-
-							if ( wc_get_loop_prop( 'total' ) ) {
-								while ( have_posts() ) {
-									the_post();
-			
-									/**
-									 * Hook: woocommerce_shop_loop.
-									 */
-									do_action( 'woocommerce_shop_loop' );
-			
-									wc_get_template_part( 'content', 'product' );
-								}
+						if ($on_sale) {
+							if ( $products_on_sale->have_posts() ) {
+								echo do_shortcode('[products category="'.$product_cat_slug.'" limit="16" columns="4" paginate="true" ids="'.$ids_placeholder.'"]');
+								// while ( $products_on_sale->have_posts() ) : $products_on_sale->the_post();
+	
+								// // pretty_dump(get_the_ID());
+								// /**
+								//  * Hook: woocommerce_shop_loop.
+								//  */
+								// do_action( 'woocommerce_shop_loop' );
+	
+								// wc_get_template_part( 'content', 'product' );
+	
+								// endwhile; // end of the loop.
+							} else {
+								do_action( 'woocommerce_no_products_found' );
 							}
-			
-							woocommerce_product_loop_end();
+						} else {
+							echo do_shortcode('[products category="'.$product_cat_slug.'" limit="16" columns="4" paginate="true"]');
+
 			
 							/**
 							 * Hook: woocommerce_after_shop_loop.
 							 *
 							 * @hooked woocommerce_pagination - 10
 							 */
+						}
 
 								?>
 					<?php  if (wp_is_mobile()) { ?>
@@ -371,7 +412,7 @@ do_action( 'woocommerce_before_main_content' );
 
 							<?php
 							// Load::molecules('product-category/product-categories-view/index'); 
-							output_filter_modal();
+							output_filter_modal($get_product_cat, $promo_checked, $promo_link);
 						?>
 					</div>
 
@@ -382,7 +423,15 @@ do_action( 'woocommerce_before_main_content' );
 							$list_categories($taxonomies, array());
 						?>
 						<p class="paragraph paragraph-xl semibold cat-head active-cat filters">Филтри</p>
-						<?php echo do_shortcode('[wpf-filters id=1]'); ?>
+						<?php 
+							echo do_shortcode('[wpf-filters id=2]'); 
+							if ($get_product_cat !== null) : ?>
+								<label class="checkbox promo-products-filter">
+									<input type="checkbox" <?php echo esc_attr($promo_checked); ?>>
+									<span class="optional"></span> 
+									<a href="<?php echo $promo_link; ?>">Промо продукти</a>
+								</label>
+							<?php endif; ?>
 	
 					</div>
 					<?php
