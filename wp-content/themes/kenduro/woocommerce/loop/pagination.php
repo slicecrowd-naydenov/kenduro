@@ -22,9 +22,9 @@ if (!defined('ABSPATH')) {
 
 $total   = isset($total) ? $total : wc_get_loop_prop('total_pages');
 $current = isset($current) ? $current : wc_get_loop_prop('current_page');
-$base    = isset($base) ? $base : esc_url_raw(str_replace(999999999, '%#%', remove_query_arg('add-to-cart', get_pagenum_link(999999999, false))));
+$base    = isset($base) ? $base : esc_url_raw(add_query_arg('product-page', '%#%', remove_query_arg('add-to-cart')));
 $format  = isset($format) ? $format : '';
-// pretty_dump($base);
+
 if ($total <= 1) {
 	return;
 }
@@ -42,11 +42,11 @@ if ($total <= 1) {
 			$has_next_link = true;
 		endif;
 		?>
-		<a href="<?php echo esc_url(str_replace('%#%', $current - 1, $base)); ?>" class="button button-secondary-blue <?php echo esc_attr($has_prev_link ? 'enable' : 'disable'); ?>">
+		<a href="<?php echo esc_url(add_query_arg('product-page', max(1, $current - 1))); ?>" class="button button-secondary-blue <?php echo esc_attr($has_prev_link ? 'enable' : 'disable'); ?>">
 			<span>Предишна</span>
 		</a>
 		<p class="paragraph paragraph-l tetriary semibold">Страница <?php echo $current; ?> от <?php echo $total; ?></p>
-		<a href="<?php echo esc_url(str_replace('%#%', $current + 1, $base)); ?>" class="button button-secondary-blue <?php echo esc_attr($has_next_link ? 'enable' : 'disable'); ?>">
+		<a href="<?php echo esc_url(add_query_arg('product-page', min($total, $current + 1))); ?>" class="button button-secondary-blue <?php echo esc_attr($has_next_link ? 'enable' : 'disable'); ?>">
 			<span>Следваща</span>
 		</a>
 	</div>
@@ -55,7 +55,7 @@ if ($total <= 1) {
 	echo paginate_links(
 		apply_filters(
 			'woocommerce_pagination_args',
-			array( // WPCS: XSS ok.
+			array(
 				'base'      => $base,
 				'format'    => $format,
 				'add_args'  => false,
