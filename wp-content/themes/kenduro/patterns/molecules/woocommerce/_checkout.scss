@@ -278,6 +278,10 @@
           }
         }
       }
+
+      & ~ .woocommerce-message {
+        display: none;
+      }
     }
   }
 }
@@ -567,6 +571,9 @@
     border: 1px dashed rgba($text-primary, 0.4);
     position: relative;
     overflow: hidden;
+    min-height: 34px;  
+    display: flex;
+    flex-direction: column;
 
     .add-coupon {
       width: 100%;
@@ -578,16 +585,54 @@
       top: 50%;
       transform: translate(-50%, -50%);
       transition: opacity 0.2s ease, visibility 0.2s ease;
+      @extend #{'.paragraph','.paragraph-m'};
       @extend .flex-center;
+
+      & ~ .woocommerce-message {
+        display: none !important;
+      }
+
+      & ~ .woocommerce-error {
+        order: 5;
+        margin: 15px 0 0 0;
+        padding: 6px 10px;
+        display: block !important;
+        border-radius: $radius-thin;
+        border: 1px solid $error;
+        background-color: rgba($error, 0.1);
+
+        &:before,
+        &:after {
+          display: none;
+        }
+
+        li {
+          color: $text-primary;
+          @extend #{'.paragraph','.paragraph-m'};
+        }
+
+        & ~ .checkout_coupon {
+          #coupon_code {
+            border-color: $error;
+          }
+        }
+      }
     }
   
     .coupon-area {
-      display: flex;
+      display: flex !important;
+      margin: 0;
       align-items: center;
       justify-content: space-between;
       opacity: 0;
       transition: opacity 0.2s ease, visibility 0.2s ease;
       visibility: hidden;
+
+      &.processing,
+      &.loading {
+        opacity: 0.4 !important;
+        pointer-events: none;
+      }
   
       .input-wrapper {
         display: flex;
@@ -624,6 +669,50 @@
         visibility: visible;
       }
     }
+
+    &.valid-code {
+      .checkout_coupon,
+      .add-coupon,
+      .woocommerce-Price-amount.amount,
+      .discount-amount  {
+        display: none !important;
+      }
+      
+      .discount-info {
+        font-size: 0;
+        position: absolute;
+        right: 0;
+        top: 50%;
+        transform: translateY(-50%);
+      }
+
+      .cart-discount {  
+        margin: 0;
+        padding-right: 20px;
+        border: none;
+        padding-top: 5px;
+        padding-bottom: 5px;
+
+        .paragraph:first-child {
+          width: 63px;
+          overflow: hidden;
+          white-space: nowrap;
+          direction: rtl;
+        }
+      }
+
+      .code-name {
+        display: block;
+        padding: 2px 10px;
+        border: 1px solid $b-highlight-one;
+        background-color: rgba($b-highlight-one, 0.1);
+        border-radius: 6px;
+      }
+
+      .woocommerce-remove-coupon {
+        display: block;
+      }
+    }
   }
 
   .cart-discount {
@@ -633,11 +722,15 @@
     position: relative;
     margin-top: -30px;
     margin-bottom: 30px;
-    padding: 10px 20px 10px 0;
+    padding: 10px 0 10px 0;
     border-bottom: 1px dashed $G-2;
 
     strong.discount-amount {
       margin-right: 10px;
+    }
+
+    .code-name {
+      display: none;
     }
 
     .woocommerce-Price-amount.amount {
@@ -663,6 +756,7 @@
       top: 50%;
       transform: translateY(-50%);
       background: url("../../assets/icons/svg/trash.svg") center center no-repeat;
+      display: none;
     }
   }
 

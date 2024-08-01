@@ -16,28 +16,31 @@
  */
 
 defined( 'ABSPATH' ) || exit;
+use Lean\Load;
 
 if ( ! wc_coupons_enabled() ) { // @codingStandardsIgnoreLine.
 	return;
 }
+$added_coupon_code = WC()->cart->get_applied_coupons() ? 'valid-code' : '';
 
 ?>
-<div class="woocommerce-form-coupon-toggle">
-	<?php wc_print_notice( apply_filters( 'woocommerce_checkout_coupon_message', esc_html__( 'Have a coupon?', 'woocommerce' ) . ' <a href="#" class="showcoupon">' . esc_html__( 'Click here to enter your code', 'woocommerce' ) . '</a>' ), 'notice' ); ?>
+<div class="coupon-wrapper <?php echo esc_attr($added_coupon_code); ?>">
+	<div class="add-coupon woocommerce-form-coupon-toggle showcoupon">
+		<?php Load::atom('svg', ['name' => 'plus', 'class' => 'plus-icon']); ?>
+		Добави промо код
+	</div>
+
+	<?php Load::molecules('cart-discount-container/index'); ?>
+
+	<form class="checkout_coupon woocommerce-form-coupon coupon-area" method="post">
+		<label for="coupon_code" class="coupon-label">
+			<?php esc_html_e( 'Промо код', 'woocommerce' ); ?>
+		</label>
+
+		<div class="input-wrapper">
+			<input type="text" name="coupon_code" class="input-text" placeholder="<?php esc_attr_e( 'Въведи тук', 'woocommerce' ); ?>" id="coupon_code" value="" />
+
+			<button type="submit" class="button<?php echo esc_attr( wc_wp_theme_get_element_class_name( 'button' ) ? ' ' . wc_wp_theme_get_element_class_name( 'button' ) : '' ); ?>" name="apply_coupon" value="<?php esc_attr_e( '', 'woocommerce' ); ?>"><?php esc_html_e( '', 'woocommerce' ); ?></button>
+		</div>
+	</form>
 </div>
-
-<form class="checkout_coupon woocommerce-form-coupon" method="post" style="display:none">
-
-	<p><?php esc_html_e( 'If you have a coupon code, please apply it below.', 'woocommerce' ); ?></p>
-
-	<p class="form-row form-row-first">
-		<label for="coupon_code" class="screen-reader-text"><?php esc_html_e( 'Coupon:', 'woocommerce' ); ?></label>
-		<input type="text" name="coupon_code" class="input-text" placeholder="<?php esc_attr_e( 'Coupon code', 'woocommerce' ); ?>" id="coupon_code" value="" />
-	</p>
-
-	<p class="form-row form-row-last">
-		<button type="submit" class="button<?php echo esc_attr( wc_wp_theme_get_element_class_name( 'button' ) ? ' ' . wc_wp_theme_get_element_class_name( 'button' ) : '' ); ?>" name="apply_coupon" value="<?php esc_attr_e( 'Apply coupon', 'woocommerce' ); ?>"><?php esc_html_e( 'Apply coupon', 'woocommerce' ); ?></button>
-	</p>
-
-	<div class="clear"></div>
-</form>

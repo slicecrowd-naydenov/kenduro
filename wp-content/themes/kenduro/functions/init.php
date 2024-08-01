@@ -491,3 +491,22 @@ function update_cart_discounts() {
 
 add_action('wp_ajax_update_cart_discounts', 'update_cart_discounts');
 add_action('wp_ajax_nopriv_update_cart_discounts', 'update_cart_discounts');
+
+
+function custom_coupon_error_message($msg, $err_code, $coupon) {
+  switch ($err_code) {
+    case WC_Coupon::E_WC_COUPON_NOT_EXIST:
+      return __('Купонът не съществува!', 'woocommerce');
+    case WC_Coupon::E_WC_COUPON_ALREADY_APPLIED :
+      return __('Купонът вече е използван!', 'woocommerce');
+    case WC_Coupon::E_WC_COUPON_EXPIRED:
+      return __('Купонът е изтекъл!', 'woocommerce');
+    case WC_Coupon::E_WC_COUPON_PLEASE_ENTER:
+      return __('Моля въведете код!', 'woocommerce');
+
+    // Добави още случаи според нуждите си
+    default:
+      return $msg;
+  }
+}
+add_filter('woocommerce_coupon_error', 'custom_coupon_error_message', 10, 3);

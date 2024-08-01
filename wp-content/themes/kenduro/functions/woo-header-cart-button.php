@@ -229,19 +229,39 @@ function trigger_ajax_to_cart() {
       // Update Total price in checkout page after
       $(document).on('ajaxComplete', (event, xhr, settings) => {
         if (settings.url === '/?wc-ajax=apply_coupon' || settings.url === '/?wc-ajax=remove_coupon') {
-          $body.trigger('wc_fragment_refresh');
+          $('.coupon-area').addClass('loading');
+          var responseText = xhr.responseText;
+          if (responseText.includes('woocommerce-error')) {
+            // var parser = new DOMParser();
+            // var doc = parser.parseFromString(responseText, 'text/html');
+            // var errorMessage = doc.querySelector('.woocommerce-error li').textContent.trim();
+            // console.log('Coupon error message: ', errorMessage);
+            $('.coupon-area').removeClass('loading');
+
+            return;
+          } else {
+            $body.trigger('wc_fragment_refresh');
+
+            $.ajax({
+              url: wc_add_to_cart_params.ajax_url,
+              type: 'POST',
+              data: {
+                action: 'update_cart_discounts'
+              },
+              success: function(response) {
+                $('.cart-discounts-container').html(response);
+                $('.coupon-wrapper').removeClass('added-coupon').addClass('valid-code');
+                $('.coupon-area').removeClass('loading');
+
+                if (settings.url === '/?wc-ajax=remove_coupon') {
+                  $('.coupon-wrapper').removeClass('valid-code');
+                }
+              }
+            });
+          }
           
-          $.ajax({
-            url: wc_add_to_cart_params.ajax_url,
-            type: 'POST',
-            data: {
-              action: 'update_cart_discounts'
-            },
-            success: function(response) {
-              $('.cart-discounts-container').html(response);
-            }
-          });
         }
+
       });
 
     })(jQuery);

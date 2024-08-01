@@ -3,7 +3,8 @@
 		foreach ( WC()->cart->get_coupons() as $code => $coupon ) : ?>
 			<div class="cart-discount coupon-<?php echo esc_attr( sanitize_title( $code ) ); ?>">
 				<p class="paragraph paragraph-m">Отстъпка от промо код</p>
-				<span>
+        <span class="code-name"><?php echo $code; ?> </span>
+				<span class="discount-info">
 					<?php
 						$discount_amount = $coupon->get_amount(); // Получаване на стойността на отстъпката
 						$discount_type = $coupon->get_discount_type(); // Получаване на типа на отстъпката

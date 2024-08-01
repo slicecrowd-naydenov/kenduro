@@ -55,6 +55,10 @@ export default () => {
       $('.product-gallery-section').find('.onsale').css('left', `calc(${wooProductGallery}px - 30px)`);
     }, 500);
   }
+
+  $('.add-coupon').on('click', function() {
+    $(this).parents('.coupon-wrapper').addClass('added-coupon');
+  });
   
   // $('body').addClass(myFunction());
 

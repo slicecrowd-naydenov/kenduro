@@ -199,31 +199,6 @@ do_action('woocommerce_before_cart'); ?>
 	
 </form>
 
-<?php if ( wc_coupons_enabled() ) { ?>
-	<div class="coupon-wrapper">
-		<div class="add-coupon">
-			<?php Load::atom('svg', ['name' => 'plus', 'class' => 'plus-icon']); ?>
-			Добави промо код
-		</div>
-		<div class="coupon-area">
-			<label for="coupon_code" class="coupon-label">
-				<?php esc_html_e( 'Промо код', 'woocommerce' ); ?>
-			</label> 
-			<div class="input-wrapper">
-				<input type="text" name="coupon_code" class="input-text" id="coupon_code" value="" placeholder="<?php esc_attr_e( 'Въведи тук', 'woocommerce' ); ?>" /> 
-				<button 
-					type="submit" 
-					class="button<?php echo esc_attr( wc_wp_theme_get_element_class_name( 'button' ) ? ' ' . wc_wp_theme_get_element_class_name( 'button' ) : '' ); ?>" 
-					name="apply_coupon" 
-					value="<?php esc_attr_e( '', 'woocommerce' ); ?>">
-						<?php esc_html_e( '', 'woocommerce' ); ?>
-				</button>
-			</div>
-			<?php do_action( 'woocommerce_cart_coupon' ); ?>
-		</div>
-	</div>
-<?php } ?>
-
 <?php do_action('woocommerce_before_cart_collaterals'); ?>
 
 <div class="cart-collaterals">
