@@ -230,6 +230,17 @@ function trigger_ajax_to_cart() {
       $(document).on('ajaxComplete', (event, xhr, settings) => {
         if (settings.url === '/?wc-ajax=apply_coupon' || settings.url === '/?wc-ajax=remove_coupon') {
           $body.trigger('wc_fragment_refresh');
+          
+          $.ajax({
+            url: wc_add_to_cart_params.ajax_url,
+            type: 'POST',
+            data: {
+              action: 'update_cart_discounts'
+            },
+            success: function(response) {
+              $('.cart-discounts-container').html(response);
+            }
+          });
         }
       });
 

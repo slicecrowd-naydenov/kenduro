@@ -478,3 +478,16 @@ add_filter( 'loop_shop_per_page', 'filter_loop_shop_per_page', 10, 1 );
 
 remove_action( 'woocommerce_before_checkout_form', 'woocommerce_checkout_coupon_form');
 add_action( 'woocommerce_before_cart_collaterals', 'woocommerce_checkout_coupon_form');
+
+function update_cart_discounts() {
+  ob_start();
+
+	Load::molecules('cart-discount-container/index');
+
+  $content = ob_get_clean();
+  echo $content;
+  wp_die();
+}
+
+add_action('wp_ajax_update_cart_discounts', 'update_cart_discounts');
+add_action('wp_ajax_nopriv_update_cart_discounts', 'update_cart_discounts');

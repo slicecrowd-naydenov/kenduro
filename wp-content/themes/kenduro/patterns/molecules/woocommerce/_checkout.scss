@@ -626,6 +626,45 @@
     }
   }
 
+  .cart-discount {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    margin-top: -30px;
+    margin-bottom: 30px;
+    padding: 10px 20px 10px 0;
+    border-bottom: 1px dashed $G-2;
+
+    strong.discount-amount {
+      margin-right: 10px;
+    }
+
+    .woocommerce-Price-amount.amount {
+      margin-left: -3px;
+
+      &:before {
+        content: '(';
+        position: relative;
+        left: -7px;
+      }
+
+      &:after {
+        content: ')';
+      }
+    }
+
+    .woocommerce-remove-coupon {
+      position: absolute;
+      width: 16px;
+      height: 16px;
+      font-size: 0;
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      background: url("../../assets/icons/svg/trash.svg") center center no-repeat;
+    }
+  }
 
   #order_review {
     width: 100%;

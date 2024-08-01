@@ -166,6 +166,9 @@ do_action('woocommerce_before_cart'); ?>
 		</ul>
 		<?php do_action('woocommerce_after_cart_table'); ?>
 	</div>
+
+	<?php Load::molecules('cart-discount-container/index'); ?>
+
 	<?php 
 			if (is_checkout()) {
 		?>
@@ -195,18 +198,6 @@ do_action('woocommerce_before_cart'); ?>
 
 	
 </form>
-
-<?php 
-// if (WC()->cart->get_coupons()) {
-
-	foreach ( WC()->cart->get_coupons() as $code => $coupon ) : ?>
-			<div class="cart-discount coupon-<?php echo esc_attr( sanitize_title( $code ) ); ?>">
-				<span><?php wc_cart_totals_coupon_label( $coupon ); ?></span>
-				<span><?php wc_cart_totals_coupon_html( $coupon ); ?></span>
-			</div>
-			<?php endforeach; 
-		// }
-		?>
 
 <?php if ( wc_coupons_enabled() ) { ?>
 	<div class="coupon-wrapper">
