@@ -172,7 +172,7 @@ do_action('woocommerce_before_cart'); ?>
 			<div id="custom-total">
 				<span class="paragraph paragraph-xl primary semibold">Крайна цена</span>
 				<h2 class="primary semibold">
-					<span id="total"><?php echo WC()->cart->get_cart_total(); ?></span>лв.
+					<span id="total"><?php echo WC()->cart->get_cart_total(); ?></span>
 				</h2>
 			</div>
 		<?php
@@ -193,7 +193,45 @@ do_action('woocommerce_before_cart'); ?>
 		</a>
 	</p>
 
+	
 </form>
+
+<?php 
+// if (WC()->cart->get_coupons()) {
+
+	foreach ( WC()->cart->get_coupons() as $code => $coupon ) : ?>
+			<div class="cart-discount coupon-<?php echo esc_attr( sanitize_title( $code ) ); ?>">
+				<span><?php wc_cart_totals_coupon_label( $coupon ); ?></span>
+				<span><?php wc_cart_totals_coupon_html( $coupon ); ?></span>
+			</div>
+			<?php endforeach; 
+		// }
+		?>
+
+<?php if ( wc_coupons_enabled() ) { ?>
+	<div class="coupon-wrapper">
+		<div class="add-coupon">
+			<?php Load::atom('svg', ['name' => 'plus', 'class' => 'plus-icon']); ?>
+			Добави промо код
+		</div>
+		<div class="coupon-area">
+			<label for="coupon_code" class="coupon-label">
+				<?php esc_html_e( 'Промо код', 'woocommerce' ); ?>
+			</label> 
+			<div class="input-wrapper">
+				<input type="text" name="coupon_code" class="input-text" id="coupon_code" value="" placeholder="<?php esc_attr_e( 'Въведи тук', 'woocommerce' ); ?>" /> 
+				<button 
+					type="submit" 
+					class="button<?php echo esc_attr( wc_wp_theme_get_element_class_name( 'button' ) ? ' ' . wc_wp_theme_get_element_class_name( 'button' ) : '' ); ?>" 
+					name="apply_coupon" 
+					value="<?php esc_attr_e( '', 'woocommerce' ); ?>">
+						<?php esc_html_e( '', 'woocommerce' ); ?>
+				</button>
+			</div>
+			<?php do_action( 'woocommerce_cart_coupon' ); ?>
+		</div>
+	</div>
+<?php } ?>
 
 <?php do_action('woocommerce_before_cart_collaterals'); ?>
 

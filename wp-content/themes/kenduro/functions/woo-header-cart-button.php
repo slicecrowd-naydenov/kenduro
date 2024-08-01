@@ -6,6 +6,7 @@ use Lean\Load;
  * Show cart contents / total Ajax
  */
 add_filter('woocommerce_add_to_cart_fragments', 'woocommerce_header_add_to_cart_fragment');
+add_filter('woocommerce_add_to_cart_fragments', 'custom_total_fragment');
 
 function woocommerce_header_add_to_cart_fragment($fragments) {
   global $woocommerce;
@@ -23,6 +24,15 @@ function woocommerce_header_add_to_cart_fragment($fragments) {
   return $fragments;
 }
 
+function custom_total_fragment($fragments) {
+  ob_start();
+?>
+  <span id="total"><?php echo WC()->cart->get_cart_total(); ?></span>
+<?php
+  $fragments['span#total'] = ob_get_clean();
+  return $fragments;
+}
+
 add_action('wp_footer', 'trigger_ajax_to_cart');
 function trigger_ajax_to_cart() {
 ?>
@@ -32,7 +42,8 @@ function trigger_ajax_to_cart() {
         $('.dsk_btn_click').removeClass('single_add_to_cart_button');
       }
       const custom_price_box = $('.custom-price-box');
-      $('body').on('added_to_cart', function() {
+      const $body = $('body');
+      $body.on('added_to_cart', function() {
         // let imgPath = $('.woocommerce-product-gallery__image').find('.wp-post-image').attr('src');
         // $('#addedToCart').find('img').attr('src', imgPath);
         $('#addedToCart').modal('show');
@@ -48,7 +59,7 @@ function trigger_ajax_to_cart() {
           .attr('data-product_id', variation_id)
           .attr('data-product_sku', variation_sku);
         
-        if ($('body').find('.woocommerce-variation-price').children().length > 0) {
+        if ($body.find('.woocommerce-variation-price').children().length > 0) {
           $('.product-type-variable').find('.summary > .price').slideUp();
         }
         // console.log('variation_id: ', variation_id);
@@ -137,18 +148,18 @@ function trigger_ajax_to_cart() {
         tyre_placement.parents('tr').hide();
         tyre_type.parents('tr').hide();
 
-        $('body').find('#yith-s, .lapilliUI-Input__field').attr('placeholder', 'Търси продукт');
+        $body.find('#yith-s, .lapilliUI-Input__field').attr('placeholder', 'Търси продукт');
         // $('.lapilliUI-Input__field').attr('placeholder', 'Търси продукт');
         $('.sku-value').html($('.sku').text());
       });
 
       let productEl = '';
       const confirmationModal = $('#deleteProductConfirmation');
-      const totalEl = $('#total');
+      // const totalEl = $('#total');
       
-      if (totalEl.length) {
-        totalEl.find('bdi span').remove();
-      }
+      // if (totalEl.length) {
+      //   totalEl.find('bdi span').remove();
+      // }
 
       $('.remove').on('click', function(event) {
         event.preventDefault();
@@ -185,17 +196,18 @@ function trigger_ajax_to_cart() {
             console.log('OK!', res);
             if ( res.ok ) {
               $(productEl).closest('.custom-cart-list__item').remove();
-              const productPrice = $(productEl).closest('li').find('.product-price bdi')
-                .clone()    //clone the element
-                .children() //select all the children
-                .remove()   //remove all the children
-                .end()  //again go back to selected element
-                .text();
+              $body.trigger('wc_fragment_refresh');
+              // const productPrice = $(productEl).closest('li').find('.product-price bdi')
+              //   .clone()    //clone the element
+              //   .children() //select all the children
+              //   .remove()   //remove all the children
+              //   .end()  //again go back to selected element
+              //   .text();
 
-              let total = totalEl.text();
-              let sum = total - productPrice;
-              let updatedTotal = Number(sum.toFixed(2));
-              totalEl.text(updatedTotal);
+              // let total = totalEl.text();
+              // let sum = total - productPrice;
+              // let updatedTotal = Number(sum.toFixed(2));
+              // totalEl.text(updatedTotal);
             }
           }))
           .catch((err) => {
@@ -206,6 +218,21 @@ function trigger_ajax_to_cart() {
       confirmationModal.on('click', '#cancelDeleteButton', function () {
         confirmationModal.modal('hide');
       });
+
+      // $(document).ajaxComplete((event, xhr, settings) => {
+      //   if (settings.url === '/?wc-ajax=apply_coupon' || settings.url === '/?wc-ajax=remove_coupon') {
+      //     // Update Total price in checkout page after
+      //     $('body').trigger('wc_fragment_refresh');
+      //   }
+      // });
+
+      // Update Total price in checkout page after
+      $(document).on('ajaxComplete', (event, xhr, settings) => {
+        if (settings.url === '/?wc-ajax=apply_coupon' || settings.url === '/?wc-ajax=remove_coupon') {
+          $body.trigger('wc_fragment_refresh');
+        }
+      });
+
     })(jQuery);
   </script>
 <?php

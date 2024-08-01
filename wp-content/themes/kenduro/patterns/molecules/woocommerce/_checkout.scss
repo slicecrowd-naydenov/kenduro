@@ -436,10 +436,6 @@
 .woocommerce-checkout {
   background-color: $G-0-5;
 
-  .woocommerce-form-coupon-toggle {
-    display: none;
-  }
-
   .section-title {
     padding-bottom: 13px;
     margin-bottom: 10px;
@@ -564,6 +560,72 @@
       }
     }
   }
+
+  .coupon-wrapper {
+    padding: 7px 7px 7px 15px;
+    border-radius: 6px;
+    border: 1px dashed rgba($text-primary, 0.4);
+    position: relative;
+    overflow: hidden;
+
+    .add-coupon {
+      width: 100%;
+      height: 100%;
+      cursor: pointer;
+      gap: 10px;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      transition: opacity 0.2s ease, visibility 0.2s ease;
+      @extend .flex-center;
+    }
+  
+    .coupon-area {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      opacity: 0;
+      transition: opacity 0.2s ease, visibility 0.2s ease;
+      visibility: hidden;
+  
+      .input-wrapper {
+        display: flex;
+        gap: 10px;
+      }
+  
+      .coupon-label {
+        @extend #{'.paragraph','.paragraph-l'};
+      }
+  
+      .input-text {
+        width: 140px;
+      }
+  
+      .button {
+        width: 40px;
+        height: 40px;
+        border-radius: $radius-small;
+        background-color: $success;
+        background-image: url('../../assets/icons/svg/checkbox_white.svg');
+        background-position: center center;
+        background-repeat: no-repeat;
+      }
+    }
+
+    &.added-coupon {
+      .add-coupon {
+        opacity: 0;
+        visibility: hidden;
+      }
+
+      .coupon-area {
+        opacity: 1;
+        visibility: visible;
+      }
+    }
+  }
+
 
   #order_review {
     width: 100%;

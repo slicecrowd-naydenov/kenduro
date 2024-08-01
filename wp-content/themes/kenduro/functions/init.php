@@ -475,3 +475,6 @@ function filter_loop_shop_per_page( $products ) {
   return $products;
 }
 add_filter( 'loop_shop_per_page', 'filter_loop_shop_per_page', 10, 1 );
+
+remove_action( 'woocommerce_before_checkout_form', 'woocommerce_checkout_coupon_form');
+add_action( 'woocommerce_before_cart_collaterals', 'woocommerce_checkout_coupon_form');

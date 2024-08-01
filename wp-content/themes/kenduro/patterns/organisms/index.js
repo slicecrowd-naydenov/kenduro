@@ -1,3 +1,4 @@
+/* eslint-disable no-alert */
 /* eslint-disable max-len */
 import $ from 'jquery';
 
@@ -54,7 +55,7 @@ export default () => {
       $('.product-gallery-section').find('.onsale').css('left', `calc(${wooProductGallery}px - 30px)`);
     }, 500);
   }
-
+  
   // $('body').addClass(myFunction());
 
   // var triggerEl = document.querySelector('#myTab a[href="#profile"]');
