@@ -22,6 +22,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 global $product;
 
+if ( ! $product ) {
+	return;
+}
+
 // pretty_dump($product->is_type('variable'));
 // if (is_product()) {
 	// if ($product->is_type('variable')) {
