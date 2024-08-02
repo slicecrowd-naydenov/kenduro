@@ -301,6 +301,14 @@ ul.products {
   }
 }
 
+.woocommerce-shop {
+  #dropdownSortMenuButton {
+    margin: 0;
+    padding: 0;
+    border: none;
+  }
+}
+
 // Brand cat page
 .tax-pa_brand,
 .archive  {
@@ -346,7 +354,6 @@ ul.products {
   }
 
   .promo-products-filter {
-    margin: 20px 0;
     display: flex;
     align-items: center;  
 
@@ -511,3 +518,4 @@ ul.products {
     }
   }
 }
+

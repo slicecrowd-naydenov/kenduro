@@ -59,6 +59,27 @@ export default () => {
   $('.add-coupon').on('click', function() {
     $(this).parents('.coupon-wrapper').addClass('added-coupon');
   });
+
+  $('.dropdown-menu-sort').on('click', '.wpfLiLabel', function() {
+    const selectedSortType = $(this).find('.wpfFilterTaxNameWrapper').text();
+    $('.sort-by-title').text(selectedSortType);
+  });
+
+  // setTimeout(() => {
+  //   var elements = $('.dropdown-menu-sort').find('.wpfDisplay');
+
+  //   elements.each(function(element) {
+  //     console.log(this.style.fontWeight);
+  //     if ( this.style['fontWeight'] === 'bold' ) {
+  //       this.style.color = 'blue';
+  //     } else {
+  //       this.style.color = 'green';
+  //     }
+  //     if ($(element).attr('style')) {
+  //       console.log(element); // Тук можете да направите каквото ви е необходимо с елемента
+  //     }
+  //   });
+  // }, 2000 );
   
   // $('body').addClass(myFunction());
 

@@ -368,6 +368,22 @@ do_action( 'woocommerce_before_main_content' );
 				?>
 					<div class="filter-content-wrapper <?php echo esc_attr($is_brand_page); ?>">
 						<div class="products-wrapper">
+							<div class="dropdown sort-by-dropdown">
+								<button class="btn btn-secondary dropdown-toggle sort-by" type="button" id="dropdownSortMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+									Сортирай по:
+									<strong class="sort-by-title">Подразбиране</strong>
+								</button>
+								<?php if ($get_product_cat !== null) : ?>
+									<label class="checkbox promo-products-filter">
+										<input type="checkbox" <?php echo esc_attr($promo_checked); ?>>
+										<span class="optional"></span> 
+										<a href="<?php echo $promo_link; ?>">Промо продукти</a>
+									</label>
+								<?php endif; ?>
+								<div class="dropdown-menu dropdown-menu-sort" aria-labelledby="dropdownSortMenuButton">
+									<?php echo do_shortcode('[wpf-filters id=4]'); ?>
+								</div>
+							</div>
 							<?php
 							if ($on_sale) {
 								if ( $products_on_sale->have_posts() ) {
@@ -423,16 +439,7 @@ do_action( 'woocommerce_before_main_content' );
 							$list_categories($taxonomies, array());
 						?>
 						<p class="paragraph paragraph-xl semibold cat-head active-cat filters">Филтри</p>
-						<?php 
-							echo do_shortcode('[wpf-filters id=2]'); 
-							if ($get_product_cat !== null) : ?>
-								<label class="checkbox promo-products-filter">
-									<input type="checkbox" <?php echo esc_attr($promo_checked); ?>>
-									<span class="optional"></span> 
-									<a href="<?php echo $promo_link; ?>">Промо продукти</a>
-								</label>
-							<?php endif; ?>
-	
+						<?php echo do_shortcode('[wpf-filters id=2]'); ?>	
 					</div>
 					<?php
 					}

@@ -32,7 +32,7 @@
 .wpfMainWrapper {
   top: 9px;
 
-  .wpfFilterWrapper[data-filter-type] {
+  .wpfFilterWrapper[data-filter-type]:not([data-filter-type="wpfSortBy"]) {
     border: 1px solid rgba($b-primary, 0.1);
     border-radius: $radius-small;
     padding: 6px 10px 6px 18px;

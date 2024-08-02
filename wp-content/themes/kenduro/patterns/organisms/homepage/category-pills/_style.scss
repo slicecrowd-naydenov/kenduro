@@ -118,6 +118,70 @@
   }
 }
 
+#dropdownSortMenuButton {
+  padding: 0 30px 0 0;
+  margin-right: 30px;
+  background-color: transparent;
+  border: none;
+  color: rgba($text-primary, 0.8);
+  border-right: 1px solid $G-2;
+  border-radius: 0;
+  @extend #{'.paragraph-l', '.paragraph'};
+
+  @include media-breakpoint-down(lg) {
+    border: none;
+  }
+}
+
+.sort-by-dropdown {
+  display: flex;
+  justify-content: end;
+  border-bottom: 1px solid rgba($text-primary, 0.1);
+  margin-bottom: 20px;
+  padding-bottom: 8px;
+
+  .wpfMainWrapper {
+    top: 0;
+    display: flex;
+  }
+
+  .dropdown-menu {
+    min-width: 210px;
+    padding: 0;
+    background-color: $G-0-5;
+    border-color: $G-2;
+    margin-top: 8px;
+  }
+
+  .wpfFilterWrapper {
+    margin: 7px 10px 7px 7px;
+    border: none;
+
+    li {
+      border-bottom: 1px dashed rgba($text-primary, 0.15);
+
+      &:last-child {
+        border: none;
+      }
+
+      .wpfDisplay[style*="font-weight: bold;"] {
+        color: $b-highlight-two;
+      }
+    }
+
+    label {
+      padding-top: 2px;
+      @extend #{'.paragraph-l', '.paragraph'};
+    }
+  }
+
+  .promo-products-filter {
+    @include media-breakpoint-down(lg) {
+      display: none;
+    }
+  }
+}
+
 .dropdown {
   @include media-breakpoint-down(xl) {
     margin-bottom: 28px;
