@@ -498,6 +498,10 @@ function create_variation($pid, $term_slug, $product_variations_fields, $attribu
       } 
       
       update_post_meta($pid, '_product_attributes', $attributes_data);
+      update_post_meta($pid, '_manage_stock', true);
+      // update_post_meta($pid, '_stock_status', $stock_status);
+      update_post_meta($pid, '_backorders', 'notify');
+      update_post_meta($pid, '_stock', 0);
       $sale_price = ''; // One day when we add Sale price in SS we have to replace this string with that field from SS
 
       // Create variation
