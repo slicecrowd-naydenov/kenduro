@@ -403,7 +403,13 @@ do_action( 'woocommerce_before_main_content' );
 									do_action( 'woocommerce_no_products_found' );
 								}
 							} else {
-								echo do_shortcode('[products category="'.$product_cat_slug.'" limit="16" columns="4" paginate="true"]');
+								if ($get_brand) {
+									pretty_dump($get_brand);
+									echo do_shortcode('[products attribute="brand" terms="'.$get_brand.'" limit="16" columns="4" paginate="true"]');
+
+								} else {	
+									echo do_shortcode('[products category="'.$product_cat_slug.'" limit="16" columns="4" paginate="true"]');
+								}
 								/**
 								 * Hook: woocommerce_after_shop_loop.
 								 *
