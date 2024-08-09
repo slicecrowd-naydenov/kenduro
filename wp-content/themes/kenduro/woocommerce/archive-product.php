@@ -404,7 +404,6 @@ do_action( 'woocommerce_before_main_content' );
 								}
 							} else {
 								if ($get_brand) {
-									pretty_dump($get_brand);
 									echo do_shortcode('[products attribute="brand" terms="'.$get_brand.'" limit="16" columns="4" paginate="true"]');
 
 								} else {	
