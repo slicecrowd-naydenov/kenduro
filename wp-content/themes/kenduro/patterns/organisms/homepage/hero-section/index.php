@@ -30,28 +30,31 @@ use Lean\Load;
                   <div class="mobile-slide-view">
                     <?php
                     if ($image) : ?>
-                      <div class="hero-logo">
-                        <img src="<?php echo esc_attr($image['url']); ?>" />
+                      <div>
+                        <div class="hero-logo">
+                          <img src="<?php echo esc_attr($image['url']); ?>" />
+                        </div>
                       </div>
-                    <?php
-                    endif;
-                    if ($title) : ?>
-                      <h2 class="hero_title"><?php echo $title; ?></h2>
-                    <?php
-                    endif;
-                    if ($description) :
-                    ?>
-                      <p class="paragraph paragraph-l semibold "><?php echo $description; ?></p>
-                    <?php
-                    endif;
-                    if ($cta['text']) :
-                    ?>
-                      <a href="<?php echo esc_attr($cta['url']) ?>" class="button button-primary-orange">
-                        <span><?php echo $cta['text']; ?></span>
-                      </a>
-                    <?php
-                    endif;
-                    ?>
+                    <?php endif; ?>
+                    <div>
+                      <?php if ($title) : ?>
+                        <h2 class="hero_title"><?php echo $title; ?></h2>
+                      <?php
+                      endif;
+                      if ($description) :
+                      ?>
+                        <p class="paragraph paragraph-l semibold "><?php echo $description; ?></p>
+                      <?php
+                      endif;
+                      if ($cta['text']) :
+                      ?>
+                        <a href="<?php echo esc_attr($cta['url']) ?>" class="button button-primary-orange">
+                          <span><?php echo $cta['text']; ?></span>
+                        </a>
+                      <?php
+                      endif;
+                      ?>
+                    </div>
                   </div>
                 </div>
               <?php endwhile; ?>
