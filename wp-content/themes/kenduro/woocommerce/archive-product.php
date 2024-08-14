@@ -90,6 +90,8 @@ if ($on_sale) {
 	$products_on_sale = new WP_Query( $products_args );
 	$promo_link = esc_url(home_url( $wp->request ));
 	$promo_checked = "checked";
+} else {
+	$ids_placeholder = array();
 }
 
 $terms_args = array(
@@ -373,7 +375,7 @@ do_action( 'woocommerce_before_main_content' );
 									Сортирай по:
 									<strong class="sort-by-title">Подразбиране</strong>
 								</button>
-								<?php if ($get_product_cat !== null) : ?>
+								<?php if ($get_product_cat !== null || $get_brand !== null) : ?>
 									<label class="checkbox promo-products-filter">
 										<input type="checkbox" <?php echo esc_attr($promo_checked); ?>>
 										<span class="optional"></span> 
@@ -385,36 +387,63 @@ do_action( 'woocommerce_before_main_content' );
 								</div>
 							</div>
 							<?php
-							if ($on_sale) {
-								if ( $products_on_sale->have_posts() ) {
-									echo do_shortcode('[products category="'.$product_cat_slug.'" limit="16" columns="4" paginate="true" ids="'.$ids_placeholder.'"]');
-									// while ( $products_on_sale->have_posts() ) : $products_on_sale->the_post();
-		
-									// // pretty_dump(get_the_ID());
-									// /**
-									//  * Hook: woocommerce_shop_loop.
-									//  */
-									// do_action( 'woocommerce_shop_loop' );
-		
-									// wc_get_template_part( 'content', 'product' );
-		
-									// endwhile; // end of the loop.
-								} else {
-									do_action( 'woocommerce_no_products_found' );
-								}
-							} else {
-								if ($get_brand) {
-									echo do_shortcode('[products attribute="brand" terms="'.$get_brand.'" limit="16" columns="4" paginate="true"]');
+							// if ($on_sale) {
+								// pretty_dump($products_on_sale);
+								if (is_search()) {
+									woocommerce_product_loop_start();
 
-								} else {	
-									echo do_shortcode('[products category="'.$product_cat_slug.'" limit="16" columns="4" paginate="true"]');
+									if ( wc_get_loop_prop( 'total' ) ) {
+										while ( have_posts() ) {
+											the_post();
+					
+											/**
+											 * Hook: woocommerce_shop_loop.
+											 */
+											do_action( 'woocommerce_shop_loop' );
+					
+											wc_get_template_part( 'content', 'product' );
+										}
+									}
+					
+									woocommerce_product_loop_end();
+								} else {
+									if ($get_brand) {
+										echo do_shortcode('[products attribute="brand" terms="'.$get_brand.'" limit="16" columns="4" paginate="true" ids="'.$ids_placeholder.'"]');
+									} else {
+	
+										// if ( $products_on_sale->have_posts() ) {
+										echo do_shortcode('[products category="'.$product_cat_slug.'" limit="16" columns="4" paginate="true" ids="'.$ids_placeholder.'"]');
+											// while ( $products_on_sale->have_posts() ) : $products_on_sale->the_post();
+				
+											// // pretty_dump(get_the_ID());
+											// /**
+											//  * Hook: woocommerce_shop_loop.
+											//  */
+											// do_action( 'woocommerce_shop_loop' );
+				
+											// wc_get_template_part( 'content', 'product' );
+				
+											// endwhile; // end of the loop.
+										// } else {
+										// 	do_action( 'woocommerce_no_products_found' );
+										// }
+									}
 								}
+							// } else {
+								// if ($get_brand) {
+								// 	echo do_shortcode('[products attribute="brand" terms="'.$get_brand.'" limit="16" columns="4" paginate="true"]');
+
+								// } else {	
+								// 	pretty_dump('NO Sale product cart page');
+
+								// 	echo do_shortcode('[products category="'.$product_cat_slug.'" limit="16" columns="4" paginate="true" ids="'.array().'"]');
+								// }
 								/**
 								 * Hook: woocommerce_after_shop_loop.
 								 *
 								 * @hooked woocommerce_pagination - 10
 								 */
-							}
+							// }
 
 								?>
 						</div>

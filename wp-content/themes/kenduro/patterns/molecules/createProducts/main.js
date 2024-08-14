@@ -17,6 +17,7 @@ export default class CreateProducts {
     this.createProductsBtn = $('#createProducts');
     this.updateProductsBtn = $('#updateProducts');
     this.createBrandsBtn = $('#createBrands');
+    this.createBikeModelsBtn = $('#createBikeModels');
     this.updateProductBtn = $('#updateProduct');
     this.updateProductVariationBtn = $('#updateProductVariation');
     this.productFieldsBtn = $('#productFields');
@@ -124,6 +125,22 @@ export default class CreateProducts {
     });
   }
 
+  createBikeModels() {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const response = await axios({
+          method: 'get',
+          url: `${wpApiSettings.rest_url}ss-data/get-bike-models/`+$(this.createBikeModelsBtn).attr('data-bike-models-id')
+        });
+        console.log('response Bike models: ', response);
+        resolve(response);
+      } catch (error) {
+        console.error('Get Products ERROR: ', error);
+        reject(error);
+      }
+    });
+  }
+
   onClickHandler() {
     // this.createProductsBtn.on('click', (e) => {
     //   e.preventDefault();
@@ -171,6 +188,11 @@ export default class CreateProducts {
       //     alert('Транзиентите са изтрити успешно.');
       //   }
       // });
+    });
+
+    this.createBikeModelsBtn.on('click', (e) => {
+      e.preventDefault();
+      this.createBikeModels();
     });
   }
 }

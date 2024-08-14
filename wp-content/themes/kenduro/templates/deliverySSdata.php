@@ -62,6 +62,14 @@ get_header();
         >create Filters</a>
         </br>
         <hr>
+        <p class="paragraph paragraph-xl">Ъпдейтва/създава Bike Models:</p>
+        <a 
+          href="#" 
+          id="createBikeModels" 
+          class="button button-primary-orange"
+          data-bike-models-id="<?php echo esc_attr($ss_ids['bike_models']); ?>"
+        >create Bike models</a>
+        </br>
       </div>
     </div>
   </div>

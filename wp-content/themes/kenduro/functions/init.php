@@ -8,6 +8,7 @@ if (!is_admin()) {
   include 'create-products.php';
   include 'create-filters.php';
   include 'create-brands.php';
+  include 'create-bike-models.php';
   include 'ss-create-order.php';
   include 'get-column-fields.php';
   // include 'filter.php';
@@ -510,3 +511,76 @@ function custom_coupon_error_message($msg, $err_code, $coupon) {
   }
 }
 add_filter('woocommerce_coupon_error', 'custom_coupon_error_message', 10, 3);
+
+// get all brands
+function get_all_bike_brands() {
+  $brands = get_terms(array(
+    'taxonomy' => 'bike-brand',
+    'hide_empty' => true, // Show all terms, except empties
+  ));
+
+  if (!empty($brands) && !is_wp_error($brands)) {
+    foreach ($brands as $brand) {
+      echo '<option value="' . $brand->name . '">' . $brand->name . '</option>';
+    }
+  }
+}
+
+// Ajax request to get all models by brand
+add_action('wp_ajax_get_models_by_brand', 'get_models_by_brand');
+add_action('wp_ajax_nopriv_get_models_by_brand', 'get_models_by_brand');
+function get_models_by_brand() {
+  $selected_brand = $_POST['brand'];
+
+  $query = new WP_Query(array(
+    'post_type' => 'compatibility',
+    'tax_query' => array(
+      array(
+        'taxonomy' => 'bike-brand',
+        'field' => 'name',
+        'terms' => $selected_brand,
+      ),
+    ),
+    'posts_per_page' => -1,
+    'fields' => 'ids'
+  ));
+
+  if ($query->have_posts()) {
+    while ($query->have_posts()) {
+      $query->the_post();
+      $model_title = get_the_title(get_the_ID());
+      echo '<option value="' . esc_attr($model_title) . '">' . esc_html($model_title) . '</option>';
+    }
+    wp_reset_postdata(); // Възстановяваме глобалната променлива post
+  }
+
+  wp_die(); // Close Ajax request
+}
+
+// Ajax request to get all years by model
+add_action('wp_ajax_get_years_by_model', 'get_years_by_model');
+add_action('wp_ajax_nopriv_get_years_by_model', 'get_years_by_model');
+function get_years_by_model() {
+  $selected_model = $_POST['model'];
+
+  $query = new WP_Query(array(
+    'post_type' => 'compatibility',
+    'title' => $selected_model,
+    'posts_per_page' => 1,
+    'fields' => 'ids'
+  ));
+
+  if ($query->have_posts()) {
+    $model_post_id = $query->posts[0];
+
+    $years = get_the_terms($model_post_id, 'bike-year');
+
+    if ($years && !is_wp_error($years)) {
+      foreach ($years as $year) {
+        echo '<option value="' . esc_attr($year->name) . '">' . esc_html($year->name) . '</option>';
+      }
+    }
+  }
+
+  wp_die(); // Close Ajax request
+}

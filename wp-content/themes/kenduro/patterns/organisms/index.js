@@ -65,6 +65,59 @@ export default () => {
     $('.sort-by-title').text(selectedSortType);
   });
 
+  const accordionItem = $('.accordion-item');
+  const accordionOnSales = $('#accordionOnSales');
+
+  $('.accordion-button').on('click', function() {
+    accordionItem.removeClass('opened');
+    $(this).parents('.accordion-item').addClass('opened');
+  });
+
+  if (accordionOnSales.length) {
+    // const items = document.querySelectorAll('.accordion-item');
+
+    const accordionOnSalesHeight = accordionOnSales.height(); // Общата височина на контейнера
+    // console.log(accordionOnSalesHeight);
+
+    const openItemHeight = accordionOnSalesHeight - 46 * (accordionItem.length - 1) - 3 * (accordionItem.length - 1);
+    $('.accordion-item.opened').height(openItemHeight);
+
+    var currentIndex = 2;
+    var totalItems = accordionItem.length;
+
+    accordionItem.on('click', function() {
+      accordionItem.height(46);
+      $(this).height(openItemHeight);
+    });
+
+    $('.accordion-button').on('click', function() {
+      if (!$(this).hasClass('collapsed')) {
+        currentIndex = parseInt($(this).attr('data-current-index'), 10);
+        // console.log('CURRENTINDEX:', currentIndex);
+      }
+    });
+    
+    setInterval(function() {
+      var currentItem = $(`#accordion-item-${currentIndex}`).find('.accordion-button');
+
+      if ($(`#accordion-item-${currentIndex}`).find('.accordion-button').hasClass('collapsed')) {
+        currentItem.trigger('click');
+      }
+      
+      // console.log('currentItem: ', currentItem);
+      // console.log('currentIndex: ', currentIndex);
+      // console.log('totalItems: ', totalItems);
+      // console.log('=================');
+      // eslint-disable-next-line no-plusplus
+      currentIndex++;
+      
+      if (currentIndex > totalItems) {
+        currentIndex = 1;
+      }
+    }, 5000);
+  }
+
+
   // setTimeout(() => {
   //   var elements = $('.dropdown-menu-sort').find('.wpfDisplay');
 
