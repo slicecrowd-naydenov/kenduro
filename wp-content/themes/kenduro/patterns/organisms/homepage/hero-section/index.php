@@ -70,7 +70,7 @@ use Lean\Load;
                 Load::atoms('link/index', [
                   'text' => 'Виж всички',
                   'class' => 'underline',
-                  'url' => 'shop',
+                  'url' => 'promotions',
                   'icon' => 'arrow_down'
                 ]); 
               ?>
