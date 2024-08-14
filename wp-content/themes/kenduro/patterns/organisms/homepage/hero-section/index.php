@@ -90,7 +90,7 @@ use Lean\Load;
                 // $background = 
                 // pretty_dump($background_image);
               ?>
-                <div class="accordion-item <?php esc_attr_e($open_by_default); ?>" id="accordion-item-<?php esc_attr_e($count); ?>" style="background-image: <?php echo esc_url($background_image); ?>">
+                <div class="accordion-item <?php esc_attr_e($open_by_default); ?>" id="accordion-item-<?php esc_attr_e($count); ?>" style="background-image: url(<?php echo esc_url($background_image); ?>)">
                   <div class="accordion-header">
                     <button class="accordion-button <?php esc_attr_e($collapsed_by_default); ?>" data-current-index="<?php esc_attr_e($count); ?>" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse-<?php esc_attr_e($count); ?>" aria-expanded="<?php esc_attr_e($aria_expanded_by_default); ?>" aria-controls="flush-collapse-<?php esc_attr_e($count); ?>">
                       <div class="on-sale-percentage">

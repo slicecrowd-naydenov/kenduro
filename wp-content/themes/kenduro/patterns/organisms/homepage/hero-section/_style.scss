@@ -91,12 +91,16 @@
         
         &.opened {
           height: 202px;
-          background-image: url('../../assets/images/kenny_promotion.jpg');
+          // background-image: url('../../assets/images/kenny_promotion.jpg'); 
 
           .button-secondary-grey {
             opacity: 1;
             visibility: visible;
           }
+        }
+
+        &:not(.opened) {
+          background-image: none !important;
         }
 
         .button-secondary-grey {
