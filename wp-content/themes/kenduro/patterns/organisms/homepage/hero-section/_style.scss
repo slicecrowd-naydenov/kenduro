@@ -25,11 +25,11 @@
     display: inline-flex;
     height: 55px;
     align-items: center;
-    margin-bottom: 150px;
+    // margin-bottom: 150px;
 
-    @include media-breakpoint-down(lg) {
-      margin-bottom: 35px;
-    }
+    // @include media-breakpoint-down(lg) {
+      // margin-bottom: 35px;
+    // }
   }
 
   .hero_title {
@@ -63,7 +63,7 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-bottom: 15px;
+      margin-bottom: 10px;
     }
 
     .accordion {
@@ -214,6 +214,10 @@
 
       .mobile-slide-view {
         max-width: 600px;
+        min-height: 350px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
 
         @include media-breakpoint-down(lg) {
           max-width: none;
@@ -228,9 +232,6 @@
           margin-left: auto;
           margin-right: auto;
           min-height: 342px;
-          display: flex;
-          flex-direction: column;
-          justify-content: space-between;
         }
         
       }
