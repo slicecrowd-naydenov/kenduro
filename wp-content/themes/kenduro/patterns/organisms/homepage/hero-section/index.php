@@ -1,9 +1,64 @@
 <?php
 
 use Lean\Load;
+// process_mockup(get_bike_model_types());
 
 // $moto_icon = file_get_contents(ICON_PATH.'/moto_icon.svg'); 
-// Load::molecules('bike-compatibility/index');
+?>
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+  Launch demo modal
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+      <?php Load::molecules('bike-compatibility/index'); ?>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+      </div>
+    </div>
+  </div>
+</div>
+<?php
+// global $fieldsToRemove;
+
+$ss_ids = get_field('ss_ids', 'option');
+$product_fields = fetch_column_fields($ss_ids['products_app_id']);
+$supported_bikes_chatgpt = get_column_field_id('supported_bikes_chatgpt', $product_fields);
+$compatibility_text = get_column_field_id('compatibility_text', $product_fields);
+// pretty_dump($supported_bikes_chatgpt);
+// pretty_dump($compatibility_text);
+
+$external_api_response = post_column_fields('64fffa49372b0c1543d60c35');
+$outputArray = array();
+
+// $filteredData = filter_items($external_api_response['items'], $fieldsToRemove);
+
+// $filteredArrays = array_filter($filteredData, function ($item) use ($outputArray) {
+//   return in_array($item['id'], $outputArray);
+// });
+$string = $external_api_response['items'][0][$supported_bikes_chatgpt]['preview'];
+pretty_dump(str_replace(["<br>", "\n"], ", ", $string));
+pretty_dump(strip_tags($string));
+pretty_dump($string);
+pretty_dump($external_api_response['items'][0][$compatibility_text]);
+
+$temp_array = explode(', ', str_replace("<br>", ", ", $string));
+$mockup_array = array_map('trim', $temp_array);
+pretty_dump($temp_array);
+
+
 ?>
 <div class="container">
   <div class="row">

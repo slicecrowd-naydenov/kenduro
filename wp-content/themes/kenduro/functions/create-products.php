@@ -644,8 +644,9 @@ function generate_variable_products($item, $ss_ids, $product_fields, $product_va
 	$prduct_sku = get_column_field_id('set_sku', $product_fields);
 	$attr_color = get_column_field_id('color', $product_fields);
 	$attr_brand = get_column_field_id('brand', $product_fields);
-	// $compatibility = get_column_field_id('compatibility', $product_fields);
-	// $compatibility_text = get_column_field_id('compatibility_text', $product_fields);
+	$compatibility = get_column_field_id('compatibility', $product_fields);
+	$supported_bikes_chatgpt = get_column_field_id('supported_bikes_chatgpt', $product_fields);
+  // $compatibility_text = str_replace("<br>", ", ", $supported_bikes_chatgpt);
 	$brand_text = get_column_field_id('brand_text', $product_fields);
 	$name_bg = get_column_field_id('product_name_bg', $product_fields);
   $seo_description_bg = get_column_field_id('seo_description_bg', $product_fields);
@@ -664,8 +665,8 @@ function generate_variable_products($item, $ss_ids, $product_fields, $product_va
   // $is_set_brand = count($item[$attr_brand]) > 0 ? $item[$attr_brand][0] : '';
 
   $attributes_data = update_attributes(
-    // $item[$compatibility], 
-    // $item[$compatibility_text], 
+    $item[$compatibility], 
+    $item[$supported_bikes_chatgpt], 
     $item[$attr_brand], 
     $item[$brand_text], 
     'brand', 
@@ -719,8 +720,9 @@ function generate_variable_products($item, $ss_ids, $product_fields, $product_va
 function generate_simple_product($item, $ss_ids, $product_fields, $product_variations_fields, $incoming_id) {
 	$attr_color = get_column_field_id('color', $product_fields);
 	$attr_brand = get_column_field_id('brand', $product_fields);
-	// $compatibility = get_column_field_id('compatibility', $product_fields);
-	// $compatibility_text = get_column_field_id('compatibility_text', $product_fields);
+	$compatibility = get_column_field_id('compatibility', $product_fields);
+	$supported_bikes_chatgpt = get_column_field_id('supported_bikes_chatgpt', $product_fields);
+  // $compatibility_text = str_replace("<br>", ", ", $supported_bikes_chatgpt);
 	$brand_text = get_column_field_id('brand_text', $product_fields);
 	$name_bg = get_column_field_id('product_name_bg', $product_fields);
   $seo_description_bg = get_column_field_id('seo_description_bg', $product_fields);
@@ -744,8 +746,8 @@ function generate_simple_product($item, $ss_ids, $product_fields, $product_varia
   update_post_meta($p_id, '_rank_math_gtin_code', sprintf("%012d", $p_id));
 
   $attributes_data = update_attributes(
-    // $item[$compatibility], 
-    // $item[$compatibility_text], 
+    $item[$compatibility], 
+    $item[$supported_bikes_chatgpt], 
     $item[$attr_brand], 
     $item[$brand_text], 
     'brand', 
@@ -877,28 +879,30 @@ function create_woocommerce_products($filteredData): ?object {
   return $response;
 }
 
-// function update_attributes($compatibility, $compatibility_text, $brand, $brand_text, $attrBrand, $color, $attrColor, $pid) {
-  function update_attributes($brand, $brand_text, $attrBrand, $color, $attrColor, $pid) {
+function update_attributes($compatibility, $chatGPTtext, $brand, $brand_text, $attrBrand, $color, $attrColor, $pid) {
+  // function update_attributes($brand, $brand_text, $attrBrand, $color, $attrColor, $pid) {
   $product = wc_get_product($pid);
 
   $attributes_data = array();
   $is_set_brand = count($brand) > 0 ? $brand[0] : '';
   $is_set_color = count($color) > 0 ? $color[0] : '';
-  // $is_set_compatibility = count($compatibility) > 0 ? $compatibility_text : '';
-  // // $product = wc_get_product($pid);
+  $is_set_compatibility = count($compatibility) > 0 ? $chatGPTtext['preview'] : '';
+  // $product = wc_get_product($pid);
 
-  // if ($is_set_compatibility !== '') {
-  //   // if is set Attr Color, add Attributes but not create variations
-  //   $temp_array = explode(',', $compatibility_text);
-  //   $mockup_array = array_map('trim', $temp_array);
-  //   wp_set_object_terms($pid, $mockup_array, 'pa_compability', true);
+  if ($is_set_compatibility !== '') {
+    // if is set Attr Color, add Attributes but not create variations
+    $chatGPTtextFormatted = str_replace(["<br>", "\n"], ", ", $chatGPTtext['preview']);
 
-  //   $attributes_data['pa_compability'] = array(
-  //     'name' => 'pa_compability',
-  //     'is_visible' => '1',
-  //     'is_taxonomy' => '1'
-  //   );
-  // }
+    $temp_array = explode(',', $chatGPTtextFormatted);
+    $mockup_array = array_map('trim', $temp_array);
+    wp_set_object_terms($pid, $mockup_array, 'pa_compability', true);
+
+    $attributes_data['pa_compability'] = array(
+      'name' => 'pa_compability',
+      'is_visible' => '1',
+      'is_taxonomy' => '1'
+    );
+  }
 
   if ($is_set_color !== '') {
     // if is set Attr Color, add Attributes but not create variations

@@ -21,6 +21,7 @@ defined( 'ABSPATH' ) || exit;
 
 global $wp_query, $wp;
 $on_sale = isset($_GET['on-sale']);
+$filterCompability = $_GET['wpf_filter_compability'];
 $query_vars = $wp_query->query_vars;
 
 $get_brand = isset($query_vars['pa_brand']) ? $query_vars['pa_brand'] : null;
@@ -103,7 +104,7 @@ $terms_args = array(
 
 $taxonomies = get_terms( $terms_args );
 
-$list_categories = function($taxonomies, $temp_arr) use ($parent_IDS, $get_brand, &$list_categories, $get_product_cat) {
+$list_categories = function($taxonomies, $temp_arr) use ($parent_IDS, $get_brand, &$list_categories, $get_product_cat, $filterCompability) {
 	if ( !empty( $taxonomies ) || !is_wp_error( $taxonomies ) ) {
 		$cat_html = '<p class="paragraph paragraph-xl semibold cat-head active-cat">Основни Категории</p><ul class="product-cat-filter">';
 		$added_all = false;
@@ -126,7 +127,10 @@ $list_categories = function($taxonomies, $temp_arr) use ($parent_IDS, $get_brand
 
 			$see_all_cat_link = esc_url(get_site_url());
 			
-			if ($get_brand === null) {
+			if (isset($filterCompability)) {
+				$term_link = esc_url(get_site_url().'/product-category\/'.$tax->slug.'?wpf_filter_compability='.$filterCompability);
+				$see_all_cat_link = esc_url(get_site_url().'/shop?wpf_filter_compability='.$filterCompability);
+			} else if ($get_brand === null) {
 				$term_link = esc_url(get_site_url().'/product-category\/'.$tax->slug);
 				$see_all_cat_link = esc_url(get_site_url().'/shop');
 			} else {
@@ -236,6 +240,21 @@ function output_filter_modal($get_product_cat, $promo_checked, $promo_link) {
 	}
 }
 
+function remove_hyphen_after_first_and_before_last_word($string) {
+	// Разбиване на стринга на масив от думи, разделени по тирета
+	$parts = explode('-', $string);
+
+	// Ако стрингът съдържа повече от една дума
+	if (count($parts) > 2) {
+		// Присъединяване на първата дума с останалата част, като се добавя интервал след първата дума
+		$first_part = array_shift($parts);
+		$last_part = array_pop($parts);
+		$string = $first_part . ' ' . implode('-', $parts) . ' ' . $last_part;
+	}
+
+	return $string;
+}
+
 get_header( 'shop' );
 
 /**
@@ -323,14 +342,25 @@ do_action( 'woocommerce_before_main_content' );
 					]);
 				} else {
 					if (!is_search()) {
-						Load::molecules('product-category/product-category-info/index', [
-							'title' => 'Всички продукти',
-							'class' => 'full-container',
-							'description' => 'Разгледайте наличните ни продукти и ако ви е необходимо нещо друго - обадете ни се !',
-							'cat' => single_term_title('', false),
-							'cat_img_inner' => $cat_inner_image_url
-						]);
-						// Load::molecules('product-category/product-categories-view/index');
+						if (isset($filterCompability)) {
+							// Ако параметърът съществува, вземете стойността му
+							Load::molecules('product-category/product-category-info/index', [
+								'title' => strtoupper(remove_hyphen_after_first_and_before_last_word($filterCompability)),
+								'class' => 'full-container',
+								'description' => 'Разгледайте наличните ни продукти и ако ви е необходимо нещо друго - обадете ни се !',
+								'cat' => single_term_title('', false),
+								'cat_img_inner' => $cat_inner_image_url
+							]);
+						} else {
+							// Ако параметърът не съществува
+							Load::molecules('product-category/product-category-info/index', [
+								'title' => 'Всички продукти',
+								'class' => 'full-container',
+								'description' => 'Разгледайте наличните ни продукти и ако ви е необходимо нещо друго - обадете ни се !',
+								'cat' => single_term_title('', false),
+								'cat_img_inner' => $cat_inner_image_url
+							]);
+						}
 					}
 				}
 			} else {
