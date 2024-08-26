@@ -24,14 +24,49 @@
     transform: translateX(-50%);
   }
 
-  & > div {
-    @extend .flex-center-y;
-  }
+  // & > div {
+    // @extend .flex-center-y;
+  // }
 
-  & > p {
-    @include media-breakpoint-down(lg) {
-      opacity: 0;
-      pointer-events: none;
+  // & > p {
+  //   @include media-breakpoint-down(lg) {
+  //     opacity: 0;
+  //     pointer-events: none;
+  //   }
+  // }
+
+  .header-btns-wrapper {
+    display: flex;
+    gap: 10px;
+
+    .bike-compatibility-button {
+      padding: 6px 11px 6px 15px;
+      border-radius: $radius-circle;
+      border: 1px dashed rgba($b-highlight-two, 0.5);
+      background-color: rgba($b-highlight-two, 0.1);
+      @extend .flex-center-y;
+      @extend #{'.paragraph', '.paragraph-m'};
+
+      .button {
+        padding-top: 6px;
+        padding-bottom: 6px;
+        margin-left: 7px;
+
+        svg {
+          margin-left: -10px;
+          margin-right: 5px;
+
+          path {
+            fill: $G-0;
+          }
+        }
+      }
+
+      .bike-icon {
+        border-right: 1px solid rgba($G-0, 0.1);
+        padding-right: 12px;
+        margin-right: 12px;
+      }
     }
   }
 

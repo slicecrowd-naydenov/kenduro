@@ -2,6 +2,8 @@
 /* eslint-disable require-jsdoc */
 import $ from 'jquery';
 import axios from 'axios';
+import 'jquery-ui/ui/widgets/selectmenu';
+
 /**
  * @class
  */
@@ -19,6 +21,11 @@ export default class Compatibilities {
     this.modelDropdown = $('#model-dropdown');
     this.yearDropdown = $('#year-dropdown');
     this.seeAllParts = $('#see-all-parts');
+    this.compatibilityModal = jQuery('#compatibilityModal');
+
+    this.brandDropdown.selectmenu();
+    this.modelDropdown.selectmenu();
+    this.yearDropdown.selectmenu();
 
     this.events();
   }
@@ -28,117 +35,159 @@ export default class Compatibilities {
    */   
 
   events() {
+    this.bikeModalEvents();
     this.onBrandChange();
     this.onModelChange();
     this.onYearChange();
   }
 
-  onBrandChange() {
-    this.brandDropdown.on('change', (e) => {
-      this.seeAllParts.removeClass('show');
-      var selectedBrand = $(e.target).val();
+  setCookie(name, value, days) {
+    const date = new Date();
+    date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+    const expires = `expires=${date.toUTCString()}`;
+    document.cookie = `${name}=${value};${expires};path=/`;
+  }
 
-      axios({
-        method: 'post',
-        url: ajaxurl,
-        data: new URLSearchParams({
-          action: 'get_models_by_brand',
-          brand: selectedBrand
+  getCookie(name) {
+    const nameEQ = `${name}=`;
+    const ca = document.cookie.split(';');
+    for (let i = 0; i < ca.length; i++) {
+      let c = ca[i];
+      while (c.charAt(0) === ' ') {
+        c = c.substring(1);
+      }
+      if (c.indexOf(nameEQ) === 0) {
+        return c.substring(nameEQ.length, c.length);
+      }
+    }
+    return null;
+  }
+
+  onBrandChange() {
+    this.brandDropdown.selectmenu({
+      change: (e) => {
+        this.seeAllParts.removeClass('show');
+        var selectedBrand = $(e.target).val();
+
+
+        axios({
+          method: 'post',
+          url: ajaxurl,
+          data: new URLSearchParams({
+            action: 'get_models_by_brand',
+            brand: selectedBrand
+          })
         })
-      })
-        .then((response) => {
-          this.modelDropdown.html(`<option value="">Избери модел</option>${response.data}`);
-          this.yearDropdown.html('<option value="">Избери година</option>');
-        })
-        .catch((error) => {
-          if (error.response) {
-            // The request was made and the server responded with a status code
-            // that falls out of the range of 2xx
-            console.log(error.response.data);
-            console.log(error.response.status);
-            console.log(error.response.headers);
-          } else if (error.request) {
-            // The request was made but no response was received
-            console.log(error.request);
-          } else {
-            // Something happened in setting up the request that triggered an Error
-            console.log('Error', error.message);
-          }
-          console.log(error.config);
-        });
-      
-      // $.ajax({
-      //   url: ajaxurl, // WordPress global variable for AJAX URL - admin-ajax.php
-      //   type: 'POST',
-      //   data: {
-      //     action: 'get_models_by_brand',
-      //     brand: selectedBrand
-      //   },
-      //   success: (response) => {
-      //     this.modelDropdown.html(`<option value="">Избери модел</option>${response}`);
-      //     this.yearDropdown.html('<option value="">Избери година</option>');
-      //   }
-      // });
+          .then((response) => {
+            this.modelDropdown.html(`<option value="">Избери модел</option>${response.data}`);
+            this.yearDropdown.html('<option value="">Избери година</option>');
+            this.modelDropdown.selectmenu('refresh');
+            this.yearDropdown.selectmenu('refresh');
+          })
+          .catch((error) => {
+            if (error.response) {
+              // The request was made and the server responded with a status code
+              // that falls out of the range of 2xx
+              console.log(error.response.data);
+              console.log(error.response.status);
+              console.log(error.response.headers);
+            } else if (error.request) {
+              // The request was made but no response was received
+              console.log(error.request);
+            } else {
+              // Something happened in setting up the request that triggered an Error
+              console.log('Error', error.message);
+            }
+            console.log(error.config);
+          });
+      }
     });
   }
 
   onModelChange() {
-    this.modelDropdown.on('change', (e) => {
-      this.seeAllParts.removeClass('show');
-      // var selectedModel = $(this).val();
-      var selectedModel = $(e.target).val();
+    this.modelDropdown.selectmenu({
+      change: (e) => {
+        this.seeAllParts.removeClass('show');
+        var selectedModel = $(e.target).val();
 
-      axios({
-        method: 'post',
-        url: ajaxurl,
-        data: new URLSearchParams({
-          action: 'get_years_by_model',
-          model: selectedModel
+        axios({
+          method: 'post',
+          url: ajaxurl,
+          data: new URLSearchParams({
+            action: 'get_years_by_model',
+            model: selectedModel
+          })
         })
-      })
-        .then((response) => {
-          this.yearDropdown.html(`<option value="">Избери година</option>${response.data}`);
-        })
-        .catch((error) => {
-          if (error.response) {
-            // The request was made and the server responded with a status code
-            // that falls out of the range of 2xx
-            console.log(error.response.data);
-            console.log(error.response.status);
-            console.log(error.response.headers);
-          } else if (error.request) {
-            // The request was made but no response was received
-            console.log(error.request);
-          } else {
-            // Something happened in setting up the request that triggered an Error
-            console.log('Error', error.message);
-          }
-          console.log(error.config);
-        });
-    
-      // $.ajax({
-      //   url: ajaxurl,
-      //   type: 'POST',
-      //   data: {
-      //     action: 'get_years_by_model',
-      //     model: selectedModel
-      //   },
-      //   success: (response) => {
-      //     this.yearDropdown.html(`<option value="">Избери година</option>${response}`);
-      //   }
-      // });
+          .then((response) => {
+            this.yearDropdown.html(`<option value="">Избери година</option>${response.data}`);
+            this.yearDropdown.selectmenu('refresh');
+          })
+          .catch((error) => {
+            if (error.response) {
+              // The request was made and the server responded with a status code
+              // that falls out of the range of 2xx
+              console.log(error.response.data);
+              console.log(error.response.status);
+              console.log(error.response.headers);
+            } else if (error.request) {
+              // The request was made but no response was received
+              console.log(error.request);
+            } else {
+              // Something happened in setting up the request that triggered an Error
+              console.log('Error', error.message);
+            }
+            console.log(error.config);
+          });
+      }
     });
   }
 
   onYearChange() {
-    this.yearDropdown.on('change', () => {
-      const brandVal = this.brandDropdown.val();
-      const modelVal = this.modelDropdown.val();
-      const yearVal = this.yearDropdown.val();
-      const href = `http://kenduro.test/shop?wpf_filter_compability=${brandVal}-${modelVal}-${yearVal}`;
-      this.seeAllParts
-        .addClass('show')
-        .attr('href', href);
+    this.yearDropdown.selectmenu({
+      change: () => {
+        const brandVal = this.brandDropdown.val();
+        const modelVal = this.modelDropdown.val();
+        const yearVal = this.yearDropdown.val();
+        const href = `http://kenduro.test/shop?wpf_filter_compability=${brandVal}-${modelVal}-${yearVal}`;
+        this.seeAllParts
+          .addClass('show')
+          .attr('href', href);
+
+        this.setCookie('brand', brandVal, 3650);
+        this.setCookie('model', modelVal, 3650);
+        this.setCookie('year', yearVal, 3650);
+        this.setCookie('modelOptions', this.modelDropdown.html(), 3650);
+        this.setCookie('yearOptions', this.yearDropdown.html(), 3650);
+      }
+    });
+  }
+
+  checkBikeCookies() {
+    const brand = this.getCookie('brand');
+    const model = this.getCookie('model');
+    const modelOptions = this.getCookie('modelOptions');
+    const year = this.getCookie('year');
+    const yearOptions = this.getCookie('yearOptions');
+
+    if ((brand && model && year) !== null) {  
+      this.brandDropdown.val(brand);
+      this.modelDropdown.html(modelOptions).val(model);
+      this.yearDropdown.html(yearOptions).val(year);
+
+      this.brandDropdown.selectmenu('refresh');
+      this.modelDropdown.selectmenu('refresh');
+      this.yearDropdown.selectmenu('refresh');
+    }
+  }
+
+  bikeModalEvents() {
+    console.log(this.compatibilityModal);
+    this.compatibilityModal.on('show.bs.modal', () => {
+      this.checkBikeCookies();
+    });
+
+    this.compatibilityModal.on('hidden.bs.modal', () => {
+      this.checkBikeCookies();
     });
   }
 }

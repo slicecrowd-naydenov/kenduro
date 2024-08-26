@@ -1,12 +1,37 @@
-#compatibilities {
-  #see-all-parts {
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.2s ease, visibility 0.2s ease;
-
-    &.show {
-      opacity: 1;
-      visibility: visible;
+#compatibilityModal {
+  #compatibilities {
+    #see-all-parts {
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.2s ease, visibility 0.2s ease;
+  
+      &.show {
+        opacity: 1;
+        visibility: visible;
+      }
     }
+  
   }
+
+  .modal-dialog {
+    max-width: 830px;
+  }
+  
+  .modal-head {
+    background-color: rgba($b-primary, 0.04);
+    border-radius: $radius-medium;
+    padding: 0 30px;  
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .modal-body {
+    flex-direction: column;
+    align-items: inherit;
+  }
+}
+
+.ui-selectmenu-menu {
+  z-index: 9999 !important;
 }
