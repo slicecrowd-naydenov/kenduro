@@ -1,16 +1,42 @@
 #compatibilityModal {
   #compatibilities {
-    #see-all-parts {
-      opacity: 0;
-      visibility: hidden;
-      transition: opacity 0.2s ease, visibility 0.2s ease;
-  
-      &.show {
+    display: flex;
+    gap: 10px; 
+    
+    .compatibilities-dropdown {
+      flex: 0 1 33.333%;
+
+      .ui-selectmenu-button {
+        width: 100%;
+        padding: 10px 8px 10px 12px;
+        border-color: $G-1-5;
+        border-radius: $radius-medium;
+        background-color: transparent;
         opacity: 1;
-        visibility: visible;
+        transition: opacity 0.2s ease;
+
+        &.disable {
+          opacity: 0.5;
+          pointer-events: none;
+        }
+      }
+
+      label {
+        margin-bottom: 4px;
       }
     }
-  
+  }
+
+  #see-all-parts {
+    margin: 0;
+    // opacity: 0;
+    // visibility: hidden;
+    // transition: opacity 0.2s ease, visibility 0.2s ease;
+
+    // &.show {
+    //   opacity: 1;
+    //   visibility: visible;
+    // }
   }
 
   .modal-dialog {
@@ -20,6 +46,7 @@
   .modal-head {
     background-color: rgba($b-primary, 0.04);
     border-radius: $radius-medium;
+    margin-bottom: 25px;
     padding: 0 30px;  
     display: flex;
     align-items: center;
@@ -29,9 +56,45 @@
   .modal-body {
     flex-direction: column;
     align-items: inherit;
+    gap: 15px;
   }
 }
 
 .ui-selectmenu-menu {
   z-index: 9999 !important;
+
+  .ui-menu {
+    padding: 10px 0;
+    border-radius: 0 0 8px 8px;
+    border-top: none;
+    margin-top: -9px;
+    border-color: $G-1-5;
+  }
+}
+
+.ui-widget-content {
+  .ui-menu-item-wrapper {
+    padding-left: 13px;
+    transition: background-color 0.2s ease, color 0.2s ease;
+
+    &:hover {
+      border-color: transparent;
+      background-color: $b-highlight-two;
+      color: $G-0;
+    }
+  }
+
+  .ui-state-active {
+    border: 1px solid transparent;
+    background-color: transparent;
+    color: inherit; 
+  }
+  
+  .selected {
+    background-color: rgba($b-highlight-two, 0.6);
+    border-color: transparent;
+    color: $G-0;
+    pointer-events: none;
+  }
+
 }

@@ -23,10 +23,6 @@ export default class Compatibilities {
     this.seeAllParts = $('#see-all-parts');
     this.compatibilityModal = jQuery('#compatibilityModal');
 
-    this.brandDropdown.selectmenu();
-    this.modelDropdown.selectmenu();
-    this.yearDropdown.selectmenu();
-
     this.events();
   }
   
@@ -35,10 +31,17 @@ export default class Compatibilities {
    */   
 
   events() {
+    this.initSelectMenus();
     this.bikeModalEvents();
     this.onBrandChange();
     this.onModelChange();
     this.onYearChange();
+  }
+
+  initSelectMenus() {
+    this.brandDropdown.selectmenu();
+    this.modelDropdown.selectmenu();
+    this.yearDropdown.selectmenu();
   }
 
   setCookie(name, value, days) {
@@ -65,8 +68,14 @@ export default class Compatibilities {
 
   onBrandChange() {
     this.brandDropdown.selectmenu({
+      open: function() {
+        $('.ui-menu-item-wrapper').removeClass('selected');
+        $('.ui-state-active').addClass('selected');
+      },
       change: (e) => {
-        this.seeAllParts.removeClass('show');
+        this.seeAllParts.addClass('disable');
+        $('#model-dropdown-button').addClass('disable');
+        $('#year-dropdown-button').addClass('disable');
         var selectedBrand = $(e.target).val();
 
 
@@ -79,8 +88,9 @@ export default class Compatibilities {
           })
         })
           .then((response) => {
-            this.modelDropdown.html(`<option value="">Избери модел</option>${response.data}`);
-            this.yearDropdown.html('<option value="">Избери година</option>');
+            $('#model-dropdown-button').removeClass('disable');
+            this.modelDropdown.html(`<option value="">Избери</option>${response.data}`);
+            this.yearDropdown.html('<option value="">Избери</option>');
             this.modelDropdown.selectmenu('refresh');
             this.yearDropdown.selectmenu('refresh');
           })
@@ -106,8 +116,13 @@ export default class Compatibilities {
 
   onModelChange() {
     this.modelDropdown.selectmenu({
+      open: function() {
+        $('.ui-menu-item-wrapper').removeClass('selected');
+        $('.ui-state-active').addClass('selected');
+      },
       change: (e) => {
-        this.seeAllParts.removeClass('show');
+        $('#year-dropdown-button').addClass('disable');
+        this.seeAllParts.addClass('disable');
         var selectedModel = $(e.target).val();
 
         axios({
@@ -119,7 +134,8 @@ export default class Compatibilities {
           })
         })
           .then((response) => {
-            this.yearDropdown.html(`<option value="">Избери година</option>${response.data}`);
+            $('#year-dropdown-button').removeClass('disable');
+            this.yearDropdown.html(`<option value="">Избери</option>${response.data}`);
             this.yearDropdown.selectmenu('refresh');
           })
           .catch((error) => {
@@ -144,13 +160,17 @@ export default class Compatibilities {
 
   onYearChange() {
     this.yearDropdown.selectmenu({
+      open: function() {
+        $('.ui-menu-item-wrapper').removeClass('selected');
+        $('.ui-state-active').addClass('selected');
+      },
       change: () => {
         const brandVal = this.brandDropdown.val();
         const modelVal = this.modelDropdown.val();
         const yearVal = this.yearDropdown.val();
         const href = `http://kenduro.test/shop?wpf_filter_compability=${brandVal}-${modelVal}-${yearVal}`;
         this.seeAllParts
-          .addClass('show')
+          .removeClass('disable')
           .attr('href', href);
 
         this.setCookie('brand', brandVal, 3650);
@@ -173,6 +193,10 @@ export default class Compatibilities {
       this.brandDropdown.val(brand);
       this.modelDropdown.html(modelOptions).val(model);
       this.yearDropdown.html(yearOptions).val(year);
+      const href = `http://kenduro.test/shop?wpf_filter_compability=${brand}-${model}-${year}`;
+      this.seeAllParts
+        .removeClass('disable')
+        .attr('href', href);
 
       this.brandDropdown.selectmenu('refresh');
       this.modelDropdown.selectmenu('refresh');
@@ -181,7 +205,6 @@ export default class Compatibilities {
   }
 
   bikeModalEvents() {
-    console.log(this.compatibilityModal);
     this.compatibilityModal.on('show.bs.modal', () => {
       this.checkBikeCookies();
     });

@@ -11,7 +11,6 @@
 	<link rel="profile" href="http://gmpg.org/xfn/11">
 	<link rel="baseurl" href="<?php echo esc_url(get_site_url()); ?>">
 	<?php wp_head(); ?>
-  <script src="https://code.jquery.com/ui/1.14.0/jquery-ui.js"></script>
 </head>
 
 <body <?php body_class(); ?>>
