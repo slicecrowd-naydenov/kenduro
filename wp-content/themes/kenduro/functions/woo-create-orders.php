@@ -208,12 +208,16 @@ function checkout_success_sent_form($order_id) {
     } else {
       $product_id = $id;
     }
+
+    $product_total = $item['total'];
+    $product_total_tax = $item['total_tax'];
+    $product_discount = $product_total + $product_total_tax;
   
     $product_info[] = array(
       'product_id' => $product_id,
       'product_name' => $product_data['name'],
       'quantity' => $product_data['quantity'],
-      'product_total' => $item['total']
+      'product_total' => $product_discount
     );
   }
   
