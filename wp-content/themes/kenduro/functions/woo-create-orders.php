@@ -14,6 +14,7 @@ function create_sales_record($response) {
   $woo_delivery_cost = get_column_field_id('woo_delivery_cost', $invoices_fields);
   $woo_vat = get_column_field_id('woo_vat', $invoices_fields);
   $woo_items_total = get_column_field_id('woo_items_total', $invoices_fields);
+  $woo_coupon = get_column_field_id('woo_coupon', $invoices_fields);
   $delivery_street = get_column_field_id('delivery_street', $invoices_fields);
   $delivery_street_no = get_column_field_id('delivery_street_no', $invoices_fields);
   $delivery_type = get_column_field_id('delivery_type', $invoices_fields);
@@ -79,6 +80,7 @@ function create_sales_record($response) {
     $order_shipping_total = $order->get_data()['shipping_total'];
     $order_total_tax = $order->get_data()['total_tax'];
     $order_total = $order->get_data()['total'];
+    $order_coupon = $order->get_data()['discount_total'];
     $order_items_subtotal = $order_total - $order_total_tax - $order_shipping_total + $order->get_data()['discount_total'];
 
     $delivery_address_arr = array(
@@ -98,6 +100,7 @@ function create_sales_record($response) {
       $woo_delivery_cost => $order_shipping_total,
       $woo_vat => $order_total_tax,
       $woo_items_total => $order_total,
+      $woo_coupon => $order_coupon,
       $delivery_ekont_office => $econt_office,
       $delivery_street => $address_street,
       $delivery_street_no => $address_street_number,
