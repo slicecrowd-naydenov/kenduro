@@ -167,12 +167,57 @@ function create_CRM_record($order_id, $invoice_id) {
   }
 }
 
+function update_menu_order($order_id) {
+  // Вземете поръчката по ID
+  $order = wc_get_order($order_id);
+
+  // Проверете дали поръчката съществува
+  if (!$order) {
+    return;
+  }
+
+  // Вземете всички артикули в поръчката
+  $items = $order->get_items();
+  $ss_fields = get_field('ss_fields', 'option');
+  $ss_ids = get_field('ss_ids', 'option');
+  $woo_items_order = $ss_fields['woo_items_order'];
+  $products_app_id = $ss_ids['products_app_id'];
+
+  // За всеки артикул актуализирайте menu_order
+  foreach ($items as $item) {
+    $product_data = $item->get_data();
+    $product_id = $product_data['product_id'];
+
+    $meta_data = get_field('meta_data', $product_id); // $product_id е ID-то на продукта, за който искате да вземете полето
+    if ($meta_data) {
+      $meta_data_keys = array_column($meta_data, 'value', 'key');
+      // pretty_dump($meta_data_keys['id']);
+      // Настройте новото значение на menu_order
+      $args = array(
+        'ID'         => $product_id,
+        'menu_order' => get_record($products_app_id, $meta_data_keys['id'])[$woo_items_order]
+      );
+    
+      // Актуализирайте продукта
+      wp_update_post($args);
+    }
+  }
+}
+
 // Schedule a task to create a sale record
 function schedule_create_sales_record($order_id) {
   $hook = 'create_sales_record_event_' . $order_id;
+  $hook_update_order = 'update_menu_order_event_' . $order_id;
+
   if (!wp_next_scheduled($hook, array($order_id))) {
     wp_schedule_single_event(time(), $hook, array($order_id));
     // error_log("Scheduled $hook for order ID: $order_id");
+  }
+
+  // Проверете дали задачата за актуализиране на menu_order вече е планирана
+  if (!wp_next_scheduled($hook_update_order, array($order_id))) {
+    wp_schedule_single_event(time() + 120, $hook_update_order, array($order_id)); // Change menu order after 120 seconds
+    // error_log("Scheduled $hook_update_order for order ID: $order_id");
   }
 }
 add_action('woocommerce_thankyou', 'schedule_create_sales_record');
@@ -197,6 +242,7 @@ add_action('init', function() {
 
   foreach ($orders as $order_id) {
     add_action('create_sales_record_event_' . $order_id, 'execute_create_sales_record', 10, 1);
+    add_action('update_menu_order_event_' . $order_id, 'update_menu_order', 10, 1);
   }
 });
 
