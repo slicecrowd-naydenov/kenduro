@@ -85,7 +85,8 @@ export default () => {
     var currentIndex = 2;
     var totalItems = accordionItem.length;
 
-    accordionItem.on('click', function() {
+    accordionItem.on('click', function(e) {
+      e.stopPropagation();
       accordionItem.height(46);
       $(this).height(openItemHeight);
     });

@@ -358,8 +358,7 @@ function set_values($fields, $product_id, $item) {
     } else if ($field['help_text'] === 'set_regular_price') {
       $product->set_regular_price($item[$field['slug']]);
     } else if ($field['help_text'] === 'product_priority') {
-      $priority = isset($item[$field['slug']]) && $item[$field['slug']] > 0 ? reverse_number($item[$field['slug']]) : 1001;
-      $product->set_menu_order($priority);
+      $product->set_menu_order($item[$field['slug']]);
     } else if ($field['help_text'] === 'product_description_bg') {
       $html = isset($item[$field['slug']]['html']) ? $item[$field['slug']]['html'] : '';
       $product->set_description($html);
@@ -630,12 +629,6 @@ function create_simple_product($pid, $term_slug, $product_fields) {
 
       update_field($field_name, $rows, $pid);
     }
-  }
-}
-
-function reverse_number($number) {
-  if ($number >= 1 && $number <= 10) {
-    return 11 - $number;
   }
 }
 

@@ -148,7 +148,7 @@ function trigger_ajax_to_cart() {
         tyre_placement.parents('tr').hide();
         tyre_type.parents('tr').hide();
 
-        $body.find('#yith-s, .lapilliUI-Input__field').attr('placeholder', 'Търси продукт');
+        // $body.find('#yith-s, .lapilliUI-Input__field').attr('placeholder', 'Търси продукт');
         // $('.lapilliUI-Input__field').attr('placeholder', 'Търси продукт');
         $('.sku-value').html($('.sku').text());
       });

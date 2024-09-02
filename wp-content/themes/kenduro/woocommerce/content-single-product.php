@@ -167,8 +167,11 @@ if (post_password_required()) {
 		<div class="summary entry-summary">
 			<?php
 
-			if (brand_text() !== '') : ?>
-				<p class="paragraph paragraph-xl semibold text-underline"><?php echo brand_text(); ?></p>
+			if (brand_text() !== '') : 
+				$term = get_term_by('name', brand_text(), 'pa_brand');
+				$term_link = get_term_link($term);
+			?>
+				<a href="<?php echo esc_url($term_link); ?>" class="paragraph paragraph-xl semibold text-underline"><?php echo brand_text(); ?></a>
 			<?php endif;
 			// pretty_dump($meta_fields);
 			/**

@@ -200,6 +200,18 @@ if ( $get_brand !== null ) {
 	$classes = $is_exclusive ? 'exclusive' : 'no-exclusive';
 }
 
+function get_product_ids_by_keyword( $keyword ) {
+	global $wpdb;
+
+	$query = $wpdb->prepare(
+		"SELECT ID FROM {$wpdb->posts} WHERE post_type = 'product' AND post_status = 'publish' AND post_title LIKE %s", '%' . $wpdb->esc_like( $keyword ) . '%'
+	);
+
+	$product_ids = $wpdb->get_col( $query );
+
+	return $product_ids;  // Връщаме масив с ID-тата на продуктите
+}
+
 function output_filter_modal($get_product_cat, $promo_checked, $promo_link) {
 	if (wp_is_mobile()) {
 		?>
@@ -440,9 +452,11 @@ do_action( 'woocommerce_before_main_content' );
 									if ($get_brand) {
 										echo do_shortcode('[products attribute="brand" terms="'.$get_brand.'" limit="16" columns="4" paginate="true" ids="'.$ids_placeholder.'"]');
 									} else {
-	
+										$keyword_string = get_product_ids_by_keyword( sanitize_text_field($_GET['ywcas_filter']) );
+										$ywcas_filter_ids = isset($_GET['ywcas_filter']) ? implode(',', array_map('intval', $keyword_string)) : $ids_placeholder; 
+										
 										// if ( $products_on_sale->have_posts() ) {
-										echo do_shortcode('[products category="'.$product_cat_slug.'" limit="16" columns="4" paginate="true" ids="'.$ids_placeholder.'"]');
+										echo do_shortcode('[products category="'.$product_cat_slug.'" limit="16" columns="4" paginate="true" ids="'.$ywcas_filter_ids.'"]');
 											// while ( $products_on_sale->have_posts() ) : $products_on_sale->the_post();
 				
 											// // pretty_dump(get_the_ID());
