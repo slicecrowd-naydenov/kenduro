@@ -422,11 +422,11 @@ do_action( 'woocommerce_before_main_content' );
 									if ($get_brand) {
 										echo do_shortcode('[products attribute="brand" terms="'.$get_brand.'" limit="16" columns="4" paginate="true" ids="'.$ids_placeholder.'"]');
 									} else {
-										$ywcas_filter_ids = isset($_GET['ywcas_filter']) ? get_product_ids_by_keyword( sanitize_text_field($_GET['ywcas_filter']) ) : $ids_placeholder; 
-										$ywcas_filter_ids_placeholder = implode(',', array_map('intval', $ywcas_filter_ids));
+										$keyword_string = get_product_ids_by_keyword( sanitize_text_field($_GET['ywcas_filter']) );
+										$ywcas_filter_ids = isset($_GET['ywcas_filter']) ? implode(',', array_map('intval', $keyword_string)) : $ids_placeholder; 
 										
 										// if ( $products_on_sale->have_posts() ) {
-										echo do_shortcode('[products category="'.$product_cat_slug.'" limit="16" columns="4" paginate="true" ids="'.$ywcas_filter_ids_placeholder.'"]');
+										echo do_shortcode('[products category="'.$product_cat_slug.'" limit="16" columns="4" paginate="true" ids="'.$ywcas_filter_ids.'"]');
 											// while ( $products_on_sale->have_posts() ) : $products_on_sale->the_post();
 				
 											// // pretty_dump(get_the_ID());
