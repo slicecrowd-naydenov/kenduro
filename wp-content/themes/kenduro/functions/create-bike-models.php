@@ -169,8 +169,10 @@ function convert_dynamic_data($dynamic_data) {
 
 function get_bike_model_types() {
   global $fieldsToRemove;
+  $ss_ids = get_field('ss_ids', 'option');
+  $bike_model_types_ID = $ss_ids['bike_model_types'];
 
-  $bike_model_types_response = post_column_fields('65030eb5e5ae89fc66e0812e');
+  $bike_model_types_response = post_column_fields($bike_model_types_ID);
 
   if (is_wp_error($bike_model_types_response)) {
     return $bike_model_types_response;

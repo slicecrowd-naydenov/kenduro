@@ -51,6 +51,17 @@
     }
   }
 
+  &-primary-grey {
+    color: $text-primary !important;
+    background-color: $G-1 !important;
+    border: none;
+    transition: background-color 0.25s ease;
+  
+    &:hover {
+      background-color: $G-2 !important;
+    }
+  }
+
   &-error {
     color: $G-0 !important;
     background-color: $error !important;

@@ -292,7 +292,8 @@ do_action( 'woocommerce_before_main_content' );
 				</div>
 			<?php } ?>
 			<header>
-				<?php if (apply_filters('woocommerce_show_page_title', true)) : ?>
+				<?php 
+				if (apply_filters('woocommerce_show_page_title', true)) : ?>
 					<!-- .woocommerce-products-header__title -->
 					<h4 class="page-title semibold <?php echo esc_attr($classes); ?>">
 						<?php 
@@ -307,7 +308,15 @@ do_action( 'woocommerce_before_main_content' );
 								<?php Load::atom('svg', ['name' => 'star-filled']); ?>
 								Ексклузивен партньор
 							</p>
-						<?php endif;?>
+						<?php endif;
+							if (isset($filterCompability)) : ?>
+								<?php echo ' за'; ?>
+								<div class="button button-primary-grey paragraph semibold edit-selected-bike">
+									<?php echo strtoupper(remove_hyphen_after_first_and_before_last_word($filterCompability)); ?>
+								</div>
+							<?php
+							endif;
+						?>
 					</h4>
 				<?php endif; ?>
 
@@ -342,16 +351,7 @@ do_action( 'woocommerce_before_main_content' );
 					]);
 				} else {
 					if (!is_search()) {
-						if (isset($filterCompability)) {
-							// Ако параметърът съществува, вземете стойността му
-							Load::molecules('product-category/product-category-info/index', [
-								'title' => strtoupper(remove_hyphen_after_first_and_before_last_word($filterCompability)),
-								'class' => 'full-container',
-								'description' => 'Разгледайте наличните ни продукти и ако ви е необходимо нещо друго - обадете ни се !',
-								'cat' => single_term_title('', false),
-								'cat_img_inner' => $cat_inner_image_url
-							]);
-						} else {
+						if (!isset($filterCompability)) {
 							// Ако параметърът не съществува
 							Load::molecules('product-category/product-category-info/index', [
 								'title' => 'Всички продукти',
