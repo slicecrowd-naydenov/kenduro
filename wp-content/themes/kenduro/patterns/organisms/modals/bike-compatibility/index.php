@@ -34,12 +34,8 @@
             </select>
           </div>
         </div>
-        <a href="#" id="see-all-parts" class="button button-primary-orange paragraph-l text-center disable" target="_blank">Покажи ми продуктите за моя мотор</a>
+        <a href="#" id="see-all-parts" class="button button-primary-orange paragraph-l text-center disable">Покажи ми продуктите за моя мотор</a>
       </div>
-      <!-- <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div> -->
     </div>
   </div>
 </div>

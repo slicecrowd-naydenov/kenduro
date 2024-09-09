@@ -36,6 +36,7 @@ export default class Compatibilities {
     this.onBrandChange();
     this.onModelChange();
     this.onYearChange();
+    this.checkBikeCookies();
   }
 
   initSelectMenus() {
@@ -197,6 +198,7 @@ export default class Compatibilities {
       this.seeAllParts
         .removeClass('disable')
         .attr('href', href);
+      $('.show-bike-compatibility').attr('href', href);
 
       this.brandDropdown.selectmenu('refresh');
       this.modelDropdown.selectmenu('refresh');

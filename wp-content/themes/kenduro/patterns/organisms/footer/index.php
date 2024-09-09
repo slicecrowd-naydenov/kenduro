@@ -72,4 +72,4 @@ use Lean\Load;
     </div>
   </div>
 </footer>
-<?php Load::molecules('bike-compatibility/index'); ?>
+<?php Load::organism('modals/bike-compatibility/index'); ?>

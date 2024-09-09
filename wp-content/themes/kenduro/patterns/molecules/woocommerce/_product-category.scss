@@ -294,6 +294,16 @@ ul.products {
 
   .page-title {
     margin-bottom: 10px;
+
+    .edit-selected-bike {
+      margin-left: 20px;
+      display: inline-flex;
+      align-items: center;
+
+      svg {
+        margin-left: 10px;
+      }
+    }
   }
 
   .nav-pills {

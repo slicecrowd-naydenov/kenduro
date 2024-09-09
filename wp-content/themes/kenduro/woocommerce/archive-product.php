@@ -23,6 +23,10 @@ global $wp_query, $wp;
 $on_sale = isset($_GET['on-sale']);
 $filterCompability = $_GET['wpf_filter_compability'];
 $query_vars = $wp_query->query_vars;
+$isSetCompatibility = isset($_COOKIE['brand']) && isset($_COOKIE['model']) && isset($_COOKIE['year']);
+if ($isSetCompatibility) {
+	$bikeCompatibility = $_COOKIE['brand'] . ' ' . $_COOKIE['model'] . ' ' . $_COOKIE['year'];
+}
 
 $get_brand = isset($query_vars['pa_brand']) ? $query_vars['pa_brand'] : null;
 $get_product_cat = isset($query_vars['product_cat']) ? $query_vars['product_cat'] : null;
@@ -252,21 +256,6 @@ function output_filter_modal($get_product_cat, $promo_checked, $promo_link) {
 	}
 }
 
-function remove_hyphen_after_first_and_before_last_word($string) {
-	// Разбиване на стринга на масив от думи, разделени по тирета
-	$parts = explode('-', $string);
-
-	// Ако стрингът съдържа повече от една дума
-	if (count($parts) > 2) {
-		// Присъединяване на първата дума с останалата част, като се добавя интервал след първата дума
-		$first_part = array_shift($parts);
-		$last_part = array_pop($parts);
-		$string = $first_part . ' ' . implode('-', $parts) . ' ' . $last_part;
-	}
-
-	return $string;
-}
-
 get_header( 'shop' );
 
 /**
@@ -323,8 +312,11 @@ do_action( 'woocommerce_before_main_content' );
 						<?php endif;
 							if (isset($filterCompability)) : ?>
 								<?php echo ' за'; ?>
-								<div class="button button-primary-grey paragraph semibold edit-selected-bike">
-									<?php echo strtoupper(remove_hyphen_after_first_and_before_last_word($filterCompability)); ?>
+								<div class="button button-primary-grey paragraph semibold edit-selected-bike" data-toggle="modal" data-target="#compatibilityModal">
+									<?php 
+										echo strtoupper(remove_hyphen_after_first_and_before_last_word($filterCompability));
+										Load::atom('svg', ['name' => 'edit']); 
+									?>
 								</div>
 							<?php
 							endif;
@@ -424,6 +416,16 @@ do_action( 'woocommerce_before_main_content' );
 										<a href="<?php echo $promo_link; ?>">Промо продукти</a>
 									</label>
 								<?php endif; ?>
+								<?php if($isSetCompatibility && !isset($filterCompability)) : ?>
+									<a href="#" class="button button-primary-orange paragraph-m show-bike-compatibility">
+										<?php 
+											echo 'Покажи продуктите за ';
+											echo strtoupper(remove_hyphen_after_first_and_before_last_word($bikeCompatibility));
+											Load::atom('svg', ['name' => 'arrow_orange']); 
+										?>
+									</a>
+								<?php endif; ?>
+
 								<div class="dropdown-menu dropdown-menu-sort" aria-labelledby="dropdownSortMenuButton">
 									<?php echo do_shortcode('[wpf-filters id=4]'); ?>
 								</div>
@@ -455,6 +457,8 @@ do_action( 'woocommerce_before_main_content' );
 										$keyword_string = get_product_ids_by_keyword( sanitize_text_field($_GET['ywcas_filter']) );
 										$ywcas_filter_ids = isset($_GET['ywcas_filter']) ? implode(',', array_map('intval', $keyword_string)) : $ids_placeholder; 
 										
+										$keyword_string = get_product_ids_by_keyword( sanitize_text_field($_GET['ywcas_filter']) );
+										pretty_dump(get_product_ids_by_keyword(('KTM EXC-F 250 2017')));
 										// if ( $products_on_sale->have_posts() ) {
 										echo do_shortcode('[products category="'.$product_cat_slug.'" limit="16" columns="4" paginate="true" ids="'.$ywcas_filter_ids.'"]');
 											// while ( $products_on_sale->have_posts() ) : $products_on_sale->the_post();

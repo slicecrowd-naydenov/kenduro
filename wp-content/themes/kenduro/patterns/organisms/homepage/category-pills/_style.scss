@@ -180,6 +180,19 @@
       display: none;
     }
   }
+
+  .show-bike-compatibility {
+    margin-left: 30px;
+    padding-top: 6px;
+    padding-bottom: 6px;
+
+    svg {
+      margin-left: 12px;
+      path {
+        fill: $G-0;
+      }
+    }
+  }
 }
 
 .dropdown {

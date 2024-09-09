@@ -584,3 +584,19 @@ function get_years_by_model() {
 
   wp_die(); // Close Ajax request
 }
+
+// bike compatibility modal
+function remove_hyphen_after_first_and_before_last_word($string) {
+	// Разбиване на стринга на масив от думи, разделени по тирета
+	$parts = explode('-', $string);
+
+	// Ако стрингът съдържа повече от една дума
+	if (count($parts) > 2) {
+		// Присъединяване на първата дума с останалата част, като се добавя интервал след първата дума
+		$first_part = array_shift($parts);
+		$last_part = array_pop($parts);
+		$string = $first_part . ' ' . implode('-', $parts) . ' ' . $last_part;
+	}
+
+	return $string;
+}

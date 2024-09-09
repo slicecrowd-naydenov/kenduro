@@ -1,6 +1,19 @@
 <?php
 use Lean\Load;
 $page_name = strtolower(get_the_title());
+$isSetCompatibility = isset($_COOKIE['brand']) && isset($_COOKIE['model']) && isset($_COOKIE['year']);
+
+if ($isSetCompatibility) {
+  $filterCompability = $_COOKIE['brand'] . ' ' . $_COOKIE['model'] . ' ' . $_COOKIE['year'];
+  $filterButtonClass = 'has-set-bike';
+  $filterButtonText = 'Покажи продуктите за ';
+  $filterButtonIconName = 'arrow_orange';
+} else {
+  $filterButtonClass = 'not-set-bike';
+  $filterButtonText = 'Добави мотора си';
+  $filterButtonIconName = 'plus';
+}
+
 ?>
 <div id="top-section">
   <div class="container">
@@ -12,14 +25,24 @@ $page_name = strtolower(get_the_title());
       </div>
       <div class="col-auto">
         <div class="header-btns-wrapper">
-          <div class="bike-compatibility-button">
+          <div class="bike-compatibility-button <?php esc_attr_e($filterButtonClass); ?>">
             <div class="bike-icon"><?php Load::atom('svg', ['name' => 'bike']); ?></div>
+            <?php if (!$isSetCompatibility) : ?>
             <span>Покажи само продукти за :</span>
+            <?php endif; ?>
             <!-- Button trigger modal -->
             <button type="button" class="button button-primary-orange paragraph-m" data-toggle="modal" data-target="#compatibilityModal">
-              <?php Load::atom('svg', ['name' => 'plus']); ?>
-              Добави мотора си
+              <?php 
+                Load::atom('svg', ['name' => $filterButtonIconName]); 
+                echo $filterButtonText;
+								echo strtoupper(remove_hyphen_after_first_and_before_last_word($filterCompability));
+              ?>
             </button>
+            <?php 
+              if ($isSetCompatibility) : 
+                Load::atom('svg', ['name' => 'edit', 'class' => 'edit-bike']); 
+              endif; 
+            ?>
           </div>
           <!-- <p class="paragraph paragraph-m semibold">Some menu goes here</p>
           <p class="paragraph paragraph-m semibold lang-bar">Language bar</p> -->
