@@ -1,5 +1,67 @@
 <?php
 
+add_action('rest_api_init', 'add_get_bike_models_endpoint');
+function add_get_bike_models_endpoint() {
+  register_rest_route(
+    'ss-data',
+    '/create-compatibility-list/(?P<id>[^/]+)',
+    array(
+      'methods' => 'GET',
+      'callback' => 'create_compatibility_list',
+      'permission_callback' => function ($request) {
+        return true;
+      }
+    )
+  );
+}
+
+function create_compatibility_list($request) {
+  global $fieldsToRemove;
+  $id = $request->get_param('id');
+
+  $external_api_response = post_column_fields($id);
+
+  if (is_wp_error($external_api_response)) {
+    return $external_api_response;
+  }
+
+
+  $filteredData = filter_items($external_api_response['items'], $fieldsToRemove);
+
+  create_woo_bike_models($filteredData);
+
+  return $filteredData;
+}
+
+function create_woo_bike_models($filteredData): ?object {
+  $response = new stdClass();
+  $ss_ids = get_field('ss_ids', 'option');
+  $product_fields = fetch_column_fields($ss_ids['products_app_id']);    
+  $supported_bikes_chatgpt = get_column_field_id('supported_bikes_chatgpt', $product_fields);
+  $formatted_bikes = get_column_field_id('formatted_bikes', $product_fields);
+  $bike_models = post_column_fields('66d82ab4af10fdeaa81e83d3'); // 66d82ab4af10fdeaa81e83d3
+  $bike_models_arr = explode("\n", $bike_models['items'][0]['description']);
+  
+  foreach ($filteredData as $item) {
+    $incoming_id = $item['id'];
+    $supported_bikes_chatgpt_array = preg_split('/\s*,\s*|\n|<br>/', $item[$supported_bikes_chatgpt]);
+    $formatted_bikes_chatgpt_results = array_intersect(array_map('strtoupper',$bike_models_arr), array_map('strtoupper',$supported_bikes_chatgpt_array));
+    $dataBody = array(
+      $formatted_bikes =>  implode(",\n", $formatted_bikes_chatgpt_results),
+    );
+    update_record_curl($ss_ids['products_app_id'], $dataBody, $incoming_id);
+
+    $response->success = true;
+  }
+
+  if (!isset($response->success)) {
+    $response->success = false;
+  }
+
+  return $response;
+}
+
+
 // add_action('rest_api_init', 'add_get_bike_models_endpoint');
 // function add_get_bike_models_endpoint() {
 //   register_rest_route(

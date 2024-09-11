@@ -130,7 +130,7 @@ export default class CreateProducts {
       try {
         const response = await axios({
           method: 'get',
-          url: `${wpApiSettings.rest_url}ss-data/get-bike-models/`+$(this.createBikeModelsBtn).attr('data-bike-models-id')
+          url: `${wpApiSettings.rest_url}ss-data/create-compatibility-list/64fffa49372b0c1543d60c35`
         });
         console.log('response Bike models: ', response);
         resolve(response);
