@@ -174,23 +174,7 @@ function update_individually_product($request) {
 
   $filteredArrays = get_record($id, $record_id);
 
-  $ss_ids = get_field('ss_ids', 'option');
-  $product_fields = fetch_column_fields($ss_ids['products_app_id']);    
-  $incoming_id = $filteredArrays['id'];
-  $supported_bikes_chatgpt = get_column_field_id('supported_bikes_chatgpt', $product_fields);
-  $formatted_bikes = get_column_field_id('formatted_bikes', $product_fields);
-  $supported_bikes_chatgpt_array = preg_split('/\s*,\s*|\n|<br>/', $filteredArrays[$supported_bikes_chatgpt]);
-  $bike_models = post_column_fields('66d82ab4af10fdeaa81e83d3'); // 66d82ab4af10fdeaa81e83d3
-  $bike_models_arr = explode("\n", $bike_models['items'][0]['description']);
-  $formatted_bikes_chatgpt_results = array_intersect(array_map('strtoupper',$bike_models_arr), array_map('strtoupper',$supported_bikes_chatgpt_array));
-  $dataBody = array(
-    $formatted_bikes =>  implode(",\n", $formatted_bikes_chatgpt_results),
-  );
-  update_record_curl($ss_ids['products_app_id'], $dataBody, $incoming_id);
-
-  $filteredArrayFormatted = get_record($id, $record_id);
-
-  update_woocommerce_product($filteredArrayFormatted, $id);
+  update_woocommerce_product($filteredArrays, $id);
 
   return $filteredArrays;
 }
@@ -653,7 +637,7 @@ function generate_variable_products($item, $ss_ids, $product_fields, $product_va
 	$prduct_sku = get_column_field_id('set_sku', $product_fields);
 	$attr_color = get_column_field_id('color', $product_fields);
 	$attr_brand = get_column_field_id('brand', $product_fields);
-	$formatted_bikes = get_column_field_id('formatted_bikes', $product_fields);
+	$bike_compatibility_text = get_column_field_id('bike_compatibility_text', $product_fields);
   // $compatibility_text = str_replace("<br>", ", ", $supported_bikes_chatgpt);
 	$brand_text = get_column_field_id('brand_text', $product_fields);
 	$name_bg = get_column_field_id('product_name_bg', $product_fields);
@@ -673,7 +657,7 @@ function generate_variable_products($item, $ss_ids, $product_fields, $product_va
   // $is_set_brand = count($item[$attr_brand]) > 0 ? $item[$attr_brand][0] : '';
 
   $attributes_data = update_attributes(
-    $item[$formatted_bikes], 
+    $item[$bike_compatibility_text], 
     $item[$attr_brand], 
     $item[$brand_text], 
     'brand', 
@@ -727,7 +711,7 @@ function generate_variable_products($item, $ss_ids, $product_fields, $product_va
 function generate_simple_product($item, $ss_ids, $product_fields, $product_variations_fields, $incoming_id) {
 	$attr_color = get_column_field_id('color', $product_fields);
 	$attr_brand = get_column_field_id('brand', $product_fields);
-	$formatted_bikes = get_column_field_id('formatted_bikes', $product_fields);
+	$bike_compatibility_text = get_column_field_id('bike_compatibility_text', $product_fields);
   // $compatibility_text = str_replace("<br>", ", ", $supported_bikes_chatgpt);
 	$brand_text = get_column_field_id('brand_text', $product_fields);
 	$name_bg = get_column_field_id('product_name_bg', $product_fields);
@@ -752,7 +736,7 @@ function generate_simple_product($item, $ss_ids, $product_fields, $product_varia
   update_post_meta($p_id, '_rank_math_gtin_code', sprintf("%012d", $p_id));
 
   $attributes_data = update_attributes(
-    $item[$formatted_bikes], 
+    $item[$bike_compatibility_text], 
     $item[$attr_brand], 
     $item[$brand_text], 
     'brand', 

@@ -169,7 +169,7 @@ export default class Compatibilities {
         const brandVal = this.brandDropdown.val();
         const modelVal = this.modelDropdown.val();
         const yearVal = this.yearDropdown.val();
-        const href = `http://kenduro.test/shop?wpf_filter_compability=${brandVal}-${modelVal}-${yearVal}`;
+        const href = `http://kenduro.test/shop?wpf_filter_compability=all|${brandVal}|${brandVal}-${modelVal}-${yearVal}`;
         this.seeAllParts
           .removeClass('disable')
           .attr('href', href);
@@ -194,7 +194,7 @@ export default class Compatibilities {
       this.brandDropdown.val(brand);
       this.modelDropdown.html(modelOptions).val(model);
       this.yearDropdown.html(yearOptions).val(year);
-      const href = `http://kenduro.test/shop?wpf_filter_compability=${brand}-${model}-${year}`;
+      const href = `http://kenduro.test/shop?wpf_filter_compability=all|${brand}|${brand}-${model}-${year}`;
       this.seeAllParts
         .removeClass('disable')
         .attr('href', href);

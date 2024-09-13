@@ -7,6 +7,7 @@
 
 get_header();
 
+// process_mockup(get_bike_model_types());
 ?>
 <main>
   <div class="container">
