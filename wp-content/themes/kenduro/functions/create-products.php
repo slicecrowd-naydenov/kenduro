@@ -634,7 +634,7 @@ function create_simple_product($pid, $term_slug, $product_fields) {
 
 // Create Variable product
 function generate_variable_products($item, $ss_ids, $product_fields, $product_variations_fields, $incoming_id) {
-	$prduct_sku = get_column_field_id('set_sku', $product_fields);
+	$product_sku = get_column_field_id('set_sku', $product_fields);
 	$attr_color = get_column_field_id('color', $product_fields);
 	$attr_brand = get_column_field_id('brand', $product_fields);
 	// $compatibility = get_column_field_id('compatibility', $product_fields);
@@ -648,10 +648,11 @@ function generate_variable_products($item, $ss_ids, $product_fields, $product_va
 
   $variations->set_name($item[$name_bg]);
   $variations->set_slug($item['title']);
-  $variations->set_sku($item[$prduct_sku]);
+  // $variations->set_sku($item[$prduct_sku]);
   
   $variations->save();
   $pid = $variations->get_id();
+  update_post_meta($pid, '_sku', $item[$product_sku]);
 
   // $is_set_color = count($item[$attr_color]) > 0 ? $item[$attr_color][0] : '';
   // $is_set_brand = count($item[$attr_brand]) > 0 ? $item[$attr_brand][0] : '';
@@ -875,8 +876,8 @@ function create_woocommerce_products($filteredData): ?object {
   $product = wc_get_product($pid);
 
   $attributes_data = array();
-  $is_set_brand = count($brand) > 0 ? $brand[0] : '';
-  $is_set_color = count($color) > 0 ? $color[0] : '';
+  $is_set_brand = (is_array($brand) && count($brand) > 0) ? $brand[0] : '';
+  $is_set_color = (is_array($color) && count($color) > 0) ? $color[0] : '';
   // $is_set_compatibility = count($compatibility) > 0 ? $compatibility_text : '';
   // // $product = wc_get_product($pid);
 
