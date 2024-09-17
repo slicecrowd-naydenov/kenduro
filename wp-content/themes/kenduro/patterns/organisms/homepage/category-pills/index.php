@@ -52,7 +52,7 @@ if ($main_categories) :
           <!-- ADD PAGINATION 
           [products limit='10' paginate='true'] 
           ================================= -->
-            <?php echo do_shortcode("[products limit='20' columns='5']"); ?>
+            <?php echo do_shortcode("[products limit='10' columns='5']"); ?>
             <a href="<?php echo esc_attr(get_site_url()); ?>/shop" class="cat-img">
               <img src="<?php echo IMAGES_PATH; ?>/categories/Image=Grey, For=All Products@2x.jpg" />
               <h4>
@@ -63,7 +63,7 @@ if ($main_categories) :
           </div>
           <?php foreach ($category_info as $id => $info) : ?>
             <div class="tab-pane fade" id="pills-<?php echo $info['slug']; ?>" role="tabpanel" aria-labelledby="pills-<?php echo $info['slug']; ?>-tab">
-              <?php echo do_shortcode("[products category='".$id."' limit='20' columns='5']"); ?>
+              <?php echo do_shortcode("[products category='".$id."' limit='10' columns='5']"); ?>
               <?php 
               if ($info['thumbnail_id']) : 
                 $image_url = wp_get_attachment_url($info['thumbnail_id']); 
