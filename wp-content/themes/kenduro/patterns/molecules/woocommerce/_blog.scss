@@ -9,6 +9,14 @@
     display: block;
   }
 
+  .addtoany_list {
+    display: flex;
+
+    a {
+      padding: 0 4px;
+    }
+  }
+
   .blog-post-list {
     margin: 0;
     padding: 0;

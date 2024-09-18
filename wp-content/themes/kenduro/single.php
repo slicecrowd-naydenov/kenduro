@@ -51,7 +51,17 @@ if (have_posts()) {
 									</div>
 									<div class="share-box">
 										<p class="paragraph paragraph-l">Сподели:</p>
-										<?php echo do_shortcode('[addtoany]');?>
+										<!-- AddToAny BEGIN -->
+											<?php $actual_link = (empty($_SERVER['HTTPS']) ? 'http' : 'https') . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]"; ?>
+										
+											<div class="a2a_kit a2a_kit_size_16 addtoany_list" data-a2a-url="<?php esc_attr_e($actual_link); ?>">
+												<a class="a2a_button_facebook"></a>
+												<a class="a2a_button_copy_link"></a>
+											</div>
+											<script async src="https://static.addtoany.com/menu/page.js"></script>
+											<!-- AddToAny END -->
+
+										<?php // echo do_shortcode('[addtoany]');?>
 									</div>
 								</div>
 
