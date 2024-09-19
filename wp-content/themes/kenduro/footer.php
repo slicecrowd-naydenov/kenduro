@@ -1,8 +1,8 @@
 <?php 
   use Lean\Load;
-
-  Load::organism('footer/index'); 
-
+  if (!is_page_template('templates/landing-event.php') ) {
+    Load::organism('footer/index'); 
+  }
   wp_footer(); 
 ?>
 
