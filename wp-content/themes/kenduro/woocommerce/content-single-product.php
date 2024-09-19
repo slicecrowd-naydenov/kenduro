@@ -109,7 +109,7 @@ function custom_code_after_product_data_tabs() {
 							$query->the_post();
 							$product = wc_get_product(get_the_ID());
 							$product_classes = implode(' ', wc_get_product_class('', $product));
-							$product_image = has_post_thumbnail() ? wp_get_attachment_image_src(get_post_thumbnail_id(), 'single-post-thumbnail')[0] : wc_placeholder_img_src();
+							$product_image = has_post_thumbnail() ? wp_get_attachment_image_src(get_post_thumbnail_id(), 'medium')[0] : wc_placeholder_img_src(); // woocommerce_thumbnail 
 							?>
 							<li class="product <?php echo esc_attr($product_classes); ?>">
 								<a href="<?php echo esc_url(get_permalink()); ?>" class="woocommerce-LoopProduct-link woocommerce-loop-product__link">
