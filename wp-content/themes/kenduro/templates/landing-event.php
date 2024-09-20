@@ -30,7 +30,7 @@ $images = range(1, 10);
       </div>
       <script src="https://player.vimeo.com/api/player.js"></script>
       <div class="wrapper">
-        <h1 class="h1 bold">TRSS Trial Shool</h1>
+        <h1 class="h1 bold">TRRS Trial Shool</h1>
         <h3 class="h3 bold"> Банско, 26ти Октомври </h3>
         <div class="available-seats">
           <p class="paragraph paragraph-l">Свободни места : <b><?php echo $available_seats; ?></b></p>

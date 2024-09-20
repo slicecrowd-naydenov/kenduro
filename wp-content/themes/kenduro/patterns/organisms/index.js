@@ -28,6 +28,12 @@ export default () => {
     new SidebarFilter($('.filter-content-wrapper'));
   }
 
+  if ($('body').hasClass('page-template-landing-event')) {
+    // eslint-disable-next-line no-undef, new-cap
+    console.log('Event page');
+    Intercom('update', { 'hide_default_launcher': true });
+  }
+
   // if (MiddleHeader) {
   //   new MiddleHeader(document.getElementById('middle-section'));
   // }
