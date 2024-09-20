@@ -16,7 +16,7 @@ $images = range(1, 10);
           <div class="wrapper">
             <p class="paragraph paragraph-l">гр. Банско, 26ти Октомври</p>
             <img src="<?php echo IMAGES_PATH; ?>/landing-event/landing-logo.png" alt="landing logo" class="landing-logo">
-            <a href="<?php echo esc_url($sign_in_url); ?>" class="button button-primary-orange paragraph paragraph-m">Запиши се сега</a>
+            <a href="<?php echo esc_url($sign_in_url); ?>" target="_blank" class="button button-primary-orange paragraph paragraph-m">Запиши се сега</a>
           </div>
         </div>
       </div>
@@ -34,7 +34,7 @@ $images = range(1, 10);
         <h3 class="h3 bold"> Банско, 26ти Октомври </h3>
         <div class="available-seats">
           <p class="paragraph paragraph-l">Свободни места : <b><?php echo $available_seats; ?></b></p>
-          <a href="<?php echo esc_url($sign_in_url); ?>" class="button button-primary-orange paragraph paragraph-l">Запиши се сега !</a>
+          <a href="<?php echo esc_url($sign_in_url); ?>" target="_blank" class="button button-primary-orange paragraph paragraph-l">Запиши се сега !</a>
         </div>
         <p class="paragraph paragraph-m tax">Цена за участие : 90лв</p>
       </div>
@@ -69,7 +69,7 @@ $images = range(1, 10);
 
     <div class="banner-section">
       <h3 class="h3 bold">Остават само <?php echo $available_seats; ?> места</h3>
-      <a href="<?php echo esc_url($sign_in_url); ?>" class="button button-primary-orange paragraph paragraph-l">Запиши се сега !</a>
+      <a href="<?php echo esc_url($sign_in_url); ?>" target="_blank" class="button button-primary-orange paragraph paragraph-l">Запиши се сега !</a>
     </div>
 
     <div class="schedule">
@@ -108,7 +108,7 @@ $images = range(1, 10);
             <p class="paragraph paragraph-xl">Събитието ще се проведе на трасе, което е изградено ексклузивно за траял събитието.</p>
             <p class="paragraph paragraph-xl">Локацията е гр.Банско, Казармите - където се провежда EnduroCross състезанието от Three Mountains Hard Enduro Bansko</p>
             <br>
-            <a href="<?php echo esc_url($google_maps); ?>" class="button button-primary-blue paragraph paragraph-m">Виж в Google Maps</a>
+            <a href="<?php echo esc_url($google_maps); ?>" target="_blank" class="button button-primary-blue paragraph paragraph-m">Виж в Google Maps</a>
             <br>
             <br>
             <img src="<?php echo IMAGES_PATH; ?>/landing-event/google-maps.jpg" alt="google maps">
@@ -119,7 +119,7 @@ $images = range(1, 10);
             <p class="paragraph paragraph-xl">TRRS е официално създадена през 2013 година, и тогава започва производството на първия си траял модел в три работни обема (250, 280 и 300 куб. см) в края на 2014 година, както и разработването на нови модели през 2015 година.</p>
             <p class="paragraph paragraph-xl">Производствените съоръжения са разположени в провинция Барселона, както и научноизследователските, развойните и иновационните дейности. В спортен план компанията предвижда постепенно участие в тази област, свързано с консолидацията на бизнеса.</p>
             <br>
-            <a href="<?php echo esc_url($google_maps); ?>" class="button button-primary-blue paragraph paragraph-m">Виж в Google Maps</a>
+            <a href="<?php echo esc_url($google_maps); ?>" target="_blank" class="button button-primary-blue paragraph paragraph-m">Виж в Google Maps</a>
           </div>
         </div>
       </div>
@@ -159,7 +159,7 @@ $images = range(1, 10);
     <div class="banner-section">
       <h1 class="h1 bold" style="margin: 0">Остават само <?php echo $available_seats; ?> места</h1>
       <h3 class="h3 bold">Банско, 26ти Октомври</h3>
-      <a href="<?php echo esc_url($sign_in_url); ?>" class="button button-primary-orange paragraph paragraph-l">Запиши се сега !</a>
+      <a href="<?php echo esc_url($sign_in_url); ?>" target="_blank" class="button button-primary-orange paragraph paragraph-l">Запиши се сега !</a>
     </div>
     
     <div class="assistants">
