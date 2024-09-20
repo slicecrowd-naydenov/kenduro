@@ -4,7 +4,9 @@ use Lean\Load;
 
 get_header();
 $available_seats = 25;
-$sign_in_url = "#";
+$sign_in_url = "https://form.smartsuite.com/sd0y91s2/EFmNkyr8RR";
+$google_maps = "https://maps.app.goo.gl/AudCjg56yczwihxB7";
+$images = range(1, 10);
 ?>
 <div id="landing-event">
   <div class="header">
@@ -106,7 +108,7 @@ $sign_in_url = "#";
             <p class="paragraph paragraph-xl">Събитието ще се проведе на трасе, което е изградено ексклузивно за траял събитието.</p>
             <p class="paragraph paragraph-xl">Локацията е гр.Банско, Казармите - където се провежда EnduroCross състезанието от Three Mountains Hard Enduro Bansko</p>
             <br>
-            <a href="#" class="button button-primary-blue paragraph paragraph-m">Виж в Google Maps</a>
+            <a href="<?php echo esc_url($google_maps); ?>" class="button button-primary-blue paragraph paragraph-m">Виж в Google Maps</a>
             <br>
             <br>
             <img src="<?php echo IMAGES_PATH; ?>/landing-event/google-maps.jpg" alt="google maps">
@@ -117,7 +119,7 @@ $sign_in_url = "#";
             <p class="paragraph paragraph-xl">TRRS е официално създадена през 2013 година, и тогава започва производството на първия си траял модел в три работни обема (250, 280 и 300 куб. см) в края на 2014 година, както и разработването на нови модели през 2015 година.</p>
             <p class="paragraph paragraph-xl">Производствените съоръжения са разположени в провинция Барселона, както и научноизследователските, развойните и иновационните дейности. В спортен план компанията предвижда постепенно участие в тази област, свързано с консолидацията на бизнеса.</p>
             <br>
-            <a href="#" class="button button-primary-blue paragraph paragraph-m">Виж в Google Maps</a>
+            <a href="<?php echo esc_url($google_maps); ?>" class="button button-primary-blue paragraph paragraph-m">Виж в Google Maps</a>
           </div>
         </div>
       </div>
@@ -133,8 +135,24 @@ $sign_in_url = "#";
           </div>
         </div>
       </div>
-      <div class="wrapper">
+      <div class="swiper-block">
+        <div class="swiper" data-slider>
+          <!-- Additional required wrapper -->
+          <div class="swiper-wrapper">
+            <!-- Slides -->
+            <?php foreach ($images as $image) : ?>
+              <div class="swiper-slide">
+                <img src="<?php echo IMAGES_PATH; ?>/landing-event/slider/<?php echo $image; ?>.jpg" alt="slide-<?php echo $image; ?>">
+              </div>
+            <?php endforeach; ?>
+          </div>
 
+          <!-- If we need navigation buttons -->
+        </div>
+        <div class="siwper-navigation">
+          <div class="swiper-button-prev"></div>
+          <div class="swiper-button-next"></div>
+        </div>
       </div>
     </div>
     
