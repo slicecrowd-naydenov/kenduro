@@ -73,6 +73,8 @@
       top: 0;
       width: 100%;
       filter: blur(5px);
+      background: url('../../assets/images/landing-event/poster.jpg') center center no-repeat;
+      background-size: cover;
 
       @include media-breakpoint-down(md) {
         display: none;
