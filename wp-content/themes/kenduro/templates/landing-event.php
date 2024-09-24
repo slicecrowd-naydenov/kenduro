@@ -3,7 +3,7 @@
 use Lean\Load;
 
 get_header();
-$available_seats = 25;
+$available_seats = 20;
 $sign_in_url = "https://form.smartsuite.com/sd0y91s2/EFmNkyr8RR";
 $google_maps = "https://maps.app.goo.gl/AudCjg56yczwihxB7";
 $images = range(1, 10);
@@ -36,7 +36,7 @@ $images = range(1, 10);
           <p class="paragraph paragraph-l">Свободни места : <b><?php echo $available_seats; ?></b></p>
           <a href="<?php echo esc_url($sign_in_url); ?>" target="_blank" class="button button-primary-orange paragraph paragraph-l">Запиши се сега !</a>
         </div>
-        <p class="paragraph paragraph-m tax">Цена за участие : 90лв</p>
+        <p class="paragraph paragraph-m tax">Цена за участие : 80лв</p>
       </div>
     </div>
 
@@ -91,7 +91,7 @@ $images = range(1, 10);
           <div class="col-sm-12 col-md-6">
             <div class="specifications">
               <h2 class="h2 bold">Каква е цената ?</h2>
-              <p class="paragraph paragraph-xl">Цената за участие е 90лв. В цената е включен и обяд - в Банско сме, няма да са калмари ...</p>
+              <p class="paragraph paragraph-xl">Цената за участие е 80лв. В цената е включен и обяд - в Банско сме, няма да са калмари ...</p>
               <p class="paragraph paragraph-xl">В цената не е включен наем на траял мотор, ако такъв ви е необходим.</p>
             </div>
           </div>
