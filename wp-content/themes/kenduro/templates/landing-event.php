@@ -42,7 +42,9 @@ $images = range(1, 10);
 
     <div class="assistants">
       <p class="paragraph paragraph-l">Със съдействието на</p>
-      <?php Load::molecules('logo/index'); ?>
+      <a href="<?php echo esc_url(get_site_url()); ?>" rel="home" class="logo" target="_blank">
+        <?php Load::atom('svg', ['name' => 'logo']); ?>
+      </a>
     </div>
 
     <div class="content-section">
@@ -164,7 +166,9 @@ $images = range(1, 10);
     
     <div class="assistants">
       <p class="paragraph paragraph-l">Със съдействието на</p>
-      <?php Load::molecules('logo/index'); ?>
+      <a href="<?php echo esc_url(get_site_url()); ?>" rel="home" class="logo" target="_blank">
+        <?php Load::atom('svg', ['name' => 'logo']); ?>
+      </a>
     </div>
   </main>
 </div>
