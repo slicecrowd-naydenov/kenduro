@@ -205,12 +205,18 @@
     }
 
     a {
-      margin-top: 20px;
+      margin-top: 20px;  
+      padding: 18px 35px;
+      line-height: 24px;
     }
 
     h1 {
+      font-size: 60px;
+      line-height: 82px;
+
       @include media-breakpoint-down(md) {
         font-size: 32px;
+        line-height: 40px;
       }
     }
   }

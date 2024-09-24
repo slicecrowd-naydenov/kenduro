@@ -30,7 +30,6 @@ export default () => {
 
   if ($('body').hasClass('page-template-landing-event')) {
     // eslint-disable-next-line no-undef, new-cap
-    console.log('Event page');
     Intercom('update', { 'hide_default_launcher': true });
   }
 
