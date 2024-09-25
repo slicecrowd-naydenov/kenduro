@@ -422,8 +422,8 @@ do_action( 'woocommerce_before_main_content' );
 									if ($get_brand) {
 										echo do_shortcode('[products attribute="brand" terms="'.$get_brand.'" limit="16" columns="4" paginate="true"]');
 									} else {
-										$keyword_string = get_product_ids_by_keyword( sanitize_text_field($_GET['ywcas_filter']) );
-										$ywcas_filter_ids = isset($_GET['ywcas_filter']) ? implode(',', array_map('intval', $keyword_string)) : $ids_placeholder; 
+										$keyword_string = isset($_GET['ywcas_filter']) ? get_product_ids_by_keyword( sanitize_text_field($_GET['ywcas_filter']) ) : '';
+										$ywcas_filter_ids = isset($_GET['ywcas_filter']) ? implode(',', array_map('intval', $keyword_string)) : implode(',', $ids_placeholder); 
 										
 										// if ( $products_on_sale->have_posts() ) {
 										echo do_shortcode('[products category="'.$product_cat_slug.'" limit="16" columns="4" paginate="true" ids="'.$ywcas_filter_ids.'"]');
