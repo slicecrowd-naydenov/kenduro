@@ -199,7 +199,9 @@
               position: relative;
               cursor: pointer;
               text-decoration: none;
-              @extend #{'.paragraph', '.paragraph-xl'};
+              margin: 0;
+              font-size: 16px;
+              line-height: 22px;
             }
           }
 
@@ -211,7 +213,9 @@
               font-size: 0;
                 
               * {
-                @extend #{'.paragraph', '.paragraph-xl'};
+                margin: 0;
+                font-size: 16px;
+                line-height: 22px;
 
                 *:not(a) {
                   color: $text-primary !important;
@@ -312,9 +316,11 @@
         padding: 0;
         text-align: center;
         font-style: normal;
-        margin-bottom: 20px;
         border: none;
-        @extend #{'.paragraph', '.paragraph-m', '.tetriary'};
+        margin: 0 0 20px;
+        font-size: 12px;
+        line-height: 16px;
+        color: $text-tetriary;
       }
     }
 
@@ -413,7 +419,9 @@
         outline: none;
         padding: 0;
         color: $text-secondary;
-        @extend #{'.paragraph', '.paragraph-l'};
+        margin: 0;
+        font-size: 14px;
+        line-height: 20px;
       }
     }
   }
@@ -540,7 +548,9 @@
 
       p {
         position: relative;
-        @extend #{'.paragraph', '.paragraph-l'};
+        margin: 0;
+        font-size: 14px;
+        line-height: 20px;
       }
       
       .wpcf7-spinner {
@@ -563,7 +573,10 @@
         }
         
         &.wpcf7-submit {
-          @extend #{'.button', '.button-primary-orange', '.paragraph', '.paragraph-l'};
+          margin: 0;
+          font-size: 14px;
+          line-height: 20px;
+          @extend #{'.button', '.button-primary-orange'};
         }
       }
     }
@@ -611,7 +624,9 @@
         align-items: center;
         gap: 10px;
         background: $G-0;
-        @extend #{'.paragraph', '.paragraph-m'};
+        margin: 10px 0 0;
+        font-size: 12px;
+        line-height: 16px;
 
         svg {
           margin-left: 0;

@@ -89,12 +89,16 @@ ul {
   }
 
   .woocommerce-breadcrumb {
-    @extend #{'.paragraph','.paragraph-m', '.tetriary', '.semibold'};
+    margin: 0;
+    font-size: 12px;
+    line-height: 16px;
+    font-weight: 600;
+    color: $text-tetriary;
 
     a {
       transition: color 0.2s ease;
       text-decoration: none;
-      @extend .regular;
+      font-weight: 400;
 
       &:hover {
         color: $text-primary !important;
@@ -298,7 +302,10 @@ h4,
   border: none;
   color: $text-primary;
   z-index: 3;
-  @extend #{'.paragraph', '.paragraph-m', '.semibold'};
+  margin: 0;
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 600;
 }
 
 // .onsale,
@@ -314,11 +321,13 @@ input[type="checkbox"] {
 
   & + span:not(.wapf-label-text),
   & + a {
-    margin-left: 0;
     position: relative;
     padding-left: 30px;
     cursor: pointer;
-    @extend #{'.paragraph','.paragraph-l', '.semibold'};
+    margin: 0;
+    font-size: 14px;
+    line-height: 20px;
+    font-weight: 600;
 
     @include media-breakpoint-down(xl) {
       display: block;

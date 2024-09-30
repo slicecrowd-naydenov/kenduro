@@ -59,7 +59,7 @@ if ($products_query->have_posts()) :
 		$related_prod[] = get_the_ID();
 	endwhile;
 
-	wp_reset_postdata();
+	// wp_reset_postdata();
 endif;
 if ($related_prod) :
 ?>

@@ -22,7 +22,7 @@ $class = isset($args['class']) ? $args['class'] : '';
           <?php foreach ($args['list'] as $arg) : ?>
             <li class="information-list__item">
               <?php Load::atom('svg', ['name' => $arg['icon']]); ?>
-              <p class="paragraph tetriary"><?php echo $arg['text']; ?></p>
+              <p class="paragraph tetriary text"><?php echo $arg['text']; ?></p>
             </li>
           <?php endforeach; ?>
         </ul>

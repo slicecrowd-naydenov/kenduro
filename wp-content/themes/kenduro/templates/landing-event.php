@@ -14,7 +14,7 @@ $images = range(1, 10);
       <div class="row">
         <div class="col">
           <div class="wrapper">
-            <p class="paragraph paragraph-l">гр. Банско, 26ти Октомври</p>
+            <p class="paragraph paragraph-l destination">гр. Банско, 26ти Октомври</p>
             <img src="<?php echo IMAGES_PATH; ?>/landing-event/landing-logo.png" alt="landing logo" class="landing-logo">
             <a href="<?php echo esc_url($sign_in_url); ?>" target="_blank" class="button button-primary-orange paragraph paragraph-m">Запиши се сега</a>
           </div>
@@ -30,11 +30,11 @@ $images = range(1, 10);
       </div>
       <script src="https://player.vimeo.com/api/player.js"></script>
       <div class="wrapper">
-        <h1 class="h1 bold">TRRS Trial Shool</h1>
-        <h3 class="h3 bold"> Банско, 26ти Октомври </h3>
+        <h1 class="h1 bold event-title">TRRS Trial Shool</h1>
+        <h3 class="h3 bold destination"> Банско, 26ти Октомври </h3>
         <div class="available-seats">
-          <p class="paragraph paragraph-l">Свободни места : <b><?php echo $available_seats; ?></b></p>
-          <a href="<?php echo esc_url($sign_in_url); ?>" target="_blank" class="button button-primary-orange paragraph paragraph-l">Запиши се сега !</a>
+          <p class="paragraph paragraph-l text">Свободни места : <b><?php echo $available_seats; ?></b></p>
+          <a href="<?php echo esc_url($sign_in_url); ?>" target="_blank" class="button button-primary-orange paragraph paragraph-l text">Запиши се сега !</a>
         </div>
         <p class="paragraph paragraph-m tax">Цена за участие : 80лв</p>
       </div>

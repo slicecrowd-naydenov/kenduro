@@ -19,7 +19,7 @@
       align-items: center;
       color: $G-0;
 
-      .paragraph-l {
+      .destination {
         @include media-breakpoint-down(md) {
           width: 106px;
         }
@@ -99,7 +99,7 @@
       position: relative;
       z-index: 2;
 
-      .h1 {
+      .event-title {
         font-size: 100px;
         line-height: 136px;
         margin: 0;
@@ -110,7 +110,7 @@
         }
       }
 
-      .h3 {
+      .destination {
         font-size: 30px;
         line-height: 1;
 
@@ -136,7 +136,7 @@
         gap: 15px;
         align-items: center;
 
-        .paragraph-l {
+        .text {
           font-size: 18px;
 
           @include media-breakpoint-down(md) {

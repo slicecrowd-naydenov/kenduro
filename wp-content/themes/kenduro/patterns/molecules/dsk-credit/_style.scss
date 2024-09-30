@@ -3,7 +3,7 @@
 
   &.step-1 {
     .finance-calculator {
-      @extend .semibold;
+      font-weight: 600;
       &:before,
       .circle:after {
         background-color: $b-highlight-two;
@@ -32,7 +32,7 @@
     }
 
     .private-data {
-      @extend .semibold;
+      font-weight: 600;
       &:before,
       .circle:after {
         background-color: $b-highlight-two;
@@ -68,8 +68,11 @@
         }
 
         a {
-          margin-left: -10px;
-          @extend #{'.paragraph','.paragraph-m', '.regular', '.primary'};
+          margin: 0;
+          font-size: 12px;
+          line-height: 16px;
+          font-weight: 400;
+          color: $text-primary;
         }
       }
     }
@@ -122,7 +125,8 @@
     }
 
     .request-sent {
-      @extend .semibold;
+      font-weight: 600;
+
       &:before,
       .circle:after {
         background-color: $b-highlight-two;
@@ -160,7 +164,10 @@
         color: $G-0;
         margin-bottom: 50px;
         position: relative;
-        @extend #{'.flex-center', '.paragraph','.paragraph-l', '.regular'};
+        font-size: 14px;
+        line-height: 20px;
+        font-weight: 400;
+        @extend #{'.flex-center'};
 
         &:before {
           width: 12px;
@@ -269,7 +276,14 @@
     position: relative;
     margin-bottom: 70px;
     font-family: $primary-font !important;
-    @extend #{'.h3', '.semibold'};
+    font-size: 28px;
+    line-height: 38px;
+    font-weight: 600;
+
+    @include media-breakpoint-down(lg) {
+      font-size: 24px;
+      line-height: 33px;
+    }
 
     @include media-breakpoint-down(md) {
       padding-top: 70px !important;
@@ -331,7 +345,10 @@
         border-color: $G-1-5;
         box-shadow: none;
         flex-direction: row-reverse;
-        @extend #{'.button', '.button-secondary-grey', '.paragraph', '.paragraph-l', '.flex-center'};
+        margin: 0;
+        font-size: 14px;
+        line-height: 20px;
+        @extend #{'.button', '.button-secondary-grey', '.flex-center'};
 
         @include media-breakpoint-only(md) {
           width: calc(33% - 14px);
@@ -383,8 +400,11 @@
 
         .dsk_column_left {
           color: $text-primary;
+          margin: 0;
+          font-size: 14px;
+          line-height: 20px;
+          font-weight: 400;
           margin-bottom: 4px;
-          @extend #{'.paragraph','.paragraph-l', '.regular'};
         }
 
         &:nth-child(1) {
@@ -456,7 +476,14 @@
             padding: 0;
             box-shadow: none;
             margin: 0;
-            @extend #{'.h3', '.semibold'};
+            font-size: 28px;
+            line-height: 38px;
+            font-weight: 600;
+
+            @include media-breakpoint-down(lg) {
+              font-size: 24px;
+              line-height: 33px;
+            }
           }
         }
 
@@ -471,8 +498,10 @@
           border-radius: $radius-small;
           transition: border-color 0.25s ease;
           text-align: left;
-          margin-bottom: 20px;
-          @extend #{'.paragraph', '.paragraph-xl', '.primary'};
+          margin: 0 0 20px;
+          font-size: 16px;
+          line-height: 22px;
+          color: $text-primary;
 
           @include media-breakpoint-down(md) {
             margin-bottom: 0;
@@ -532,11 +561,17 @@
         }
 
         #back_dskcredit {
-          @extend #{'.button', '.button-secondary-grey', '.paragraph', '.paragraph-l'};
+          margin: 0;
+          font-size: 14px;
+          line-height: 20px;
+          @extend #{'.button', '.button-secondary-grey'};
         }
 
         #buy_dskcredit {
-          @extend #{'.button', '.button-primary-orange', '.paragraph', '.paragraph-l'};
+          margin: 0;
+          font-size: 14px;
+          line-height: 20px;
+          @extend #{'.button', '.button-primary-orange'};
         }
       }
 
@@ -544,7 +579,10 @@
         padding: 0;
 
         .dsk_span {
-          @extend #{'.paragraph', '.paragraph-m', '.secondary'};
+          margin: 0;
+          color: $text-secondary;
+          font-size: 12px;
+          line-height: 16px;
         }
       }
 
@@ -558,8 +596,11 @@
 
         .dsk_column {
           color: $text-primary;
+          margin: 0;
+          font-size: 14px;
+          line-height: 20px;
+          font-weight: 400;
           margin-bottom: 4px;
-          @extend #{'.paragraph','.paragraph-l', '.regular'};
         }
 
         input {
@@ -572,7 +613,10 @@
           border-radius: $radius-small;
           transition: border-color 0.25s ease;
           text-align: left;
-          @extend #{'.paragraph', '.paragraph-xl', '.primary'};
+          margin: 0;
+          font-size: 16px;
+          line-height: 22px;
+          color: $text-primary;
 
           &:focus {
             outline: none;
@@ -634,11 +678,13 @@
           &:before {
             content: 'Купи на изплащане';
             display: inline-block;
-            @extend #{'.paragraph','.paragraph-l', '.semibold'};
             line-height: 37px;
             border-right: 1px solid $G-1-5;
             padding-right: 10px;
-            margin-right: 8px;
+            margin: 0 8px 0 0;
+            font-size: 14px;
+            line-height: 20px;
+            font-weight: 600;
 
             @include media-breakpoint-between(lg, large) {
               font-size: 12px;
@@ -683,14 +729,24 @@
           &:before {
             content: 'Или пък купи на изплащане';
             display: inline-block;
-            @extend #{'.paragraph','.paragraph-m', '.semibold'};
+            margin: 0;
+            font-size: 12px;
+            line-height: 16px;
+            font-weight: 600;
           }
 
           p {
             color: $text-primary;
             font-family: $primary-font;
             margin: 0;
-            @extend #{'.h4', '.semibold'};
+            font-weight: 600;
+            font-size: 21px;
+            line-height: 29px;
+
+            @include media-breakpoint-down(lg) {
+              font-size: 18px;
+              line-height: 25px;
+            }
           }
         }
       }

@@ -76,7 +76,10 @@ function trigger_ajax_to_cart() {
         // Логика за stock message:
         var delivery_time_text = variation.delivery_time_text;
         var delivery_message;
-        var quantity = variationStockData[variation.variation_id];
+        var stockDataElement = document.getElementById('variation-stock');
+        var stockData = JSON.parse(stockDataElement.getAttribute('data-stock'));
+        var quantity = stockData[variation.variation_id];
+
         
         if (quantity > 0) {
           delivery_message = "Може да бъде доставено утре!";
