@@ -3,7 +3,7 @@
 use Lean\Load;
 
 get_header();
-$available_seats = 15;
+$available_seats = 13;
 $sign_in_url = "https://form.smartsuite.com/sd0y91s2/EFmNkyr8RR";
 $google_maps = "https://maps.app.goo.gl/AudCjg56yczwihxB7";
 $images = range(1, 10);
