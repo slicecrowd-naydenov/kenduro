@@ -344,7 +344,10 @@
               background-repeat: no-repeat;
               background-position: center left 20px;
               padding-right: 25px;
-              @extend #{'.paragraph','.paragraph-l', '.semibold'};
+              margin: 0;
+              font-size: 14px;
+              line-height: 20px;
+              font-weight: 600;
 
               @include media-breakpoint-down(md) {
                 padding-left: 30px;
@@ -399,7 +402,15 @@
           }
 
           .product_title {
-            @extend #{'.h3','.primary', '.semibold'};
+            color: $text-primary;
+            font-weight: 600;
+            font-size: 28px;
+            line-height: 38px;
+
+            @include media-breakpoint-down(lg) {
+              font-size: 24px;
+              line-height: 33px;
+            }
           }
 
           .woosw-btn {
@@ -553,14 +564,20 @@
                     left: 0;
                     position: inherit;
                     padding-left: 30px;
-                    @extend #{'.paragraph','.paragraph-l', '.semibold'};
+                    margin: 0;
+                    font-size: 14px;
+                    line-height: 20px;
+                    font-weight: 600;
                   }
                 }
               }
 
               .wapf-label-text {
                 padding-left: 30px;
-                @extend #{'.paragraph','.paragraph-l', '.semibold'};
+                margin: 0;
+                font-size: 14px;
+                line-height: 20px;
+                font-weight: 600;
 
                 // &:before,
                 // &:after {
@@ -600,16 +617,25 @@
             ins,
             & > .price > .amount,
             & > .amount {
-              @extend #{'.h3', '.semibold'};
               margin-bottom: 2px;
               margin-left: 0;
+              font-weight: 600;
+              font-size: 28px;
+              line-height: 38px;
+
+              @include media-breakpoint-down(lg) {
+                font-size: 24px;
+                line-height: 33px;
+              }
             }
 
             del {
               opacity: 1;
               text-decoration: none;
+              margin: 0;
+              font-size: 14px;
+              line-height: 20px;
               @extend .flex-center;
-              @extend #{'.paragraph', '.paragraph-l'};
 
               @include media-breakpoint-down(sm) {
                 font-size: 12px;
@@ -628,7 +654,9 @@
 
               ins {
                 margin: 0;
-                @extend #{'.paragraph', '.paragraph-l', '.regular'};
+                font-size: 14px;
+                line-height: 20px;
+                font-weight: 400;
               }
             }
 
@@ -716,7 +744,14 @@
               text-decoration: none;
               padding: 0 0 8px;
               margin: 0;
-              @extend #{'.h4','.primary'};
+              color: $text-primary;
+              font-size: 21px;
+              line-height: 29px;
+
+              @include media-breakpoint-down(lg) {
+                font-size: 18px;
+                line-height: 25px;
+              }
             }
           }
         }
@@ -728,7 +763,9 @@
           padding-bottom: 20px;
 
           p {
-            @extend #{'.paragraph','.paragraph-l'};
+            margin: 0;
+            font-size: 14px;
+            line-height: 20px;
           }
 
           ul,

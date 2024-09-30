@@ -15,7 +15,9 @@
 
   label {
     padding-bottom: 4px;
-    @extend #{'.paragraph','.paragraph-l'};
+    margin: 0;
+    font-size: 14px;
+    line-height: 20px;
   }
 
   .woocommerce-input-wrapper {
@@ -201,12 +203,6 @@
 
   .optional {
     font-size: 0 !important;
-
-    // &:after {
-    //   content: '(препоръчително)';
-    //   display: inline-block;
-    //   @extend #{'.paragraph','.paragraph-l', '.inactive'};
-    // }
   }
 
   .woocommerce {
@@ -314,16 +310,20 @@
     .product-name {
       a {
         text-decoration: none;
-        margin-bottom: 4px;
         color: $b-primary;
         pointer-events: none;
-        @extend #{'.paragraph','.paragraph-l'};
+        margin: 0 0 4px;
+        font-size: 14px;
+        line-height: 20px;
       }
     }
 
     .product-price {
       bdi {
-        @extend #{'.paragraph','.paragraph-xl', '.semibold'};
+        margin: 0;
+        font-size: 16px;
+        line-height: 22px;
+        font-weight: 600;
       }
     }
 
@@ -388,7 +388,10 @@
     top: 50%;
     padding-right: 15px;
     transform: translate(-50%, -50%);
-    @extend #{'.paragraph','.paragraph-l', '.regular'};
+    margin: 0;
+    font-size: 14px;
+    line-height: 20px;
+    font-weight: 400;
 
     svg {
       position: absolute;
@@ -470,7 +473,10 @@
         
         label {
           padding-bottom: 4px;
-          @extend #{'.paragraph','.paragraph-l', '.primary'};
+          margin: 0;
+          font-size: 14px;
+          line-height: 20px;
+          color: $text-primary;
         }
       }
 
@@ -526,14 +532,16 @@
         display: none;
  
         & + label {
-          margin-left: 0;
           position: relative;
           padding-left: 30px !important;
           padding-bottom: 0 !important;
           padding-top: 0 !important;
           transition: color 0.3s;
           cursor: pointer;
-          @extend #{'.paragraph','.paragraph-l', '.semibold'};
+          margin: 0;
+          font-size: 14px;
+          line-height: 20px;
+          font-weight: 600;
 
           &:before {
             content: '';
@@ -585,7 +593,9 @@
       top: 50%;
       transform: translate(-50%, -50%);
       transition: opacity 0.2s ease, visibility 0.2s ease;
-      @extend #{'.paragraph','.paragraph-m'};
+      margin: 0;
+      font-size: 12px;
+      line-height: 16px;
       @extend .flex-center;
 
       & ~ .woocommerce-message {
@@ -608,7 +618,9 @@
 
         li {
           color: $text-primary;
-          @extend #{'.paragraph','.paragraph-m'};
+          margin: 0;
+          font-size: 12px;
+          line-height: 16px;
         }
 
         & ~ .checkout_coupon {
@@ -640,7 +652,9 @@
       }
   
       .coupon-label {
-        @extend #{'.paragraph','.paragraph-l'};
+        margin: 0;
+        font-size: 14px;
+        line-height: 20px;
       }
   
       .input-text {
@@ -828,7 +842,9 @@
             position: relative;
 
             &:before {
-              @extend #{'.paragraph','.paragraph-l'};
+              margin: 0;
+              font-size: 14px;
+              line-height: 20px;
 
               @include media-breakpoint-down(md) {
                 content: 'Офис на Еконт';
@@ -853,7 +869,9 @@
               .multiselect__single {
 
                 &:after {
-                  @extend #{'.paragraph','.paragraph-l'};
+                  margin: 0;
+                  font-size: 14px;
+                  line-height: 20px;
 
                   @include media-breakpoint-down(md) {
                     position: absolute;
@@ -878,7 +896,9 @@
           }
 
           &:before {
-            @extend #{'.paragraph','.paragraph-l'};
+            margin: 0;
+            font-size: 14px;
+            line-height: 20px;
 
             @include media-breakpoint-down(md) {
               content: 'Град';
@@ -1044,7 +1064,9 @@
               white-space: nowrap;
               pointer-events: none;
               font-weight: 400;
-              @extend #{'.paragraph','.paragraph-m'};
+              margin: 0;
+              font-size: 12px;
+              line-height: 16px;
 
               @include media-breakpoint-down(md) {
                 max-width: calc(100% - 30px);
@@ -1128,7 +1150,9 @@
       border-radius: $radius-circle;
       // background: url('../../assets/icons/svg/send.svg') center center no-repeat;
       background-color: $b-highlight-two;
-      @extend #{'.paragraph','.paragraph-l'};
+      margin: 0;
+      font-size: 14px;
+      line-height: 20px;
     }
   }
 }

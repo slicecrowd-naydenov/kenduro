@@ -11,6 +11,7 @@ const sass = require('gulp-sass')(require('sass'));
 const sourcemaps = require('gulp-sourcemaps');
 const gutil = require('gulp-util');
 const webpackStream = require('webpack-stream');
+const minify = require('gulp-minify');
 
 // Used to minify the CSS
 const cssnano = require('gulp-cssnano');
@@ -195,6 +196,7 @@ function jsWatch() {
 function jsTask( options ) {
   return gulp.src( jsEntryFile )
     .pipe( webpackStream( options ) )
+    .pipe(minify())
     .pipe( gulp.dest( '../build/js' ) );
 }
 

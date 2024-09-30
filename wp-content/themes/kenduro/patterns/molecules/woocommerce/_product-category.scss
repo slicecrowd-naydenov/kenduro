@@ -235,7 +235,10 @@ ul.products {
       order: 10;
       color: $b-primary;
       width: 100%;
-      @extend #{'.paragraph','.paragraph-xl', '.semibold'};
+      margin: 0;
+      font-size: 16px;
+      line-height: 22px;
+      font-weight: 600;
       @include line-clamp(2);
     }
     
@@ -254,9 +257,10 @@ ul.products {
       }
 
       & > del {
-        margin: 0;
         color: $text-tetriary;
-        @extend #{'.paragraph','.paragraph-xl'};
+        margin: 0;
+        font-size: 16px;
+        line-height: 22px;
 
         ins {
           margin: 0;
@@ -266,7 +270,9 @@ ul.products {
       & > ins {
         margin: 0;
         order: -1;
-        @extend #{'.paragraph','.paragraph-xl', '.semibold'};
+        font-weight: 600;
+        font-size: 16px;
+        line-height: 22px;
       }
     }
 
@@ -365,10 +371,11 @@ ul.products {
 
     a {
       padding-left: 30px;
-      margin-left: -30px;
       text-decoration: none;
       opacity: 0.8;
-      @extend #{'.paragraph','.paragraph-l'};
+      margin: 0 0 0 -30px;
+      font-size: 14px;
+      line-height: 20px;
     }
   }
 

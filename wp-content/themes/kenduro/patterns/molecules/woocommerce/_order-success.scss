@@ -1,7 +1,14 @@
 .woocommerce-order-received {
   .woocommerce-notice {
     &--success {
-      @extend #{'.h4', '.semibold'};
+      font-weight: 600;
+      font-size: 21px;
+      line-height: 29px;
+    
+      @include media-breakpoint-down(lg) {
+        font-size: 18px;
+        line-height: 25px;
+      }
     }
   }
 

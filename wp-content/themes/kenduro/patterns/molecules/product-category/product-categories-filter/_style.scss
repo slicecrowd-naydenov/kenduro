@@ -43,7 +43,10 @@
     .wfpTitle { 
       height: auto;
       line-height: 24px;
-      @extend #{'.paragraph','.paragraph-l', '.regular'};
+      margin: 0;
+      font-size: 14px;
+      line-height: 20px;
+      font-weight: 400;
     }
 
     .wpfFilterTitle {
@@ -105,7 +108,10 @@
     .wpfFilterTaxNameWrapper {
       opacity: 0.8;
       transition: opacity 0.2s ease;
-      @extend #{'.paragraph','.paragraph-l', '.regular'};
+      margin: 0;
+      font-size: 14px;
+      line-height: 20px;
+      font-weight: 400;
     }
 
     li {
@@ -144,7 +150,10 @@
     right: 0;
     top: -45px;
     left: 74px;
-    @extend #{'.paragraph','.paragraph-m', '.regular'};
+    margin: 0;
+    font-size: 12px;
+    line-height: 16px;
+    font-weight: 400;
 
     @include media-breakpoint-down(xl) {
       position: relative;
@@ -164,7 +173,10 @@
     z-index: 5;
     padding-left: 28px;
     transition: color 0.2s ease;
-    @extend #{'.paragraph','.paragraph-l', '.regular'};
+    margin: 0;
+    font-size: 14px;
+    line-height: 20px;
+    font-weight: 400;
 
     &:before {
       width: 18px;
@@ -242,7 +254,10 @@
       flex: 0 0 calc(50% - 5px);
     }
 
-    @extend #{'.paragraph','.paragraph-l', '.regular'};
+    margin: 0;
+    font-size: 14px;
+    line-height: 20px;
+    font-weight: 400;
   }
 }
 
