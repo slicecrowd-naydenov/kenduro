@@ -1,22 +1,56 @@
 <?php 
 use Lean\Load;
+
+// $main_categories = get_transient('main_categories_transients');
+
+// if (false === $main_categories) {
+//   echo 'Кешът не е наличен. Записвам кеш за main_categories.<br>';
+  
+//   global $wpdb;
+
+//   // Извършване на SQL заявка за извличане на основните категории
+//   $sql = "
+//     SELECT t.term_id, t.name, t.slug
+//     FROM {$wpdb->terms} AS t
+//     INNER JOIN {$wpdb->term_taxonomy} AS tt ON t.term_id = tt.term_id
+//     WHERE tt.taxonomy = 'product_cat' AND tt.parent = 0 AND tt.count > 0
+//   ";
+
+//   $main_categories = $wpdb->get_results($sql);
+
+//   set_transient('main_categories_transients', $main_categories, 3600);
+// } else {
+//   echo 'Кешът е наличен. Зареждам от кеша.<br>';
+// }
+
 $args = array(
   'taxonomy' => 'product_cat',
   'parent' => 0,
   'hide_empty' => true
 );
 $main_categories = get_terms($args);
+// $main_categories = get_transient('main_categories_transients');
 
-if ($main_categories) : 
-  $category_info = array();
-  foreach ($main_categories as $main_category) {
-    $category_info[$main_category->term_id] = array(
-        'slug' => $main_category->slug,
-        'name' => $main_category->name,
-        'thumbnail_id' => get_term_meta($main_category->term_id, 'thumbnail_id', true),
-    );
-  }
-?>
+// if (false === $main_categories) {
+//   echo 'Кешът не е наличен. Записвам кеш за main_categories.<br>';
+//   set_transient('main_categories_transients', $main_categories, 3600);
+// } else {
+//   echo 'Кешът е наличен. Зареждам от кеша.<br>';
+//   // pretty_dump($main_categories); // Показва кешираните данни
+// }
+
+// $main_categories = wp_cache_get('main_categories', 'custom_group');
+
+// if (false === $main_categories) {
+//   echo 'Кешът не е наличен. Записвам кеш за main_categories.<br>';
+//   $main_categories = get_terms($args);
+//   wp_cache_set('main_categories', $main_categories, 'custom_group', 3600); // Запис в кеша
+// } else {
+//   echo ('Кешът е наличен. Зареждам от кеша.<br>');
+//   pretty_dump($main_categories); // Показва съдържанието на кеша
+// }
+
+if ($main_categories) : ?>
 
 <div class="category-pills">
   <div class="container">
@@ -39,9 +73,11 @@ if ($main_categories) :
             <li class="nav-item" role="presentation">
               <button class="paragraph paragraph-l nav-link active" id="pills-all-tab" data-bs-toggle="pill" data-bs-target="#pills-all" type="button" role="tab" aria-controls="pills-all" aria-selected="true">Всички</button>
             </li>
-            <?php foreach ($category_info as $id => $info) : ?>
+            <?php foreach ($main_categories as $id => $info) : ?>
               <li class="nav-item" role="presentation">
-                <button class="paragraph paragraph-l nav-link" id="pills-<?php echo $info['slug']; ?>-tab" data-bs-toggle="pill" data-bs-target="#pills-<?php echo $info['slug']; ?>" type="button" role="tab" aria-controls="pills-<?php echo $info['slug']; ?>" aria-selected="false"><?php echo $info['name']; ?></button>
+                <button class="paragraph paragraph-l nav-link" id="pills-<?php echo $info->slug; ?>-tab" data-bs-toggle="pill" data-bs-target="#pills-<?php echo $info->slug; ?>" type="button" role="tab" aria-controls="pills-<?php echo $info->slug; ?>" aria-selected="false" data-category-id="<?php echo $info->term_id; ?>">
+                  <?php echo $info->name; ?>
+                </button>
               </li>
             <?php endforeach; ?>
           </ul>
@@ -61,21 +97,11 @@ if ($main_categories) :
               </h4>
             </a>
           </div>
-          <?php foreach ($category_info as $id => $info) : ?>
-            <div class="tab-pane fade" id="pills-<?php echo $info['slug']; ?>" role="tabpanel" aria-labelledby="pills-<?php echo $info['slug']; ?>-tab">
-              <?php echo do_shortcode("[products category='".$id."' limit='10' columns='5']"); ?>
-              <?php 
-              if ($info['thumbnail_id']) : 
-                $image_url = wp_get_attachment_url($info['thumbnail_id']); 
-              ?>
-                <a href="<?php echo esc_url(get_site_url() . '/product-category/'.$info['slug'].'/'); ?>" class="cat-img">
-                  <img src="<?php echo $image_url; ?>" />
-                  <h4>
-                    Разгледайте всички <strong><?php echo $info['name']; ?></strong> продукти
-                    <?php Load::atom('svg', ['name' => 'arrow_xl']); ?>
-                  </h4>
-                </a>
-              <?php endif; ?>
+          <?php foreach ($main_categories as $id => $info) : ?>
+            <div class="tab-pane fade" id="pills-<?php echo $info->slug; ?>" role="tabpanel" aria-labelledby="pills-<?php echo $info->slug; ?>-tab">
+              <div id="products-<?php echo $info->term_id; ?>">
+                <p class="paragraph paragraph-xl">Зареждане на продукти...</p>
+              </div>
             </div>
           <?php endforeach; ?>
         </div>

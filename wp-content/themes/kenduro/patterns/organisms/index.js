@@ -1,6 +1,8 @@
 /* eslint-disable no-alert */
 /* eslint-disable max-len */
 import $ from 'jquery';
+import axios from 'axios';
+
 
 import { Tab } from 'bootstrap';
 // import ShopFilter from './shop';
@@ -47,6 +49,46 @@ export default () => {
         tabTrigger.show();
       });
     });
+
+    $('#pills-tab').find('.nav-link:not(#pills-all-tab)').on('click', function() {
+    // var categorySlug = $(this).attr('id').replace('pills-', '').replace('-tab', '');
+    var categoryId = $(this).data('category-id');
+
+    // Провери дали вече не са заредени продуктите
+    if ($('#products-' + categoryId).find('.products').children().length >= 1) {
+      console.log('заредени са');
+      return;
+    }
+    console.log('НЕ СА');
+
+    axios({
+      method: 'post',
+      url: ajaxurl,
+      data: new URLSearchParams({
+        action: 'load_products',
+        category_id: categoryId
+      })
+    })
+      .then((response) => {
+        $('#products-' + categoryId).html(response.data);
+      })
+      .catch((error) => {
+        if (error.response) {
+          // The request was made and the server responded with a status code
+          // that falls out of the range of 2xx
+          console.log(error.response.data);
+          console.log(error.response.status);
+          console.log(error.response.headers);
+        } else if (error.request) {
+          // The request was made but no response was received
+          console.log(error.request);
+        } else {
+          // Something happened in setting up the request that triggered an Error
+          console.log('Error', error.message);
+        }
+        console.log(error.config);
+      });
+  });
   }
 
   $('button[data-bs-toggle="pill"]').on('click', function() {

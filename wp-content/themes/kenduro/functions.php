@@ -69,3 +69,16 @@ function fun_select_default_option( $args) {
     $args['selected'] = $args['options'][0];
     return $args;
 }
+
+function load_products_on_homepage_via_ajax() {
+  $category_id = intval($_POST['category_id']);
+  
+  $products = do_shortcode("[products category='$category_id' limit='10' columns='5']");
+  
+  echo $products;
+  wp_die();
+}
+
+// Регистрирай AJAX екшъните за автентифицирани и неавтентифицирани потребители
+add_action('wp_ajax_load_products', 'load_products_on_homepage_via_ajax');
+add_action('wp_ajax_nopriv_load_products', 'load_products_on_homepage_via_ajax');

@@ -4,7 +4,8 @@
   $args = array(
     'taxonomy' => 'pa_brand',
     'orderby' => 'name', 
-    'hide_empty' => true
+    'hide_empty' => true,
+    'number' => 10
   );
   
   $terms = get_terms($args);
