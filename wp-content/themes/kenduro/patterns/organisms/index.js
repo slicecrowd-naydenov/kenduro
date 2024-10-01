@@ -56,10 +56,8 @@ export default () => {
 
     // Провери дали вече не са заредени продуктите
     if ($('#products-' + categoryId).find('.products').children().length >= 1) {
-      console.log('заредени са');
       return;
     }
-    console.log('НЕ СА');
 
     axios({
       method: 'post',
