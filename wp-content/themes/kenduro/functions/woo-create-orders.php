@@ -206,8 +206,8 @@ function update_menu_order($order_id) {
 
 // Schedule a task to create a sale record
 function schedule_create_sales_record($order_id) {
-  $hook = 'create_sales_record_event_' . $order_id;
-  $hook_update_order = 'update_menu_order_event_' . $order_id;
+  $hook = 'create_sales_record_event';
+  $hook_update_order = 'update_menu_order_event';
 
   if (!wp_next_scheduled($hook, array($order_id))) {
     wp_schedule_single_event(time(), $hook, array($order_id));
@@ -231,25 +231,13 @@ function execute_create_sales_record($order_id) {
     // error_log("Executed create_sales_record_event for order ID: $order_id");
   }
 }
-
-// Register dynamic hook
-add_action('init', function() {
-  $orders = wc_get_orders(array(
-    'limit' => -1,
-    'status' => 'any',
-    'return' => 'ids',
-  ));
-
-  foreach ($orders as $order_id) {
-    add_action('create_sales_record_event_' . $order_id, 'execute_create_sales_record', 10, 1);
-    add_action('update_menu_order_event_' . $order_id, 'update_menu_order', 10, 1);
-  }
-});
+add_action('create_sales_record_event', 'execute_create_sales_record');
+add_action('update_menu_order_event', 'update_menu_order');
 
 // Function to manually schedule a task to create a sale record
 // We have to invoke this function in some page -> reschedule_sales_record_event(9284);
 function reschedule_sales_record_event($order_id) {
-  $hook = 'create_sales_record_event_' . $order_id;
+  $hook = 'create_sales_record_event';
   wp_clear_scheduled_hook($hook, array($order_id));
   wp_schedule_single_event(time(), $hook, array($order_id)); // Планирайте изпълнението след 10 секунди
   error_log("Rescheduled $hook for order ID: $order_id");

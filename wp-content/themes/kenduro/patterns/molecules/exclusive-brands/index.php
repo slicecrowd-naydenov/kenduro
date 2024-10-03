@@ -5,10 +5,28 @@
     'taxonomy' => 'pa_brand',
     'orderby' => 'name', 
     'hide_empty' => true,
-    'number' => 10
+    'number' => 20
   );
   
+  $terms = get_transient('get_brands_cached');
+
+if (false === $terms) {
+  // echo 'Кешът не е наличен. Извличам от базата данни.<br>';
+
   $terms = get_terms($args);
+
+  if (!empty($terms)) {
+    // Запис на резултата в кеша за 1 седмица (604800 секунди)
+    set_transient('get_brands_cached', $terms, 604800);
+    // echo 'Кешът е запазен.<br>';
+  } else {
+    // echo 'get_terms() не върна резултати.<br>';
+  }
+} else {
+  // echo 'Кешът е наличен. Зареждам от кеша.<br>';
+  // var_dump($main_categories); // Показва кешираните данни
+}
+
 ?>
 <div class="exclusive-brands"> 
   <div class="container">

@@ -2,12 +2,6 @@
 
 use Lean\Load;
 
-// $infoArray = [
-//   ['icon' => 'star', 'text' => 'Unique Products'],
-//   ['icon' => 'customer-support', 'text' => 'Immediate Customer Support'],
-//   ['icon' => 'return-policy', 'text' => '14-day Return Policy'],
-//   ['icon' => 'payment', 'text' => 'Pay on Delivery'],
-// ];
 $args = wp_parse_args($args);
 $class = isset($args['class']) ? $args['class'] : '';
 ?>

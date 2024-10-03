@@ -90,7 +90,7 @@ if ($main_categories) : ?>
           ================================= -->
             <?php echo do_shortcode("[products limit='10' columns='5']"); ?>
             <a href="<?php echo esc_attr(get_site_url()); ?>/shop" class="cat-img">
-              <img src="<?php echo IMAGES_PATH; ?>/categories/Image=Grey, For=All Products@2x.jpg" />
+              <img src="<?php echo IMAGES_PATH; ?>/categories/Image=Grey, For=All Products.jpg" />
               <h4>
                 Разгледайте <strong>всички</strong> Kenduro продукти
                 <?php Load::atom('svg', ['name' => 'arrow_xl']); ?>
