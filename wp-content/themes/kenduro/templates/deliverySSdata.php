@@ -7,7 +7,7 @@
 
 get_header();
 
-$transients = ['wp_nav_menu_cached', 'get_brands_cached', 'hero_slides_data', 'on_sale_panel_data', 'popular_categories_ids'];
+$transients = ['wp_nav_menu_cached', 'get_brands_cached', 'hero_slides_data', 'on_sale_panel_data', 'popular_categories_ids', 'main_categories_transients'];
 
 foreach ($transients as $transient) {
   if (get_transient($transient)) {

@@ -12,7 +12,7 @@ if (!is_admin()) {
   include 'ss-create-order.php';
   include 'get-column-fields.php';
   // include 'filter.php';
-  include 'woo-recently-viewed-products.php';
+  // include 'woo-recently-viewed-products.php';
   include 'woo-product-images.php';
   include 'woo-header-cart-button.php';
   include 'woo-checkout-fields.php';
@@ -396,14 +396,17 @@ function related_records(&$records, $keyToModify, $existingIds) {
 
 add_filter('nav_menu_submenu_css_class','nav_menu_classes', 10, 3 );
 function nav_menu_classes( $classes, $args, $depth ){
-  foreach ( $classes as $key => $class ) {
-    if ( $depth == 0) {
-      $classes[ $key ] = 'sub-menu';
-    } elseif ( $depth == 1) {
-      $classes[ $key ] = 'sub-sub-menu';
-    }
-  } 
-  return $classes;
+  $wp_nav_menu_cached = get_transient('wp_nav_menu_cached');
+  if (false === $wp_nav_menu_cached) {
+    foreach ( $classes as $key => $class ) {
+      if ( $depth == 0) {
+        $classes[ $key ] = 'sub-menu';
+      } elseif ( $depth == 1) {
+        $classes[ $key ] = 'sub-sub-menu';
+      }
+    } 
+    return $classes;
+  }
 }
 
 function url_get_contents ($Url) {

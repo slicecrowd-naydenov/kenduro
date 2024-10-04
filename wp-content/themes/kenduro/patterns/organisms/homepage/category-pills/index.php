@@ -1,54 +1,19 @@
 <?php 
 use Lean\Load;
 
-// $main_categories = get_transient('main_categories_transients');
-
-// if (false === $main_categories) {
-//   echo 'Кешът не е наличен. Записвам кеш за main_categories.<br>';
-  
-//   global $wpdb;
-
-//   // Извършване на SQL заявка за извличане на основните категории
-//   $sql = "
-//     SELECT t.term_id, t.name, t.slug
-//     FROM {$wpdb->terms} AS t
-//     INNER JOIN {$wpdb->term_taxonomy} AS tt ON t.term_id = tt.term_id
-//     WHERE tt.taxonomy = 'product_cat' AND tt.parent = 0 AND tt.count > 0
-//   ";
-
-//   $main_categories = $wpdb->get_results($sql);
-
-//   set_transient('main_categories_transients', $main_categories, 3600);
-// } else {
-//   echo 'Кешът е наличен. Зареждам от кеша.<br>';
-// }
-
 $args = array(
   'taxonomy' => 'product_cat',
   'parent' => 0,
   'hide_empty' => true
 );
-$main_categories = get_terms($args);
-// $main_categories = get_transient('main_categories_transients');
 
-// if (false === $main_categories) {
-//   echo 'Кешът не е наличен. Записвам кеш за main_categories.<br>';
-//   set_transient('main_categories_transients', $main_categories, 3600);
-// } else {
-//   echo 'Кешът е наличен. Зареждам от кеша.<br>';
-//   // pretty_dump($main_categories); // Показва кешираните данни
-// }
+$main_categories = get_transient('main_categories_transients');
 
-// $main_categories = wp_cache_get('main_categories', 'custom_group');
-
-// if (false === $main_categories) {
-//   echo 'Кешът не е наличен. Записвам кеш за main_categories.<br>';
-//   $main_categories = get_terms($args);
-//   wp_cache_set('main_categories', $main_categories, 'custom_group', 3600); // Запис в кеша
-// } else {
-//   echo ('Кешът е наличен. Зареждам от кеша.<br>');
-//   pretty_dump($main_categories); // Показва съдържанието на кеша
-// }
+if (false === $main_categories) {
+  // echo 'Кешът не е наличен. Записвам кеш за main_categories.<br>';
+  $main_categories = get_terms($args);
+  set_transient('main_categories_transients', $main_categories, 604800);
+}
 
 if ($main_categories) : ?>
 

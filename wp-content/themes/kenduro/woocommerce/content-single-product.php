@@ -102,24 +102,24 @@ function custom_code_after_product_data_tabs() {
 					<ul class="products columns-5">
 						<?php
 						foreach ($related_products as $related_product) :
-							$product = wc_get_product($related_product->get_id());
-							$product_classes = implode(' ', wc_get_product_class('', $product));
-							$product_image = has_post_thumbnail($product->get_id()) ? wp_get_attachment_image_src(get_post_thumbnail_id($product->get_id()), 'medium')[0] : wc_placeholder_img_src();
+							$related_product_ID = $related_product->get_id();
+							$product_classes = implode(' ', wc_get_product_class('', $related_product));
+							$product_image = has_post_thumbnail($related_product_ID) ? wp_get_attachment_image_src(get_post_thumbnail_id($related_product_ID), 'medium')[0] : wc_placeholder_img_src();
 							?>
 							<li class="product <?php echo esc_attr($product_classes); ?>">
-								<a href="<?php echo esc_url(get_permalink()); ?>" class="woocommerce-LoopProduct-link woocommerce-loop-product__link">
+								<a href="<?php echo esc_url(get_permalink($related_product_ID)); ?>" class="woocommerce-LoopProduct-link woocommerce-loop-product__link">
 									<div class='wc-img-wrapper'>
 										<?php
 										// Product image
-										echo '<img src="' . esc_url($product_image) . '" alt="' . esc_attr(get_the_title()) . '" />';
+										echo '<img src="' . esc_url($product_image) . '" alt="' . esc_attr(get_the_title($related_product_ID)) . '" />';
 										?>
 									</div>
 									<?php
 									// Product title
-									echo '<h2 class="woocommerce-loop-product__title">' . get_the_title() . '</h2>';
+									echo '<h2 class="woocommerce-loop-product__title">' . get_the_title($related_product_ID) . '</h2>';
 
 									// Product price
-									echo '<span class="price">' . $product->get_price_html() . '</span>';
+									echo '<span class="price">' . $related_product->get_price_html() . '</span>';
 									?>
 								</a>
 							</li>
