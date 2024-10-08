@@ -21,6 +21,10 @@
       border-radius: $radius-small;
       overflow: hidden;
       background-color: $thumbs_bg; 
+      
+      @include media-breakpoint-up(md) {
+        flex: 0 0 180px;
+      }
 
       img {
         max-width: 180px;

@@ -4,7 +4,8 @@ import $ from 'jquery';
 import axios from 'axios';
 
 
-import { Tab } from 'bootstrap';
+import { Tab } from 'bootstrap/js/dist/tab';
+import { Collapse } from 'bootstrap/js/dist/collapse';
 // import ShopFilter from './shop';
 import Slider from './slider';
 import MobileNavigation from './header/bottom/index';
@@ -162,6 +163,31 @@ export default () => {
       }
     }, 5000);
   }
+
+  window.onload = function() {
+    let additionalTaxTimeout;
+    clearTimeout(additionalTaxTimeout);
+    additionalTaxTimeout = setTimeout(() => {
+      if (!window.Intercom) {
+        // Създаваме <script> таг и го зареждаме динамично
+        var intercomScript = document.createElement('script');
+        intercomScript.type = 'text/javascript';
+        intercomScript.async = true;
+        intercomScript.src = 'https://widget.intercom.io/widget/xtb4h29q';
+        var firstScript = document.getElementsByTagName('script')[0];
+        firstScript.parentNode.insertBefore(intercomScript, firstScript);
+
+        intercomScript.onload = function() {
+          window.Intercom('boot', {
+            app_id: 'xtb4h29q'
+          });
+          // window.Intercom('show');
+        };
+      } else {
+        window.Intercom('show');
+      }
+    }, 7500);
+  };
 
 
   // setTimeout(() => {

@@ -4,7 +4,9 @@
  * @class
  */
 import $ from 'jquery';
-import Swiper from 'swiper/bundle';
+// import Swiper from 'swiper/bundle';
+import Swiper from 'swiper';
+import { Navigation, Pagination, Autoplay } from 'swiper/modules';
 // import 'swiper/swiper-bundle.min.css';
 
 export default class Slider {
@@ -35,6 +37,7 @@ export default class Slider {
 
   initializeSlider() {
     this.swiper = new Swiper(this.$el[0], {
+      modules: [Navigation, Pagination, Autoplay],
       autoHeight: true,
       pagination: {
         el: this.$el.find('.swiper-pagination')[0],
