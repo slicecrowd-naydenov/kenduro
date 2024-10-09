@@ -73,11 +73,24 @@ if ($on_sale_data === false) {
         <?php if (!empty($slides_data)) : ?>
           <div class="swiper" data-slider>
             <div class="swiper-wrapper">
-              <?php foreach ($slides_data as $slide) : ?>
+              <?php 
+                $first_slide = true;
+                foreach ($slides_data as $slide) : 
+                $set_no_lazy_class = $first_slide ? 'no-lazy' : '';
+                ?>
                 <div class="swiper-slide">
                   <?php if ($slide['slide_image']) : ?>
                     <div class="slide-image">
-                      <img src="<?php echo esc_attr($slide['slide_image']['url']); ?>" alt="" class="no-lazy">
+                      <img 
+                        src="<?php echo esc_attr($slide['slide_image']['url']); ?>" 
+                        alt="" 
+                        class="<?php echo $set_no_lazy_class; ?>"
+                        <?php if ($first_slide) { ?>
+                          rel="preload" 
+                          as="image"
+                          fetchpriority="high"
+                        <?php } ?>
+                      >
                     </div>
                   <?php
                   endif;
@@ -112,7 +125,7 @@ if ($on_sale_data === false) {
                     </div>
                   </div>
                 </div>
-              <?php endforeach; ?>
+              <?php $first_slide = false; endforeach; ?>
             </div>
             <div class="swiper-pagination"></div>
           </div>
