@@ -1,7 +1,8 @@
 <?php 
   use Lean\Load;
   if (!is_page_template('templates/landing-event.php') ) {
-    Load::organism('footer/index'); 
+    Load::organism('footer/index');
+    Load::organisms('modals/consent_banner/index');
   }
   wp_footer(); 
 ?>

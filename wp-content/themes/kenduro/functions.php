@@ -82,10 +82,3 @@ function load_products_on_homepage_via_ajax() {
 // Регистрирай AJAX екшъните за автентифицирани и неавтентифицирани потребители
 add_action('wp_ajax_load_products', 'load_products_on_homepage_via_ajax');
 add_action('wp_ajax_nopriv_load_products', 'load_products_on_homepage_via_ajax');
-
-// Improve Google pagespeed
-function remove_additional_libs_script() {
-    // Премахни React-DOM скрипта
-    wp_deregister_script('jquery-ui-core');
-}
-add_action('wp_enqueue_scripts', 'remove_additional_libs_script', 100);

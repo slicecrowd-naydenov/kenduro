@@ -36,6 +36,47 @@ export default () => {
     Intercom('update', { 'hide_default_launcher': true });
   }
 
+  function setCookie(name, value, days) {
+    var date = new Date();
+    date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+    var expires = "expires=" + date.toUTCString();
+    document.cookie = name + "=" + value + ";" + expires + ";path=/";
+  }
+
+  var consentBanner = $('#consentBanner');
+  var consentBannerOptions = $('#consentBannerOptions');
+
+  if (!document.cookie.includes('consentGranted=')) {
+    consentBanner.modal('show');
+  }
+
+
+  $('.acceptCookies').on('click', () => {
+  //   document.cookie = "consent=true; path=/";
+    setCookie('consentGranted', 'true', 365);
+    consentBanner.modal('hide');
+    consentBannerOptions.modal('hide');
+
+    // gtag('consent', 'update', {
+    //   'ad_storage': 'granted',
+    //   'analytics_storage': 'granted',
+    //   'ad_user_data': 'granted',
+    //   'ad_personalization': 'granted'
+    // });
+  });
+
+  $('#showOptions').on('click', (e) => {
+    e.preventDefault();
+    consentBanner.modal('hide');
+    consentBannerOptions.modal('show');
+  });
+
+  $('#hideOptions').on('click', (e) => {
+    e.preventDefault();
+    consentBannerOptions.modal('hide');
+    consentBanner.modal('show');
+  });
+
   // if (MiddleHeader) {
   //   new MiddleHeader(document.getElementById('middle-section'));
   // }

@@ -20,7 +20,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-global $product;
+// global $product;
 
 if ( ! $product ) {
 	return;
@@ -64,7 +64,9 @@ if ($product->is_type('simple')) {
 		}
 	} 
 } else {
-	$variation_ids = $product->get_children();
+	$parent_id = $product->get_parent_id(); // Връща ID на променливия продукт
+	$parent_product = wc_get_product($parent_id);
+	$variation_ids = $parent_product->get_children();
 
 	$variation_stock_data = array();
 	foreach ($variation_ids as $variation_id) {

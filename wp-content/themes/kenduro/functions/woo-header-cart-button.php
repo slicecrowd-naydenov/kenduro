@@ -33,7 +33,7 @@ function custom_total_fragment($fragments) {
   return $fragments;
 }
 
-add_action('wp_footer', 'trigger_ajax_to_cart');
+add_action('wp_footer', 'trigger_ajax_to_cart', 22);
 function trigger_ajax_to_cart() {
 ?>
   <script type="text/javascript">
