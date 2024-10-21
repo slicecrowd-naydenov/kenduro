@@ -3,7 +3,6 @@
 use Lean\Load;
 
 get_header();
-$available_seats = 4;
 $sign_in_url = "https://form.smartsuite.com/sd0y91s2/EFmNkyr8RR";
 $google_maps = "https://maps.app.goo.gl/AudCjg56yczwihxB7";
 $images = range(1, 10);
@@ -16,7 +15,6 @@ $images = range(1, 10);
           <div class="wrapper">
             <p class="paragraph paragraph-l destination">гр. Банско, 26ти Октомври</p>
             <img src="<?php echo IMAGES_PATH; ?>/landing-event/landing-logo.png" alt="landing logo" class="landing-logo">
-            <a href="<?php echo esc_url($sign_in_url); ?>" target="_blank" class="button button-primary-orange paragraph paragraph-m">Запиши се сега</a>
           </div>
         </div>
       </div>
@@ -33,10 +31,8 @@ $images = range(1, 10);
         <h1 class="h1 bold event-title">TRRS Trial Shool</h1>
         <h3 class="h3 bold destination"> Банско, 26ти Октомври </h3>
         <div class="available-seats">
-          <p class="paragraph paragraph-l text">Свободни места : <b><?php echo $available_seats; ?></b></p>
-          <a href="<?php echo esc_url($sign_in_url); ?>" target="_blank" class="button button-primary-orange paragraph paragraph-l text">Запиши се сега !</a>
+          <p class="paragraph paragraph-l text">Местата са изчерпани </p>
         </div>
-        <p class="paragraph paragraph-m tax">Цена за участие : 80лв</p>
       </div>
     </div>
 
@@ -67,11 +63,6 @@ $images = range(1, 10);
           </div>
         </div>
       </div>
-    </div>
-
-    <div class="banner-section">
-      <h1 class="h1 bold" style="margin: 0">Остават само <?php echo $available_seats; ?> места</h1>
-      <a href="<?php echo esc_url($sign_in_url); ?>" target="_blank" class="button button-primary-orange paragraph paragraph-xxl">Запиши се сега !</a>
     </div>
 
     <div class="schedule">
@@ -154,12 +145,6 @@ $images = range(1, 10);
           <div class="swiper-button-next"></div>
         </div>
       </div>
-    </div>
-    
-    <div class="banner-section">
-      <h1 class="h1 bold" style="margin: 0">Остават само <?php echo $available_seats; ?> места</h1>
-      <h3 class="h3 bold">Банско, 26ти Октомври</h3>
-      <a href="<?php echo esc_url($sign_in_url); ?>" target="_blank" class="button button-primary-orange paragraph paragraph-xxl">Запиши се сега !</a>
     </div>
     
     <div class="assistants">

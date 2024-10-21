@@ -13,7 +13,7 @@
     z-index: 5;
 
     .wrapper {
-      padding: 12px 0;
+      padding: 20px 0;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -131,7 +131,7 @@
         margin-top: 50px;
         background-color: $b-primary;
         border-radius: $radius-circle;
-        padding: 8px 8px 8px 25px;
+        padding: 8px 25px;
         display: flex;
         gap: 15px;
         align-items: center;
