@@ -54,12 +54,26 @@ if (false === $terms) {
                 $meta_fields = get_term_meta($term_id);
                 $is_exclusive = isset($meta_fields['exclusive_brand']) && $meta_fields['exclusive_brand'][0];
                 $term_logo_id = array_key_exists('exclusive_logo', $meta_fields) && isset($meta_fields['exclusive_logo'][0]) ? $meta_fields['exclusive_logo'][0] : '';
-                $term_logo = wp_get_attachment_url($term_logo_id);
+                $term_logo = $term_logo_id ? wp_get_attachment_url($term_logo_id) : IMAGES_PATH.'/no-logo.jpg';
                 $exclusive_class = $is_exclusive ? 'exclusive-brand' : '';
+
+                if ($term_logo_id) {
+                  $term_logo_metadata = wp_get_attachment_metadata($term_logo_id);
+                  $term_logo_width = isset($term_logo_metadata['width']) ? $term_logo_metadata['width'] : '';
+                  $term_logo_height = isset($term_logo_metadata['height']) ? $term_logo_metadata['height'] : '';
+                } else {
+                  $term_logo_width = '400';
+                  $term_logo_height = '200';
+                }
               ?>
                 <li class="brands__list-item swiper-slide <?php echo esc_attr($exclusive_class); ?>">
                   <a href="<?php echo esc_attr($term_link); ?>" class="brands__list-item-link">
-                    <img src="<?php echo esc_attr($term_logo)?>" alt="<?php esc_attr_e($term_name); ?>"/>
+                    <img 
+                      src="<?php echo esc_attr($term_logo)?>" 
+                      alt="<?php esc_attr_e($term_name); ?>"
+                      width="<?php echo esc_attr($term_logo_width); ?>" 
+                      height="<?php echo esc_attr($term_logo_height); ?>"  
+                    />
                   </a>
                   <a href="<?php echo esc_attr($term_link); ?>" class="paragraph paragraph-xl brand_name">
                     <?php echo $term_name; ?>

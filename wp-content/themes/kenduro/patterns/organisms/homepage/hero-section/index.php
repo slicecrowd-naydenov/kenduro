@@ -52,7 +52,7 @@ if ($on_sale_data === false) {
         'url' => get_sub_field('url'),
         'background_image' => get_sub_field('background_image'),
         'open_by_default' => $count === 1 ? 'opened' : '',
-        'aria_expanded_by_default' => $count === 1 ? true : false,
+        'aria_expanded_by_default' => $count === 1 ? 'true' : 'false',
         'show_by_default' => $count === 1 ? 'show' : '',
         'collapsed_by_default' => $count === 1 ? '' : 'collapsed',
         'count' => $count
