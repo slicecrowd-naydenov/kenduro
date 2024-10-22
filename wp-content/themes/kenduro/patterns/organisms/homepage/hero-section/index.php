@@ -85,6 +85,15 @@ if ($on_sale_data === false) {
                         src="<?php echo esc_attr($slide['slide_image']['url']); ?>" 
                         alt="" 
                         class="<?php echo $set_no_lazy_class; ?>"
+                        srcset="
+                          <?php echo $slide['slide_image']['sizes']['woocommerce_thumbnail']; ?> 500w, 
+                          <?php echo $slide['slide_image']['sizes']['medium_large']; ?> 768w, 
+                          <?php echo $slide['slide_image']['sizes']['large']; ?> 1024w"
+                        sizes="
+                          (max-width: 456px) 500px,
+                          (max-width: 768px) 768px,
+                          (max-width: 1024px) 1024px,
+                          1260px"
                         <?php if ($first_slide) { ?>
                           rel="preload" 
                           as="image"
