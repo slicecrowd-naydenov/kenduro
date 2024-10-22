@@ -59,7 +59,7 @@ if (false === $terms) {
               ?>
                 <li class="brands__list-item swiper-slide <?php echo esc_attr($exclusive_class); ?>">
                   <a href="<?php echo esc_attr($term_link); ?>" class="brands__list-item-link">
-                    <img src="<?php echo esc_attr($term_logo)?>" />
+                    <img src="<?php echo esc_attr($term_logo)?>" alt="<?php esc_attr_e($term_name); ?>"/>
                   </a>
                   <a href="<?php echo esc_attr($term_link); ?>" class="paragraph paragraph-xl brand_name">
                     <?php echo $term_name; ?>
