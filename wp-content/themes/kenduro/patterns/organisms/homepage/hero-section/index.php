@@ -109,7 +109,7 @@ if ($on_sale_data === false) {
                     if ($slide['logo']) : ?>
                       <div>
                         <div class="hero-logo">
-                          <img src="<?php echo esc_attr($slide['logo']['url']); ?>" />
+                          <img src="<?php echo esc_attr($slide['logo']['url']); ?>" width="<?php esc_attr_e($slide['logo']['width']); ?>" height="<?php esc_attr_e($slide['logo']['height']); ?>"/>
                         </div>
                       </div>
                     <?php endif; ?>
