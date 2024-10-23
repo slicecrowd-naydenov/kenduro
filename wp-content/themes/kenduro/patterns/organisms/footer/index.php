@@ -24,12 +24,12 @@ use Lean\Load;
         </p>
         <ul class="socials">
           <li>
-            <a href="https://www.instagram.com/kenduro_shop/" target="_blank">
+            <a href="https://www.instagram.com/kenduro_shop/" target="_blank" aria-label="Kenduro Instagram">
               <?php Load::atom('svg', ['name' => 'instagram']); ?>
             </a>
           </li>
           <li>
-            <a href="https://www.facebook.com/kenduro.shop" target="_blank">
+            <a href="https://www.facebook.com/kenduro.shop" target="_blank" aria-label="Kenduro Facebook">
               <?php Load::atom('svg', ['name' => 'facebook']); ?>
             </a>
           </li>
@@ -60,7 +60,7 @@ use Lean\Load;
   <div class="container">
     <div class="row bottom">
       <div class="col text-center">
-        <a href="<?php echo esc_url(get_site_url()); ?>" rel="home" class="logo">
+        <a href="<?php echo esc_url(get_site_url()); ?>" rel="home" class="logo" aria-label="Kenduro logo">
           <?php Load::atom('svg', ['name' => 'logo_light']); ?>
         </a>
         <div>
