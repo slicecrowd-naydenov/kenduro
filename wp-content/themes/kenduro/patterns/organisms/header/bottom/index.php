@@ -1,6 +1,6 @@
 <?php
 
-use Lean\Load;
+// use Lean\Load;
 
 // $chosenCat = '';
 // $args = array(
@@ -11,9 +11,10 @@ use Lean\Load;
 // $main_categories = get_terms($args);
 $featured_product_ID = get_field('featured_product', 'options');
 $main_menu_class = is_array($featured_product_ID) ? 'has-featured-product' : '';
-
+delete_transient('wp_nav_menu_cached');
+$cache_key = wp_is_mobile() ? 'wp_nav_menu_cached_mobile' : 'wp_nav_menu_cached_desktop';
 // Опит за извличане на кешираните категории
-$wp_nav_menu = get_transient('wp_nav_menu_cached');
+$wp_nav_menu = get_transient($cache_key);
 
 if (false === $wp_nav_menu) {
   // echo 'Кешът не е наличен. Извличам от базата данни.<br>';
@@ -54,7 +55,8 @@ if (false === $wp_nav_menu) {
 
   if (!empty($wp_nav_menu)) {
     // Запис на резултата в кеша за 1 час (3600 секунди)
-    set_transient('wp_nav_menu_cached', $wp_nav_menu, 3600);
+    set_transient($cache_key, $wp_nav_menu, 3600);
+
     // echo 'Кешът е запазен.<br>';
   } else {
     // echo 'get_terms() не върна резултати.<br>';

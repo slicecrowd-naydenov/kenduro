@@ -347,14 +347,40 @@ do_action( 'woocommerce_before_main_content' );
 				}
 			} else {
 				// Brand Tax page
+				$banner_srcset = wp_get_attachment_image_srcset($term_banner_id);
+				$banner_sizes = wp_get_attachment_image_sizes($term_banner_id);
+				$banner_metadata = wp_get_attachment_metadata($term_banner_id);
+				$banner_width = $banner_metadata['width'];
+				$banner_height = $banner_metadata['height'];
+
+				
+				$logo_metadata = wp_get_attachment_metadata($term_logo_id);
+				$logo_width = $logo_metadata['width'];
+				$logo_height = $logo_metadata['height'];
 				?>
 
 				<div class="brand-info <?php echo esc_attr($classes); ?>">
 					<div class="brand-info__image">
 						<div class="brand-info__logo">
-							<img src="<?php echo esc_attr($term_logo)?>" class="no-lazy" alt="" />
+							<img 
+								src="<?php echo esc_attr($term_logo)?>" 
+								width="<?php echo esc_attr($logo_width); ?>"
+    						height="<?php echo esc_attr($logo_height); ?>" 
+								alt="" 
+							/>
 						</div>
-						<img class="no-lazy" src="<?php echo esc_attr($term_banner)?>" alt="" />
+						<img 
+							src="<?php echo esc_attr($term_banner)?>" 
+							alt="banner"
+							srcset="<?php echo esc_attr($banner_srcset); ?>" 
+    					sizes="
+								(max-width: 456px) 500px,
+								(max-width: 768px) 768px,
+								(max-width: 1024px) 1024px,
+								1400px"
+							width="<?php echo esc_attr($banner_width); ?>"
+    					height="<?php echo esc_attr($banner_height); ?>"
+							/>
 					</div>
 					<div>
 						<div class="brand-info__description collapse paragraph paragraph-l" id="collapseSummary">
