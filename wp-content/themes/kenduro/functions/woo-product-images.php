@@ -10,7 +10,7 @@ add_filter('storefront_woocommerce_args', 'bbloomer_resize_storefront_images');
 
 function bbloomer_resize_storefront_images($args) {
   $args['single_image_width'] = 630;
-  $args['thumbnail_image_width'] = wp_is_mobile() ? 265 : 500; 
+  $args['thumbnail_image_width'] = 416;
   return $args;
 }
 
