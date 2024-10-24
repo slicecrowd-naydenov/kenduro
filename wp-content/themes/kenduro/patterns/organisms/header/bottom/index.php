@@ -11,7 +11,7 @@
 // $main_categories = get_terms($args);
 $featured_product_ID = get_field('featured_product', 'options');
 $main_menu_class = is_array($featured_product_ID) ? 'has-featured-product' : '';
-delete_transient('wp_nav_menu_cached');
+
 $cache_key = wp_is_mobile() ? 'wp_nav_menu_cached_mobile' : 'wp_nav_menu_cached_desktop';
 // Опит за извличане на кешираните категории
 $wp_nav_menu = get_transient($cache_key);
