@@ -213,23 +213,39 @@ $promo_product_ids = implode(',', $promo_products);
         ?>
 				<div class="filter-content-wrapper">
           <div class="products-wrapper">
+            <div class="dropdown sort-by-dropdown">
+              <button class="btn btn-secondary dropdown-toggle sort-by" type="button" id="dropdownSortMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Сортирай по:
+                <strong class="sort-by-title">Подразбиране</strong>
+              </button>
+              <?php if ($get_product_cat !== null || $get_brand !== null) : ?>
+                <label class="checkbox promo-products-filter">
+                  <input type="checkbox" <?php echo esc_attr($promo_checked); ?>>
+                  <span class="optional"></span> 
+                  <a href="<?php echo $promo_link; ?>">Промо продукти</a>
+                </label>
+              <?php endif; ?>
+              <div class="dropdown-menu dropdown-menu-sort" aria-labelledby="dropdownSortMenuButton">
+                <?php echo do_shortcode('[wpf-filters id=4]'); ?>
+              </div>
+            </div>
             <?php echo do_shortcode('[products ids="'.$promo_product_ids.'" limit="12" columns="4" paginate="true"]'); ?>
-            </div> 
-            <?php  if (wp_is_mobile()) { ?>
-					<div class="mobile-wrapper filter-sidebar">
-						<div class="dropdown">
-						<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-haspopup="true" aria-expanded="false">
-							Категории
-						</button>
-						<ul class="nav nav-pills product-categories-view dropdown-menu" role="tablist" aria-labelledby="dropdownMenuButton">
-							<?php 
-							$list_categories($main_categories_arr, array());
-							?>
-						</ul>
-						</div>
+          </div> 
+          <?php  if (wp_is_mobile()) { ?>
+          <div class="mobile-wrapper filter-sidebar">
+            <div class="dropdown">
+              <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Категории
+              </button>
+              <ul class="nav nav-pills product-categories-view dropdown-menu" role="tablist" aria-labelledby="dropdownMenuButton">
+                <?php 
+                $list_categories($main_categories_arr, array());
+                ?>
+              </ul>
+            </div>
 
-							<!-- // Load::molecules('product-category/product-categories-view/index'); 
-							// output_filter_modal(); -->
+              <!-- // Load::molecules('product-category/product-categories-view/index'); 
+              // output_filter_modal(); -->
             <!-- Button trigger modal -->
             <button type="button" class="button filter-modal" data-toggle="modal" data-target="#filterModal">
               Филтри
@@ -251,9 +267,9 @@ $promo_product_ids = implode(',', $promo_products);
                 </div>
               </div>
             </div>
-					</div>
+          </div>
 
-					<?php } else { ?>
+          <?php } else { ?>
           <div class="filter-sidebar">
             <?php $list_categories($main_categories_arr, array()); ?>
             <p class="paragraph paragraph-xl semibold cat-head active-cat filters">Филтри</p>
@@ -261,8 +277,8 @@ $promo_product_ids = implode(',', $promo_products);
 
           </div> 
           
-					<?php
-					}
+          <?php
+          }
           ?>
         </div>
       </div>

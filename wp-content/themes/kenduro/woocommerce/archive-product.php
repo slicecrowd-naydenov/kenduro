@@ -490,7 +490,7 @@ do_action( 'woocommerce_before_main_content' );
 					<?php  if (wp_is_mobile()) { ?>
 					<div class="mobile-wrapper filter-sidebar">
 						<div class="dropdown">
-						<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-haspopup="true" aria-expanded="false">
+						<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 							Категории
 						</button>
 						<ul class="nav nav-pills product-categories-view dropdown-menu" role="tablist" aria-labelledby="dropdownMenuButton">
