@@ -611,8 +611,45 @@
 
             @include media-breakpoint-only(lg) {
               height: 60px;
-            } 
+            }
+
+            .asnp-savedPrice {
+              display: none;
+            }
             
+            .asnp-totalPrice-section {
+              display: flex;
+              flex-direction: column-reverse;
+            }
+
+            s {
+                line-height: 20px;
+                text-decoration: none;
+
+              &:before {
+                content: 'Намалено от ';
+                display: inline-block;
+                color: $text-primary; 
+                font-size: 14px;
+                line-height: 20px;
+                margin-right: 3px;
+              }
+
+              .amount {
+                text-decoration: line-through;
+                font-size: 14px;
+                line-height: 20px;
+                font-weight: 400;
+              }
+            }
+       
+            .amount {
+              color: $text-primary;
+              font-weight: 600;
+              font-size: 28px;
+              line-height: 38px;
+            }
+
 
             ins,
             & > .price > .amount,

@@ -13,7 +13,7 @@ function add_theme_scripts() {
 		wp_dequeue_style( 'storefront-icons' );
 		wp_dequeue_style( 'storefront-fonts' );
 		wp_dequeue_style( 'storefront-style-inline' );
-		wp_dequeue_style( 'wp-emoji-styles' );
+		// wp_dequeue_style( 'wp-emoji-styles' );
 		wp_dequeue_style( 'classic-theme-styles' );
 		wp_dequeue_style( 'global-styles' );
 
