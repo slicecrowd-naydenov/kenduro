@@ -204,7 +204,7 @@ $promo_product_ids = implode(',', $promo_products);
         <h3>Промоции</h3>
         <?php
           Load::molecules('product-category/product-category-info/index', [
-            'title' => 'Страшни промоции за Хелоуин до 4ти Ноември',
+            'title' => 'Black Friday Седмица №1 - от 4ти до 9ти Ноември',
             'class' => 'discount-container',
             // 'description' => 'Разгледайте детайлно нашите намалени продукти.',
             // 'cat' => 'намалени продукти',
