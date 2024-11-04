@@ -620,6 +620,15 @@
             .asnp-totalPrice-section {
               display: flex;
               flex-direction: column-reverse;
+
+              & > span {
+                .amount {
+                  color: $text-primary;
+                  font-weight: 600;
+                  font-size: 28px;
+                  line-height: 38px;
+                }
+              }
             }
 
             s {
@@ -636,21 +645,14 @@
               }
 
               .amount {
+                color: $text-primary;
                 text-decoration: line-through;
                 font-size: 14px;
                 line-height: 20px;
                 font-weight: 400;
               }
             }
-       
-            .amount {
-              color: $text-primary;
-              font-weight: 600;
-              font-size: 28px;
-              line-height: 38px;
-            }
-
-
+      
             ins,
             & > .price > .amount,
             & > .amount {

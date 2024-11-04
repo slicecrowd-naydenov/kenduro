@@ -264,6 +264,10 @@ function checkout_success_sent_form($order_id) {
     $product_total = $item['total'];
     $product_total_tax = $item['total_tax'];
     $product_discount = $product_total + $product_total_tax;
+
+    if ($product_discount == 0) {
+      continue;
+    }
   
     $product_info[] = array(
       'product_id' => $product_id,

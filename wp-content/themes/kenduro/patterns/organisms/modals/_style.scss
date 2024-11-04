@@ -69,6 +69,14 @@
       }
     }
   }
+
+  &#filterModal {
+    .modal-header {
+      @include media-breakpoint-down(md) {
+        justify-content: space-between;
+      }
+    }
+  }
 }
 
 .modal-backdrop {

@@ -33,7 +33,13 @@ function get_filtered_column_fields($fields) {
   $filtered_data = array();
   foreach ($fields as $field) {
     // if ($field["params"]["help_doc"] !== null && $field["params"]["help_doc"]['preview'] !== '') {
-    if (array_key_exists('help_doc', $field["params"]) && $field["params"]["help_doc"] !== null && $field["params"]["help_doc"]['preview'] !== '') {
+    if (
+      array_key_exists('help_doc', $field["params"]) &&
+      $field["params"]["help_doc"] !== null &&
+      is_array($field["params"]["help_doc"]) &&
+      array_key_exists('preview', $field["params"]["help_doc"]) && 
+      $field["params"]["help_doc"]['preview'] !== ''
+    ) {
       $preview_text = $field["params"]["help_doc"]['preview'];
       $html_text = $field["params"]["help_doc"]['html'];
 

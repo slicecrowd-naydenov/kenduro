@@ -26,6 +26,7 @@ $query_vars = $wp_query->query_vars;
 $get_brand = isset($query_vars['pa_brand']) ? $query_vars['pa_brand'] : null;
 $get_product_cat = isset($query_vars['product_cat']) ? $query_vars['product_cat'] : null;
 $product_cat_ID = 0;
+$product_cat_slug = '';
 
 $is_brand_page = $get_brand !== null ? 'brand_page' : 'cat_page';
 
@@ -91,7 +92,7 @@ if ($on_sale) {
 	$promo_link = esc_url(home_url( $wp->request ));
 	$promo_checked = "checked";
 } else {
-	$ids_placeholder = array();
+	$ids_placeholder = '';
 }
 
 $terms_args = array(

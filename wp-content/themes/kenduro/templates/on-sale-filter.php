@@ -204,7 +204,7 @@ $promo_product_ids = implode(',', $promo_products);
         <h3>Промоции</h3>
         <?php
           Load::molecules('product-category/product-category-info/index', [
-            'title' => 'Разгледайте настоящите промоции в Kenduro',
+            'title' => 'Страшни промоции за Хелоуин до 4ти Ноември',
             'class' => 'discount-container',
             // 'description' => 'Разгледайте детайлно нашите намалени продукти.',
             // 'cat' => 'намалени продукти',

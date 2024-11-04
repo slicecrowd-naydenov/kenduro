@@ -43,6 +43,7 @@ if ( ! $product ) {
 
 $delivery_time_text = '';
 $ss_delivery_time_text = '';
+$variation_stock_data = array();
 
 if ($product->is_type('simple')) {
 	$meta_data = get_field('meta_data', $product->get_id()); // $product_id е ID-то на продукта, за който искате да вземете полето
@@ -68,7 +69,6 @@ if ($product->is_type('simple')) {
 	$parent_product = wc_get_product($parent_id);
 	$variation_ids = $parent_product->get_children();
 
-	$variation_stock_data = array();
 	foreach ($variation_ids as $variation_id) {
 		$variation = wc_get_product($variation_id);
     $stock_quantity = $variation->get_stock_quantity();

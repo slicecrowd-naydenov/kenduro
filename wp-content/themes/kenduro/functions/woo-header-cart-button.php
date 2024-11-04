@@ -154,6 +154,54 @@ function trigger_ajax_to_cart() {
         // $body.find('#yith-s, .lapilliUI-Input__field').attr('placeholder', 'Търси продукт');
         // $('.lapilliUI-Input__field').attr('placeholder', 'Търси продукт');
         $('.sku-value').html($('.sku').text());
+
+        // $('.single_add_to_cart_button').on('click', function(e){ 
+        //   e.preventDefault();
+        //   $thisbutton = $(this),
+        //   $form = $thisbutton.closest('form.cart'),
+        //   id = $thisbutton.val(),
+        //   product_qty = $form.find('input[name=quantity]').val() || 1,
+        //   product_id = $form.find('input[name=product_id]').val() || id,
+        //   variation_id = $form.find('input[name=variation_id]').val() || 0;
+        //   wapf_field_groups = $form.find('input[name=wapf_field_groups]');
+        //   wapf_field_groups_value = wapf_field_groups.attr('value') || 0;
+        //   wapf_checked = $form.find('.wapf-checked');
+        //   wapf_checked_name = wapf_checked.find('.wapf-input').attr('name') || 0;
+        //   wapf_checked_value = wapf_checked.find('.wapf-input').val() || 0;
+
+        //   var data = {
+        //     action: 'ql_woocommerce_ajax_add_to_cart',
+        //     product_id: product_id,
+        //     product_sku: '',
+        //     quantity: product_qty,
+        //     variation_id: variation_id,
+        //     [wapf_checked_name]: wapf_checked_value,
+        //     wapf_field_groups: wapf_field_groups_value 
+        //   };
+          
+        //   $.ajax({
+        //     type: 'post',
+        //     url: wc_add_to_cart_params.ajax_url,
+        //     data: data,
+        //     beforeSend: function (response) {
+        //       $thisbutton.removeClass('added').addClass('loading');
+        //     },
+        //     complete: function (response) {
+        //       $thisbutton.addClass('added').removeClass('loading');
+        //     }, 
+        //     success: function (response) { 
+        //       if (response.error & response.product_url) {
+        //         window.location = response.product_url;
+        //         return;
+        //       } else { 
+        //         $(document.body).trigger('added_to_cart', [response.fragments, response.cart_hash, $thisbutton]);
+        //         // $('body').trigger('wc_fragment_refresh');
+
+        //       } 
+        //       $(document.body).trigger('wc_fragment_refresh');
+        //     }, 
+        //   }); 
+        // }); 
       });
 
       let productEl = '';

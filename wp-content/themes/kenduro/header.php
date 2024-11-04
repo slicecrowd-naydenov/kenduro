@@ -15,8 +15,4 @@
 </head>
 
 <body <?php body_class(); ?>>
-	<?php 
-		if (!is_page_template('templates/landing-event.php') ) {
-			Load::organism('header/index');
-		}
-	?>
+	<?php Load::organism('header/index');	?>
