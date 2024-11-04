@@ -218,13 +218,6 @@ $promo_product_ids = implode(',', $promo_products);
                 Сортирай по:
                 <strong class="sort-by-title">Подразбиране</strong>
               </button>
-              <?php if ($get_product_cat !== null || $get_brand !== null) : ?>
-                <label class="checkbox promo-products-filter">
-                  <input type="checkbox" <?php echo esc_attr($promo_checked); ?>>
-                  <span class="optional"></span> 
-                  <a href="<?php echo $promo_link; ?>">Промо продукти</a>
-                </label>
-              <?php endif; ?>
               <div class="dropdown-menu dropdown-menu-sort" aria-labelledby="dropdownSortMenuButton">
                 <?php echo do_shortcode('[wpf-filters id=4]'); ?>
               </div>
