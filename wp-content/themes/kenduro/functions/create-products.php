@@ -10,17 +10,17 @@ add_action('rest_api_init', 'add_get_products_endpoint');
 
 function add_get_products_endpoint() {
   // create products
-  register_rest_route(
-    'ss-data',
-    '/get-products/(?P<id>[^/]+)(?:/(?P<product_id>[^/]+))?',
-    array(
-      'methods' => 'GET',
-      'callback' => 'get_all_products',
-      'permission_callback' => function () {
-        return true;
-      }
-    )
-  );
+  // register_rest_route(
+  //   'ss-data',
+  //   '/get-products/(?P<id>[^/]+)(?:/(?P<product_id>[^/]+))?',
+  //   array(
+  //     'methods' => 'GET',
+  //     'callback' => 'get_all_products',
+  //     'permission_callback' => function () {
+  //       return true;
+  //     }
+  //   )
+  // );
 
   // Global update products
   register_rest_route(
@@ -58,62 +58,62 @@ function getInnermostValue($array) {
   return $array;
 }
 
-function get_all_products($request) {
-  global $fieldsToRemove;
-  $ss_ids = get_field('ss_ids', 'option');
-  $product_variations = post_column_fields($ss_ids['product_variations']);
+// function get_all_products($request) {
+//   global $fieldsToRemove;
+//   $ss_ids = get_field('ss_ids', 'option');
+//   $product_variations = post_column_fields($ss_ids['product_variations']);
 
-  $id = $request->get_param('id');
-  $product_id = $request->get_param('product_id');
-  $external_api_response = post_column_fields($id);
+//   $id = $request->get_param('id');
+//   $product_id = $request->get_param('product_id');
+//   $external_api_response = post_column_fields($id);
 
-  $related_records = get_column_fields_related($id);
-  $product_variations_fields = fetch_column_fields($ss_ids['product_variations']);
-  $product_fields = fetch_column_fields($ss_ids['products_app_id']);
-  $product_variation = get_column_field_id('product_variation', $product_variations_fields);
-  $product_var_id = get_column_field_id('product_var_id', $product_fields);
-  $existing_ids = array_column($related_records['related_records'], 'id');
-  $outputArray = array();
+//   $related_records = get_column_fields_related($id);
+//   $product_variations_fields = fetch_column_fields($ss_ids['product_variations']);
+//   $product_fields = fetch_column_fields($ss_ids['products_app_id']);
+//   $product_variation = get_column_field_id('product_variation', $product_variations_fields);
+//   $product_var_id = get_column_field_id('product_var_id', $product_fields);
+//   $existing_ids = array_column($related_records['related_records'], 'id');
+//   $outputArray = array();
 
-  if (is_wp_error($external_api_response)) {
-    return $external_api_response;
-  }
+//   if (is_wp_error($external_api_response)) {
+//     return $external_api_response;
+//   }
 
-  // IMPORTANT -> remove unnecessary IDs from Product
-  if (!$product_id) {
-    related_records($external_api_response['items'], $product_var_id, $existing_ids);
-  }
+//   // IMPORTANT -> remove unnecessary IDs from Product
+//   if (!$product_id) {
+//     related_records($external_api_response['items'], $product_var_id, $existing_ids);
+//   }
 
-  foreach ($product_variations['items'] as $variation) {
-    if (isset($variation[$product_variation]) && is_array($variation[$product_variation])) {
-      foreach ($variation[$product_variation] as $value) {
-        if (!in_array($value, $outputArray)) {
-          $outputArray[] = $value;
-        }
-      }
-    }
-  }
+//   foreach ($product_variations['items'] as $variation) {
+//     if (isset($variation[$product_variation]) && is_array($variation[$product_variation])) {
+//       foreach ($variation[$product_variation] as $value) {
+//         if (!in_array($value, $outputArray)) {
+//           $outputArray[] = $value;
+//         }
+//       }
+//     }
+//   }
 
-  $filteredData = filter_items($external_api_response['items'], $fieldsToRemove);
+//   $filteredData = filter_items($external_api_response['items'], $fieldsToRemove);
 
-  $filteredArrays = array_filter($filteredData, function ($item) use ($outputArray) {
-    return in_array($item['id'], $outputArray);
-  });
+//   $filteredArrays = array_filter($filteredData, function ($item) use ($outputArray) {
+//     return in_array($item['id'], $outputArray);
+//   });
 
-  if (!$product_id) {
-    // Create product
-    create_woocommerce_products($filteredArrays);
-  } else {
-    // Update product
-    $filteredArrays = get_record($id, $product_id);
-    // $filteredArrays = array_filter($filteredData, function ($item) use ($product_id) {
-    //   return $item['id'] === $product_id;
-    // });
-    update_woocommerce_product($filteredArrays, $id);
-  }
+//   if (!$product_id) {
+//     // Create product
+//     create_woocommerce_products($filteredArrays);
+//   } else {
+//     // Update product
+//     $filteredArrays = get_record($id, $product_id);
+//     // $filteredArrays = array_filter($filteredData, function ($item) use ($product_id) {
+//     //   return $item['id'] === $product_id;
+//     // });
+//     update_woocommerce_product($filteredArrays, $id);
+//   }
 
-  return $filteredArrays;
-}
+//   return $filteredArrays;
+// }
 
 function mass_update_create_products($request) {
   global $fieldsToRemove;
