@@ -351,13 +351,13 @@ do_action( 'woocommerce_before_main_content' );
 				$banner_srcset = wp_get_attachment_image_srcset($term_banner_id);
 				$banner_sizes = wp_get_attachment_image_sizes($term_banner_id);
 				$banner_metadata = wp_get_attachment_metadata($term_banner_id);
-				$banner_width = $banner_metadata['width'];
-				$banner_height = $banner_metadata['height'];
+				$banner_width = isset($banner_metadata['width']) ? $banner_metadata['width'] : 0;
+				$banner_height = isset($banner_metadata['height']) ? $banner_metadata['height'] : 0;
 
 				
 				$logo_metadata = wp_get_attachment_metadata($term_logo_id);
-				$logo_width = $logo_metadata['width'];
-				$logo_height = $logo_metadata['height'];
+				$logo_width = isset($logo_metadata['width']) ? $logo_metadata['width'] : 0;
+				$logo_height = isset($logo_metadata['height']) ? $logo_metadata['height'] : 0;
 				?>
 
 				<div class="brand-info <?php echo esc_attr($classes); ?>">
