@@ -167,80 +167,50 @@ function create_CRM_record($order_id, $invoice_id) {
   }
 }
 
-function update_menu_order($order_id) {
-  // Вземете поръчката по ID
-  $order = wc_get_order($order_id);
+// function update_menu_order($order_id) {
+//   // Вземете поръчката по ID
+//   $order = wc_get_order($order_id);
 
-  // Проверете дали поръчката съществува
-  if (!$order) {
-    return;
-  }
+//   // Проверете дали поръчката съществува
+//   if (!$order) {
+//     return;
+//   }
 
-  // Вземете всички артикули в поръчката
-  $items = $order->get_items();
-  $ss_fields = get_field('ss_fields', 'option');
-  $ss_ids = get_field('ss_ids', 'option');
-  $woo_items_order = $ss_fields['woo_items_order'];
-  $products_app_id = $ss_ids['products_app_id'];
+//   // Вземете всички артикули в поръчката
+//   $items = $order->get_items();
+//   $ss_fields = get_field('ss_fields', 'option');
+//   $ss_ids = get_field('ss_ids', 'option');
+//   $woo_items_order = $ss_fields['woo_items_order'];
+//   $products_app_id = $ss_ids['products_app_id'];
 
-  // За всеки артикул актуализирайте menu_order
-  foreach ($items as $item) {
-    $product_data = $item->get_data();
-    $product_id = $product_data['product_id'];
+//   // За всеки артикул актуализирайте menu_order
+//   foreach ($items as $item) {
+//     $product_data = $item->get_data();
+//     $product_id = $product_data['product_id'];
 
-    $meta_data = get_field('meta_data', $product_id); // $product_id е ID-то на продукта, за който искате да вземете полето
-    if ($meta_data) {
-      $meta_data_keys = array_column($meta_data, 'value', 'key');
-      // pretty_dump($meta_data_keys['id']);
-      // Настройте новото значение на menu_order
-      $args = array(
-        'ID'         => $product_id,
-        'menu_order' => get_record($products_app_id, $meta_data_keys['id'])[$woo_items_order]
-      );
+//     $meta_data = get_field('meta_data', $product_id); // $product_id е ID-то на продукта, за който искате да вземете полето
+//     if ($meta_data) {
+//       $meta_data_keys = array_column($meta_data, 'value', 'key');
+//       // pretty_dump($meta_data_keys['id']);
+//       // Настройте новото значение на menu_order
+//       $args = array(
+//         'ID'         => $product_id,
+//         'menu_order' => get_record($products_app_id, $meta_data_keys['id'])[$woo_items_order]
+//       );
     
-      // Актуализирайте продукта
-      wp_update_post($args);
-    }
-  }
-}
+//       // Актуализирайте продукта
+//       wp_update_post($args);
+//     }
+//   }
+// }
 
-// Schedule a task to create a sale record
-function schedule_create_sales_record($order_id) {
-  $hook = 'create_sales_record_event';
-  $hook_update_order = 'update_menu_order_event';
-
-  if (!wp_next_scheduled($hook, array($order_id))) {
-    wp_schedule_single_event(time(), $hook, array($order_id));
-    // error_log("Scheduled $hook for order ID: $order_id");
-  }
-
-  // Проверете дали задачата за актуализиране на menu_order вече е планирана
-  if (!wp_next_scheduled($hook_update_order, array($order_id))) {
-    wp_schedule_single_event(time() + 120, $hook_update_order, array($order_id)); // Change menu order after 120 seconds
-    // error_log("Scheduled $hook_update_order for order ID: $order_id");
-  }
-}
-add_action('woocommerce_thankyou', 'schedule_create_sales_record');
-
-// Execute the task of creating a sale record
-function execute_create_sales_record($order_id) {
+add_action('woocommerce_thankyou', 'success_message_after_payment');
+function success_message_after_payment($order_id) {
   $checkout_response = checkout_success_sent_form($order_id);
   $is_synced = get_field('sync_order_with_smartsuite', $order_id);
   if (get_post_type($order_id) == "shop_order" && $is_synced === NULL) {
     create_sales_record($checkout_response);
-    // error_log("Executed create_sales_record_event for order ID: $order_id");
   }
-}
-add_action('create_sales_record_event', 'execute_create_sales_record');
-add_action('update_menu_order_event', 'update_menu_order');
-
-// Function to manually schedule a task to create a sale record
-// We have to invoke this function in some page -> reschedule_sales_record_event(9284);
-function reschedule_sales_record_event($order_id) {
-  $hook = 'create_sales_record_event';
-  wp_clear_scheduled_hook($hook, array($order_id));
-  wp_schedule_single_event(time(), $hook, array($order_id)); // Планирайте изпълнението след 10 секунди
-  error_log("Rescheduled $hook for order ID: $order_id");
 }
 
 // Function to create a record after completing an order
