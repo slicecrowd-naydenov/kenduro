@@ -49,9 +49,9 @@ export default class SidebarFilter {
       $(this).next().slideToggle();
     });
     
-    if ($('.wpfMainWrapper')[0].clientHeight === 0) {
-      $('.cat-head.filters, .wpfClearButton').hide();
-    }
+    // if ($('.wpfMainWrapper')[0].clientHeight === 0) {
+    //   $('.cat-head.filters, .wpfClearButton').hide();
+    // }
 
     const allCats = $('.all-cats');
     $('.product-cat-filter').each(function() {
@@ -87,9 +87,9 @@ export default class SidebarFilter {
     var getFIlterURL = window.location.search;
     this.showClearButton(getFIlterURL);
 
-    $('.wpfMainWrapper').on('click', () => {
+    $('.filter-sidebar').find('.wpfMainWrapper').on('click', () => {
       setTimeout(() => {
-        var getFIlterURL = $('.wpfMainWrapper').attr('data-hide-url');
+        var getFIlterURL = $('.filter-sidebar').find('.wpfMainWrapper').attr('data-hide-url');
         // eslint-disable-next-line no-undefined
         if (getFIlterURL !== undefined) {
           this.showClearButton(getFIlterURL);

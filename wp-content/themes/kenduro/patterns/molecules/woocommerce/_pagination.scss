@@ -29,7 +29,10 @@
       background-color: transparent;
       text-decoration: none;
       transition: all 0.25s ease;
-      @extend #{'.paragraph','.paragraph-m', '.flex-center'};
+      margin: 0;
+      font-size: 12px;
+      line-height: 16px;
+      @extend #{'.flex-center'};
   
       &.current,
       &:hover {

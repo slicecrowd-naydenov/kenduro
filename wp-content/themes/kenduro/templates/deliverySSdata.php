@@ -8,6 +8,15 @@
 get_header();
 
 // process_mockup(get_bike_model_types());
+
+$transients = ['wp_nav_menu_cached_mobile', 'wp_nav_menu_cached_desktop', 'get_brands_cached', 'hero_slides_data', 'on_sale_panel_data', 'popular_categories_ids', 'main_categories_transients'];
+
+foreach ($transients as $transient) {
+  if (get_transient($transient)) {
+    delete_transient($transient);
+  }
+}
+
 ?>
 <main>
   <div class="container">

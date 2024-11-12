@@ -20,15 +20,13 @@ use Lean\Load;
 
 defined('ABSPATH') || exit;
 
-global $product;
+$current_product = wc_get_product(get_the_ID());
 
-function brand_text() {
-	global $product;
-
+function brand_text($current_product) {
 	$brand = '';
 
-	if ($product->get_attribute('pa_brand')) {
-		$brand = $product->get_attribute('pa_brand');
+	if ($current_product->get_attribute('pa_brand')) {
+		$brand = $current_product->get_attribute('pa_brand');
 	} else {
 		$brand = '';
 	}
@@ -37,9 +35,9 @@ function brand_text() {
 }
 
 function custom_code_after_product_data_tabs() {
-	global $product;
+	$current_product = wc_get_product(get_the_ID());
 
-	if (!$product) {
+	if (!$current_product) {
 		return;
 	}
 
@@ -52,21 +50,20 @@ function custom_code_after_product_data_tabs() {
 			array(
 				'taxonomy'   => 'pa_brand',
 				'field'      => 'slug',
-				'terms'      => strtolower(brand_text()),
+				'terms'      => strtolower(brand_text($current_product)),
 			),
 		),
 		'orderby'        => 'menu_order', // Сортиране по полето "Menu order"
 		'order'          => 'ASC',
 	);
+	$related_products = wc_get_products($args);
 
-	$query = new WP_Query($args);
-
-	if ($query->have_posts()) : ?>
+	if (!empty($related_products)) : ?>
 		<div class="row brand-section">
 			<div class="col-12 col-xl-6">
 				<?php 
 					$taxonomy = 'pa_brand';
-					$term = get_term_by('name', brand_text(), $taxonomy);
+					$term = get_term_by('name', brand_text($current_product), $taxonomy);
 					$term_id = $term->term_id;
 					$meta_fields = get_term_meta($term_id);
 					$term_logo_id = $meta_fields['exclusive_logo'][0];
@@ -84,14 +81,14 @@ function custom_code_after_product_data_tabs() {
 					<div class="brand-info__description paragrap paragraph-l">
 						<?php echo $brand_description; ?>
 					</div>
-					<a href="<?php echo esc_attr($term_link); ?>" class="paragrap paragraph-l">Виж всички продукти от <?php echo brand_text(); ?></a>
+					<a href="<?php echo esc_attr($term_link); ?>" class="paragrap paragraph-l">Виж всички продукти от <?php echo brand_text($current_product); ?></a>
 				</div>
 
 
 			</div>
 			<div class="col-12 col-xl-6">
 				<div class="brand-section__products">
-					<div>Популярни от <strong><?php echo brand_text(); ?></strong></div>
+					<div>Популярни от <strong><?php echo brand_text($current_product); ?></strong></div>
 					<?php
 						Load::atoms('link/index', [
 							'text' => 'Разгледай всички',
@@ -104,31 +101,29 @@ function custom_code_after_product_data_tabs() {
 				<div class="woocommerce columns-5">
 					<ul class="products columns-5">
 						<?php
-
-						while ($query->have_posts()) :
-							$query->the_post();
-							$product = wc_get_product(get_the_ID());
-							$product_classes = implode(' ', wc_get_product_class('', $product));
-							$product_image = has_post_thumbnail() ? wp_get_attachment_image_src(get_post_thumbnail_id(), 'single-post-thumbnail')[0] : wc_placeholder_img_src();
+						foreach ($related_products as $related_product) :
+							$related_product_ID = $related_product->get_id();
+							$product_classes = implode(' ', wc_get_product_class('', $related_product));
+							$product_image = has_post_thumbnail($related_product_ID) ? wp_get_attachment_image_src(get_post_thumbnail_id($related_product_ID), 'medium')[0] : wc_placeholder_img_src();
 							?>
 							<li class="product <?php echo esc_attr($product_classes); ?>">
-								<a href="<?php echo esc_url(get_permalink()); ?>" class="woocommerce-LoopProduct-link woocommerce-loop-product__link">
+								<a href="<?php echo esc_url(get_permalink($related_product_ID)); ?>" class="woocommerce-LoopProduct-link woocommerce-loop-product__link">
 									<div class='wc-img-wrapper'>
 										<?php
 										// Product image
-										echo '<img src="' . esc_url($product_image) . '" alt="' . esc_attr(get_the_title()) . '" />';
+										echo '<img src="' . esc_url($product_image) . '" alt="' . esc_attr(get_the_title($related_product_ID)) . '" />';
 										?>
 									</div>
 									<?php
 									// Product title
-									echo '<h2 class="woocommerce-loop-product__title">' . get_the_title() . '</h2>';
+									echo '<h2 class="woocommerce-loop-product__title">' . get_the_title($related_product_ID) . '</h2>';
 
 									// Product price
-									echo '<span class="price">' . $product->get_price_html() . '</span>';
+									echo '<span class="price">' . $related_product->get_price_html() . '</span>';
 									?>
 								</a>
 							</li>
-						<?php endwhile; ?>
+						<?php endforeach; ?>
 					</ul>
 				</div>	
 			</div>
@@ -136,7 +131,7 @@ function custom_code_after_product_data_tabs() {
 <?php
 	endif;
 
-	wp_reset_postdata();
+	// wp_reset_postdata();
 }
 add_action('woocommerce_after_single_product_summary', 'custom_code_after_product_data_tabs', 11);
 
@@ -152,7 +147,7 @@ if (post_password_required()) {
 	return;
 }
 ?>
-<div id="product-<?php the_ID(); ?>" <?php wc_product_class('', $product); ?>>
+<div id="product-<?php the_ID(); ?>" <?php wc_product_class('', $current_product ); ?>>
 	<div class="product-gallery-section">
 		<?php
 		/**
@@ -167,11 +162,11 @@ if (post_password_required()) {
 		<div class="summary entry-summary">
 			<?php
 
-			if (brand_text() !== '') : 
-				$term = get_term_by('name', brand_text(), 'pa_brand');
+			if (brand_text($current_product) !== '') : 
+				$term = get_term_by('name', brand_text($current_product), 'pa_brand');
 				$term_link = get_term_link($term);
 			?>
-				<a href="<?php echo esc_url($term_link); ?>" class="paragraph paragraph-xl semibold text-underline"><?php echo brand_text(); ?></a>
+				<a href="<?php echo esc_url($term_link); ?>" class="paragraph paragraph-xl semibold text-underline"><?php echo brand_text($current_product); ?></a>
 			<?php endif;
 			// pretty_dump($meta_fields);
 			/**

@@ -21,6 +21,10 @@
       border-radius: $radius-small;
       overflow: hidden;
       background-color: $thumbs_bg; 
+      
+      @include media-breakpoint-up(md) {
+        flex: 0 0 180px;
+      }
 
       img {
         max-width: 180px;
@@ -35,6 +39,42 @@
     .button-secondary-grey {
       margin-left: 5px;
       margin-top: 27px;
+    }
+  }
+
+  &#consentBanner,
+  &#consentBannerOptions {
+    .modal-dialog {
+      max-width: 520px;
+
+      @include media-breakpoint-down(md) {
+        margin: 0 auto;
+        align-items: end;
+        height: 100%;
+      }
+    }
+
+    .content-footer{
+      display: flex;
+      gap: 20px;
+      padding-top: 25px;
+
+      .button {
+        margin: 0;
+        flex: 1 0 auto;
+      }
+
+      .paragraph {
+        height: 45px;
+      }
+    }
+  }
+
+  &#filterModal {
+    .modal-header {
+      @include media-breakpoint-down(md) {
+        justify-content: space-between;
+      }
     }
   }
 }

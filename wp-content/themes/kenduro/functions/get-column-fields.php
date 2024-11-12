@@ -33,14 +33,17 @@ function get_filtered_column_fields($fields) {
   $filtered_data = array();
   foreach ($fields as $field) {
     // if ($field["params"]["help_doc"] !== null && $field["params"]["help_doc"]['preview'] !== '') {
-    if (array_key_exists('help_doc', $field["params"]) && $field["params"]["help_doc"] !== null && $field["params"]["help_doc"]['preview'] !== '') {
-      $preview_text = $field["params"]["help_doc"]['preview'];
+    if (
+      is_array($field["params"]["help_doc"]) &&
+      $field["params"]["help_doc"]["html"] !== '' // Sale price with VAT field
+    ) {
+      $preview_text = array_key_exists('preview', $field["params"]["help_doc"]) && $field["params"]["help_doc"]['preview'] !== '';
       $html_text = $field["params"]["help_doc"]['html'];
 
       $filtered_item = array(
         "slug" => $field["slug"],
         "label" => $field["label"],
-        "help_text" => $preview_text ? $preview_text : strip_tags($html_text)
+        "help_text" => $preview_text ? $field["params"]["help_doc"]['preview'] : strip_tags($html_text)
       );
       $filtered_data[] = $filtered_item;
     }

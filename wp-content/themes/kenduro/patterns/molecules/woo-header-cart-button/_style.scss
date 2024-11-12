@@ -20,7 +20,9 @@ a.cart-customlocation {
 
   .text {
     padding-right: 2px;
-    @extend #{'.paragraph','.paragraph-m'};
+    margin: 0;
+    font-size: 12px;
+    line-height: 16px;
 
     @include media-breakpoint-down(lg) {
       display: none
@@ -28,7 +30,10 @@ a.cart-customlocation {
   }
 
   .amount {
-    @extend #{'.paragraph','.paragraph-m', '.semibold'};
+    margin: 0;
+    font-size: 12px;
+    line-height: 16px;
+    font-weight: 600;
   }
 
   .count {

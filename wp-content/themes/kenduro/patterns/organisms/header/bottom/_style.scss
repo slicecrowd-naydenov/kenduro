@@ -310,7 +310,10 @@
         text-decoration: none;
         transition: color 0.25s ease;
         padding: 0;
-        @extend #{'.paragraph','.paragraph-l', '.semibold'};
+        margin: 0;
+        font-size: 14px;
+        line-height: 20px;
+        font-weight: 600;
       }
 
       &:hover {

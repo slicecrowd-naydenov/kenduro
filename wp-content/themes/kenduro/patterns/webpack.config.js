@@ -1,5 +1,6 @@
 var path = require('path');
 const TerserPlugin = require('terser-webpack-plugin');
+// const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 module.exports = {
   entry: {
@@ -15,19 +16,26 @@ module.exports = {
   stats: {
     colors: true
   },
-  mode: 'none',
+  mode: 'production',
   devtool: 'source-map',
   optimization: {
+    minimize: true, // Ensure minimization is enabled
     minimizer: [
-      // В Webpack 5 и по-нови версии се използва TerserPlugin за минимизация.
       new TerserPlugin({
-        extractComments: false, // Ако искате да изключите извличането на коментари.
+        extractComments: false,
       }),
-    ],
+    ]
   },
   resolve: {
     fallback: {
       stream: require.resolve('stream-browserify')
     }
   },
+  // plugins: [
+  //   //...
+  //   new BundleAnalyzerPlugin()
+  // ],
+  externals: {
+    jquery: 'jQuery'
+  }
 };

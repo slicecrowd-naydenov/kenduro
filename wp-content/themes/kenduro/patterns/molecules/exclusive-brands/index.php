@@ -4,10 +4,29 @@
   $args = array(
     'taxonomy' => 'pa_brand',
     'orderby' => 'name', 
-    'hide_empty' => true
+    'hide_empty' => true,
+    'number' => 20
   );
   
+  $terms = get_transient('get_brands_cached');
+
+if (false === $terms) {
+  // echo 'Кешът не е наличен. Извличам от базата данни.<br>';
+
   $terms = get_terms($args);
+
+  if (!empty($terms)) {
+    // Запис на резултата в кеша за 1 седмица (604800 секунди)
+    set_transient('get_brands_cached', $terms, 604800);
+    // echo 'Кешът е запазен.<br>';
+  } else {
+    // echo 'get_terms() не върна резултати.<br>';
+  }
+} else {
+  // echo 'Кешът е наличен. Зареждам от кеша.<br>';
+  // var_dump($main_categories); // Показва кешираните данни
+}
+
 ?>
 <div class="exclusive-brands"> 
   <div class="container">
@@ -34,13 +53,27 @@
                 $term_link = get_term_link($term);
                 $meta_fields = get_term_meta($term_id);
                 $is_exclusive = isset($meta_fields['exclusive_brand']) && $meta_fields['exclusive_brand'][0];
-                $term_logo_id = $meta_fields['exclusive_logo'][0];
-                $term_logo = wp_get_attachment_url($term_logo_id);
+                $term_logo_id = array_key_exists('exclusive_logo', $meta_fields) && isset($meta_fields['exclusive_logo'][0]) ? $meta_fields['exclusive_logo'][0] : '';
+                $term_logo = $term_logo_id ? wp_get_attachment_url($term_logo_id) : IMAGES_PATH.'/no-logo.jpg';
                 $exclusive_class = $is_exclusive ? 'exclusive-brand' : '';
+
+                if ($term_logo_id) {
+                  $term_logo_metadata = wp_get_attachment_metadata($term_logo_id);
+                  $term_logo_width = isset($term_logo_metadata['width']) ? $term_logo_metadata['width'] : '';
+                  $term_logo_height = isset($term_logo_metadata['height']) ? $term_logo_metadata['height'] : '';
+                } else {
+                  $term_logo_width = '400';
+                  $term_logo_height = '200';
+                }
               ?>
                 <li class="brands__list-item swiper-slide <?php echo esc_attr($exclusive_class); ?>">
                   <a href="<?php echo esc_attr($term_link); ?>" class="brands__list-item-link">
-                    <img src="<?php echo esc_attr($term_logo)?>" />
+                    <img 
+                      src="<?php echo esc_attr($term_logo)?>" 
+                      alt="<?php esc_attr_e($term_name); ?>"
+                      width="<?php echo esc_attr($term_logo_width); ?>" 
+                      height="<?php echo esc_attr($term_logo_height); ?>"  
+                    />
                   </a>
                   <a href="<?php echo esc_attr($term_link); ?>" class="paragraph paragraph-xl brand_name">
                     <?php echo $term_name; ?>

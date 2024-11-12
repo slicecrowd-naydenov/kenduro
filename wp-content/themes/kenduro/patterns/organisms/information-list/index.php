@@ -2,12 +2,6 @@
 
 use Lean\Load;
 
-// $infoArray = [
-//   ['icon' => 'star', 'text' => 'Unique Products'],
-//   ['icon' => 'customer-support', 'text' => 'Immediate Customer Support'],
-//   ['icon' => 'return-policy', 'text' => '14-day Return Policy'],
-//   ['icon' => 'payment', 'text' => 'Pay on Delivery'],
-// ];
 $args = wp_parse_args($args);
 $class = isset($args['class']) ? $args['class'] : '';
 ?>
@@ -22,7 +16,7 @@ $class = isset($args['class']) ? $args['class'] : '';
           <?php foreach ($args['list'] as $arg) : ?>
             <li class="information-list__item">
               <?php Load::atom('svg', ['name' => $arg['icon']]); ?>
-              <p class="paragraph tetriary"><?php echo $arg['text']; ?></p>
+              <p class="paragraph tetriary text"><?php echo $arg['text']; ?></p>
             </li>
           <?php endforeach; ?>
         </ul>

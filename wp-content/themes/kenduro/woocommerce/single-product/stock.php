@@ -20,7 +20,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-global $product;
+// global $product;
 
 if ( ! $product ) {
 	return;
@@ -43,6 +43,7 @@ if ( ! $product ) {
 
 $delivery_time_text = '';
 $ss_delivery_time_text = '';
+$variation_stock_data = array();
 
 if ($product->is_type('simple')) {
 	$meta_data = get_field('meta_data', $product->get_id()); // $product_id е ID-то на продукта, за който искате да вземете полето
@@ -64,9 +65,10 @@ if ($product->is_type('simple')) {
 		}
 	} 
 } else {
-	$variation_ids = $product->get_children();
+	$parent_id = $product->get_parent_id(); // Връща ID на променливия продукт
+	$parent_product = wc_get_product($parent_id);
+	$variation_ids = $parent_product->get_children();
 
-	$variation_stock_data = array();
 	foreach ($variation_ids as $variation_id) {
 		$variation = wc_get_product($variation_id);
     $stock_quantity = $variation->get_stock_quantity();
@@ -74,7 +76,7 @@ if ($product->is_type('simple')) {
 		$variation_stock_data[$var_id] = $stock_quantity;
 	}
 	// това е необходимо за вземане на количеството на вариацията
-	wp_add_inline_script('wc-add-to-cart-variation', 'var variationStockData = ' . json_encode($variation_stock_data) . ';', 'before');
+	// wp_add_inline_script('wc-add-to-cart-variation', 'var variationStockData = ' . json_encode($variation_stock_data) . ';', 'before');
 
 
 	$delivery_time_text = get_post_meta($variation_ids[0], '_my_delivery_time_text', true);
@@ -96,6 +98,7 @@ switch ($delivery_time_text) {
 
 ?>
 <div class="custom-stock">
+	<div id="variation-stock" data-stock='<?php echo json_encode($variation_stock_data); ?>'></div>
 	<p class="stock paragraph paragraph-m <?php echo esc_attr( $class ); ?>">
 		<?php // echo wp_kses_post( $availability );
 			Load::atom('svg', ['name' => 'checkbox']);

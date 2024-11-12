@@ -1,7 +1,7 @@
 <?php 
   use Lean\Load;
-
-  Load::organism('footer/index'); 
+  Load::organism('footer/index');
+  Load::organisms('modals/consent_banner/index');
 
   wp_footer(); 
 ?>

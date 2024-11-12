@@ -31,6 +31,7 @@ if ($isSetCompatibility) {
 $get_brand = isset($query_vars['pa_brand']) ? $query_vars['pa_brand'] : null;
 $get_product_cat = isset($query_vars['product_cat']) ? $query_vars['product_cat'] : null;
 $product_cat_ID = 0;
+$product_cat_slug = '';
 
 $is_brand_page = $get_brand !== null ? 'brand_page' : 'cat_page';
 
@@ -96,7 +97,7 @@ if ($on_sale) {
 	$promo_link = esc_url(home_url( $wp->request ));
 	$promo_checked = "checked";
 } else {
-	$ids_placeholder = array();
+	$ids_placeholder = '';
 }
 
 $terms_args = array(
@@ -369,14 +370,40 @@ do_action( 'woocommerce_before_main_content' );
 				}
 			} else {
 				// Brand Tax page
+				$banner_srcset = wp_get_attachment_image_srcset($term_banner_id);
+				$banner_sizes = wp_get_attachment_image_sizes($term_banner_id);
+				$banner_metadata = wp_get_attachment_metadata($term_banner_id);
+				$banner_width = isset($banner_metadata['width']) ? $banner_metadata['width'] : 0;
+				$banner_height = isset($banner_metadata['height']) ? $banner_metadata['height'] : 0;
+
+				
+				$logo_metadata = wp_get_attachment_metadata($term_logo_id);
+				$logo_width = isset($logo_metadata['width']) ? $logo_metadata['width'] : 0;
+				$logo_height = isset($logo_metadata['height']) ? $logo_metadata['height'] : 0;
 				?>
 
 				<div class="brand-info <?php echo esc_attr($classes); ?>">
 					<div class="brand-info__image">
 						<div class="brand-info__logo">
-							<img src="<?php echo esc_attr($term_logo)?>" class="no-lazy" alt="" />
+							<img 
+								src="<?php echo esc_attr($term_logo)?>" 
+								width="<?php echo esc_attr($logo_width); ?>"
+    						height="<?php echo esc_attr($logo_height); ?>" 
+								alt="" 
+							/>
 						</div>
-						<img class="no-lazy" src="<?php echo esc_attr($term_banner)?>" alt="" />
+						<img 
+							src="<?php echo esc_attr($term_banner)?>" 
+							alt="banner"
+							srcset="<?php echo esc_attr($banner_srcset); ?>" 
+    					sizes="
+								(max-width: 456px) 500px,
+								(max-width: 768px) 768px,
+								(max-width: 1024px) 1024px,
+								1400px"
+							width="<?php echo esc_attr($banner_width); ?>"
+    					height="<?php echo esc_attr($banner_height); ?>"
+							/>
 					</div>
 					<div>
 						<div class="brand-info__description collapse paragraph paragraph-l" id="collapseSummary">
@@ -452,9 +479,9 @@ do_action( 'woocommerce_before_main_content' );
 									woocommerce_product_loop_end();
 								} else {
 									if ($get_brand) {
-										echo do_shortcode('[products attribute="brand" terms="'.$get_brand.'" limit="16" columns="4" paginate="true" ids="'.$ids_placeholder.'"]');
+										echo do_shortcode('[products attribute="brand" terms="'.$get_brand.'" limit="16" columns="4" paginate="true"]');
 									} else {
-										$keyword_string = get_product_ids_by_keyword( sanitize_text_field($_GET['ywcas_filter']) );
+										$keyword_string = isset($_GET['ywcas_filter']) ? get_product_ids_by_keyword( sanitize_text_field($_GET['ywcas_filter']) ) : '';
 										$ywcas_filter_ids = isset($_GET['ywcas_filter']) ? implode(',', array_map('intval', $keyword_string)) : $ids_placeholder; 
 										
 										// $keyword_string = get_product_ids_by_keyword( sanitize_text_field($_GET['ywcas_filter']) );
@@ -498,7 +525,7 @@ do_action( 'woocommerce_before_main_content' );
 					<?php  if (wp_is_mobile()) { ?>
 					<div class="mobile-wrapper filter-sidebar">
 						<div class="dropdown">
-						<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-haspopup="true" aria-expanded="false">
+						<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 							Категории
 						</button>
 						<ul class="nav nav-pills product-categories-view dropdown-menu" role="tablist" aria-labelledby="dropdownMenuButton">

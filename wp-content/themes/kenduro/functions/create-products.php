@@ -10,17 +10,17 @@ add_action('rest_api_init', 'add_get_products_endpoint');
 
 function add_get_products_endpoint() {
   // create products
-  register_rest_route(
-    'ss-data',
-    '/get-products/(?P<id>[^/]+)(?:/(?P<product_id>[^/]+))?',
-    array(
-      'methods' => 'GET',
-      'callback' => 'get_all_products',
-      'permission_callback' => function () {
-        return true;
-      }
-    )
-  );
+  // register_rest_route(
+  //   'ss-data',
+  //   '/get-products/(?P<id>[^/]+)(?:/(?P<product_id>[^/]+))?',
+  //   array(
+  //     'methods' => 'GET',
+  //     'callback' => 'get_all_products',
+  //     'permission_callback' => function () {
+  //       return true;
+  //     }
+  //   )
+  // );
 
   // Global update products
   register_rest_route(
@@ -58,62 +58,62 @@ function getInnermostValue($array) {
   return $array;
 }
 
-function get_all_products($request) {
-  global $fieldsToRemove;
-  $ss_ids = get_field('ss_ids', 'option');
-  $product_variations = post_column_fields($ss_ids['product_variations']);
+// function get_all_products($request) {
+//   global $fieldsToRemove;
+//   $ss_ids = get_field('ss_ids', 'option');
+//   $product_variations = post_column_fields($ss_ids['product_variations']);
 
-  $id = $request->get_param('id');
-  $product_id = $request->get_param('product_id');
-  $external_api_response = post_column_fields($id);
+//   $id = $request->get_param('id');
+//   $product_id = $request->get_param('product_id');
+//   $external_api_response = post_column_fields($id);
 
-  $related_records = get_column_fields_related($id);
-  $product_variations_fields = fetch_column_fields($ss_ids['product_variations']);
-  $product_fields = fetch_column_fields($ss_ids['products_app_id']);
-  $product_variation = get_column_field_id('product_variation', $product_variations_fields);
-  $product_var_id = get_column_field_id('product_var_id', $product_fields);
-  $existing_ids = array_column($related_records['related_records'], 'id');
-  $outputArray = array();
+//   $related_records = get_column_fields_related($id);
+//   $product_variations_fields = fetch_column_fields($ss_ids['product_variations']);
+//   $product_fields = fetch_column_fields($ss_ids['products_app_id']);
+//   $product_variation = get_column_field_id('product_variation', $product_variations_fields);
+//   $product_var_id = get_column_field_id('product_var_id', $product_fields);
+//   $existing_ids = array_column($related_records['related_records'], 'id');
+//   $outputArray = array();
 
-  if (is_wp_error($external_api_response)) {
-    return $external_api_response;
-  }
+//   if (is_wp_error($external_api_response)) {
+//     return $external_api_response;
+//   }
 
-  // IMPORTANT -> remove unnecessary IDs from Product
-  if (!$product_id) {
-    related_records($external_api_response['items'], $product_var_id, $existing_ids);
-  }
+//   // IMPORTANT -> remove unnecessary IDs from Product
+//   if (!$product_id) {
+//     related_records($external_api_response['items'], $product_var_id, $existing_ids);
+//   }
 
-  foreach ($product_variations['items'] as $variation) {
-    if (isset($variation[$product_variation]) && is_array($variation[$product_variation])) {
-      foreach ($variation[$product_variation] as $value) {
-        if (!in_array($value, $outputArray)) {
-          $outputArray[] = $value;
-        }
-      }
-    }
-  }
+//   foreach ($product_variations['items'] as $variation) {
+//     if (isset($variation[$product_variation]) && is_array($variation[$product_variation])) {
+//       foreach ($variation[$product_variation] as $value) {
+//         if (!in_array($value, $outputArray)) {
+//           $outputArray[] = $value;
+//         }
+//       }
+//     }
+//   }
 
-  $filteredData = filter_items($external_api_response['items'], $fieldsToRemove);
+//   $filteredData = filter_items($external_api_response['items'], $fieldsToRemove);
 
-  $filteredArrays = array_filter($filteredData, function ($item) use ($outputArray) {
-    return in_array($item['id'], $outputArray);
-  });
+//   $filteredArrays = array_filter($filteredData, function ($item) use ($outputArray) {
+//     return in_array($item['id'], $outputArray);
+//   });
 
-  if (!$product_id) {
-    // Create product
-    create_woocommerce_products($filteredArrays);
-  } else {
-    // Update product
-    $filteredArrays = get_record($id, $product_id);
-    // $filteredArrays = array_filter($filteredData, function ($item) use ($product_id) {
-    //   return $item['id'] === $product_id;
-    // });
-    update_woocommerce_product($filteredArrays, $id);
-  }
+//   if (!$product_id) {
+//     // Create product
+//     create_woocommerce_products($filteredArrays);
+//   } else {
+//     // Update product
+//     $filteredArrays = get_record($id, $product_id);
+//     // $filteredArrays = array_filter($filteredData, function ($item) use ($product_id) {
+//     //   return $item['id'] === $product_id;
+//     // });
+//     update_woocommerce_product($filteredArrays, $id);
+//   }
 
-  return $filteredArrays;
-}
+//   return $filteredArrays;
+// }
 
 function mass_update_create_products($request) {
   global $fieldsToRemove;
@@ -634,7 +634,7 @@ function create_simple_product($pid, $term_slug, $product_fields) {
 
 // Create Variable product
 function generate_variable_products($item, $ss_ids, $product_fields, $product_variations_fields, $incoming_id) {
-	$prduct_sku = get_column_field_id('set_sku', $product_fields);
+	$product_sku = get_column_field_id('set_sku', $product_fields);
 	$attr_color = get_column_field_id('color', $product_fields);
 	$attr_brand = get_column_field_id('brand', $product_fields);
 	$bike_compatibility_text = get_column_field_id('bike_compatibility_text', $product_fields);
@@ -648,10 +648,11 @@ function generate_variable_products($item, $ss_ids, $product_fields, $product_va
 
   $variations->set_name($item[$name_bg]);
   $variations->set_slug($item['title']);
-  $variations->set_sku($item[$prduct_sku]);
+  // $variations->set_sku($item[$prduct_sku]);
   
   $variations->save();
   $pid = $variations->get_id();
+  update_post_meta($pid, '_sku', $item[$product_sku]);
 
   // $is_set_color = count($item[$attr_color]) > 0 ? $item[$attr_color][0] : '';
   // $is_set_brand = count($item[$attr_brand]) > 0 ? $item[$attr_brand][0] : '';
@@ -873,10 +874,10 @@ function update_attributes($chatGPTtext, $brand, $brand_text, $attrBrand, $color
   $product = wc_get_product($pid);
 
   $attributes_data = array();
-  $is_set_brand = count($brand) > 0 ? $brand[0] : '';
-  $is_set_color = count($color) > 0 ? $color[0] : '';
-  // $is_set_compatibility = $compatibility) > 0 ? $chatGPTtext : '';
-  // $product = wc_get_product($pid);
+  $is_set_brand = (is_array($brand) && count($brand) > 0) ? $brand[0] : '';
+  $is_set_color = (is_array($color) && count($color) > 0) ? $color[0] : '';
+  // $is_set_compatibility = count($compatibility) > 0 ? $compatibility_text : '';
+  // // $product = wc_get_product($pid);
 
   if ($chatGPTtext !== '') {
     // if is set Attr Color, add Attributes but not create variations

@@ -33,7 +33,7 @@ $terms = get_terms($args);
                 $term_link = get_term_link($term);
                 $meta_fields = get_term_meta($term_id);
                 $is_exclusive = isset($meta_fields['exclusive_brand']) && $meta_fields['exclusive_brand'][0];
-                $term_logo_id = $meta_fields['exclusive_logo'][0];
+                $term_logo_id = array_key_exists('exclusive_logo', $meta_fields) && isset($meta_fields['exclusive_logo'][0]) ? $meta_fields['exclusive_logo'][0] : '';
                 $term_logo = wp_get_attachment_url($term_logo_id);
                 $exclusive_class = $is_exclusive ? 'exclusive-brand' : '';
                 ?>
