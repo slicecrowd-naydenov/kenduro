@@ -21,7 +21,8 @@ defined( 'ABSPATH' ) || exit;
 
 global $wp_query, $wp;
 $on_sale = isset($_GET['on-sale']);
-$filterCompability = $_GET['wpf_filter_compability'];
+$filterCompability = isset($_GET['wpf_filter_compability']) ? $_GET['wpf_filter_compability'] : '';
+$bikeCompatibility = '';
 $query_vars = $wp_query->query_vars;
 $isSetCompatibility = isset($_COOKIE['brand']) && isset($_COOKIE['model']) && isset($_COOKIE['year']);
 if ($isSetCompatibility) {
@@ -311,12 +312,12 @@ do_action( 'woocommerce_before_main_content' );
 								Ексклузивен партньор
 							</p>
 						<?php endif;
-							if (isset($filterCompability)) : ?>
+							if ($bikeCompatibility !== '') : ?>
 								<?php echo ' за'; ?>
 								<div class="button button-primary-grey paragraph semibold edit-selected-bike" data-toggle="modal" data-target="#compatibilityModal">
 									<?php 
-										echo strtoupper(remove_hyphen_after_first_and_before_last_word($filterCompability));
-										Load::atom('svg', ['name' => 'edit']); 
+										echo strtoupper(remove_hyphen_after_first_and_before_last_word($bikeCompatibility));
+										Load::atom('svg', ['name' => 'edit_icon']); 
 									?>
 								</div>
 							<?php
@@ -443,7 +444,11 @@ do_action( 'woocommerce_before_main_content' );
 										<a href="<?php echo $promo_link; ?>">Промо продукти</a>
 									</label>
 								<?php endif; ?>
-								<?php if($isSetCompatibility && !isset($filterCompability)) : ?>
+								<?php if (
+									$bikeCompatibility !== '' &&
+									$get_product_cat !== null || 
+									$get_brand !== null
+								) : ?>
 									<a href="#" class="button button-primary-orange paragraph-m show-bike-compatibility">
 										<?php 
 											echo 'Покажи продуктите за ';

@@ -470,9 +470,9 @@ function create_variation($pid, $term_slug, $product_variations_fields, $attribu
   $set_regular_price = get_column_field_id('set_regular_price', $product_variations_fields);
   $delivery_time_text = get_column_field_id('delivery_time_text', $product_variations_fields);
 
-  $filters = array_filter($product_variations_fields, function($k) {
-    return str_starts_with($k['help_text'], 'filter_');
-  });
+  // $filters = array_filter($product_variations_fields, function($k) {
+  //   return str_starts_with($k['help_text'], 'filter_');
+  // });
 
   foreach ($product_variations['items'] as $product_variation) {
     if (!empty($product_variation[$product_id_slug]) && $product_variation[$product_id_slug][0] === $term_slug) {
@@ -578,6 +578,12 @@ function add_img_to_gallery($product_id,$image_id_array){
 function create_simple_product($pid, $term_slug, $product_fields) {
   $ss_ids = get_field('ss_ids', 'option');
   $product_variations = post_column_fields($ss_ids['product_variations']);
+  $filters = array_filter($product_variations, function($k) {
+    return str_starts_with($k['help_text'], 'filter_');
+  });
+  $filters_id = fetch_column_fields($ss_ids['filters_id']);
+  $filter_values = get_column_field_id('filter_values', $filters_id);
+  $filter_arr = post_column_fields($ss_ids['filters_id']);
 	$product_variations_quantity = get_column_field_id('product_variations_quantity', $product_fields);
   // $attr_color = get_column_field_id('attr_color', $product_fields);
 	$product_id_slug = get_column_field_id('product_variation', $product_fields);
@@ -595,6 +601,23 @@ function create_simple_product($pid, $term_slug, $product_fields) {
   
       // Define the attribute data
       // $attributes_data = array();
+
+      $attributes = process_product_attributes($product_variation, $filters, $filter_arr, $filter_values);
+      
+      // $sku = $parent_product_sku.'_';
+      foreach ($attributes as $key => $attr) {
+        wp_set_object_terms($pid, $attr, $key, true);
+        // $sku.= strtoupper($attr.'_');
+        $attributes_data[$key] = array(
+          'name' => $key,
+          'value' => $attr,
+          'is_visible' => '1',
+          'is_taxonomy' => '1',
+          'is_variation' => '1'
+        );
+      } 
+      
+      update_post_meta($pid, '_product_attributes', $attributes_data);
 
 
       $sale_price = ''; // One day when we add Sale price in SS we have to replace this string with that field from SS

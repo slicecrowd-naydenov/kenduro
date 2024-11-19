@@ -161,50 +161,50 @@ function post_column_fields_limit($id, $limit = 5, $offset = 0) {
   return json_decode(wp_remote_retrieve_body($response), true);
 }
 
-function post_column_fields_compare($id) {
-  $ss_fields = get_field('ss_fields', 'option');
-  $link_to_product_variations = $ss_fields['link_to_product_variations'];
-  $upload_update_to_wordpress = $ss_fields['upload_update_to_wordpress'];
-  $supported_bikes_chatgpt = $ss_fields['supported_bikes_chatgpt'];
-  $body = json_encode(array(
-    "filter" => array(
-      "operator" => "and",
-      "fields" => array(
-        array(
-          "field" => $link_to_product_variations,  // Field: Link to Product Variations
-          "comparison" => "is_not_empty",
-          "value" => ""
-        ),
-        array(
-          "field" => $upload_update_to_wordpress,  // Field: Upload/Update to Wordpress
-          "comparison" => "is",
-          "value" => true
-        ),
-        array(
-          "field" => $supported_bikes_chatgpt,
-          "comparison" => "is_not_empty",
-          "value" => ""
-        )
-      )
-    )
-  ));
-  $response = wp_remote_request(
-    'https://app.smartsuite.com/api/v1/applications/' . $id . '/records/list/',
-    array(
-      'method' => 'POST',
-      'headers' => array(
-        'Content-Type' => 'application/json',
-        'Authorization' => 'Token 2570295cb9c1e4c7f81d46ed046c09bf43fd5740',
-        'ACCOUNT-ID' => 'sd0y91s2',
-      ),
-      'body' => $body
-    )
-  );
-  if (is_wp_error($response)) {
-    return new WP_Error('api_error', 'Error fetching data from post_column_fields_limit', array('status' => 500));
-  }
-  return json_decode(wp_remote_retrieve_body($response), true);
-}
+// function post_column_fields_compare($id) {
+//   $ss_fields = get_field('ss_fields', 'option');
+//   $link_to_product_variations = $ss_fields['link_to_product_variations'];
+//   $upload_update_to_wordpress = $ss_fields['upload_update_to_wordpress'];
+//   $supported_bikes_chatgpt = $ss_fields['supported_bikes_chatgpt'];
+//   $body = json_encode(array(
+//     "filter" => array(
+//       "operator" => "and",
+//       "fields" => array(
+//         array(
+//           "field" => $link_to_product_variations,  // Field: Link to Product Variations
+//           "comparison" => "is_not_empty",
+//           "value" => ""
+//         ),
+//         array(
+//           "field" => $upload_update_to_wordpress,  // Field: Upload/Update to Wordpress
+//           "comparison" => "is",
+//           "value" => true
+//         ),
+//         array(
+//           "field" => $supported_bikes_chatgpt,
+//           "comparison" => "is_not_empty",
+//           "value" => ""
+//         )
+//       )
+//     )
+//   ));
+//   $response = wp_remote_request(
+//     'https://app.smartsuite.com/api/v1/applications/' . $id . '/records/list/',
+//     array(
+//       'method' => 'POST',
+//       'headers' => array(
+//         'Content-Type' => 'application/json',
+//         'Authorization' => 'Token 2570295cb9c1e4c7f81d46ed046c09bf43fd5740',
+//         'ACCOUNT-ID' => 'sd0y91s2',
+//       ),
+//       'body' => $body
+//     )
+//   );
+//   if (is_wp_error($response)) {
+//     return new WP_Error('api_error', 'Error fetching data from post_column_fields_limit', array('status' => 500));
+//   }
+//   return json_decode(wp_remote_retrieve_body($response), true);
+// }
 
 function update_record_curl($appId, $dataBody, $recordId) {
   $url = 'https://app.smartsuite.com/api/v1/applications/' . $appId . '/records/' . $recordId . '/';

@@ -3,6 +3,7 @@ use Lean\Load;
 $page_name = strtolower(get_the_title());
 $isSetCompatibility = isset($_COOKIE['brand']) && isset($_COOKIE['model']) && isset($_COOKIE['year']);
 
+$filterCompability = '';
 if ($isSetCompatibility) {
   $filterCompability = $_COOKIE['brand'] . ' ' . $_COOKIE['model'] . ' ' . $_COOKIE['year'];
   $filterButtonClass = 'has-set-bike';
@@ -35,7 +36,9 @@ if ($isSetCompatibility) {
               <?php 
                 Load::atom('svg', ['name' => $filterButtonIconName]); 
                 echo $filterButtonText;
-								echo strtoupper(remove_hyphen_after_first_and_before_last_word($filterCompability));
+                if ($filterCompability !== '') {
+                  echo strtoupper(remove_hyphen_after_first_and_before_last_word($filterCompability));
+                }
               ?>
             </button>
             <?php 

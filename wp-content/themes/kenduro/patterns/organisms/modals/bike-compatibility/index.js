@@ -169,7 +169,9 @@ export default class Compatibilities {
         const brandVal = this.brandDropdown.val();
         const modelVal = this.modelDropdown.val();
         const yearVal = this.yearDropdown.val();
-        const href = `http://kenduro.test/shop?wpf_filter_compability=all|${brandVal}|${brandVal}-${modelVal}-${yearVal}`;
+        const currentDomain = window.location.origin;
+
+        const href = `${currentDomain}/shop?wpf_filter_compability=all|${brandVal}-all|${brandVal}-${modelVal}-${yearVal}`;
         this.seeAllParts
           .removeClass('disable')
           .attr('href', href);
@@ -194,7 +196,9 @@ export default class Compatibilities {
       this.brandDropdown.val(brand);
       this.modelDropdown.html(modelOptions).val(model);
       this.yearDropdown.html(yearOptions).val(year);
-      const href = `http://kenduro.test/shop?wpf_filter_compability=all|${brand}|${brand}-${model}-${year}`;
+      const currentDomain = window.location.origin;
+
+      const href = `${currentDomain}/shop?wpf_filter_compability=all|${brand}-all|${brand}-${model}-${year}`; 
       this.seeAllParts
         .removeClass('disable')
         .attr('href', href);
@@ -208,10 +212,12 @@ export default class Compatibilities {
 
   bikeModalEvents() {
     this.compatibilityModal.on('show.bs.modal', () => {
+      $('body').addClass('overflow-hidden'); 
       this.checkBikeCookies();
     });
-
+    
     this.compatibilityModal.on('hidden.bs.modal', () => {
+      $('body').removeClass('overflow-hidden');
       this.checkBikeCookies();
     });
   }
