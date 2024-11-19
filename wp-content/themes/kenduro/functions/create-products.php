@@ -578,7 +578,8 @@ function add_img_to_gallery($product_id,$image_id_array){
 function create_simple_product($pid, $term_slug, $product_fields) {
   $ss_ids = get_field('ss_ids', 'option');
   $product_variations = post_column_fields($ss_ids['product_variations']);
-  $filters = array_filter($product_variations, function($k) {
+  $product_variations_fields = fetch_column_fields($ss_ids['product_variations']);
+  $filters = array_filter($product_variations_fields, function($k) {
     return str_starts_with($k['help_text'], 'filter_');
   });
   $filters_id = fetch_column_fields($ss_ids['filters_id']);

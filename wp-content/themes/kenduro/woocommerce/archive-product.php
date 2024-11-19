@@ -313,13 +313,13 @@ do_action( 'woocommerce_before_main_content' );
 							</p>
 						<?php endif;
 							if ($bikeCompatibility !== '') : ?>
-								<?php echo ' за'; ?>
-								<div class="button button-primary-grey paragraph semibold edit-selected-bike" data-toggle="modal" data-target="#compatibilityModal">
+								<?php // echo ' за'; ?>
+								<!-- <div class="button button-primary-grey paragraph semibold edit-selected-bike" data-toggle="modal" data-target="#compatibilityModal">
 									<?php 
-										echo strtoupper(remove_hyphen_after_first_and_before_last_word($bikeCompatibility));
-										Load::atom('svg', ['name' => 'edit_icon']); 
+										// echo strtoupper(remove_hyphen_after_first_and_before_last_word($bikeCompatibility));
+										// Load::atom('svg', ['name' => 'edit_icon']); 
 									?>
-								</div>
+								</div> -->
 							<?php
 							endif;
 						?>
@@ -449,13 +449,13 @@ do_action( 'woocommerce_before_main_content' );
 									$get_product_cat !== null || 
 									$get_brand !== null
 								) : ?>
-									<a href="#" class="button button-primary-orange paragraph-m show-bike-compatibility">
+									<!-- <a href="#" class="button button-primary-orange paragraph-m show-bike-compatibility">
 										<?php 
-											echo 'Покажи продуктите за ';
-											echo strtoupper(remove_hyphen_after_first_and_before_last_word($bikeCompatibility));
-											Load::atom('svg', ['name' => 'arrow_orange']); 
+											// echo 'Покажи продуктите за ';
+											// echo strtoupper(remove_hyphen_after_first_and_before_last_word($bikeCompatibility));
+											// Load::atom('svg', ['name' => 'arrow_orange']); 
 										?>
-									</a>
+									</a> -->
 								<?php endif; ?>
 
 								<div class="dropdown-menu dropdown-menu-sort" aria-labelledby="dropdownSortMenuButton">
