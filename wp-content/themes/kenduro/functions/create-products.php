@@ -491,8 +491,8 @@ function create_variation($pid, $term_slug, $product_variations_fields, $attribu
           'name' => $key,
           'value' => $attr,
           'is_visible' => '1',
-          'is_taxonomy' => '1',
-          'is_variation' => '1'
+          'is_taxonomy' => '1',          
+          'is_variation' => $key !== 'pa_673c5747c2395eb0eb8045de' ? '1' : '0'
         );
       } 
       

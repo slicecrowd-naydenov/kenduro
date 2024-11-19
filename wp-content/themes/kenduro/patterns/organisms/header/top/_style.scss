@@ -27,6 +27,11 @@
   .col:first-child {
     display: flex;
     align-items: center;
+
+    @include media-breakpoint-down(lg) {
+      opacity: 0;
+      visibility: hidden;
+    }
   }
 
   // & > div {
