@@ -6,7 +6,7 @@
 function add_theme_scripts() {
 	if (!is_admin()) {
 		// wp_deregister_script( 'jquery' );
-		wp_deregister_script('jquery-ui-core');
+		// wp_deregister_script('jquery-ui-core');
 		wp_dequeue_style( 'wp-block-library' );
     wp_dequeue_style( 'wp-block-library-theme' );
 		wp_dequeue_style( 'storefront-gutenberg-blocks' );

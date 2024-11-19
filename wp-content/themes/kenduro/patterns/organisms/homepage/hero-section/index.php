@@ -1,6 +1,7 @@
 <?php
 
 use Lean\Load;
+// process_mockup(get_bike_model_types());
 
 // $moto_icon = file_get_contents(ICON_PATH.'/moto_icon.svg'); 
 // Load::molecules('bike-compatibility/index');

@@ -11,6 +11,7 @@ import Slider from './slider';
 import MobileNavigation from './header/bottom/index';
 // import MiddleHeader from './header/middle/index';
 import SidebarFilter from './sidebar_filter/index';
+import Compatibilities from './modals/bike-compatibility';
 
 export default () => {
   // const $body = $('body');
@@ -18,6 +19,9 @@ export default () => {
   // if ($body.hasClass('woocommerce-shop')) {
   //   new ShopFilter();
   // }
+  if (Compatibilities) {
+    new Compatibilities(document.getElementById('compatibilities'));
+  }
 
   $('[data-slider]').each((index, el) => {
     new Slider(el);

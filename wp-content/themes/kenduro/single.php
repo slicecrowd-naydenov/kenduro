@@ -6,6 +6,7 @@ use Lean\Load;
  */
 
 get_header();
+$selected_ids = null;
 
 if (have_posts()) {
 	while (have_posts()) {
@@ -15,11 +16,16 @@ if (have_posts()) {
 			$ids = array(); 
 			foreach( $featured_posts as $post ): 
 				setup_postdata($post);
-				$ids[] = $post;
+				$has_product = wc_get_product( $post );
+				if ($has_product) {
+					$ids[] = $post;
+				}
 			endforeach;
 
-			$random_ids = array_rand($ids, 2);
-    	$selected_ids = $ids[$random_ids[0]] . ',' . $ids[$random_ids[1]];
+			if (!empty($ids) && count($ids) >= 2) {
+				$random_ids = array_rand($ids, 2);
+				$selected_ids = $ids[$random_ids[0]] . ',' . $ids[$random_ids[1]];
+			} 
 				// Reset the global post object so that the rest of the page works correctly.
 			wp_reset_postdata();
 		endif;
@@ -134,10 +140,14 @@ if (have_posts()) {
 								<?php
 								}
 
+								if ($selected_ids !== null) :
 
 								?>
 								<h4 class="sidebar__title semibold">От Кендуро с любов ❤️</h4>
-								<?php echo do_shortcode('[products limit="2" columns="1" ids="'.$selected_ids.'"]')?>
+								<?php 
+									echo do_shortcode('[products limit="2" columns="1" ids="'.$selected_ids.'"]');
+								endif;
+								?>
 
 							</div>
 						</div>

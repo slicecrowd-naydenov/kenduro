@@ -21,7 +21,13 @@ defined( 'ABSPATH' ) || exit;
 
 global $wp_query, $wp;
 $on_sale = isset($_GET['on-sale']);
+$filterCompability = isset($_GET['wpf_filter_compability']) ? $_GET['wpf_filter_compability'] : '';
+$bikeCompatibility = '';
 $query_vars = $wp_query->query_vars;
+$isSetCompatibility = isset($_COOKIE['brand']) && isset($_COOKIE['model']) && isset($_COOKIE['year']);
+if ($isSetCompatibility) {
+	$bikeCompatibility = $_COOKIE['brand'] . ' ' . $_COOKIE['model'] . ' ' . $_COOKIE['year'];
+}
 
 $get_brand = isset($query_vars['pa_brand']) ? $query_vars['pa_brand'] : null;
 $get_product_cat = isset($query_vars['product_cat']) ? $query_vars['product_cat'] : null;
@@ -104,7 +110,7 @@ $terms_args = array(
 
 $taxonomies = get_terms( $terms_args );
 
-$list_categories = function($taxonomies, $temp_arr) use ($parent_IDS, $get_brand, &$list_categories, $get_product_cat) {
+$list_categories = function($taxonomies, $temp_arr) use ($parent_IDS, $get_brand, &$list_categories, $get_product_cat, $filterCompability) {
 	if ( !empty( $taxonomies ) || !is_wp_error( $taxonomies ) ) {
 		$cat_html = '<p class="paragraph paragraph-xl semibold cat-head active-cat">Основни Категории</p><ul class="product-cat-filter">';
 		$added_all = false;
@@ -127,7 +133,10 @@ $list_categories = function($taxonomies, $temp_arr) use ($parent_IDS, $get_brand
 
 			$see_all_cat_link = esc_url(get_site_url());
 			
-			if ($get_brand === null) {
+			if (isset($filterCompability)) {
+				$term_link = esc_url(get_site_url().'/product-category\/'.$tax->slug.'?wpf_filter_compability='.$filterCompability);
+				$see_all_cat_link = esc_url(get_site_url().'/shop?wpf_filter_compability='.$filterCompability);
+			} else if ($get_brand === null) {
 				$term_link = esc_url(get_site_url().'/product-category\/'.$tax->slug);
 				$see_all_cat_link = esc_url(get_site_url().'/shop');
 			} else {
@@ -286,7 +295,8 @@ do_action( 'woocommerce_before_main_content' );
 				</div>
 			<?php } ?>
 			<header>
-				<?php if (apply_filters('woocommerce_show_page_title', true)) : ?>
+				<?php 
+				if (apply_filters('woocommerce_show_page_title', true)) : ?>
 					<!-- .woocommerce-products-header__title -->
 					<h4 class="page-title semibold <?php echo esc_attr($classes); ?>">
 						<?php 
@@ -301,7 +311,18 @@ do_action( 'woocommerce_before_main_content' );
 								<?php Load::atom('svg', ['name' => 'star-filled']); ?>
 								Ексклузивен партньор
 							</p>
-						<?php endif;?>
+						<?php endif;
+							if ($bikeCompatibility !== '') : ?>
+								<?php // echo ' за'; ?>
+								<!-- <div class="button button-primary-grey paragraph semibold edit-selected-bike" data-toggle="modal" data-target="#compatibilityModal">
+									<?php 
+										// echo strtoupper(remove_hyphen_after_first_and_before_last_word($bikeCompatibility));
+										// Load::atom('svg', ['name' => 'edit_icon']); 
+									?>
+								</div> -->
+							<?php
+							endif;
+						?>
 					</h4>
 				<?php endif; ?>
 
@@ -336,14 +357,16 @@ do_action( 'woocommerce_before_main_content' );
 					]);
 				} else {
 					if (!is_search()) {
-						Load::molecules('product-category/product-category-info/index', [
-							'title' => 'Всички продукти',
-							'class' => 'full-container',
-							'description' => 'Разгледайте наличните ни продукти и ако ви е необходимо нещо друго - обадете ни се !',
-							'cat' => single_term_title('', false),
-							'cat_img_inner' => $cat_inner_image_url
-						]);
-						// Load::molecules('product-category/product-categories-view/index');
+						if (!isset($filterCompability)) {
+							// Ако параметърът не съществува
+							Load::molecules('product-category/product-category-info/index', [
+								'title' => 'Всички продукти',
+								'class' => 'full-container',
+								'description' => 'Разгледайте наличните ни продукти и ако ви е необходимо нещо друго - обадете ни се !',
+								'cat' => single_term_title('', false),
+								'cat_img_inner' => $cat_inner_image_url
+							]);
+						}
 					}
 				}
 			} else {
@@ -421,6 +444,20 @@ do_action( 'woocommerce_before_main_content' );
 										<a href="<?php echo $promo_link; ?>">Промо продукти</a>
 									</label>
 								<?php endif; ?>
+								<?php if (
+									$bikeCompatibility !== '' &&
+									$get_product_cat !== null || 
+									$get_brand !== null
+								) : ?>
+									<!-- <a href="#" class="button button-primary-orange paragraph-m show-bike-compatibility">
+										<?php 
+											// echo 'Покажи продуктите за ';
+											// echo strtoupper(remove_hyphen_after_first_and_before_last_word($bikeCompatibility));
+											// Load::atom('svg', ['name' => 'arrow_orange']); 
+										?>
+									</a> -->
+								<?php endif; ?>
+
 								<div class="dropdown-menu dropdown-menu-sort" aria-labelledby="dropdownSortMenuButton">
 									<?php echo do_shortcode('[wpf-filters id=4]'); ?>
 								</div>
@@ -452,6 +489,8 @@ do_action( 'woocommerce_before_main_content' );
 										$keyword_string = isset($_GET['ywcas_filter']) ? get_product_ids_by_keyword( sanitize_text_field($_GET['ywcas_filter']) ) : '';
 										$ywcas_filter_ids = isset($_GET['ywcas_filter']) ? implode(',', array_map('intval', $keyword_string)) : $ids_placeholder; 
 										
+										// $keyword_string = get_product_ids_by_keyword( sanitize_text_field($_GET['ywcas_filter']) );
+										// pretty_dump(get_product_ids_by_keyword(('KTM EXC-F 250 2017')));
 										// if ( $products_on_sale->have_posts() ) {
 										echo do_shortcode('[products category="'.$product_cat_slug.'" limit="16" columns="4" paginate="true" ids="'.$ywcas_filter_ids.'"]');
 											// while ( $products_on_sale->have_posts() ) : $products_on_sale->the_post();

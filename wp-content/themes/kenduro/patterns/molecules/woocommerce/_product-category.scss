@@ -57,6 +57,18 @@
   }
 }
 
+.page-title {
+  .edit-selected-bike {
+    margin-left: 20px;
+    display: inline-flex;
+    align-items: center;
+
+    svg {
+      margin-left: 10px;
+    }
+  }
+}
+
 ul.products {
   width: 100%;
   display: flex;
@@ -361,7 +373,8 @@ ul.products {
 
   .promo-products-filter {
     display: flex;
-    align-items: center;  
+    align-items: center; 
+    margin-left: 30px;
 
     input[type="checkbox"]:checked + span:after {
       width: 8px;

@@ -470,9 +470,9 @@ function create_variation($pid, $term_slug, $product_variations_fields, $attribu
   $set_regular_price = get_column_field_id('set_regular_price', $product_variations_fields);
   $delivery_time_text = get_column_field_id('delivery_time_text', $product_variations_fields);
 
-  $filters = array_filter($product_variations_fields, function($k) {
-    return str_starts_with($k['help_text'], 'filter_');
-  });
+  // $filters = array_filter($product_variations_fields, function($k) {
+  //   return str_starts_with($k['help_text'], 'filter_');
+  // });
 
   foreach ($product_variations['items'] as $product_variation) {
     if (!empty($product_variation[$product_id_slug]) && $product_variation[$product_id_slug][0] === $term_slug) {
@@ -578,6 +578,13 @@ function add_img_to_gallery($product_id,$image_id_array){
 function create_simple_product($pid, $term_slug, $product_fields) {
   $ss_ids = get_field('ss_ids', 'option');
   $product_variations = post_column_fields($ss_ids['product_variations']);
+  $product_variations_fields = fetch_column_fields($ss_ids['product_variations']);
+  $filters = array_filter($product_variations_fields, function($k) {
+    return str_starts_with($k['help_text'], 'filter_');
+  });
+  $filters_id = fetch_column_fields($ss_ids['filters_id']);
+  $filter_values = get_column_field_id('filter_values', $filters_id);
+  $filter_arr = post_column_fields($ss_ids['filters_id']);
 	$product_variations_quantity = get_column_field_id('product_variations_quantity', $product_fields);
   // $attr_color = get_column_field_id('attr_color', $product_fields);
 	$product_id_slug = get_column_field_id('product_variation', $product_fields);
@@ -595,6 +602,23 @@ function create_simple_product($pid, $term_slug, $product_fields) {
   
       // Define the attribute data
       // $attributes_data = array();
+
+      $attributes = process_product_attributes($product_variation, $filters, $filter_arr, $filter_values);
+      
+      // $sku = $parent_product_sku.'_';
+      foreach ($attributes as $key => $attr) {
+        wp_set_object_terms($pid, $attr, $key, true);
+        // $sku.= strtoupper($attr.'_');
+        $attributes_data[$key] = array(
+          'name' => $key,
+          'value' => $attr,
+          'is_visible' => '1',
+          'is_taxonomy' => '1',
+          'is_variation' => '1'
+        );
+      } 
+      
+      update_post_meta($pid, '_product_attributes', $attributes_data);
 
 
       $sale_price = ''; // One day when we add Sale price in SS we have to replace this string with that field from SS
@@ -637,8 +661,8 @@ function generate_variable_products($item, $ss_ids, $product_fields, $product_va
 	$product_sku = get_column_field_id('set_sku', $product_fields);
 	$attr_color = get_column_field_id('color', $product_fields);
 	$attr_brand = get_column_field_id('brand', $product_fields);
-	// $compatibility = get_column_field_id('compatibility', $product_fields);
-	// $compatibility_text = get_column_field_id('compatibility_text', $product_fields);
+	$bike_compatibility_text = get_column_field_id('bike_compatibility_text', $product_fields);
+  // $compatibility_text = str_replace("<br>", ", ", $supported_bikes_chatgpt);
 	$brand_text = get_column_field_id('brand_text', $product_fields);
 	$name_bg = get_column_field_id('product_name_bg', $product_fields);
   $seo_description_bg = get_column_field_id('seo_description_bg', $product_fields);
@@ -658,8 +682,7 @@ function generate_variable_products($item, $ss_ids, $product_fields, $product_va
   // $is_set_brand = count($item[$attr_brand]) > 0 ? $item[$attr_brand][0] : '';
 
   $attributes_data = update_attributes(
-    // $item[$compatibility], 
-    // $item[$compatibility_text], 
+    $item[$bike_compatibility_text], 
     $item[$attr_brand], 
     $item[$brand_text], 
     'brand', 
@@ -713,8 +736,8 @@ function generate_variable_products($item, $ss_ids, $product_fields, $product_va
 function generate_simple_product($item, $ss_ids, $product_fields, $product_variations_fields, $incoming_id) {
 	$attr_color = get_column_field_id('color', $product_fields);
 	$attr_brand = get_column_field_id('brand', $product_fields);
-	// $compatibility = get_column_field_id('compatibility', $product_fields);
-	// $compatibility_text = get_column_field_id('compatibility_text', $product_fields);
+	$bike_compatibility_text = get_column_field_id('bike_compatibility_text', $product_fields);
+  // $compatibility_text = str_replace("<br>", ", ", $supported_bikes_chatgpt);
 	$brand_text = get_column_field_id('brand_text', $product_fields);
 	$name_bg = get_column_field_id('product_name_bg', $product_fields);
   $seo_description_bg = get_column_field_id('seo_description_bg', $product_fields);
@@ -738,8 +761,7 @@ function generate_simple_product($item, $ss_ids, $product_fields, $product_varia
   update_post_meta($p_id, '_rank_math_gtin_code', sprintf("%012d", $p_id));
 
   $attributes_data = update_attributes(
-    // $item[$compatibility], 
-    // $item[$compatibility_text], 
+    $item[$bike_compatibility_text], 
     $item[$attr_brand], 
     $item[$brand_text], 
     'brand', 
@@ -871,8 +893,8 @@ function create_woocommerce_products($filteredData): ?object {
   return $response;
 }
 
-// function update_attributes($compatibility, $compatibility_text, $brand, $brand_text, $attrBrand, $color, $attrColor, $pid) {
-  function update_attributes($brand, $brand_text, $attrBrand, $color, $attrColor, $pid) {
+function update_attributes($chatGPTtext, $brand, $brand_text, $attrBrand, $color, $attrColor, $pid) {
+  // function update_attributes($brand, $brand_text, $attrBrand, $color, $attrColor, $pid) {
   $product = wc_get_product($pid);
 
   $attributes_data = array();
@@ -881,18 +903,20 @@ function create_woocommerce_products($filteredData): ?object {
   // $is_set_compatibility = count($compatibility) > 0 ? $compatibility_text : '';
   // // $product = wc_get_product($pid);
 
-  // if ($is_set_compatibility !== '') {
-  //   // if is set Attr Color, add Attributes but not create variations
-  //   $temp_array = explode(',', $compatibility_text);
-  //   $mockup_array = array_map('trim', $temp_array);
-  //   wp_set_object_terms($pid, $mockup_array, 'pa_compability', true);
+  if ($chatGPTtext !== '') {
+    // if is set Attr Color, add Attributes but not create variations
+    // $chatGPTtextFormatted = str_replace(["<br>", "\n"], ", ", $chatGPTtext['preview']);
 
-  //   $attributes_data['pa_compability'] = array(
-  //     'name' => 'pa_compability',
-  //     'is_visible' => '1',
-  //     'is_taxonomy' => '1'
-  //   );
-  // }
+    $temp_array = explode(',', $chatGPTtext);
+    $mockup_array = array_map('trim', $temp_array);
+    wp_set_object_terms($pid, $mockup_array, 'pa_compability', true);
+
+    $attributes_data['pa_compability'] = array(
+      'name' => 'pa_compability',
+      'is_visible' => '1',
+      'is_taxonomy' => '1'
+    );
+  }
 
   if ($is_set_color !== '') {
     // if is set Attr Color, add Attributes but not create variations

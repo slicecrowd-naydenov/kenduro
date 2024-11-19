@@ -10,7 +10,6 @@
 	
 	<link rel="profile" href="http://gmpg.org/xfn/11">
 	<link rel="baseurl" href="<?php echo esc_url(get_site_url()); ?>">
-
 	<?php wp_head(); ?>
 </head>
 
