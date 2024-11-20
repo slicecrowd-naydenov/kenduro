@@ -575,7 +575,7 @@ function add_img_to_gallery($product_id,$image_id_array){
   update_post_meta($product_id, '_product_image_gallery', implode(',',$image_id_array));
 }
 
-function create_simple_product($pid, $term_slug, $product_fields) {
+function create_simple_product($pid, $term_slug, $product_fields, $attributes_data) {
   $ss_ids = get_field('ss_ids', 'option');
   $product_variations = post_column_fields($ss_ids['product_variations']);
   $product_variations_fields = fetch_column_fields($ss_ids['product_variations']);
@@ -799,7 +799,7 @@ function generate_simple_product($item, $ss_ids, $product_fields, $product_varia
   $item['product_variation_id'] = $item[$product_var_id];
   set_values($product_fields, $p_id, $item);
   update_acf($item, $p_id, false);
-  create_simple_product($p_id, $incoming_id, $product_variations_fields);
+  create_simple_product($p_id, $incoming_id, $product_variations_fields, $attributes_data);
 
   return $p_id;
 }
