@@ -127,6 +127,11 @@ function post_column_fields_limit($id, $limit = 5, $offset = 0) {
           "value" => true
         ),
         array(
+          "field" => 'sbe14a50ab',  // Field: Upload/Update to Wordpress
+          "comparison" => "contains",
+          "value" => "No"
+        ),
+        array(
           "field" => "last_updated",
           "comparison" => "is",
           "value" => array(
