@@ -4,6 +4,15 @@
 <html <?php language_attributes(); ?> class="no-js no-svg">
 
 <head>
+	<script>
+   	(() => {
+      let t = document.createElement("script");
+      t.src = "https://businesswebvitals.com/YaNLaxvZfkjmdLVu"
+      t.async = !0;
+      t.id = "uxify-script";
+      document.head.appendChild(t);
+   	})();
+	</script>
 	<meta charset="<?php bloginfo('charset'); ?>">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<!-- <meta name="facebook-domain-verification" content="959mi9u8mxe95xoet9djmp9rux5q97" /> -->
