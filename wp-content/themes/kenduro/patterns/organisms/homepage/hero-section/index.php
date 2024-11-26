@@ -80,11 +80,13 @@ if ($on_sale_data === false) {
                 $set_no_lazy_class = $first_slide ? 'no-lazy' : '';
                 ?>
                 <div class="swiper-slide">
-                  <?php if ($slide['slide_image']) : ?>
+                  <?php if ($slide['slide_image']) : 
+                    $transformedString = str_replace(['_', '-', '='], ' ', $slide['slide_image']['title']);
+                  ?>
                     <div class="slide-image">
                       <img 
                         src="<?php echo esc_attr($slide['slide_image']['url']); ?>" 
-                        alt="" 
+                        alt="<?php esc_attr_e($transformedString); ?>" 
                         class="<?php echo $set_no_lazy_class; ?>"
                         srcset="
                           <?php echo $slide['slide_image']['sizes']['woocommerce_thumbnail']; ?> 500w, 
