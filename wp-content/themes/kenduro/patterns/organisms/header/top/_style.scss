@@ -50,6 +50,7 @@
     gap: 10px;
 
     .bike-compatibility-button {
+      display: none;
       padding: 6px 11px 6px 15px;
       border-radius: $radius-circle;
       border: 1px dashed rgba($b-highlight-two, 0.5);
