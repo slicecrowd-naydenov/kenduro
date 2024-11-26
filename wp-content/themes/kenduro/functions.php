@@ -83,6 +83,44 @@ function load_products_on_homepage_via_ajax() {
 add_action('wp_ajax_load_products', 'load_products_on_homepage_via_ajax');
 add_action('wp_ajax_nopriv_load_products', 'load_products_on_homepage_via_ajax');
 
+
+
+// Филтър за промяна на каноничния URL
+// add_filter( 'rank_math/frontend/canonical', function( $canonical ) {
+//   $current_url = "https://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+  
+//   // Ако в URL има "product-page=", използваме този параметър за каноничния линк
+//   if (strpos($current_url, '?product-page=') !== false) {
+//       $canonical = strtok($current_url, '#'); // Премахваме hash, ако съществува
+//   }
+
+//   return $canonical;
+// });
+
+
+
+// add_filter( "rank_math/frontend/next_rel_link", function( $link ) {
+//   // Проверяваме дали има "page/" в линка
+//   // $total   = isset($total) ? $total : wc_get_loop_prop('total_pages');
+//   // $current = isset($current) ? $current : wc_get_loop_prop('current_page');
+//   // $base    = isset($base) ? $base : esc_url_raw(add_query_arg('product-page', '%#%', remove_query_arg('add-to-cart')));
+//   $product_page = isset($_GET['product-page']) ? (int) $_GET['product-page'] : 1;
+
+//   if (strpos($link, '/page/') !== false) {
+//     // Преобразуваме "page/X" в "?product-page=X"
+//     $link = preg_replace('#/page/(\d+)#', '?product-page='.$product_page + 1, $link);
+//   }
+//   return $link;
+// });
+
+// add_filter( "rank_math/frontend/prev_rel_link", function( $link ) {
+//   // Извличаме текущата стойност на "product-page" от URL
+//   error_log('Generated Prev Link: ' . $link); // Записваме в логовете
+// });
+
+
+
+
 // add_action('wp_ajax_ql_woocommerce_ajax_add_to_cart', 'ql_woocommerce_ajax_add_to_cart'); 
 // add_action('wp_ajax_nopriv_ql_woocommerce_ajax_add_to_cart', 'ql_woocommerce_ajax_add_to_cart');      
 // function ql_woocommerce_ajax_add_to_cart() {  

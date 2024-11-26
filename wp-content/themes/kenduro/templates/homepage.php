@@ -7,6 +7,7 @@ get_header();
 
 ?>
 <main id="primary">
+  <h1 class="hidden-h1">Kenduro</h1>
   <?php 
     Load::organisms('homepage/hero-section/index');
     Load::organisms('information-list/index', [

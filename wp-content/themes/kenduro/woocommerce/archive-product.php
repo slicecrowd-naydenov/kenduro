@@ -324,6 +324,15 @@ do_action( 'woocommerce_before_main_content' );
 							endif;
 						?>
 					</h4>
+					<h1 class="hidden-h1">
+						<?php 
+							if ($get_brand !== null) {
+								echo $cur_term->name;
+							} else {
+								woocommerce_page_title(); 
+							}
+						?>
+					</h1>
 				<?php endif; ?>
 
 				<?php
@@ -393,6 +402,8 @@ do_action( 'woocommerce_before_main_content' );
 								alt="" 
 							/>
 						</div>
+						<?php 
+						if ($term_banner) : ?>
 						<img 
 							src="<?php echo esc_attr($term_banner)?>" 
 							alt="banner"
@@ -404,7 +415,8 @@ do_action( 'woocommerce_before_main_content' );
 								1400px"
 							width="<?php echo esc_attr($banner_width); ?>"
     					height="<?php echo esc_attr($banner_height); ?>"
-							/>
+						/>
+						<?php endif; ?>
 					</div>
 					<div>
 						<div class="brand-info__description collapse paragraph paragraph-l" id="collapseSummary">

@@ -18,6 +18,7 @@ $terms = get_terms($args);
     <div class="row">
       <div class="col">
         <h3 class="semibold">Производители</h3>
+        <h1 class="hidden-h1">Производители</h1>
         <div class="mobile-wrapper">
           <?php
             Load::molecules('product-category/product-categories-view/index');
