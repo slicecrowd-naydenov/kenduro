@@ -2,7 +2,51 @@
 /* Template Name: Bike compatibility */
 use Lean\Load;
 
+
+$current_url = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+
+// Парсирай URL-то
+$url_parts = parse_url($current_url);
+$query_params = [];
+if (isset($url_parts['query'])) {
+  parse_str($url_parts['query'], $query_params); // Разделя query string на масив
+}
+
+// Проверка дали "on-sale" съществува
+if (array_key_exists('on-sale', $query_params)) {
+  // Премахваме "on-sale", ако съществува
+  unset($query_params['on-sale']);
+} else {
+  // Добавяме "on-sale", ако не съществува
+  $query_params['on-sale'] = '';
+}
+
+// Генерираме новия query string
+$new_query = http_build_query($query_params);
+
+// Сглобяваме новия URL
+$new_url = $url_parts['scheme'] . '://' . $url_parts['host'] . $url_parts['path'];
+if (!empty($new_query)) {
+  $new_url .= '?' . $new_query;
+}
+
+$on_sale = isset($_GET['on-sale']);
+$promo_checked = '';
+
+// if we are in on-sale page
+if ($on_sale) {
+  $promo_checked = 'checked';
+  // $promo_link = esc_url(home_url( $wp->request ));
+	$wccs_products = new WCCS_Products();
+  $promo_products = $wccs_products->get_discounted_products();
+	$promo_products_ids = implode(',', array_map('intval', $promo_products));
+} else {
+	$promo_products_ids = '';
+}
+
+
 get_header();
+
 // $on_sale = isset($_GET['on-sale']);
 // $promo_checked = '';
 // $promo_link = esc_url(home_url( $wp->request ).'?on-sale');
@@ -18,7 +62,7 @@ get_header();
 // }
 $is_set_bike_compatibility = check_is_set_bike_compatibility();
 $bikeCompatibility = '';
-$get_product_cat = isset($_GET['wpf_filter_cat_1']) ? $_GET['wpf_filter_cat_1'] : '';;
+$get_product_cat = isset($_GET['wpf_filter_cat_1']) ? $_GET['wpf_filter_cat_1'] : '';
 
 $current_cat = get_term_by('id', $get_product_cat, 'product_cat');
 $parent_IDS = array();
@@ -49,7 +93,7 @@ if ($is_set_bike_compatibility !== '') {
         'field'      => 'slug',
         'terms'      => $slugs,
         'operator'   => 'IN', 
-      ),
+      )
     ),
   ];
 
@@ -179,18 +223,18 @@ $list_categories = function($taxonomies, $temp_arr) use ($parent_IDS, &$list_cat
                 <strong class="sort-by-title">Подразбиране</strong>
               </button>
 
-              <!-- <label class="checkbox promo-products-filter">
-                <input type="checkbox" <?php // echo esc_attr($promo_checked); ?>>
+              <label class="checkbox promo-products-filter">
+                <input type="checkbox" <?php echo esc_attr($promo_checked); ?>>
                 <span class="optional"></span> 
-                <a href="<?php // echo $promo_link; ?>">Промо продукти</a>
-              </label> -->
+                <a href="<?php echo esc_url($new_url); ?>">Промо продукти</a>
+              </label>
 
               <div class="dropdown-menu dropdown-menu-sort" aria-labelledby="dropdownSortMenuButton">
                 <?php echo do_shortcode('[wpf-filters id=4]'); ?>
               </div>
             </div>
             <?php
-              echo do_shortcode('[products limit="16" columns="4" paginate="true"]');
+              echo do_shortcode('[products limit="16" columns="4" paginate="true" ids="'.$promo_products_ids.'"]');
             ?>
           </div>
 
@@ -208,7 +252,7 @@ $list_categories = function($taxonomies, $temp_arr) use ($parent_IDS, &$list_cat
 						</div>
 
 							<?php
-							// output_filter_modal($get_product_cat, $promo_checked, $promo_link);
+							output_filter_modal($get_product_cat, $promo_checked, $new_url);
 						?>
 					</div>
 

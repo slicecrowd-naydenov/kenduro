@@ -673,3 +673,47 @@ function remove_hyphen_after_first_and_before_last_word($string) {
 
 	return $string;
 }
+
+function check_is_set_bike_compatibility() {
+  return isset($_COOKIE['bikeCompatibility']) ? $_COOKIE['bikeCompatibility'] : '';
+}
+
+function output_filter_modal($get_product_cat, $promo_checked, $promo_link) {
+	if (wp_is_mobile()) {
+		?>
+		<!-- Button trigger modal -->
+		<button type="button" class="button filter-modal" data-toggle="modal" data-target="#filterModal">
+			Филтри
+		</button>
+
+		<!-- Modal -->
+		<div class="modal fade mobile-modal" id="filterModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="exampleModalLongTitle">Филтри</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<?php Load::atom('svg', ['name' => 'close']); ?>
+						</button>
+					</div>
+					<div class="modal-body">
+						<?php
+							Load::molecules('product-category/product-categories-filter/index');
+							
+							if ($get_product_cat !== null) : ?>
+								<label class="checkbox promo-products-filter">
+									<input type="checkbox" <?php echo esc_attr($promo_checked); ?>>
+									<span class="optional"></span> 
+									<a href="<?php echo esc_url($promo_link); ?>">Промо продукти</a>
+								</label>
+							<?php endif;
+						?>
+					</div>
+				</div>
+			</div>
+		</div>
+		<?php
+	} else {
+		Load::molecules('product-category/product-categories-filter/index');
+	}
+}

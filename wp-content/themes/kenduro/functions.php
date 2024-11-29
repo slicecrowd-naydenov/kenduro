@@ -83,10 +83,6 @@ function load_products_on_homepage_via_ajax() {
 add_action('wp_ajax_load_products', 'load_products_on_homepage_via_ajax');
 add_action('wp_ajax_nopriv_load_products', 'load_products_on_homepage_via_ajax');
 
-function check_is_set_bike_compatibility() {
-  return isset($_COOKIE['bikeCompatibility']) ? $_COOKIE['bikeCompatibility'] : '';
-}
-
 
 
 // Филтър за промяна на каноничния URL
