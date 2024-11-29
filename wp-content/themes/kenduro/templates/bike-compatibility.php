@@ -18,7 +18,22 @@ get_header();
 // }
 $is_set_bike_compatibility = check_is_set_bike_compatibility();
 $bikeCompatibility = '';
+$get_product_cat = isset($_GET['wpf_filter_cat_1']) ? $_GET['wpf_filter_cat_1'] : '';;
 
+$current_cat = get_term_by('id', $get_product_cat, 'product_cat');
+$parent_IDS = array();
+
+if ($current_cat) {
+	$parent_IDS[] = $current_cat->term_id;
+	$parent_cat = $current_cat->parent !== 0 ? get_term_by('id', $current_cat->parent, 'product_cat') : null;
+
+	while ($parent_cat !== null) {
+		$parent_IDS[] = $parent_cat->term_id;
+		$parent_cat = $parent_cat->parent !== 0 ? get_term_by('id', $parent_cat->parent, 'product_cat') : null;
+	}
+}
+
+$cat_ids = [];
 if ($is_set_bike_compatibility !== '') {
   $filter_value = sanitize_text_field($is_set_bike_compatibility);
 	$bikeCompatibility = $_COOKIE['brand'] . ' ' . $_COOKIE['model'] . ' ' . $_COOKIE['year'];
@@ -45,9 +60,11 @@ if ($is_set_bike_compatibility !== '') {
     // $categories = [];
     foreach ($product_ids as $product_id) {
       // $product_cats = wp_get_post_terms($product_id, 'product_cat', ['fields' => 'names']);
-      $cat_ids = wp_get_post_terms($product_id, 'product_cat', ['fields' => 'ids']);
+      $product_cat_ids = wp_get_post_terms($product_id, 'product_cat', ['fields' => 'ids']);
+      $cat_ids = array_merge($cat_ids, $product_cat_ids); // Обединяваме всички ID-та
       // $categories[$product_id] = $product_cats;
     }
+    $cat_ids = array_unique($cat_ids);
 
     $terms_args = array(
       'taxonomy'     => 'product_cat',
@@ -68,12 +85,7 @@ if ($is_set_bike_compatibility !== '') {
 
 
 
-$parent_IDS = array();
-$get_brand = isset($query_vars['pa_brand']) ? $query_vars['pa_brand'] : null;
-
-
-
-$list_categories = function($taxonomies, $temp_arr) use ($parent_IDS, &$list_categories, $is_set_bike_compatibility) {
+$list_categories = function($taxonomies, $temp_arr) use ($parent_IDS, &$list_categories, $is_set_bike_compatibility, $cat_ids) {
 	if ( !empty( $taxonomies ) || !is_wp_error( $taxonomies ) ) {
 		$cat_html = '<p class="paragraph paragraph-xl semibold cat-head active-cat">Основни Категории</p><ul class="product-cat-filter">';
 		$added_all = false;
@@ -96,7 +108,7 @@ $list_categories = function($taxonomies, $temp_arr) use ($parent_IDS, &$list_cat
 
 			$see_all_cat_link = esc_url(get_site_url());
 			
-      $term_link = esc_url(get_site_url().'/bike-compatibility?wpf_filter_compability='.$is_set_bike_compatibility.'?cat_name=motocross-gear');
+      $term_link = esc_url(get_site_url().'/bike-compatibility?wpf_filter_compability='.$is_set_bike_compatibility.'&wpf_filter_cat_1='.$tax->term_id);
       $see_all_cat_link = esc_url(get_site_url().'/bike-compatibility?wpf_filter_compability='.$is_set_bike_compatibility);
 
 
@@ -108,16 +120,17 @@ $list_categories = function($taxonomies, $temp_arr) use ($parent_IDS, &$list_cat
 			$q = new WP_Query( $product_args );
 		
 			if ($q->post_count > 0) {
-				
-				if (in_array($tax->term_id, $parent_IDS)) {
-					$next_category = $tax->term_id;
-					// $tax_name = '<b class="active">'.$tax->name.'</b>';
-					$active_class = 'active';
-				} else {
-					// $tax_name = $tax->name;
-					$active_class = '';
-				}
-				$cat_html .= '<li class="'.$active_class.'"><a href="'.$term_link.'" class="paragraph paragraph-l">'.$tax->name.'</a></li>';
+				if (in_array($tax->term_id, $cat_ids)) {
+          if (in_array($tax->term_id, $parent_IDS)) {
+            $next_category = $tax->term_id;
+            // $tax_name = '<b class="active">'.$tax->name.'</b>';
+            $active_class = 'active';
+          } else {
+            // $tax_name = $tax->name;
+            $active_class = '';
+          }
+          $cat_html .= '<li class="'.$active_class.'"><a href="'.$term_link.'" class="paragraph paragraph-l">'.$tax->name.'</a></li>';
+        }
 			}
 			wp_reset_postdata();
 		}
@@ -189,7 +202,7 @@ $list_categories = function($taxonomies, $temp_arr) use ($parent_IDS, &$list_cat
               </button>
               <ul class="nav nav-pills product-categories-view dropdown-menu" role="tablist" aria-labelledby="dropdownMenuButton">
                 <?php 
-                // $list_categories($taxonomies, array());
+                $list_categories($taxonomies, array());
                 ?>
               </ul>
 						</div>
