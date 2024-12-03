@@ -589,12 +589,18 @@ add_filter('woocommerce_coupon_error', 'custom_coupon_error_message', 10, 3);
 function get_all_bike_brands() {
   $brands = get_terms(array(
     'taxonomy' => 'bike-brand',
-    'hide_empty' => true, // Show all terms, except empties
+    'hide_empty' => true, // Показване само на термини с публикации
   ));
 
   if (!empty($brands) && !is_wp_error($brands)) {
+    // Сортиране на марките азбучно по име
+    usort($brands, function ($a, $b) {
+      return strcmp($a->name, $b->name); // Сравнение по име
+    });
+
+    // Извеждане на опциите
     foreach ($brands as $brand) {
-      echo '<option value="' . $brand->name . '">' . $brand->name . '</option>';
+      echo '<option value="' . esc_attr($brand->name) . '">' . esc_html($brand->name) . '</option>';
     }
   }
 }
@@ -619,9 +625,17 @@ function get_models_by_brand() {
   ));
 
   if ($query->have_posts()) {
+    $models = array();
     while ($query->have_posts()) {
       $query->the_post();
-      $model_title = get_the_title(get_the_ID());
+      $models[] = get_the_title(get_the_ID()); // Събиране на заглавията
+    }
+
+    // Сортиране на моделите азбучно
+    natcasesort($models);
+
+    // Извеждане на опциите
+    foreach ($models as $model_title) {
       echo '<option value="' . esc_attr($model_title) . '">' . esc_html($model_title) . '</option>';
     }
     wp_reset_postdata(); // Възстановяваме глобалната променлива post
