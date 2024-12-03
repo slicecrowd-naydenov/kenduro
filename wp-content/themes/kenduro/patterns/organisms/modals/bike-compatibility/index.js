@@ -2,7 +2,7 @@
 /* eslint-disable require-jsdoc */
 import $ from 'jquery';
 import axios from 'axios';
-import 'jquery-ui/ui/widgets/selectmenu';
+import 'select2';
 
 /**
  * @class
@@ -40,9 +40,24 @@ export default class Compatibilities {
   }
 
   initSelectMenus() {
-    this.brandDropdown.selectmenu();
-    this.modelDropdown.selectmenu();
-    this.yearDropdown.selectmenu();
+    // this.brandDropdown.selectmenu();
+    // this.modelDropdown.selectmenu();
+    // this.yearDropdown.selectmenu();
+    this.brandDropdown.select2({
+      placeholder: "Избери",
+      // allowClear: true,
+      dropdownParent: $('#compatibilities')
+    });
+    this.modelDropdown.select2({
+      placeholder: "Избери",
+      // allowClear: true,
+      dropdownParent: $('#compatibilities')
+    });
+    this.yearDropdown.select2({
+      placeholder: "Избери",
+      // allowClear: true,
+      dropdownParent: $('#compatibilities')
+    });
   }
 
   setCookie(name, value, days) {
@@ -68,122 +83,141 @@ export default class Compatibilities {
   }
 
   onBrandChange() {
-    this.brandDropdown.selectmenu({
-      open: function() {
-        $('.ui-menu-item-wrapper').removeClass('selected');
-        $('.ui-state-active').addClass('selected');
-      },
-      change: (e) => {
-        this.seeAllParts.addClass('disable');
-        $('#model-dropdown-button').addClass('disable');
-        $('#year-dropdown-button').addClass('disable');
-        var selectedBrand = $(e.target).val();
+    this.brandDropdown.on('change', (e) => {
+      this.modelDropdown.prop('disabled', true);
+      this.yearDropdown.prop('disabled', true);
+      this.seeAllParts.addClass('disable');
+      // $('#model-dropdown').siblings('.select2').addClass('disable');
+      // $('#year-dropdown-button').addClass('disable');
+      var selectedBrand = $(e.target).val();
+      console.log('onBrandChange: ', selectedBrand);
 
-
-        axios({
-          method: 'post',
-          url: ajaxurl,
-          data: new URLSearchParams({
-            action: 'get_models_by_brand',
-            brand: selectedBrand
-          })
+      axios({
+        method: 'post',
+        url: ajaxurl,
+        data: new URLSearchParams({
+          action: 'get_models_by_brand',
+          brand: selectedBrand
         })
-          .then((response) => {
-            $('#model-dropdown-button').removeClass('disable');
-            this.modelDropdown.html(`<option value="">Избери</option>${response.data}`);
-            this.yearDropdown.html('<option value="">Избери</option>');
-            this.modelDropdown.selectmenu('refresh');
-            this.yearDropdown.selectmenu('refresh');
-          })
-          .catch((error) => {
-            if (error.response) {
-              // The request was made and the server responded with a status code
-              // that falls out of the range of 2xx
-              console.log(error.response.data);
-              console.log(error.response.status);
-              console.log(error.response.headers);
-            } else if (error.request) {
-              // The request was made but no response was received
-              console.log(error.request);
-            } else {
-              // Something happened in setting up the request that triggered an Error
-              console.log('Error', error.message);
-            }
-            console.log(error.config);
-          });
-      }
+      })
+        .then((response) => {
+          // $('#model-dropdown').siblings('.select2').removeClass('disable');
+          this.modelDropdown.prop('disabled', false);
+          this.modelDropdown.html(`<option value="">Избери</option>${response.data}`);
+          // this.yearDropdown.html('');
+          // this.yearDropdown.html('<option value="">Избери</option>');
+          console.log('response.data: ', response.data);
+          // this.modelDropdown.trigger('change');
+          // this.yearDropdown.trigger('change');
+          // this.modelDropdown.selectmenu('refresh');
+          // this.yearDropdown.selectmenu('refresh');
+        })
+        .catch((error) => {
+          if (error.response) {
+            // The request was made and the server responded with a status code
+            // that falls out of the range of 2xx
+            console.log(error.response.data);
+            console.log(error.response.status);
+            console.log(error.response.headers);
+          } else if (error.request) {
+            // The request was made but no response was received
+            console.log(error.request);
+          } else {
+            // Something happened in setting up the request that triggered an Error
+            console.log('Error', error.message);
+          }
+          console.log(error.config);
+        });
     });
   }
 
   onModelChange() {
-    this.modelDropdown.selectmenu({
-      open: function() {
-        $('.ui-menu-item-wrapper').removeClass('selected');
-        $('.ui-state-active').addClass('selected');
-      },
-      change: (e) => {
-        $('#year-dropdown-button').addClass('disable');
-        this.seeAllParts.addClass('disable');
-        var selectedModel = $(e.target).val();
+    this.modelDropdown.on('change', (e) => {
+      this.yearDropdown.prop('disabled', true);
+      this.seeAllParts.addClass('disable');
+      var selectedModel = $(e.target).val(); 
+      console.log('onModelChange: ', selectedModel);
 
-        axios({
-          method: 'post',
-          url: ajaxurl,
-          data: new URLSearchParams({
-            action: 'get_years_by_model',
-            model: selectedModel
-          })
+      axios({
+        method: 'post',
+        url: ajaxurl,
+        data: new URLSearchParams({
+          action: 'get_years_by_model',
+          model: selectedModel
         })
-          .then((response) => {
-            $('#year-dropdown-button').removeClass('disable');
-            this.yearDropdown.html(`<option value="">Избери</option>${response.data}`);
-            this.yearDropdown.selectmenu('refresh');
-          })
-          .catch((error) => {
-            if (error.response) {
-              // The request was made and the server responded with a status code
-              // that falls out of the range of 2xx
-              console.log(error.response.data);
-              console.log(error.response.status);
-              console.log(error.response.headers);
-            } else if (error.request) {
-              // The request was made but no response was received
-              console.log(error.request);
-            } else {
-              // Something happened in setting up the request that triggered an Error
-              console.log('Error', error.message);
-            }
-            console.log(error.config);
-          });
-      }
+      })
+        .then((response) => {
+          // $('#year-dropdown-button').removeClass('disable');
+          this.yearDropdown.prop('disabled', false);
+
+          // Реинициализация на Select2, ако е необходимо
+          this.yearDropdown.html(`<option value="">Избери</option>${response.data}`);
+          // this.yearDropdown.trigger('change'); // Уведомява Select2 за новите опции
+          // this.yearDropdown.selectmenu('refresh');
+        })
+        .catch((error) => {
+          if (error.response) {
+            // The request was made and the server responded with a status code
+            // that falls out of the range of 2xx
+            console.log(error.response.data);
+            console.log(error.response.status);
+            console.log(error.response.headers);
+          } else if (error.request) {
+            // The request was made but no response was received
+            console.log(error.request);
+          } else {
+            // Something happened in setting up the request that triggered an Error
+            console.log('Error', error.message);
+          }
+          console.log(error.config);
+        });
     });
   }
 
   onYearChange() {
-    this.yearDropdown.selectmenu({
-      open: function() {
-        $('.ui-menu-item-wrapper').removeClass('selected');
-        $('.ui-state-active').addClass('selected');
-      },
-      change: () => {
-        const brandVal = this.brandDropdown.val();
-        const modelVal = this.modelDropdown.val();
-        const yearVal = this.yearDropdown.val();
-        const currentDomain = window.location.origin;
+    this.yearDropdown.on('change', (e) => {
+      const brandVal = this.brandDropdown.val();
+      const modelVal = this.modelDropdown.val();
+      const yearVal = this.yearDropdown.val();
+      const currentDomain = window.location.origin;
+      const href = `${currentDomain}/bike-compatibility?wpf_filter_compability=all|${brandVal}-all|${brandVal}-${modelVal}-${yearVal}`;
+      console.log('onYearChange: ', href);
 
-        const href = `${currentDomain}/bike-compatibility?wpf_filter_compability=all|${brandVal}-all|${brandVal}-${modelVal}-${yearVal}`;
-        this.seeAllParts
-          .removeClass('disable')
-          .attr('href', href);
-
-        this.setCookie('brand', brandVal, 3650);
-        this.setCookie('model', modelVal, 3650);
-        this.setCookie('year', yearVal, 3650);
-        this.setCookie('modelOptions', this.modelDropdown.html(), 3650);
-        this.setCookie('yearOptions', this.yearDropdown.html(), 3650);
-        this.setCookie('bikeCompatibility', `all|${brandVal}-all|${brandVal}-${modelVal}-${yearVal}`, 3650); 
-      }
+      this.seeAllParts
+        .removeClass('disable')
+        .attr('href', href);
+        
+      this.setCookie('brand', brandVal, 3650);
+      this.setCookie('model', modelVal, 3650);
+      this.setCookie('year', yearVal, 3650);
+      this.setCookie('modelOptions', this.modelDropdown.html(), 3650);
+      this.setCookie('yearOptions', this.yearDropdown.html(), 3650);
+      this.setCookie('bikeCompatibility', `all|${brandVal}-all|${brandVal}-${modelVal}-${yearVal}`, 3650); 
     });
+    // this.yearDropdown.selectmenu({
+    //   open: function() {
+    //     $('.ui-menu-item-wrapper').removeClass('selected');
+    //     $('.ui-state-active').addClass('selected');
+    //   },
+    //   change: () => {
+    //     const brandVal = this.brandDropdown.val();
+    //     const modelVal = this.modelDropdown.val();
+    //     const yearVal = this.yearDropdown.val();
+    //     const currentDomain = window.location.origin;
+
+    //     const href = `${currentDomain}/bike-compatibility?wpf_filter_compability=all|${brandVal}-all|${brandVal}-${modelVal}-${yearVal}`;
+    //     this.seeAllParts
+    //       .removeClass('disable')
+    //       .attr('href', href);
+
+    //     this.setCookie('brand', brandVal, 3650);
+    //     this.setCookie('model', modelVal, 3650);
+    //     this.setCookie('year', yearVal, 3650);
+    //     this.setCookie('modelOptions', this.modelDropdown.html(), 3650);
+    //     this.setCookie('yearOptions', this.yearDropdown.html(), 3650);
+    //     this.setCookie('bikeCompatibility', `all|${brandVal}-all|${brandVal}-${modelVal}-${yearVal}`, 3650); 
+    //   }
+    // });
   }
 
   checkBikeCookies() {
@@ -194,10 +228,14 @@ export default class Compatibilities {
     const yearOptions = this.getCookie('yearOptions');
 
     if ((brand && model && year) !== null) {  
-      this.brandDropdown.val(brand);
-      this.modelDropdown.html(modelOptions).val(model);
-      this.yearDropdown.html(yearOptions).val(year);
+      this.brandDropdown.val(brand).trigger('change.select2');
+      this.modelDropdown.html(modelOptions).val(model).trigger('change.select2');
+      this.yearDropdown.html(yearOptions).val(year).trigger('change.select2');
       const currentDomain = window.location.origin;
+
+      console.log('brand: ', brand);
+      console.log('model: ', model);
+      console.log('year: ', year);
 
       const href = `${currentDomain}/bike-compatibility?wpf_filter_compability=all|${brand}-all|${brand}-${model}-${year}`; 
       this.seeAllParts
@@ -205,9 +243,11 @@ export default class Compatibilities {
         .attr('href', href);
       $('.show-bike-compatibility').attr('href', href);
 
-      this.brandDropdown.selectmenu('refresh');
-      this.modelDropdown.selectmenu('refresh');
-      this.yearDropdown.selectmenu('refresh');
+      // this.brandDropdown.selectmenu('refresh');
+      // this.modelDropdown.selectmenu('refresh');
+      // this.yearDropdown.selectmenu('refresh');
+    } else {
+      this.compatibilityModal.modal('show'); 
     }
   }
 
