@@ -663,14 +663,21 @@ function get_years_by_model() {
     $years = get_the_terms($model_post_id, 'bike-year');
 
     if ($years && !is_wp_error($years)) {
+      // Сортиране на годините от по-голяма към по-малка
+      usort($years, function ($a, $b) {
+        return intval($b->name) - intval($a->name); // Сравняване по числова стойност
+      });
+
+      // Извеждане на сортираните опции
       foreach ($years as $year) {
         echo '<option value="' . esc_attr($year->name) . '">' . esc_html($year->name) . '</option>';
       }
     }
   }
 
-  wp_die(); // Close Ajax request
+  wp_die(); // Затваряне на Ajax заявката
 }
+
 
 // bike compatibility modal
 function remove_hyphen_after_first_and_before_last_word($string) {
