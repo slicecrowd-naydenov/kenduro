@@ -600,6 +600,9 @@ function get_all_bike_brands() {
 
     // Извеждане на опциите
     foreach ($brands as $brand) {
+      if (strtolower($brand->slug) === 'all') {
+        continue;
+      }
       echo '<option value="' . esc_attr($brand->name) . '">' . esc_html($brand->name) . '</option>';
     }
   }
@@ -636,6 +639,9 @@ function get_models_by_brand() {
 
     // Извеждане на опциите
     foreach ($models as $model_title) {
+      if (strtolower($model_title) === 'all') {
+        continue;
+      }
       echo '<option value="' . esc_attr($model_title) . '">' . esc_html($model_title) . '</option>';
     }
     wp_reset_postdata(); // Възстановяваме глобалната променлива post
@@ -670,6 +676,9 @@ function get_years_by_model() {
 
       // Извеждане на сортираните опции
       foreach ($years as $year) {
+        if (strtolower($year->slug) === 'all') {
+          continue;
+        }
         echo '<option value="' . esc_attr($year->name) . '">' . esc_html($year->name) . '</option>';
       }
     }

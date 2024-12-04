@@ -154,9 +154,15 @@
 .select2-container {
   z-index: 9999;
 
-  &.disable {
-    opacity: 0.5;
-    pointer-events: none;
+  // &.disable {
+  //   opacity: 0.5;
+  //   pointer-events: none;
+  // }
+
+  &.select2-container--disabled {
+    .select2-selection__rendered:after {
+      opacity: 1 !important;
+    }
   }
 }
 
@@ -166,9 +172,29 @@
     border-color: $G-1-5;
     border-radius: $radius-medium;
 
+    .select2-selection__arrow {
+      width: 30px;
+      height: 100%;
+
+      b {
+        margin-top: -3px;
+      }
+    }
+
     .select2-selection__rendered {
       padding: 10px 8px 10px 12px;
       line-height: 1;
+
+      &:after {
+        content: "";
+        position: absolute;
+        font-family: "Font Awesome 5 Free";
+        animation: fa-spin .75s linear infinite;
+        right: 8px;
+        background: #EEE;
+        z-index: 22;
+        opacity: 0;
+      }
     }
   }
 }

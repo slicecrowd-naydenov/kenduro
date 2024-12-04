@@ -17,6 +17,7 @@ export default class Compatibilities {
       return;
     }
 
+    this.body = $('body');
     this.brandDropdown = $('#brand-dropdown');
     this.modelDropdown = $('#model-dropdown');
     this.yearDropdown = $('#year-dropdown');
@@ -90,7 +91,6 @@ export default class Compatibilities {
       // $('#model-dropdown').siblings('.select2').addClass('disable');
       // $('#year-dropdown-button').addClass('disable');
       var selectedBrand = $(e.target).val();
-      console.log('onBrandChange: ', selectedBrand);
 
       axios({
         method: 'post',
@@ -106,7 +106,7 @@ export default class Compatibilities {
           this.modelDropdown.html(`<option value="">Избери</option>${response.data}`);
           // this.yearDropdown.html('');
           // this.yearDropdown.html('<option value="">Избери</option>');
-          console.log('response.data: ', response.data);
+          // console.log('response.data: ', response.data);
           // this.modelDropdown.trigger('change');
           // this.yearDropdown.trigger('change');
           // this.modelDropdown.selectmenu('refresh');
@@ -136,7 +136,6 @@ export default class Compatibilities {
       this.yearDropdown.prop('disabled', true);
       this.seeAllParts.addClass('disable');
       var selectedModel = $(e.target).val(); 
-      console.log('onModelChange: ', selectedModel);
 
       axios({
         method: 'post',
@@ -181,7 +180,7 @@ export default class Compatibilities {
       const yearVal = this.yearDropdown.val();
       const currentDomain = window.location.origin;
       const href = `${currentDomain}/bike-compatibility?wpf_filter_compability=all|${brandVal}-all|${brandVal}-${modelVal}-${yearVal}`;
-      console.log('onYearChange: ', href);
+      // console.log('onYearChange: ', href);
 
       this.seeAllParts
         .removeClass('disable')
@@ -194,30 +193,6 @@ export default class Compatibilities {
       this.setCookie('yearOptions', this.yearDropdown.html(), 3650);
       this.setCookie('bikeCompatibility', `all|${brandVal}-all|${brandVal}-${modelVal}-${yearVal}`, 3650); 
     });
-    // this.yearDropdown.selectmenu({
-    //   open: function() {
-    //     $('.ui-menu-item-wrapper').removeClass('selected');
-    //     $('.ui-state-active').addClass('selected');
-    //   },
-    //   change: () => {
-    //     const brandVal = this.brandDropdown.val();
-    //     const modelVal = this.modelDropdown.val();
-    //     const yearVal = this.yearDropdown.val();
-    //     const currentDomain = window.location.origin;
-
-    //     const href = `${currentDomain}/bike-compatibility?wpf_filter_compability=all|${brandVal}-all|${brandVal}-${modelVal}-${yearVal}`;
-    //     this.seeAllParts
-    //       .removeClass('disable')
-    //       .attr('href', href);
-
-    //     this.setCookie('brand', brandVal, 3650);
-    //     this.setCookie('model', modelVal, 3650);
-    //     this.setCookie('year', yearVal, 3650);
-    //     this.setCookie('modelOptions', this.modelDropdown.html(), 3650);
-    //     this.setCookie('yearOptions', this.yearDropdown.html(), 3650);
-    //     this.setCookie('bikeCompatibility', `all|${brandVal}-all|${brandVal}-${modelVal}-${yearVal}`, 3650); 
-    //   }
-    // });
   }
 
   checkBikeCookies() {
@@ -233,10 +208,6 @@ export default class Compatibilities {
       this.yearDropdown.html(yearOptions).val(year).trigger('change.select2');
       const currentDomain = window.location.origin;
 
-      console.log('brand: ', brand);
-      console.log('model: ', model);
-      console.log('year: ', year);
-
       const href = `${currentDomain}/bike-compatibility?wpf_filter_compability=all|${brand}-all|${brand}-${model}-${year}`; 
       this.seeAllParts
         .removeClass('disable')
@@ -247,18 +218,20 @@ export default class Compatibilities {
       // this.modelDropdown.selectmenu('refresh');
       // this.yearDropdown.selectmenu('refresh');
     } else {
-      this.compatibilityModal.modal('show'); 
+      if (this.body.hasClass('page-template-bike-compatibility')) {
+        this.compatibilityModal.modal('show');
+      } 
     }
   }
 
   bikeModalEvents() {
     this.compatibilityModal.on('show.bs.modal', () => {
-      $('body').addClass('overflow-hidden'); 
+      this.body.addClass('overflow-hidden'); 
       this.checkBikeCookies();
     });
     
     this.compatibilityModal.on('hidden.bs.modal', () => {
-      $('body').removeClass('overflow-hidden');
+      this.body.removeClass('overflow-hidden');
       this.checkBikeCookies();
     });
   }
