@@ -25,7 +25,7 @@ $is_set_bike_compatibility = check_is_set_bike_compatibility();
 $bikeCompatibility = '';
 $query_vars = $wp_query->query_vars;
 $isSetCompatibility = isset($_COOKIE['brand']) && isset($_COOKIE['model']) && isset($_COOKIE['year']);
-$excluded_categories = ['body-equipment', 'accessories', 'navigations', 'bikes']; // exclude categories where we are showing bike compatibility button
+$excluded_categories = ['body-equipment', 'navigations', 'bikes']; // exclude categories where we are showing bike compatibility button
 
 if ($is_set_bike_compatibility !== '') {
 	$bikeCompatibility = $_COOKIE['brand'] . ' ' . $_COOKIE['model'] . ' ' . $_COOKIE['year'];
