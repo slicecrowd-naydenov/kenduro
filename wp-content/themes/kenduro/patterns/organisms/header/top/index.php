@@ -28,11 +28,11 @@ if ($is_set_bike_compatibility !== '') {
               <a href="" class="show-bike-compatibility button button-primary-orange paragraph-m">Покажи продуктите за: <?php echo strtoupper(remove_hyphen_after_first_and_before_last_word($filterCompability)); ?>
                 <?php Load::atom('svg', ['name' => 'arrow_orange']); ?>
               </a>
-              <span class="edit-bike-model" data-toggle="modal" data-target="#compatibilityModal"><?php Load::atom('svg', ['name' => 'edit', 'class' => 'edit-bike']); ?></span>
+              <span class="edit-bike-model" data-toggle="modal" data-target="#compatibilityModal" data-url="my-bike"><?php Load::atom('svg', ['name' => 'edit', 'class' => 'edit-bike']); ?></span>
             <?php } else { ?>
-              <span>Покажи само продукти за :</span>
+              <span>Покажи всички продукти за :</span>
               <!-- Button trigger modal -->
-              <button type="button" class="button button-primary-orange paragraph-m" data-toggle="modal" data-target="#compatibilityModal">
+              <button type="button" class="button button-primary-orange paragraph-m" data-toggle="modal" data-target="#compatibilityModal" data-url="my-bike">
                 <?php 
                   Load::atom('svg', ['name' => 'plus']); 
                   echo 'Добави мотора си';

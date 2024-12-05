@@ -206,7 +206,7 @@ $list_categories = function($taxonomies, $temp_arr) use ($parent_IDS, &$list_cat
       <div class="col">
         <h4 class="page-title semibold">
           Всички продукти за 
-          <div class="button button-primary-grey paragraph semibold edit-selected-bike" data-toggle="modal" data-target="#compatibilityModal">
+          <div class="button button-primary-grey paragraph semibold edit-selected-bike" data-toggle="modal" data-target="#compatibilityModal" data-url="my-bike">
             <?php 
               echo strtoupper(remove_hyphen_after_first_and_before_last_word($bikeCompatibility));
               Load::atom('svg', ['name' => 'edit_icon']); 

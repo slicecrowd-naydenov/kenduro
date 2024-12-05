@@ -401,10 +401,11 @@ do_action( 'woocommerce_before_main_content' );
 										<a href="<?php echo $promo_link; ?>">Промо продукти</a>
 									</label>
 								<?php endif; ?>
-								<?php if (
+								<?php 
+								if (
 									$is_set_bike_compatibility !== '' &&
 									!in_array($get_product_cat, $excluded_categories)
-									) : 
+								) : 
 									$URL = $_SERVER['REDIRECT_URL'];
 								?>
 									<a href="<?php echo $URL .'?wpf_filter_compability='.$is_set_bike_compatibility; ?>" class="button button-primary-orange paragraph-m show-cat-bike-compatibility">
@@ -414,6 +415,19 @@ do_action( 'woocommerce_before_main_content' );
 											Load::atom('svg', ['name' => 'arrow_orange']); 
 										?>
 									</a>
+								<?php endif; 
+								if (
+									$is_set_bike_compatibility === '' &&
+									!in_array($get_product_cat, $excluded_categories)
+								) : 
+									$URL = $_SERVER['REDIRECT_URL'];
+								?>
+									<button class="button button-primary-orange paragraph-m show-cat-bike-compatibility" data-toggle="modal" data-target="#compatibilityModal" data-url="product-cat">
+										<?php 
+											echo 'Филтрирай за мотор';
+											Load::atom('svg', ['name' => 'arrow_orange']); 
+										?>
+									</button>
 								<?php endif; ?>
 
 								<div class="dropdown-menu dropdown-menu-sort" aria-labelledby="dropdownSortMenuButton">

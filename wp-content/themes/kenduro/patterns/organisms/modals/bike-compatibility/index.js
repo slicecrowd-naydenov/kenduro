@@ -23,6 +23,7 @@ export default class Compatibilities {
     this.yearDropdown = $('#year-dropdown');
     this.seeAllParts = $('#see-all-parts');
     this.compatibilityModal = jQuery('#compatibilityModal');
+    this.seeAllProductsURL = '';
 
     this.events();
   }
@@ -179,7 +180,9 @@ export default class Compatibilities {
       const modelVal = this.modelDropdown.val();
       const yearVal = this.yearDropdown.val();
       const currentDomain = window.location.origin;
-      const href = `${currentDomain}/my-bike?wpf_filter_compability=all|${brandVal}-all|${brandVal}-${modelVal}-${yearVal}`;
+      const bikeURL = this.seeAllProductsURL === 'my-bike' ? `${currentDomain}/my-bike` : window.location.href;
+      const href = `${bikeURL}?wpf_filter_compability=all|${brandVal}-all|${brandVal}-${modelVal}-${yearVal}`;
+      // window.location.href
       // console.log('onYearChange: ', href);
 
       this.seeAllParts
@@ -225,7 +228,9 @@ export default class Compatibilities {
   }
 
   bikeModalEvents() {
-    this.compatibilityModal.on('show.bs.modal', () => {
+    this.compatibilityModal.on('show.bs.modal', (event) => {
+      let button = $(event.relatedTarget) // Button that triggered the modal
+      this.seeAllProductsURL = button.data('url') // Extract info from data-* attributes
       this.body.addClass('overflow-hidden'); 
       this.checkBikeCookies();
     });
