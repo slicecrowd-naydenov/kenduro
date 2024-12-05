@@ -152,8 +152,8 @@ $list_categories = function($taxonomies, $temp_arr) use ($parent_IDS, &$list_cat
 
 			$see_all_cat_link = esc_url(get_site_url());
 			
-      $term_link = esc_url(get_site_url().'/bike-compatibility?wpf_filter_compability='.$is_set_bike_compatibility.'&wpf_filter_cat_1='.$tax->term_id);
-      $see_all_cat_link = esc_url(get_site_url().'/bike-compatibility?wpf_filter_compability='.$is_set_bike_compatibility);
+      $term_link = esc_url(get_site_url().'/my-bike?wpf_filter_compability='.$is_set_bike_compatibility.'&wpf_filter_cat_1='.$tax->term_id);
+      $see_all_cat_link = esc_url(get_site_url().'/my-bike?wpf_filter_compability='.$is_set_bike_compatibility);
 
 
 			if (!$added_all) {
