@@ -130,7 +130,7 @@ if ($is_set_bike_compatibility !== '') {
 
 
 $list_categories = function($taxonomies, $temp_arr) use ($parent_IDS, &$list_categories, $is_set_bike_compatibility, $cat_ids) {
-	if ( !empty( $taxonomies ) || !is_wp_error( $taxonomies ) ) {
+	if ( !empty( $taxonomies ) || $taxonomies !== null ) {
 		$cat_html = '<p class="paragraph paragraph-xl semibold cat-head active-cat">Основни Категории</p><ul class="product-cat-filter">';
 		$added_all = false;
 		foreach ($taxonomies as $tax) {
@@ -246,7 +246,9 @@ $list_categories = function($taxonomies, $temp_arr) use ($parent_IDS, &$list_cat
               </button>
               <ul class="nav nav-pills product-categories-view dropdown-menu" role="tablist" aria-labelledby="dropdownMenuButton">
                 <?php 
-                $list_categories($taxonomies, array());
+                  if ($taxonomies !== null) {
+                    $list_categories($taxonomies, array());
+                  }
                 ?>
               </ul>
 						</div>
@@ -260,7 +262,9 @@ $list_categories = function($taxonomies, $temp_arr) use ($parent_IDS, &$list_cat
 
 					<div class="filter-sidebar">
 						<?php
-							$list_categories($taxonomies, array());
+              if ($taxonomies !== null) {
+                $list_categories($taxonomies, array());
+              }
 						?>
 						<p class="paragraph paragraph-xl semibold cat-head active-cat filters">Филтри</p>
 						<?php echo do_shortcode('[wpf-filters id=2]'); ?>	
