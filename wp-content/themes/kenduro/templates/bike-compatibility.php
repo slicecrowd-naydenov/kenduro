@@ -77,6 +77,8 @@ if ($current_cat) {
 	}
 }
 
+$taxonomies = null;
+
 $cat_ids = [];
 if ($is_set_bike_compatibility !== '') {
   $filter_value = sanitize_text_field($is_set_bike_compatibility);
