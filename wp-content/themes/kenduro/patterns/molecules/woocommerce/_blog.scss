@@ -3,7 +3,9 @@
 }
 // Blog-post
 .single {
-  background-color: $G-0-5;
+  #primary {
+    background-color: $G-0-5;
+  }
 
   .addtoany_share_save_container {
     display: block;

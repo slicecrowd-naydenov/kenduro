@@ -179,7 +179,7 @@ export default class Compatibilities {
       const modelVal = this.modelDropdown.val();
       const yearVal = this.yearDropdown.val();
       const currentDomain = window.location.origin;
-      const href = `${currentDomain}/bike-compatibility?wpf_filter_compability=all|${brandVal}-all|${brandVal}-${modelVal}-${yearVal}`;
+      const href = `${currentDomain}/my-bike?wpf_filter_compability=all|${brandVal}-all|${brandVal}-${modelVal}-${yearVal}`;
       // console.log('onYearChange: ', href);
 
       this.seeAllParts
@@ -208,7 +208,7 @@ export default class Compatibilities {
       this.yearDropdown.html(yearOptions).val(year).trigger('change.select2');
       const currentDomain = window.location.origin;
 
-      const href = `${currentDomain}/bike-compatibility?wpf_filter_compability=all|${brand}-all|${brand}-${model}-${year}`; 
+      const href = `${currentDomain}/my-bike?wpf_filter_compability=all|${brand}-all|${brand}-${model}-${year}`; 
       this.seeAllParts
         .removeClass('disable')
         .attr('href', href);

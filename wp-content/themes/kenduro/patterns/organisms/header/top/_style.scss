@@ -50,7 +50,7 @@
     gap: 10px;
 
     .bike-compatibility-button {
-      display: none;
+      // display: none;
       padding: 6px 11px 6px 15px;
       border-radius: $radius-circle;
       border: 1px dashed rgba($b-highlight-two, 0.5);
@@ -60,6 +60,31 @@
 
       @include media-breakpoint-down(sm) {
         display: none;
+      }
+
+      .edit-bike-model {
+        display: flex;
+        cursor: pointer;  
+        margin-left: 13px;
+        margin-right: 8px;
+        padding: 2px;
+
+        .edit-bike {
+  
+          path {
+            fill: $G-0;
+          }
+        }
+
+        path {
+          transition: fill 0.2s ease-in-out;
+        }
+
+        &:hover {
+          path {
+            fill: $b-highlight-two;
+          }
+        }
       }
 
       .button {
@@ -87,7 +112,6 @@
         .button {
           display: inline-flex;
           align-items: center;
-          flex-direction: row-reverse;
           
           svg {
             margin-left: 10px;
@@ -99,14 +123,6 @@
         border-right: 1px solid rgba($G-0, 0.1);
         padding-right: 12px;
         margin-right: 12px;
-      }
-
-      .edit-bike {
-        margin-left: 10px;
-
-        path {
-          fill: $G-0;
-        }
       }
     }
   }

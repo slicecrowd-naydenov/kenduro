@@ -11,6 +11,7 @@ body {
   overflow: hidden;
   border-radius: 0 0 $radius-medium $radius-medium;
   margin-bottom: -$radius-medium;
+  background-color: $G-0;
 
   @include media-breakpoint-up(lg) {
     &:after {

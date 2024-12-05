@@ -21,11 +21,13 @@ defined( 'ABSPATH' ) || exit;
 
 global $wp_query, $wp;
 $on_sale = isset($_GET['on-sale']);
-$filterCompability = isset($_GET['wpf_filter_compability']) ? $_GET['wpf_filter_compability'] : '';
+$is_set_bike_compatibility = check_is_set_bike_compatibility();
 $bikeCompatibility = '';
 $query_vars = $wp_query->query_vars;
 $isSetCompatibility = isset($_COOKIE['brand']) && isset($_COOKIE['model']) && isset($_COOKIE['year']);
-if ($isSetCompatibility) {
+$excluded_categories = ['body-equipment', 'accessories', 'navigations', 'bikes']; // exclude categories where we are showing bike compatibility button
+
+if ($is_set_bike_compatibility !== '') {
 	$bikeCompatibility = $_COOKIE['brand'] . ' ' . $_COOKIE['model'] . ' ' . $_COOKIE['year'];
 }
 
@@ -110,7 +112,7 @@ $terms_args = array(
 
 $taxonomies = get_terms( $terms_args );
 
-$list_categories = function($taxonomies, $temp_arr) use ($parent_IDS, $get_brand, &$list_categories, $get_product_cat, $filterCompability) {
+$list_categories = function($taxonomies, $temp_arr) use ($parent_IDS, $get_brand, &$list_categories, $get_product_cat) {
 	if ( !empty( $taxonomies ) || !is_wp_error( $taxonomies ) ) {
 		$cat_html = '<p class="paragraph paragraph-xl semibold cat-head active-cat">Основни Категории</p><ul class="product-cat-filter">';
 		$added_all = false;
@@ -133,10 +135,7 @@ $list_categories = function($taxonomies, $temp_arr) use ($parent_IDS, $get_brand
 
 			$see_all_cat_link = esc_url(get_site_url());
 			
-			if (isset($filterCompability)) {
-				$term_link = esc_url(get_site_url().'/product-category\/'.$tax->slug.'?wpf_filter_compability='.$filterCompability);
-				$see_all_cat_link = esc_url(get_site_url().'/shop?wpf_filter_compability='.$filterCompability);
-			} else if ($get_brand === null) {
+			if ($get_brand === null) {
 				$term_link = esc_url(get_site_url().'/product-category\/'.$tax->slug);
 				$see_all_cat_link = esc_url(get_site_url().'/shop');
 			} else {
@@ -271,18 +270,7 @@ do_action( 'woocommerce_before_main_content' );
 								<?php Load::atom('svg', ['name' => 'star-filled']); ?>
 								Ексклузивен партньор
 							</p>
-						<?php endif;
-							if ($bikeCompatibility !== '' && $get_brand === null) : ?>
-								<?php // echo ' за'; ?>
-								<!-- <div class="button button-primary-grey paragraph semibold edit-selected-bike" data-toggle="modal" data-target="#compatibilityModal">
-									<?php 
-										// echo strtoupper(remove_hyphen_after_first_and_before_last_word($bikeCompatibility));
-										// Load::atom('svg', ['name' => 'edit_icon']); 
-									?>
-								</div>  -->
-							<?php
-							endif;
-						?>
+						<?php endif; ?>
 					</h4>
 					<h1 class="hidden-h1">
 						<?php 
@@ -326,16 +314,13 @@ do_action( 'woocommerce_before_main_content' );
 					]);
 				} else {
 					if (!is_search()) {
-						if (!isset($filterCompability)) {
-							// Ако параметърът не съществува
-							Load::molecules('product-category/product-category-info/index', [
-								'title' => 'Всички продукти',
-								'class' => 'full-container',
-								'description' => 'Разгледайте наличните ни продукти и ако ви е необходимо нещо друго - обадете ни се !',
-								'cat' => single_term_title('', false),
-								'cat_img_inner' => $cat_inner_image_url
-							]);
-						}
+						Load::molecules('product-category/product-category-info/index', [
+							'title' => 'Всички продукти',
+							'class' => 'full-container',
+							'description' => 'Разгледайте наличните ни продукти и ако ви е необходимо нещо друго - обадете ни се !',
+							'cat' => single_term_title('', false),
+							'cat_img_inner' => $cat_inner_image_url
+						]);
 					}
 				}
 			} else {
@@ -417,17 +402,18 @@ do_action( 'woocommerce_before_main_content' );
 									</label>
 								<?php endif; ?>
 								<?php if (
-									$bikeCompatibility !== '' &&
-									$get_product_cat !== null || 
-									$get_brand === null
-								) : ?>
-									<!-- <a href="#" class="button button-primary-orange paragraph-m show-bike-compatibility">
+									$is_set_bike_compatibility !== '' &&
+									!in_array($get_product_cat, $excluded_categories)
+									) : 
+									$URL = $_SERVER['REDIRECT_URL'];
+								?>
+									<a href="<?php echo $URL .'?wpf_filter_compability='.$is_set_bike_compatibility; ?>" class="button button-primary-orange paragraph-m show-cat-bike-compatibility">
 										<?php 
-											// echo 'Покажи продуктите за ';
-											// echo strtoupper(remove_hyphen_after_first_and_before_last_word($bikeCompatibility));
-											// Load::atom('svg', ['name' => 'arrow_orange']); 
+											echo 'Покажи продуктите за ';
+											echo strtoupper(remove_hyphen_after_first_and_before_last_word($bikeCompatibility));
+											Load::atom('svg', ['name' => 'arrow_orange']); 
 										?>
-									</a> -->
+									</a>
 								<?php endif; ?>
 
 								<div class="dropdown-menu dropdown-menu-sort" aria-labelledby="dropdownSortMenuButton">
