@@ -419,9 +419,7 @@ do_action( 'woocommerce_before_main_content' );
 								if (
 									$is_set_bike_compatibility === '' &&
 									!in_array($get_product_cat, $excluded_categories)
-								) : 
-									$URL = $_SERVER['REDIRECT_URL'];
-								?>
+								) : ?>
 									<button class="button button-primary-orange paragraph-m show-cat-bike-compatibility" data-toggle="modal" data-target="#compatibilityModal" data-url="product-cat">
 										<?php 
 											echo 'Филтрирай за мотор';
