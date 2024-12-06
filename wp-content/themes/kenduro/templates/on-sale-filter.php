@@ -205,7 +205,7 @@ $promo_product_ids = implode(',', $promo_products);
         <h1 class="hidden-h1">Промоции</h1>
         <?php
           Load::molecules('product-category/product-category-info/index', [
-            'title' => 'Black Friday KENDURO намаления за Ноември',
+            'title' => 'Коледните Промоции на Кендуро',
             'class' => 'discount-container',
             // 'description' => 'Разгледайте детайлно нашите намалени продукти.',
             // 'cat' => 'намалени продукти',
