@@ -419,6 +419,17 @@ function variation_settings_fields($loop, $variation_data, $variation) {
       'value'       => get_post_meta($variation->ID, '_my_delivery_time_text', true)
     )
   );
+
+  // Checkbox for Disable on Frontend
+  woocommerce_wp_checkbox(
+    array(
+      'id'            => '_disable_in_website[' . $variation->ID . ']',
+      'label'         => __('Disable in Website', 'woocommerce'),
+      'desc_tip'    => 'true',
+      'description'   => __('Check this box to disable this variation on the frontend.', 'woocommerce'),
+      'value'         => get_post_meta($variation->ID, '_disable_in_website', true),
+    )
+  );
 }
 /**
  * Save new fields for variations
@@ -439,6 +450,8 @@ function save_variation_settings_fields($post_id) {
     }
   }
 
+  $disable_in_website = isset($_POST['_disable_in_website'][$post_id]) ? 'yes' : 'no';
+  update_post_meta($post_id, '_disable_in_website', $disable_in_website);
 }
 
 
@@ -455,6 +468,14 @@ function load_variation_settings_fields($variations) {
 
   // New Text Field for Delivery Time
   $variations['delivery_time_text'] = get_post_meta($variations['variation_id'], '_my_delivery_time_text', true);
+
+  $disable_in_website = get_post_meta($variations['variation_id'], '_disable_in_website', true);
+
+  // Премахване на вариацията, ако е маркирана за скриване
+  if ($disable_in_website === 'yes') {
+    return false;
+  }
+
 
   return $variations;
 }

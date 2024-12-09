@@ -467,6 +467,7 @@ function create_variation($pid, $term_slug, $product_variations_fields, $attribu
 	$product_id_slug = get_column_field_id('product_variation', $product_variations_fields);
   $attr_color = get_column_field_id('attr_color', $product_variations_fields);
   $variation_product_id = get_column_field_id('variation_product_id', $product_variations_fields);
+  $remove_from_website = get_column_field_id('remove_from_website', $product_variations_fields);
   $set_regular_price = get_column_field_id('set_regular_price', $product_variations_fields);
   $delivery_time_text = get_column_field_id('delivery_time_text', $product_variations_fields);
 
@@ -521,6 +522,7 @@ function create_variation($pid, $term_slug, $product_variations_fields, $attribu
       update_post_meta($variation_id, '_sku', $variation_id);
       update_post_meta($variation_id, '_rank_math_gtin_code', sprintf("%012d", $variation_id));
       update_post_meta($variation_id, '_my_product_variation_id', $product_variation[$variation_product_id]);
+      update_post_meta($variation_id, '_disable_in_website', $product_variation[$remove_from_website] ? 'yes' : 'no');
       if (getInnermostValue($product_variation[$delivery_time_text]) !== null || '') {
         update_post_meta($variation_id, '_my_delivery_time_text', getInnermostValue($product_variation[$delivery_time_text]));
       }
