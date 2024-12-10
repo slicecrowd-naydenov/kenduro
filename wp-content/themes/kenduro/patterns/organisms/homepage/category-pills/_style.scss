@@ -144,9 +144,8 @@
   margin-bottom: 20px;
   padding-bottom: 8px;
 
-  @include media-breakpoint-down(sm) {
-    flex-direction: column;
-    gap: 10px;
+  @include media-breakpoint-down(md) {
+    display: none;
   }
 
   .wpfMainWrapper {
@@ -197,6 +196,7 @@
     margin-left: 30px;
     padding-top: 6px;
     padding-bottom: 6px;
+    text-align: center;
 
     @include media-breakpoint-down(sm) {
       margin: 0;
@@ -209,6 +209,12 @@
       }
     }
   }
+}
+
+.show-cat-bike-compatibility {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .dropdown {

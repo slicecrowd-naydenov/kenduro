@@ -6,7 +6,11 @@
   background-color: $b-primary;
   padding-top: 52px;
 
-  @include media-breakpoint-down(lg) {
+  @include media-breakpoint-only(md) {
     padding-top: 70px;
+  }
+
+  @include media-breakpoint-down(md) {
+    padding-top: 120px;
   }
 }

@@ -49,6 +49,10 @@
     display: flex;
     gap: 10px;
 
+    @include media-breakpoint-down(md) {
+      margin-right: -15px;
+    }
+
     .bike-compatibility-button {
       // display: none;
       padding: 6px 11px 6px 15px;
@@ -58,8 +62,12 @@
       @extend .flex-center-y;
       @extend #{'.paragraph', '.paragraph-m'};
 
-      @include media-breakpoint-down(sm) {
-        display: none;
+      @include media-breakpoint-down(md) {
+        // display: none;
+        position: absolute;
+        left: 15px;
+        top: 65px;
+        width: calc(100% - 30px);
       }
 
       .edit-bike-model {
@@ -91,6 +99,14 @@
         padding-top: 6px;
         padding-bottom: 6px;
         margin-left: 7px;
+
+        @include media-breakpoint-down(md) {
+          flex: 0 1 100%;
+          justify-content: space-between;
+          margin-left: 0;
+          padding-left: 12px;
+          padding-right: 12px;
+        }
         
         svg  {
           path {
@@ -106,10 +122,22 @@
             margin-right: 5px;
           }
         }
+
+        span {
+          @include media-breakpoint-down(md) {
+            display: none;
+          }
+        }
+
+        button[data-toggle="modal"] {
+          @include media-breakpoint-down(md) {
+            flex: 0 1 100%;
+          }
+        }
       }
 
       &.has-set-bike {
-        .button {
+        .button { 
           display: inline-flex;
           align-items: center;
           

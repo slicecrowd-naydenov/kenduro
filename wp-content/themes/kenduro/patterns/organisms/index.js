@@ -234,6 +234,17 @@ export default () => {
     }, 7500);
   };
 
+  $('#filterModal').on('show.bs.modal', function(event) {
+    let modalBody = $(this).find('.modal-body');
+    if (!modalBody.find('.show-cat-bike-compatibility').length) {
+      let elementToClone = $('.show-cat-bike-compatibility');
+      if (elementToClone.length) { // Уверяваме се, че елементът съществува
+        let clonedElement = elementToClone.clone(true);
+        modalBody.append(clonedElement);
+      }
+    }
+});
+
 
   // setTimeout(() => {
   //   var elements = $('.dropdown-menu-sort').find('.wpfDisplay');

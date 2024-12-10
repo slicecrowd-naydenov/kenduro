@@ -63,11 +63,32 @@ function add_ajaxurl_to_front() {
 }
 add_action('wp_head', 'add_ajaxurl_to_front');
 
-add_filter('woocommerce_dropdown_variation_attribute_options_args','fun_select_default_option',10,1);
-function fun_select_default_option( $args) { 
-  if(count($args['options']) > 0) //Check the count of available options in dropdown
-    $args['selected'] = $args['options'][0];
-    return $args;
+add_filter('woocommerce_dropdown_variation_attribute_options_args', 'select_first_available_option', 10, 1);
+function select_first_available_option($args) {
+  global $product;
+
+  if (!empty($args['options']) && is_object($product)) {
+    // Извличаме наличните опции за атрибута
+    $available_variations = $product->get_available_variations();
+    $valid_options = [];
+
+    foreach ($available_variations as $variation) {
+      $attribute_key = 'attribute_' . $args['attribute'];
+      if (isset($variation['attributes'][$attribute_key])) {
+        $valid_options[] = $variation['attributes'][$attribute_key];
+      }
+    }
+
+    // Намираме първата активна опция
+    foreach ($args['options'] as $option) {
+      if (in_array($option, $valid_options)) {
+        $args['selected'] = $option;
+        break;
+      }
+    }
+  }
+
+  return $args;
 }
 
 function load_products_on_homepage_via_ajax() {

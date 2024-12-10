@@ -1,4 +1,5 @@
 <!-- Modal -->
+ <?php use Lean\Load; ?>
 <div class="modal fade" id="compatibilityModal" tabindex="-1" role="dialog" aria-labelledby="compatibilityModalTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
@@ -12,6 +13,9 @@
             <p class="paragraph paragraph-xl">И ние ще ти покажем само продуктите, които те интересуват</p>
           </div>
           <img src="<?php echo IMAGES_PATH; ?>/add_bike.png" />
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <?php Load::atom('svg', ['name' => 'close']); ?>
+          </button>
         </div>
         <div id="compatibilities">
           <div class="compatibilities-dropdown">

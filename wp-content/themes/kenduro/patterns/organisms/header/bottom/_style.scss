@@ -127,6 +127,9 @@
       color: $G-0;
       border-color: $G-0;
       border-radius: $radius-circle;
+      position: fixed;
+      top: 15px;
+      left: 15px;
     }
 
     &:before,

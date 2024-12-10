@@ -4,13 +4,19 @@ $page_name = strtolower(get_the_title());
 $is_set_bike_compatibility = check_is_set_bike_compatibility();
 
 $filterCompability = '';
+$btnText = 'Покажи всички продукти ';
 if ($is_set_bike_compatibility !== '') {
   $filterCompability = $_COOKIE['brand'] . ' ' . $_COOKIE['model'] . ' ' . $_COOKIE['year'];
   $filterButtonClass = 'has-set-bike';
+  $btnText = 'Покажи продуктите ';
+
 } else {
   $filterButtonClass = 'not-set-bike';
 }
 
+if (wp_is_mobile()) {
+  $btnText = 'Всичко ';
+}
 ?>
 <div id="top-section">
   <div class="container">
@@ -25,7 +31,7 @@ if ($is_set_bike_compatibility !== '') {
           <div class="bike-compatibility-button <?php esc_attr_e($filterButtonClass); ?>">
             <div class="bike-icon"><?php Load::atom('svg', ['name' => 'bike']); ?></div>
             <?php if ($is_set_bike_compatibility !== '') { ?>
-              <a href="" class="show-bike-compatibility button button-primary-orange paragraph-m">Покажи продуктите за: <?php echo strtoupper(remove_hyphen_after_first_and_before_last_word($filterCompability)); ?>
+              <a href="" class="show-bike-compatibility button button-primary-orange paragraph-m"><?php echo $btnText;?> за: <?php echo strtoupper(remove_hyphen_after_first_and_before_last_word($filterCompability)); ?>
                 <?php Load::atom('svg', ['name' => 'arrow_orange']); ?>
               </a>
               <span class="edit-bike-model" data-toggle="modal" data-target="#compatibilityModal" data-url="my-bike"><?php Load::atom('svg', ['name' => 'edit', 'class' => 'edit-bike']); ?></span>
