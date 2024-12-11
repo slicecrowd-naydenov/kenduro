@@ -12,7 +12,7 @@
             <h3 class="bold">Добави мотора си</h3>
             <p class="paragraph paragraph-xl">И ние ще ти покажем само продуктите, които те интересуват</p>
           </div>
-          <img src="<?php echo IMAGES_PATH; ?>/add_bike.png" />
+          <img src="<?php echo IMAGES_PATH; ?>/add_bike.png" alt="bike compatibility icon"/>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <?php Load::atom('svg', ['name' => 'close']); ?>
           </button>

@@ -70,7 +70,7 @@ if (false === $terms) {
                   <a href="<?php echo esc_attr($term_link); ?>" class="brands__list-item-link">
                     <img 
                       src="<?php echo esc_attr($term_logo)?>" 
-                      alt="<?php esc_attr_e($term_name); ?>"
+                      alt="<?php esc_attr_e(strtolower($term_name)); ?>"
                       width="<?php echo esc_attr($term_logo_width); ?>" 
                       height="<?php echo esc_attr($term_logo_height); ?>"  
                     />

@@ -109,7 +109,7 @@ export default class SearchField {
                     <a href="${post.link}">
                       <div class="thumb">
                         ${newestPost}
-                        <img class="blog-post-list__item-image" src="${imageURL}" alt="${imageALT}">
+                        <img class="blog-post-list__item-image" src="${imageURL}" alt="${imageALT.toLowerCase()}">
                       </div>
                       <div class="title-wrapper">
                         <p class="paragraph paragraph-xl semibold post-title">${post.title}</p>

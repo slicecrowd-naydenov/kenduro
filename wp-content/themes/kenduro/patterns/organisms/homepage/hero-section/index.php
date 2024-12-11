@@ -86,7 +86,7 @@ if ($on_sale_data === false) {
                     <div class="slide-image">
                       <img 
                         src="<?php echo esc_attr($slide['slide_image']['url']); ?>" 
-                        alt="<?php esc_attr_e($transformedString); ?>" 
+                        alt="<?php esc_attr_e(strtolower($transformedString)); ?>" 
                         class="<?php echo $set_no_lazy_class; ?>"
                         srcset="
                           <?php echo $slide['slide_image']['sizes']['woocommerce_thumbnail']; ?> 500w, 
@@ -116,7 +116,7 @@ if ($on_sale_data === false) {
                             src="<?php esc_attr_e($slide['logo']['url']); ?>" 
                             width="<?php esc_attr_e($slide['logo']['width']); ?>" 
                             height="<?php esc_attr_e($slide['logo']['height']); ?>"
-                            alt="<?php esc_attr_e($slide['logo']['title']); ?>"
+                            alt="<?php esc_attr_e(strtolower($slide['logo']['title'])); ?>"
                           />
                         </div>
                       </div>

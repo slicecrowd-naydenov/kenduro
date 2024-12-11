@@ -34,8 +34,13 @@ function brand_text($current_product) {
 	return $brand;
 }
 
+$brand_text = brand_text($current_product);
+
+
 function custom_code_after_product_data_tabs() {
 	$current_product = wc_get_product(get_the_ID());
+	$brand_text = brand_text($current_product);
+
 
 	if (!$current_product) {
 		return;
@@ -50,7 +55,7 @@ function custom_code_after_product_data_tabs() {
 			array(
 				'taxonomy'   => 'pa_brand',
 				'field'      => 'slug',
-				'terms'      => strtolower(brand_text($current_product)),
+				'terms'      => strtolower($brand_text),
 			),
 		),
 		'orderby'        => 'menu_order', // Сортиране по полето "Menu order"
@@ -63,7 +68,7 @@ function custom_code_after_product_data_tabs() {
 			<div class="col-12 col-xl-6">
 				<?php 
 					$taxonomy = 'pa_brand';
-					$term = get_term_by('name', brand_text($current_product), $taxonomy);
+					$term = get_term_by('name', $brand_text, $taxonomy);
 					$term_id = $term->term_id;
 					$meta_fields = get_term_meta($term_id);
 					$term_logo_id = $meta_fields['exclusive_logo'][0];
@@ -75,20 +80,20 @@ function custom_code_after_product_data_tabs() {
 				<div class="brand-info">
 					<div class="brand-info__image">
 						<div class="brand-info__logo">
-							<img src="<?php echo esc_attr($term_logo)?>" />
+							<img src="<?php echo esc_attr($term_logo)?>" alt="<?php echo esc_attr(strtolower($brand_text)); ?>" />
 						</div>
 					</div>
 					<div class="brand-info__description paragrap paragraph-l">
 						<?php echo $brand_description; ?>
 					</div>
-					<a href="<?php echo esc_attr($term_link); ?>" class="paragrap paragraph-l">Виж всички продукти от <?php echo brand_text($current_product); ?></a>
+					<a href="<?php echo esc_attr($term_link); ?>" class="paragrap paragraph-l">Виж всички продукти от <?php echo $brand_text; ?></a>
 				</div>
 
 
 			</div>
 			<div class="col-12 col-xl-6">
 				<div class="brand-section__products">
-					<div>Популярни от <strong><?php echo brand_text($current_product); ?></strong></div>
+					<div>Популярни от <strong><?php echo $brand_text; ?></strong></div>
 					<?php
 						Load::atoms('link/index', [
 							'text' => 'Разгледай всички',
@@ -162,11 +167,11 @@ if (post_password_required()) {
 		<div class="summary entry-summary">
 			<?php
 
-			if (brand_text($current_product) !== '') : 
-				$term = get_term_by('name', brand_text($current_product), 'pa_brand');
+			if ($brand_text !== '') : 
+				$term = get_term_by('name', $brand_text, 'pa_brand');
 				$term_link = get_term_link($term);
 			?>
-				<a href="<?php echo esc_url($term_link); ?>" class="paragraph paragraph-xl semibold text-underline"><?php echo brand_text($current_product); ?></a>
+				<a href="<?php echo esc_url($term_link); ?>" class="paragraph paragraph-xl semibold text-underline"><?php echo $brand_text; ?></a>
 			<?php endif;
 			// pretty_dump($meta_fields);
 			/**

@@ -133,7 +133,7 @@ $images = range(1, 10);
             <!-- Slides -->
             <?php foreach ($images as $image) : ?>
               <div class="swiper-slide">
-                <img src="<?php echo IMAGES_PATH; ?>/landing-event/slider/<?php echo $image; ?>.jpg" alt="slide-<?php echo $image; ?>">
+                <img src="<?php echo IMAGES_PATH; ?>/landing-event/slider/<?php echo $image; ?>.jpg" alt="slide <?php echo esc_attr(strtolower($image)); ?>">
               </div>
             <?php endforeach; ?>
           </div>

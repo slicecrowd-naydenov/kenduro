@@ -344,7 +344,7 @@ do_action( 'woocommerce_before_main_content' );
 								src="<?php echo esc_attr($term_logo)?>" 
 								width="<?php echo esc_attr($logo_width); ?>"
     						height="<?php echo esc_attr($logo_height); ?>" 
-								alt="<?php echo woocommerce_page_title(); ?>" 
+								alt="<?php echo esc_attr(strtolower(woocommerce_page_title())); ?>" 
 							/>
 						</div>
 						<?php 
