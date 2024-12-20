@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Pagination - Show numbered pagination for catalog pages
  *
@@ -11,25 +10,25 @@
  * happen. When this occurs the version of the template file will be bumped and
  * the readme will list any important changes.
  *
- * @see     https://docs.woocommerce.com/document/template-structure/
+ * @see     https://woocommerce.com/document/template-structure/
  * @package WooCommerce\Templates
- * @version 3.3.1
+ * @version 9.3.0
  */
 
 if (!defined('ABSPATH')) {
 	exit;
 }
 
-$total   = isset($total) ? $total : wc_get_loop_prop('total_pages');
-$current = isset($current) ? $current : wc_get_loop_prop('current_page');
-$base    = isset($base) ? $base : esc_url_raw(add_query_arg('product-page', '%#%', remove_query_arg('add-to-cart')));
-$format  = isset($format) ? $format : '';
+$total   = isset( $total ) ? $total : wc_get_loop_prop( 'total_pages' );
+$current = isset( $current ) ? $current : wc_get_loop_prop( 'current_page' );
+$base    = isset( $base ) ? $base : esc_url_raw( str_replace( 999999999, '%#%', remove_query_arg( 'add-to-cart', get_pagenum_link( 999999999, false ) ) ) );
+$format  = isset( $format ) ? $format : '';
 
-if ($total <= 1) {
+if ( $total <= 1 ) {
 	return;
 }
 ?>
-<nav class="woocommerce-pagination">
+<nav class="woocommerce-pagination" aria-label="<?php esc_attr_e( 'Product Pagination', 'woocommerce' ); ?>">
 	<div class="woocommerce-pagination__info">
 		<?php
 		$has_prev_link = false;
@@ -42,11 +41,12 @@ if ($total <= 1) {
 			$has_next_link = true;
 		endif;
 		?>
-		<a href="<?php echo esc_url(add_query_arg('product-page', max(1, $current - 1))); ?>" class="button button-secondary-blue <?php echo esc_attr($has_prev_link ? 'enable' : 'disable'); ?>">
+		
+		<a href="<?php echo esc_url( $current > 1 ? get_pagenum_link( $current - 1 ) : '#' ); ?>" class="button button-secondary-blue prev-page-link <?php echo esc_attr($has_prev_link ? 'enable' : 'disable'); ?>">
 			<span>Предишна</span>
 		</a>
-		<p class="paragraph paragraph-l tetriary semibold">Страница <?php echo $current; ?> от <?php echo $total; ?></p>
-		<a href="<?php echo esc_url(add_query_arg('product-page', min($total, $current + 1))); ?>" class="button button-secondary-blue <?php echo esc_attr($has_next_link ? 'enable' : 'disable'); ?>">
+		<p class="paragraph paragraph-l tetriary semibold">Страница <?php echo intval($current); ?> от <?php echo intval($total); ?></p>
+		<a href="<?php echo esc_url( $current < $total ? get_pagenum_link( $current + 1 ) : '#' ); ?>" class="button button-secondary-blue next-page-link <?php echo esc_attr($has_next_link ? 'enable' : 'disable'); ?>">
 			<span>Следваща</span>
 		</a>
 	</div>

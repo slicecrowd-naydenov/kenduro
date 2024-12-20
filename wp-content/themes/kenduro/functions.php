@@ -104,7 +104,24 @@ function load_products_on_homepage_via_ajax() {
 add_action('wp_ajax_load_products', 'load_products_on_homepage_via_ajax');
 add_action('wp_ajax_nopriv_load_products', 'load_products_on_homepage_via_ajax');
 
+// modify pagination structure on [products] shortcode
+add_filter( 'woocommerce_shortcode_products_query', 'custom_shortcode_pagination' );
+function custom_shortcode_pagination( $query_args ) {
+  if ( is_shop() || is_product_taxonomy() ) {
+    $paged = get_query_var( 'paged' ) ? absint( get_query_var( 'paged' ) ) : 1;
+    $query_args['paged'] = $paged;
+  }
+  return $query_args;
+}
 
+add_filter( 'woocommerce_pagination_args', 'custom_pagination_args' );
+function custom_pagination_args( $args ) {
+  if ( is_shop() || is_product_taxonomy() ) {
+    $args['base'] = str_replace( '999999999', '%#%', get_pagenum_link( 999999999 ) );
+    $args['format'] = '/page/%#%';
+  }
+  return $args;
+}
 
 // Филтър за промяна на каноничния URL
 // add_filter( 'rank_math/frontend/canonical', function( $canonical ) {

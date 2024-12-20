@@ -435,6 +435,8 @@ do_action( 'woocommerce_before_main_content' );
 							<?php
 							// if ($on_sale) {
 								// pretty_dump($products_on_sale);
+								$limitProducts = wp_is_mobile() ? 6 : 16;
+
 								if (is_search()) {
 									woocommerce_product_loop_start();
 
@@ -454,15 +456,16 @@ do_action( 'woocommerce_before_main_content' );
 									woocommerce_product_loop_end();
 								} else {
 									if ($get_brand) {
-										echo do_shortcode('[products attribute="brand" terms="'.$get_brand.'" limit="16" columns="4" paginate="true"]');
+										echo do_shortcode('[products attribute="brand" terms="'.$get_brand.'" limit="'.$limitProducts.'" columns="4" paginate="true"]');
 									} else {
+
 										$keyword_string = isset($_GET['ywcas_filter']) ? get_product_ids_by_keyword( sanitize_text_field($_GET['ywcas_filter']) ) : '';
 										$ywcas_filter_ids = isset($_GET['ywcas_filter']) ? implode(',', array_map('intval', $keyword_string)) : $ids_placeholder; 
 										
 										// $keyword_string = get_product_ids_by_keyword( sanitize_text_field($_GET['ywcas_filter']) );
 										// pretty_dump(get_product_ids_by_keyword(('KTM EXC-F 250 2017')));
 										// if ( $products_on_sale->have_posts() ) {
-										echo do_shortcode('[products category="'.$product_cat_slug.'" limit="16" columns="4" paginate="true" ids="'.$ywcas_filter_ids.'"]');
+										echo do_shortcode('[products category="'.$product_cat_slug.'" limit="'.$limitProducts.'" columns="4" paginate="true" ids="'.$ywcas_filter_ids.'"]');
 											// while ( $products_on_sale->have_posts() ) : $products_on_sale->the_post();
 				
 											// // pretty_dump(get_the_ID());
