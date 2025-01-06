@@ -151,11 +151,6 @@ export default () => {
     $(this).parents('.coupon-wrapper').addClass('added-coupon');
   });
 
-  $('.dropdown-menu-sort').on('click', '.wpfLiLabel', function() {
-    const selectedSortType = $(this).find('.wpfFilterTaxNameWrapper').text();
-    $('.sort-by-title').text(selectedSortType);
-  });
-
   const accordionItem = $('.accordion-item');
   const accordionOnSales = $('#accordionOnSales');
 
