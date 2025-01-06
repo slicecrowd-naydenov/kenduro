@@ -55,7 +55,7 @@
 
     @include media-breakpoint-down(lg) {
       width: 100%;
-      height: 400px;
+      height: 415px;
     }
 
     .on-sale-header {
@@ -84,7 +84,7 @@
         position: relative;
         height: 46px;
         transition: height 0.35s ease;
-        background-size: cover;
+        // background-size: cover;
 
         @include media-breakpoint-only(md) {
           background-image: none !important;
@@ -128,7 +128,8 @@
 
       &-button {
         padding: 10px;
-        background-color: transparent;
+        background-color: $b-tetriary;
+        border-radius: 10px;
         box-shadow: none;
         display: flex;
         gap: 10px;
