@@ -319,6 +319,16 @@ h4,
   font-weight: 600;
 }
 
+.search-results {
+  .filter-content-wrapper + .storefront-sorting {
+    display: flex !important;
+
+    @include media-breakpoint-down(xl) {
+      margin: 0;
+    }
+  }
+}
+
 // .onsale,
 .grecaptcha-badge,
 .woocommerce-notices-wrapper,

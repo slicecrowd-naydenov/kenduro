@@ -456,7 +456,9 @@ do_action( 'woocommerce_before_main_content' );
 									woocommerce_product_loop_end();
 								} else {
 									if ($get_brand) {
-										echo do_shortcode('[products attribute="brand" terms="'.$get_brand.'" limit="'.$limitProducts.'" columns="4" paginate="true"]');
+										$cur_cat_on_brand_page = isset($_GET['product_cat']) ? $_GET['product_cat'] : '';
+
+										echo do_shortcode('[products attribute="brand" category="'.$cur_cat_on_brand_page.'" terms="'.$get_brand.'" limit="'.$limitProducts.'" columns="4" paginate="true"]');
 									} else {
 
 										$keyword_string = isset($_GET['ywcas_filter']) ? get_product_ids_by_keyword( sanitize_text_field($_GET['ywcas_filter']) ) : '';
