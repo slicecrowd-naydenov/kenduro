@@ -344,6 +344,24 @@
         background: url('../../assets/icons/svg/trash.svg') center center no-repeat;
       }
     }
+
+    &.asnp-wepb-cart-bundle-item {
+      padding: 0;
+
+      .product-thumbnail {
+        img {
+          transform-origin: center right;
+        }
+      }
+
+      .product-name {
+        padding-left: 0;
+
+        a {
+          font-size: 13px;
+        }
+      }
+    }
   }
 
   button.button {

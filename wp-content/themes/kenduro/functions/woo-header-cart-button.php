@@ -216,8 +216,9 @@ function trigger_ajax_to_cart() {
         event.preventDefault();
         event.stopPropagation();
         productEl = event.currentTarget;
-        let imgPath = $(productEl).closest('.custom-cart-list__item').find('.product-thumbnail img').attr('src');
-        let productName = $(productEl).closest('.custom-cart-list__item').find('.product-name a').text();
+        let selectedElWrapper = $(productEl).closest('.custom-cart-list__item');
+        let imgPath = selectedElWrapper.find('.product-thumbnail img').attr('src');
+        let productName = selectedElWrapper.find('.product-name a').text();
         
         confirmationModal.find('img').attr('src', imgPath);
         confirmationModal.find('#product_name').text('"' + productName + '"');
@@ -236,7 +237,14 @@ function trigger_ajax_to_cart() {
       });
 
       confirmationModal.on('click', '#confirmDeleteButton', () => {
-        $(productEl).closest('li').addClass('removing');
+        let selectedElWrapper = $(productEl).closest('.custom-cart-list__item');
+
+        selectedElWrapper.addClass('removing');
+
+        if (selectedElWrapper.hasClass('asnp-wepb-cart-bundle')) {
+          selectedElWrapper.nextUntil(':not(.asnp-wepb-cart-bundle-item)').addClass('removing');
+        }
+
         confirmationModal.modal('hide');
         if (!productEl) {
           return;
@@ -246,7 +254,8 @@ function trigger_ajax_to_cart() {
           .then(((res) => {
             console.log('OK!', res);
             if ( res.ok ) {
-              $(productEl).closest('.custom-cart-list__item').remove();
+              selectedElWrapper.remove();
+              $('.asnp-wepb-cart-bundle-item.removing').remove();
               $body.trigger('wc_fragment_refresh');
               // const productPrice = $(productEl).closest('li').find('.product-price bdi')
               //   .clone()    //clone the element

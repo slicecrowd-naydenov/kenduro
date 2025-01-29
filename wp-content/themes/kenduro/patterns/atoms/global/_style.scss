@@ -459,3 +459,56 @@ input[type="checkbox"] {
   top: -9999px;
   font-size: 0;
 }
+
+.stock,
+.asnp-product-inStock-wrapper .stock,
+.asnp-modal-quickView-wrapper .asnp-productInfo .asnp-productInfo-inStock .stock {
+  padding: 4px 9px !important;
+  display: inline-flex;
+  align-items: center;
+  border-radius: $radius-circle;
+  color: $text-primary !important;
+  align-self: baseline;
+  font-size: 12px !important;
+  margin: 0 !important;
+  font-weight: 600;
+
+  &:before {
+    display: none;
+  }
+
+  svg {
+    margin-right: 8px;
+  }
+  
+  &.in-stock {
+    background-color: rgba($success, 0.05);
+    border: 1px solid $success;
+
+    svg {
+      path {
+        fill: $success;
+      }
+    }
+  }
+
+  &.available-on-backorder { 
+    background: rgba($b-highlight-one, 0.1) url('../../assets/icons/svg/info-icon.svg') center left 9px no-repeat;
+    border: 1px solid rgba($b-highlight-one, 0.3);
+
+    svg {
+      opacity: 0;
+    }
+  }
+
+  &.out-of-stock {
+    background-color: rgba($error, 0.05);
+    border: 1px solid $error;
+
+    svg {
+      path {
+        fill: $error;
+      }
+    }
+  }
+}

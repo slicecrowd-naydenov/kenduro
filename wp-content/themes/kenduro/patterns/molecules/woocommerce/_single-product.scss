@@ -224,15 +224,6 @@
               img {
                 position: relative;
                 border-radius: $radius-thin;
-
-                &:before {
-                  /* Стилове за :before псевдо-елемента */
-                  content: "";
-                  display: block;
-                  width: 10px; /* Пример за ширина */
-                  height: 10px; /* Пример за височина */
-                  background-color: red; /* Пример за цвят */
-                }
               }
             }
           }
@@ -353,46 +344,6 @@
                 padding-left: 30px;
                 padding-right: 0;
                 background-position: center left 0px;
-              }
-            }
-          }
-
-          .stock {
-            padding: 4px 9px;
-            display: inline-flex;
-            align-items: center;
-            border-radius: $radius-circle;
-            color: $text-primary;
-            align-self: baseline;
-
-            &:before {
-              display: none;
-            }
-
-            svg {
-              margin-right: 6px;
-            }
-            
-            &.in-stock,
-            &.available-on-backorder {
-              background-color: rgba($success, 0.05);
-              border: 1px solid $success;
-
-              svg {
-                path {
-                  fill: $success;
-                }
-              }
-            }
-
-            &.out-of-stock {
-              background-color: rgba($error, 0.05);
-              border: 1px solid $error;
-
-              svg {
-                path {
-                  fill: $error;
-                }
               }
             }
           }

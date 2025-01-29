@@ -44,6 +44,7 @@ if ( ! $product ) {
 $delivery_time_text = '';
 $ss_delivery_time_text = '';
 $variation_stock_data = array();
+$var_id = 0;
 
 if ($product->is_type('simple')) {
 	$meta_data = get_field('meta_data', $product->get_id()); // $product_id е ID-то на продукта, за който искате да вземете полето
@@ -98,7 +99,7 @@ switch ($delivery_time_text) {
 
 ?>
 <div class="custom-stock">
-	<div id="variation-stock" data-stock='<?php echo json_encode($variation_stock_data); ?>'></div>
+	<div id="variation-stock" data-variation-id="<?php echo json_encode($variation_ids); ?>" data-stock='<?php echo json_encode($variation_stock_data); ?>'></div>
 	<p class="stock paragraph paragraph-m <?php echo esc_attr( $class ); ?>">
 		<?php // echo wp_kses_post( $availability );
 			Load::atom('svg', ['name' => 'checkbox']);
