@@ -4,7 +4,8 @@ use Lean\Load;
 $args = array(
   'taxonomy' => 'product_cat',
   'parent' => 0,
-  'hide_empty' => true
+  'hide_empty' => true,
+  'exclude'    => array(4646)
 );
 
 $main_categories = get_transient('main_categories_transients');

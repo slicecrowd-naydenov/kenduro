@@ -41,10 +41,7 @@
         padding: 20px;
         border-radius: $radius-medium;
         background-color: $G-0;
-
-        @include media-breakpoint-only(lg) {
-          align-items: flex-start;
-        } 
+        align-items: flex-start;
 
         @include media-breakpoint-down(lg) {
           margin-top: 30px;
@@ -265,6 +262,8 @@
           position: relative;
           display: flex;
           flex-direction: column;
+          flex: 1;
+          align-self: stretch;
 
           @include media-breakpoint-down(lg) {
             width: 100%;
