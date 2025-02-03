@@ -160,7 +160,6 @@ function trigger_ajax_to_cart() {
           e.stopPropagation();
           let $thisbutton = $(this),
           data = 'product_id=' + $($thisbutton).attr('data-product_id');
-          console.log('data: ', data);
 
           jQuery(document.body).trigger('adding_to_cart', [$thisbutton, data]);
 
