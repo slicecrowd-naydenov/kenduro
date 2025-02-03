@@ -44,6 +44,7 @@ if ( ! $product ) {
 $delivery_time_text = '';
 $ss_delivery_time_text = '';
 $variation_stock_data = array();
+$variation_ids = array();
 $var_id = 0;
 
 if ($product->is_type('simple')) {
