@@ -271,9 +271,16 @@
 
       h3 {
         text-align: left !important;
-        color: $b-primary !important;
-        line-height: 26px !important;
-        font-size: 16px !important;
+        line-height: 0 !important;
+        font-size: 0 !important;
+
+        &:before {
+          content: attr(data-variation-option);
+          display: block;
+          line-height: 26px !important;
+          font-size: 16px !important;
+          color: $b-primary !important;
+        }
       }
     }
 

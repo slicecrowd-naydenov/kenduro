@@ -109,6 +109,7 @@ if ($product->get_type() === 'easy_product_bundle') {
 					'id' => $variation_id, // ID на вариацията
 					'type' => $variation_product->get_type(), // Тип на вариацията
 					'quantity' => $variation_product->get_data()['stock_quantity'],
+					'variation_option' => $variation_product->get_data()['attribute_summary'],
 					'delivery_time_text' => $delivery_var_time_text,
 					'name' => $parent_product->get_name() . ' ' . $variation_product->get_data()['attribute_summary']
 				];
