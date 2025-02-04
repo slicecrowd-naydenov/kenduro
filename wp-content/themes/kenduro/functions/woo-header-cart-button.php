@@ -155,41 +155,44 @@ function trigger_ajax_to_cart() {
         // $('.lapilliUI-Input__field').attr('placeholder', 'Търси продукт');
         $('.sku-value').html($('.sku').text());
 
-        // $('.product-type-easy_product_bundle').find('.single_add_to_cart_button').on('click', function(e) {
-        //   e.preventDefault();
-        //   e.stopPropagation();
-        //   let $thisbutton = $(this),
-        //   data = 'product_id=' + $($thisbutton).attr('data-product_id');
+        $('.product-type-easy_product_bundle').find('.single_add_to_cart_button').on('click', function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          let $thisbutton = $(this),
+          data = {
+            'product_id': $($thisbutton).attr('data-product_id'),
+            'asnp_wepb_items': $('#asnp_wepb_items').attr('value')
+          };
 
-        //   jQuery(document.body).trigger('adding_to_cart', [$thisbutton, data]);
+          jQuery(document.body).trigger('adding_to_cart', [$thisbutton, data]);
 
-        //   jQuery.ajax({
-        //     type: 'POST',
-        //     url: woocommerce_params.wc_ajax_url.toString().replace('%%endpoint%%', 'add_to_cart'),
-        //     data: data,
-        //     beforeSend: function(response) {
-        //       $thisbutton
-        //         .prop('disabled', true)
-        //         .removeClass('added')
-        //         .addClass('loading');
-        //     },
-        //     complete: function(response) {
-        //       $thisbutton
-        //         .prop('disabled', false)
-        //         .addClass('added')
-        //         .removeClass('loading');
-        //     },
-        //     success: function(response) {
-        //       if (response.error && response.product_url) {
-        //         window.location = response.product_url;
-        //         return;
-        //       }
-        //       jQuery(document.body).trigger('added_to_cart', [response.fragments, response.cart_hash, $thisbutton]);
-        //     },
-        //   });
+          jQuery.ajax({
+            type: 'POST',
+            url: woocommerce_params.wc_ajax_url.toString().replace('%%endpoint%%', 'add_to_cart'),
+            data: data,
+            beforeSend: function(response) {
+              $thisbutton
+                .prop('disabled', true)
+                .removeClass('added')
+                .addClass('loading');
+            },
+            complete: function(response) {
+              $thisbutton
+                .prop('disabled', false)
+                .addClass('added')
+                .removeClass('loading');
+            },
+            success: function(response) {
+              if (response.error && response.product_url) {
+                window.location = response.product_url;
+                return;
+              }
+              jQuery(document.body).trigger('added_to_cart', [response.fragments, response.cart_hash, $thisbutton]);
+            },
+          });
 
-        //   return false;
-        // });
+          // return false;
+        });
 
         // $('.single_add_to_cart_button').on('click', function(e){ 
         //   e.preventDefault();
