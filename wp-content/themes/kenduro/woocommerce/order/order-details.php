@@ -1,6 +1,4 @@
 <?php
-use Lean\Load;
-
 /**
  * Order details
  *
@@ -14,12 +12,14 @@ use Lean\Load;
  *
  * @see     https://woocommerce.com/document/template-structure/
  * @package WooCommerce\Templates
- * @version 9.0.0
+ * @version 9.6.0
  *
  * @var bool $show_downloads Controls whether the downloads table should be rendered.
  */
 
  // phpcs:disable WooCommerce.Commenting.CommentHooks.MissingHookComment
+
+use Lean\Load;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -59,6 +59,7 @@ if ( $show_downloads ) {
 					foreach ($order_items as $item_id => $item) {
 						$product = $item->get_product();
 		
+
 						wc_get_template(
 							'order/order-details-item.php',
 							array(

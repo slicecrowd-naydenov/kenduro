@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Related Products
  *
@@ -11,9 +10,9 @@
  * happen. When this occurs the version of the template file will be bumped and
  * the readme will list any important changes.
  *
- * @see         https://docs.woocommerce.com/document/template-structure/
+ * @see         https://woocommerce.com/document/template-structure/
  * @package     WooCommerce\Templates
- * @version     3.9.0
+ * @version     9.6.0
  */
 
 use Lean\Load;
