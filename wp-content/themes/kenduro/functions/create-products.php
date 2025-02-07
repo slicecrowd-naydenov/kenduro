@@ -58,6 +58,56 @@ function getInnermostValue($array) {
   return $array;
 }
 
+function get_related_records_cached($app_id) {
+  $cache_key = 'related_records_' . $app_id;
+  $cached_data = get_transient($cache_key);
+
+  if ($cached_data === false) {
+    $cached_data = get_column_fields_related($app_id);
+    set_transient($cache_key, $cached_data, 604800); // Кешира за 10 минути
+  }
+
+  return $cached_data;
+}
+
+function fetch_column_fields_cached($app_id) {
+  static $cache = []; // Локален статичен кеш за функцията
+
+  if (isset($cache[$app_id])) {
+      return $cache[$app_id]; // Ако вече е заредено, върни от статичния кеш
+  }
+
+  $cache_key = 'fetch_column_fields_' . $app_id;
+  $cached_data = get_transient($cache_key);
+
+  if ($cached_data === false) {
+      $cached_data = fetch_column_fields($app_id);
+      set_transient($cache_key, $cached_data, 604800);
+  }
+
+  $cache[$app_id] = $cached_data; // Запази в локалния кеш на функцията
+  return $cached_data;
+}
+
+function post_column_fields_cached($app_id) {
+  static $cache = []; // Локален статичен кеш за функцията
+
+  if (isset($cache[$app_id])) {
+      return $cache[$app_id]; // Ако вече е заредено, върни от статичния кеш
+  }
+
+  $cache_key = 'post_column_fields_' . $app_id;
+  $cached_data = get_transient($cache_key);
+
+  if ($cached_data === false) {
+      $cached_data = post_column_fields($app_id);
+      set_transient($cache_key, $cached_data, 604800);
+  }
+
+  $cache[$app_id] = $cached_data; // Запази в локалния кеш на функцията
+  return $cached_data;
+}
+
 // function get_all_products($request) {
 //   global $fieldsToRemove;
 //   $ss_ids = get_field('ss_ids', 'option');
@@ -69,7 +119,7 @@ function getInnermostValue($array) {
 
 //   $related_records = get_column_fields_related($id);
 //   $product_variations_fields = fetch_column_fields($ss_ids['product_variations']);
-//   $product_fields = fetch_column_fields($ss_ids['products_app_id']);
+//   $product_fields = fetch_column_fields_cached($ss_ids['products_app_id']);
 //   $product_variation = get_column_field_id('product_variation', $product_variations_fields);
 //   $product_var_id = get_column_field_id('product_var_id', $product_fields);
 //   $existing_ids = array_column($related_records['related_records'], 'id');
@@ -124,8 +174,8 @@ function mass_update_create_products($request) {
 
 
   $external_api_response = post_column_fields_limit($ss_ids['products_app_id'], $limit, $offset);
-  $related_records = get_column_fields_related($ss_ids['products_app_id']);
-  $product_fields = fetch_column_fields($ss_ids['products_app_id']);
+  $related_records = get_related_records_cached($ss_ids['products_app_id']);
+  $product_fields = fetch_column_fields_cached($ss_ids['products_app_id']);
   $product_var_id = get_column_field_id('product_var_id', $product_fields);
   $existing_ids = array_column($related_records['related_records'], 'id');
 
@@ -169,10 +219,12 @@ function mass_update_create_products($request) {
 }
 
 function update_individually_product($request) {
+  // $ss_ids = get_field('ss_ids', 'option');
   $id = $request->get_param('id');
   $record_id = $request->get_param('record_id');
 
   $filteredArrays = get_record($id, $record_id);
+  // fetch_column_fields_cached($ss_ids['product_variations']);
 
   update_woocommerce_product($filteredArrays, $id);
 
@@ -277,7 +329,7 @@ function update_product_manually($data, $product_id) {
   $product = wc_get_product($product_id);
   if ($product) {
     $ss_ids = get_field('ss_ids', 'option');
-    $product_variations_fields = fetch_column_fields($ss_ids['product_variations']);
+    $product_variations_fields = fetch_column_fields_cached($ss_ids['product_variations']);
     $product_variations_quantity = get_column_field_id('product_variations_quantity', $product_variations_fields);
     $set_regular_price = get_column_field_id('set_regular_price', $product_variations_fields);
 	  // $delivery_time = get_column_field_id('delivery_time', $product_variations_fields);
@@ -411,7 +463,7 @@ function get_column_field_id($helper_text, $fetch_variation_columns) {
 
 function is_variable_product($id, $product_id_slug, $product_variation_slug) {
   $ss_ids = get_field('ss_ids', 'option');
-  $product_variations = post_column_fields($ss_ids['product_variations']);
+  $product_variations = post_column_fields_cached($ss_ids['product_variations']);
   $result = false;
 
   foreach ($product_variations['items'] as $product_variation) {
@@ -454,13 +506,13 @@ function process_product_attributes($product_variation, $filters, $filter_arr, $
 
 function create_variation($pid, $term_slug, $product_variations_fields, $attributes_data) {
   $ss_ids = get_field('ss_ids', 'option');
-  $product_variations = post_column_fields($ss_ids['product_variations']);
+  $product_variations = post_column_fields_cached($ss_ids['product_variations']);
   $filters = array_filter($product_variations_fields, function($k) {
     return str_starts_with($k['help_text'], 'filter_');
   });
-  $filters_id = fetch_column_fields($ss_ids['filters_id']);
+  $filters_id = fetch_column_fields_cached($ss_ids['filters_id']);
   $filter_values = get_column_field_id('filter_values', $filters_id);
-  $filter_arr = post_column_fields($ss_ids['filters_id']);
+  $filter_arr = post_column_fields_cached($ss_ids['filters_id']);
 	$product_variations_quantity = get_column_field_id('product_variations_quantity', $product_variations_fields);
   // $parent_product = wc_get_product($pid);
   // $parent_product_sku = $parent_product->get_sku();
@@ -579,14 +631,14 @@ function add_img_to_gallery($product_id,$image_id_array){
 
 function create_simple_product($pid, $term_slug, $product_fields, $attributes_data) {
   $ss_ids = get_field('ss_ids', 'option');
-  $product_variations = post_column_fields($ss_ids['product_variations']);
-  $product_variations_fields = fetch_column_fields($ss_ids['product_variations']);
+  $product_variations = post_column_fields_cached($ss_ids['product_variations']);
+  $product_variations_fields = fetch_column_fields_cached($ss_ids['product_variations']);
   $filters = array_filter($product_variations_fields, function($k) {
     return str_starts_with($k['help_text'], 'filter_');
   });
-  $filters_id = fetch_column_fields($ss_ids['filters_id']);
+  $filters_id = fetch_column_fields_cached($ss_ids['filters_id']);
   $filter_values = get_column_field_id('filter_values', $filters_id);
-  $filter_arr = post_column_fields($ss_ids['filters_id']);
+  $filter_arr = post_column_fields_cached($ss_ids['filters_id']);
 	$product_variations_quantity = get_column_field_id('product_variations_quantity', $product_fields);
   // $attr_color = get_column_field_id('attr_color', $product_fields);
 	$product_id_slug = get_column_field_id('product_variation', $product_fields);
@@ -809,8 +861,8 @@ function generate_simple_product($item, $ss_ids, $product_fields, $product_varia
 function create_woocommerce_products($filteredData): ?object {
   // $count = 0;
   $ss_ids = get_field('ss_ids', 'option');
-  $product_fields = fetch_column_fields($ss_ids['products_app_id']);
-  $product_variations_fields = fetch_column_fields($ss_ids['product_variations']);
+  $product_fields = fetch_column_fields_cached($ss_ids['products_app_id']);
+  $product_variations_fields = fetch_column_fields_cached($ss_ids['product_variations']);
   $product_id_slug = get_column_field_id('product_variation', $product_variations_fields);
   $product_variation_slug = get_column_field_id('is_variation', $product_variations_fields);
   $create_product = get_column_field_id('create_product', $product_fields);
@@ -951,11 +1003,10 @@ function update_attributes($chatGPTtext, $brand, $brand_text, $attrBrand, $color
 
 function update_woocommerce_product($item, $id) {
   $ss_ids = get_field('ss_ids', 'option');
-  $product_fields = fetch_column_fields($ss_ids['products_app_id']);    
-  $product_variations_fields = fetch_column_fields($ss_ids['product_variations']);
+  $product_fields = fetch_column_fields_cached($ss_ids['products_app_id']);    
+  $product_variations_fields = fetch_column_fields_cached($ss_ids['product_variations']);
   $product_var_id = get_column_field_id('product_var_id', $product_fields);
   
-  $product_variations_fields = fetch_column_fields($ss_ids['product_variations']);
   $product_id_slug = get_column_field_id('product_variation', $product_variations_fields);
   $product_variation_slug = get_column_field_id('is_variation', $product_variations_fields);
 
