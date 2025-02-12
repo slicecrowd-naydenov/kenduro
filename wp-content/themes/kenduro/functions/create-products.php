@@ -1071,6 +1071,7 @@ function update_attributes($chatGPTtext, $brand, $brand_text, $attrBrand, $color
 //   // delete_transient('wc_transients_cache');
 // }
 
+
 function update_woocommerce_product($item, $id) {
   $ss_ids = get_field('ss_ids', 'option');
   $product_fields = fetch_column_fields_cached($ss_ids['products_app_id']);    
