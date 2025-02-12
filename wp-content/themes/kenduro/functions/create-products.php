@@ -504,9 +504,9 @@ function process_product_attributes($product_variation, $filters, $filter_arr, $
   return $attributes;
 }
 
-function create_variation($pid, $term_slug, $product_variations_fields, $attributes_data) {
+function create_variation($pid, $term_slug, $product_variations_fields, $attributes_data, $product_variations) {
   $ss_ids = get_field('ss_ids', 'option');
-  $product_variations = post_column_fields_cached($ss_ids['product_variations']);
+  // $product_variations = post_column_fields_cached($ss_ids['product_variations']);
   $filters = array_filter($product_variations_fields, function($k) {
     return str_starts_with($k['help_text'], 'filter_');
   });
@@ -517,18 +517,26 @@ function create_variation($pid, $term_slug, $product_variations_fields, $attribu
   // $parent_product = wc_get_product($pid);
   // $parent_product_sku = $parent_product->get_sku();
 	$product_id_slug = get_column_field_id('product_variation', $product_variations_fields);
-  $attr_color = get_column_field_id('attr_color', $product_variations_fields);
+  // $attr_color = get_column_field_id('attr_color', $product_variations_fields);
   $variation_product_id = get_column_field_id('variation_product_id', $product_variations_fields);
   $remove_from_website = get_column_field_id('remove_from_website', $product_variations_fields);
   $set_regular_price = get_column_field_id('set_regular_price', $product_variations_fields);
   $delivery_time_text = get_column_field_id('delivery_time_text', $product_variations_fields);
 
-  // $filters = array_filter($product_variations_fields, function($k) {
-  //   return str_starts_with($k['help_text'], 'filter_');
-  // });
+  $product = wc_get_product($pid);
+  $existing_variation_ids = $product->get_children(); // Взима всички съществуващи вариации
 
-  foreach ($product_variations['items'] as $product_variation) {
+  $existing_variations = [];
+  foreach ($existing_variation_ids as $variation_id) {
+    $variation = new WC_Product_Variation($variation_id);
+    $get_prod_ss_id = get_post_meta($variation_id, '_my_product_variation_id', true);
+    $existing_variations[$get_prod_ss_id] = $variation_id;
+  }
+
+  foreach ($product_variations as $get_product) {
+    $product_variation = get_record($ss_ids['product_variations'], $get_product);
     if (!empty($product_variation[$product_id_slug]) && $product_variation[$product_id_slug][0] === $term_slug) {
+      $sku = $product_variation[$variation_product_id] ?? '';
       $quantity = isset($product_variation[$product_variations_quantity]) ? $product_variation[$product_variations_quantity] : 0;
       // $stock_status = $quantity > 0 ? 'instock' : 'onbackorder';
       // $manage_stock = $quantity > 0 ? true : false;
@@ -555,9 +563,15 @@ function create_variation($pid, $term_slug, $product_variations_fields, $attribu
       // update_post_meta($pid, '_backorders', 'notify');
       // update_post_meta($pid, '_stock', 0);
       $sale_price = ''; // One day when we add Sale price in SS we have to replace this string with that field from SS
-
       // Create variation
-      $variation = new WC_Product_Variation();
+      if (isset($existing_variations[$sku])) {
+        $variation_id = $existing_variations[$sku];
+        $variation = new WC_Product_Variation($variation_id);
+      } else {
+        $variation = new WC_Product_Variation();
+        $variation->set_parent_id($pid);
+      }
+
       $variation->set_parent_id($pid);
       $variation->set_attributes($attributes);
       $variation->set_manage_stock(true);
@@ -578,6 +592,12 @@ function create_variation($pid, $term_slug, $product_variations_fields, $attribu
       if (getInnermostValue($product_variation[$delivery_time_text]) !== null || '') {
         update_post_meta($variation_id, '_my_delivery_time_text', getInnermostValue($product_variation[$delivery_time_text]));
       }
+    }
+  }
+
+  foreach ($existing_variations as $key => $value) {
+    if (!in_array($key, $product_variations)) {
+      wp_delete_post($value, true);
     }
   }
 }
@@ -629,24 +649,23 @@ function add_img_to_gallery($product_id,$image_id_array){
   update_post_meta($product_id, '_product_image_gallery', implode(',',$image_id_array));
 }
 
-function create_simple_product($pid, $term_slug, $product_fields, $attributes_data) {
+function create_simple_product($pid, $term_slug, $product_variations_fields, $attributes_data, $product_variations) {
   $ss_ids = get_field('ss_ids', 'option');
-  $product_variations = post_column_fields_cached($ss_ids['product_variations']);
-  $product_variations_fields = fetch_column_fields_cached($ss_ids['product_variations']);
   $filters = array_filter($product_variations_fields, function($k) {
     return str_starts_with($k['help_text'], 'filter_');
   });
   $filters_id = fetch_column_fields_cached($ss_ids['filters_id']);
   $filter_values = get_column_field_id('filter_values', $filters_id);
   $filter_arr = post_column_fields_cached($ss_ids['filters_id']);
-	$product_variations_quantity = get_column_field_id('product_variations_quantity', $product_fields);
+	$product_variations_quantity = get_column_field_id('product_variations_quantity', $product_variations_fields);
   // $attr_color = get_column_field_id('attr_color', $product_fields);
-	$product_id_slug = get_column_field_id('product_variation', $product_fields);
-  $set_regular_price = get_column_field_id('set_regular_price', $product_fields);
-  $product_variation_sku = get_column_field_id('product_variation_sku', $product_fields);
-  $delivery_time_text = get_column_field_id('delivery_time_text', $product_fields);
+	$product_id_slug = get_column_field_id('product_variation', $product_variations_fields);
+  $set_regular_price = get_column_field_id('set_regular_price', $product_variations_fields);
+  $product_variation_sku = get_column_field_id('product_variation_sku', $product_variations_fields);
+  $delivery_time_text = get_column_field_id('delivery_time_text', $product_variations_fields);
+  $product_variation = get_record($ss_ids['product_variations'], $product_variations);
+
   
-  foreach ($product_variations['items'] as $product_variation) {
     // $is_set_color = isset($product_variation[$attr_color]) && $product_variation[$attr_color] !== '';
     if (!empty($product_variation[$product_id_slug]) && $product_variation[$product_id_slug][0] === $term_slug) {
       $quantity = isset($product_variation[$product_variations_quantity]) && (int)$product_variation[$product_variations_quantity] !== 0 ? (int)$product_variation[$product_variations_quantity] : 0;
@@ -707,11 +726,10 @@ function create_simple_product($pid, $term_slug, $product_fields, $attributes_da
 
       update_field($field_name, $rows, $pid);
     }
-  }
 }
 
 // Create Variable product
-function generate_variable_products($item, $ss_ids, $product_fields, $product_variations_fields, $incoming_id) {
+function generate_variable_products($item, $ss_ids, $product_fields, $product_variations_fields, $incoming_id, $product_id = null) {
 	$product_sku = get_column_field_id('set_sku', $product_fields);
 	$attr_color = get_column_field_id('color', $product_fields);
 	$attr_brand = get_column_field_id('brand', $product_fields);
@@ -721,8 +739,9 @@ function generate_variable_products($item, $ss_ids, $product_fields, $product_va
 	$name_bg = get_column_field_id('product_name_bg', $product_fields);
   $seo_description_bg = get_column_field_id('seo_description_bg', $product_fields);
 	$seo_keywords = get_column_field_id('seo_keywords', $product_fields);
+  $product_var_id = get_column_field_id('product_var_id', $product_fields);
 
-  $variations = new WC_Product_Variable();
+  $variations = new WC_Product_Variable($product_id);
 
   $variations->set_name($item[$name_bg]);
   $variations->set_slug($item['title']);
@@ -781,13 +800,17 @@ function generate_variable_products($item, $ss_ids, $product_fields, $product_va
   set_values($product_fields, $pid, $item);
   update_acf($item, $pid, false);
 
-  create_variation($pid, $incoming_id, $product_variations_fields, $attributes_data);
+  // foreach ($item[$product_var_id] as $prod_variation) {
+  //   $get_record = get_record('651f9c5af5b14e0d99b3e73c', $prod_variation);
+  create_variation($pid, $incoming_id, $product_variations_fields, $attributes_data, $item[$product_var_id]);
+    
+  // }
 
   return $pid;
 }
 
 // Create Simple products function
-function generate_simple_product($item, $ss_ids, $product_fields, $product_variations_fields, $incoming_id) {
+function generate_simple_product($item, $ss_ids, $product_fields, $product_variations_fields, $incoming_id, $product_id = null) {
 	$attr_color = get_column_field_id('color', $product_fields);
 	$attr_brand = get_column_field_id('brand', $product_fields);
 	$bike_compatibility_text = get_column_field_id('bike_compatibility_text', $product_fields);
@@ -798,7 +821,7 @@ function generate_simple_product($item, $ss_ids, $product_fields, $product_varia
 	$seo_keywords = get_column_field_id('seo_keywords', $product_fields);
   $product_var_id = get_column_field_id('product_var_id', $product_fields);
 
-  $simple_product = new WC_Product_Simple();
+  $simple_product = new WC_Product_Simple($product_id);
   $simple_product->set_name($item[$name_bg]); // product title
   $simple_product->set_status('publish');
   $simple_product->set_slug($item['title']);
@@ -853,7 +876,7 @@ function generate_simple_product($item, $ss_ids, $product_fields, $product_varia
   $item['product_variation_id'] = $item[$product_var_id];
   set_values($product_fields, $p_id, $item);
   update_acf($item, $p_id, false);
-  create_simple_product($p_id, $incoming_id, $product_variations_fields, $attributes_data);
+  create_simple_product($p_id, $incoming_id, $product_variations_fields, $attributes_data, $item[$product_var_id][0]);
 
   return $p_id;
 }
@@ -910,20 +933,20 @@ function create_woocommerce_products($filteredData): ?object {
           // if Smartsuite product record is updated after Woo product last updated or if we have $globalUpdate
           if (is_variable_product($incoming_id, $product_id_slug, $product_variation_slug)) {
             // Delete post which is updated
-            wp_delete_post($product_id, false);
-            delete_transient('wc_transients_cache');
+            // wp_delete_post($product_id, false);
+            // delete_transient('wc_transients_cache');
             // Create again post with updated DATA
-            $pid = generate_variable_products($item, $ss_ids, $product_fields, $product_variations_fields, $incoming_id);
+            $pid = generate_variable_products($item, $ss_ids, $product_fields, $product_variations_fields, $incoming_id, $product_id);
   
             if (!is_wp_error($pid)) {
               $product_id = $pid;
             }
           } else {
             // Delete post which is updated
-            wp_delete_post($product_id, false);
-            delete_transient('wc_transients_cache');
+            // wp_delete_post($product_id, false);
+            // delete_transient('wc_transients_cache');
             // Create again post with updated DATA
-            $p_id = generate_simple_product($item, $ss_ids, $product_fields, $product_variations_fields, $incoming_id);
+            $p_id = generate_simple_product($item, $ss_ids, $product_fields, $product_variations_fields, $incoming_id, $product_id);
   
             if (!is_wp_error($p_id)) {
               $product_id = $p_id;
@@ -948,21 +971,16 @@ function create_woocommerce_products($filteredData): ?object {
 }
 
 function update_attributes($chatGPTtext, $brand, $brand_text, $attrBrand, $color, $attrColor, $pid) {
-  // function update_attributes($brand, $brand_text, $attrBrand, $color, $attrColor, $pid) {
   $product = wc_get_product($pid);
-
   $attributes_data = array();
-  $is_set_brand = (is_array($brand) && count($brand) > 0) ? $brand[0] : '';
-  $is_set_color = (is_array($color) && count($color) > 0) ? $color[0] : '';
-  // $is_set_compatibility = count($compatibility) > 0 ? $compatibility_text : '';
-  // // $product = wc_get_product($pid);
 
-  if ($chatGPTtext !== '') {
-    // if is set Attr Color, add Attributes but not create variations
-    // $chatGPTtextFormatted = str_replace(["<br>", "\n"], ", ", $chatGPTtext['preview']);
+  // Изчистваме старите стойности за всички атрибути, които ще обновяваме
+  wp_set_object_terms($pid, array(), 'pa_compability');
+  wp_set_object_terms($pid, array(), 'pa_'.$attrBrand);
+  wp_set_object_terms($pid, array(), 'pa_'.$attrColor);
 
-    $temp_array = explode(',', $chatGPTtext);
-    $mockup_array = array_map('trim', $temp_array);
+  if (!empty($chatGPTtext)) {
+    $mockup_array = array_map('trim', explode(',', $chatGPTtext));
     wp_set_object_terms($pid, $mockup_array, 'pa_compability', true);
 
     $attributes_data['pa_compability'] = array(
@@ -972,9 +990,8 @@ function update_attributes($chatGPTtext, $brand, $brand_text, $attrBrand, $color
     );
   }
 
-  if ($is_set_color !== '') {
-    // if is set Attr Color, add Attributes but not create variations
-    wp_set_object_terms($pid, array($is_set_color), 'pa_'.$attrColor, true);
+  if (!empty($color)) {
+    wp_set_object_terms($pid, array($color[0]), 'pa_'.$attrColor, true);
 
     $attributes_data['pa_'.$attrColor] = array(
       'name' => 'pa_'.$attrColor,
@@ -983,8 +1000,7 @@ function update_attributes($chatGPTtext, $brand, $brand_text, $attrBrand, $color
     );
   }
 
-  if ($is_set_brand !== '') {
-    // if is set Attr Brand, add Attributes but not create variations
+  if (!empty($brand)) {
     wp_set_object_terms($pid, array($brand_text), 'pa_'.$attrBrand, true);
 
     $attributes_data['pa_'.$attrBrand] = array(
@@ -993,13 +1009,67 @@ function update_attributes($chatGPTtext, $brand, $brand_text, $attrBrand, $color
       'is_taxonomy' => '1'
     );
   }
+
   update_post_meta($pid, '_product_attributes', $attributes_data);
-  
   $product->save();
+
   return $attributes_data;
-  // delete_transient('wc_attribute_taxonomies');
-  // delete_transient('wc_transients_cache');
 }
+
+
+// function update_attributes($chatGPTtext, $brand, $brand_text, $attrBrand, $color, $attrColor, $pid) {
+//   // function update_attributes($brand, $brand_text, $attrBrand, $color, $attrColor, $pid) {
+//   $product = wc_get_product($pid);
+
+//   $attributes_data = array();
+//   $is_set_brand = (is_array($brand) && count($brand) > 0) ? $brand[0] : '';
+//   $is_set_color = (is_array($color) && count($color) > 0) ? $color[0] : '';
+//   // $is_set_compatibility = count($compatibility) > 0 ? $compatibility_text : '';
+//   // // $product = wc_get_product($pid);
+
+//   if ($chatGPTtext !== '') {
+//     // if is set Attr Color, add Attributes but not create variations
+//     // $chatGPTtextFormatted = str_replace(["<br>", "\n"], ", ", $chatGPTtext['preview']);
+
+//     $temp_array = explode(',', $chatGPTtext);
+//     $mockup_array = array_map('trim', $temp_array);
+//     wp_set_object_terms($pid, $mockup_array, 'pa_compability', true);
+
+//     $attributes_data['pa_compability'] = array(
+//       'name' => 'pa_compability',
+//       'is_visible' => '1',
+//       'is_taxonomy' => '1'
+//     );
+//   }
+
+//   if ($is_set_color !== '') {
+//     // if is set Attr Color, add Attributes but not create variations
+//     wp_set_object_terms($pid, array($is_set_color), 'pa_'.$attrColor, true);
+
+//     $attributes_data['pa_'.$attrColor] = array(
+//       'name' => 'pa_'.$attrColor,
+//       'is_visible' => '1',
+//       'is_taxonomy' => '1'
+//     );
+//   }
+
+//   if ($is_set_brand !== '') {
+//     // if is set Attr Brand, add Attributes but not create variations
+//     wp_set_object_terms($pid, array($brand_text), 'pa_'.$attrBrand, true);
+
+//     $attributes_data['pa_'.$attrBrand] = array(
+//       'name' => 'pa_'.$attrBrand,
+//       'is_visible' => '1',
+//       'is_taxonomy' => '1'
+//     );
+//   }
+//   update_post_meta($pid, '_product_attributes', $attributes_data);
+  
+//   $product->save();
+//   return $attributes_data;
+//   // delete_transient('wc_attribute_taxonomies');
+//   // delete_transient('wc_transients_cache');
+// }
 
 function update_woocommerce_product($item, $id) {
   $ss_ids = get_field('ss_ids', 'option');
@@ -1024,10 +1094,10 @@ function update_woocommerce_product($item, $id) {
 
         // Delete post which is updated
         // pretty_dump('asd');
-        wp_delete_post($product_id, false);
-        delete_transient('wc_transients_cache');
+        // wp_delete_post($product_id, false);
+        // delete_transient('wc_transients_cache');
         // Create again post with updated DATA
-        $p_id = generate_simple_product($item, $ss_ids, $product_fields, $product_variations_fields, $incoming_id);
+        $p_id = generate_simple_product($item, $ss_ids, $product_fields, $product_variations_fields, $incoming_id, $product_id);
 
         if (!is_wp_error($p_id)) {
           $product_id = $p_id;
@@ -1035,10 +1105,10 @@ function update_woocommerce_product($item, $id) {
       } else {
         // Delete and Create new Variable product
 
-        wp_delete_post($product_id, false);
-        delete_transient('wc_transients_cache');
+        // wp_delete_post($product_id, false);
+        // delete_transient('wc_transients_cache');
         // Create again post with updated DATA
-        $pid = generate_variable_products($item, $ss_ids, $product_fields, $product_variations_fields, $incoming_id);
+        $pid = generate_variable_products($item, $ss_ids, $product_fields, $product_variations_fields, $incoming_id, $product_id);
 
         if (!is_wp_error($pid)) {
           $product_id = $pid;
