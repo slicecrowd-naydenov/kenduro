@@ -9,7 +9,22 @@ get_header();
 
 // process_mockup(get_bike_model_types());
 
-$transients = ['wp_nav_menu_cached_mobile', 'wp_nav_menu_cached_desktop', 'get_brands_cached', 'hero_slides_data', 'on_sale_panel_data', 'popular_categories_ids', 'main_categories_transients'];
+$ss_ids = get_field('ss_ids', 'option');
+$transients = [
+  'wp_nav_menu_cached_mobile', 
+  'wp_nav_menu_cached_desktop', 
+  'get_brands_cached', 
+  'hero_slides_data', 
+  'on_sale_panel_data', 
+  'popular_categories_ids', 
+  'main_categories_transients', 
+  'related_records_' . $ss_ids['products_app_id'],
+  'fetch_column_fields_' . $ss_ids['products_app_id'],
+  'fetch_column_fields_' . $ss_ids['product_variations'],
+  'fetch_column_fields_' . $ss_ids['filters_id'],
+  'post_column_fields_' . $ss_ids['product_variations'],
+  'post_column_fields_' . $ss_ids['filters_id'],
+];
 
 foreach ($transients as $transient) {
   if (get_transient($transient)) {

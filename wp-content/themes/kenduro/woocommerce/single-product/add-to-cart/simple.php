@@ -58,6 +58,11 @@ if ($product->get_type() === 'easy_product_bundle') {
 	$bundle_products_ids = array_map(function ($item) {
 		$delivery_time_text = '';
 		$prod = wc_get_product($item['product']);
+
+		if (!$prod) {
+			return null;
+		}
+		
 		$parent_id = $prod->get_parent_id();
 		$parent_product = wc_get_product($parent_id);
 		$get_product_name = '';
