@@ -8,6 +8,7 @@ function create_sales_record($response) {
   $invoices_fields = fetch_column_fields($invoices_id);
 
   $invoices_items = get_column_field_id('invoices_items', $invoices_fields);
+  $origins = get_column_field_id('origins', $invoices_fields);
   $delivery_address_field = get_column_field_id('delivery_address_field', $invoices_fields);
   $delivery_city = get_column_field_id('delivery_city', $invoices_fields);
   $woo_items_subtotal = get_column_field_id('woo_items_subtotal', $invoices_fields);
@@ -92,8 +93,12 @@ function create_sales_record($response) {
       "location_country" => "Bulgaria",
     );
 
+    $utm_source = get_post_meta($response['order_id'], '_wc_order_attribution_utm_source', true);
+    $utm_source = !empty($utm_source) ? $utm_source : 'Няма данни';
+
     $new_data = array(
       $invoices_items => $sales_ids_array,
+      $origins => $utm_source,
       $delivery_type => $econt_delivery_type,
       $delivery_city => $city,
       $woo_items_subtotal => $order_items_subtotal,
