@@ -239,6 +239,13 @@ export default () => {
     }
   });
 
+  $('.category-description').find('.read-more').on('click', function() {
+    $('.category-description__box').toggleClass('expanded').css('height', function() {
+        return $(this).hasClass('expanded') ? $(this).prop('scrollHeight') + 'px' : '300px';
+    });
+    $(this).text($(this).text() === 'Прочети още' ? 'Скрий' : 'Прочети още');
+});
+
   
 
   // setTimeout(() => {

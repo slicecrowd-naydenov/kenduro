@@ -550,7 +550,10 @@ do_action( 'woocommerce_before_main_content' );
 			?>
 
 			<?php
-			
+									if (is_product_category()) :
+										Load::molecules('category-description/index');
+									endif;
+
 						// echo do_shortcode('[wrvp_recently_viewed_products number_of_products_in_row="4" posts_per_page="4"]');
 									Load::molecules('product-category/product-category-info/index', [
 										'title' => '<span class="highlighted">K</span>enduro е изработен от Teo',
