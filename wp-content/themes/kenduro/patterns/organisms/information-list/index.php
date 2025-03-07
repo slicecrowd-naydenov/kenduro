@@ -17,6 +17,9 @@ $class = isset($args['class']) ? $args['class'] : '';
             <li class="information-list__item">
               <?php Load::atom('svg', ['name' => $arg['icon']]); ?>
               <p class="paragraph tetriary text"><?php echo $arg['text']; ?></p>
+              <?php if (isset($arg['description'])) :?>
+                <p class="paragraph paragraph-m tetriary"><?php echo $arg['description']; ?></p>
+              <?php endif; ?>
             </li>
           <?php endforeach; ?>
         </ul>

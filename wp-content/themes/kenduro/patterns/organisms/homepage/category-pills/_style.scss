@@ -25,52 +25,26 @@
   .tab-content {
     margin-bottom: 40px;
 
-    .cat-img {
-      border-radius: $radius-medium;
-      text-decoration: none;
-      overflow: hidden;
-      position: relative;
-      margin: 30px 0 100px;
-      @extend .flex-center;
+    .see-all-products {
+      margin: 50px auto 100px;
+      border-bottom: 1px solid $G-1-5;
 
-      @include media-breakpoint-down(xl) {
-        padding: 45px 30px;
-        background-image: url("../../assets/images/teo-background.webp");
-        background-size: 200%;
-        background-position: center right 20%;
-        color: $G-0;
-        margin-bottom: 52px;
+      @include media-breakpoint-down(sm) {
+        margin: 30px auto 80px;
+        border: none;
       }
 
-      h4 {
-        position: absolute;
-        left: 50%;
-        top: 50%;
-        transform: translate(-50%, -50%);
+      a.button-primary-orange {
+        display: block;
+        width: fit-content;  
+        margin: 0 auto;
+        position: relative;
+        top: 20px;
+        outline: 10px solid $G-0;
 
-        @include media-breakpoint-down(xl) {
-          position: relative;
-          left: auto;
-          top: auto;
-          transform: none;
-          margin: 0;
-          padding-right: 20px;
-          background: url("../../assets/icons/svg/arrow_orange.svg") center right no-repeat;
-        }
-
-        svg {
-          position: relative;
-          top: -2px;
-
-          @include media-breakpoint-down(xl) {
-            display: none;
-          }
-        }
-      }
-
-      img {
-        @include media-breakpoint-down(xl) {
-          display: none;
+        @include media-breakpoint-down(sm) {
+          width: 100%;
+          text-align: center;
         }
       }
     }

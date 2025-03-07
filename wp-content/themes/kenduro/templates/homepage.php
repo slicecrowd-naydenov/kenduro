@@ -13,14 +13,31 @@ get_header();
     Load::organisms('information-list/index', [
       'class' => 'with-border',
       'list'  => [
-        ['icon' => 'star', 'text' => 'Уникални продукти'],
-        ['icon' => 'customer-support', 'text' => 'Незабавна поддръжка на клиенти'],
-        ['icon' => 'return-policy', 'text' => '14-дневна политика за връщане'],
-        ['icon' => 'payment', 'text' => 'Плащане при доставка'],
+        [
+          'icon' => 'star', 
+          'text' => 'Уникални продукти',
+          'description' => 'Екипировка, която няма да намериш никъде другаде !'
+        ],
+        [
+          'icon' => 'customer-support', 
+          'text' => 'Лично отношение',
+          'description' => 'Най-доброто обслужване на клиенти от всичките ни конкуренти, винаги може да разчиташ на нас !'
+        ],
+        [
+          'icon' => 'return-policy', 
+          'text' => '14-дневна политика за връщане',
+          'description' => 'Не се притеснявай ако не си сигурен кой размер ти трябва. Поръчай ги всичките :)'
+        ],
+        [
+          'icon' => 'payment', 
+          'text' => 'Плащане при доставка',
+          'description' => 'Първо провери дали ти харесва и чак тогава го плати ! Ние сме тук да създаваме приятели, а не клиенти.'
+        ],
       ]
     ]);
     Load::organisms('homepage/popular-cats/index'); 
     Load::organisms('homepage/category-pills/index');
+    Load::organisms('homepage/exclusive-partners/index');
     ?>
     <div class="container">
       <div class="row">

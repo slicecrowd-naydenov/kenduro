@@ -55,13 +55,12 @@ if ($main_categories) : ?>
           [products limit='10' paginate='true'] 
           ================================= -->
             <?php echo do_shortcode("[products limit='10' columns='5']"); ?>
-            <a href="<?php echo esc_attr(get_site_url()); ?>/shop" class="cat-img">
-              <img src="<?php echo IMAGES_PATH; ?>/categories/image_grey_for_all_products.jpg" alt="all products background"/>
-              <h4>
-                Разгледайте <strong>всички</strong> Kenduro продукти
-                <?php Load::atom('svg', ['name' => 'arrow_xl']); ?>
-              </h4>
-            </a>
+            
+            <div class="see-all-products">
+              <a href="<?php echo esc_attr(get_site_url()); ?>/shop" class="button button-primary-orange paragraph paragraph-l semibold">
+                Разгледай всички продукти в Кендуро
+              </a>
+            </div>
           </div>
           <?php foreach ($main_categories as $id => $info) : ?>
             <div class="tab-pane fade" id="pills-<?php echo $info->slug; ?>" role="tabpanel" aria-labelledby="pills-<?php echo $info->slug; ?>-tab">
