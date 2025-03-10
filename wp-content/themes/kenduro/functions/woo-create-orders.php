@@ -9,6 +9,11 @@ function create_sales_record($response) {
 
   $invoices_items = get_column_field_id('invoices_items', $invoices_fields);
   $origins = get_column_field_id('origins', $invoices_fields);
+  $source_type = get_column_field_id('source-type', $invoices_fields);
+  $source_medium = get_column_field_id('source-medium', $invoices_fields);
+  $source_campaign_name = get_column_field_id('source-campaign-name', $invoices_fields);
+  $source_session_pages = get_column_field_id('source-session-pages', $invoices_fields);
+  $source_devices = get_column_field_id('source-device', $invoices_fields);
   $delivery_address_field = get_column_field_id('delivery_address_field', $invoices_fields);
   $delivery_city = get_column_field_id('delivery_city', $invoices_fields);
   $woo_items_subtotal = get_column_field_id('woo_items_subtotal', $invoices_fields);
@@ -94,11 +99,26 @@ function create_sales_record($response) {
     );
 
     $utm_source = get_post_meta($response['order_id'], '_wc_order_attribution_utm_source', true);
+    $utm_source_type = get_post_meta($response['order_id'], '_wc_order_attribution_source_type', true);
+    $utm_source_medium = get_post_meta($response['order_id'], '_wc_order_attribution_utm_medium', true);
+    $utm_source_campaign_name = get_post_meta($response['order_id'], '_wc_order_attribution_utm_campaign', true);
+    $utm_session_pages = get_post_meta($response['order_id'], '_wc_order_attribution_session_pages', true);
+    $utm_source_devices = get_post_meta($response['order_id'], '_wc_order_attribution_device_type', true);
     $utm_source = !empty($utm_source) ? $utm_source : 'Няма данни';
+    $utm_source_type = !empty($utm_source_type) ? $utm_source_type : 'Няма данни';
+    $utm_source_medium = !empty($utm_source_medium) ? $utm_source_medium : 'Няма данни';
+    $utm_source_campaign_name = !empty($utm_source_campaign_name) ? $utm_source_campaign_name : 'Няма данни';
+    $utm_session_pages = !empty($utm_session_pages) ? $utm_session_pages : 'Няма данни';
+    $utm_source_devices = !empty($utm_source_devices) ? $utm_source_devices : 'Няма данни';
 
     $new_data = array(
       $invoices_items => $sales_ids_array,
       $origins => $utm_source,
+      $source_type => $utm_source_type,
+      $source_medium => $utm_source_medium,
+      $source_campaign_name => $utm_source_campaign_name,
+      $source_session_pages => $utm_session_pages,
+      $source_devices => $utm_source_devices,
       $delivery_type => $econt_delivery_type,
       $delivery_city => $city,
       $woo_items_subtotal => $order_items_subtotal,
