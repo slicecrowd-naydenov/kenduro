@@ -197,9 +197,9 @@ if ( $get_brand !== null ) {
 	$term_id = $cur_term->term_id;
 	$meta_fields = get_term_meta($term_id);
 	$is_exclusive = isset($meta_fields['exclusive_brand']) && $meta_fields['exclusive_brand'][0];
-	$term_logo_id = $meta_fields['exclusive_logo'][0];
-	$term_banner_id = $meta_fields['exclusive_banner'][0];
-	$brand_description = $meta_fields['brand_description'][0];
+	$term_logo_id = isset($meta_fields['exclusive_logo'][0]) ? $meta_fields['exclusive_logo'][0] : '';
+	$term_banner_id = isset($meta_fields['exclusive_banner'][0]) ? $meta_fields['exclusive_banner'][0] : '';
+	$brand_description = isset($meta_fields['brand_description'][0]) ? $meta_fields['brand_description'][0] : '';
 	$term_logo = wp_get_attachment_url($term_logo_id);
 	$term_banner = wp_get_attachment_url($term_banner_id);
 	$classes = $is_exclusive ? 'exclusive' : 'no-exclusive';
@@ -344,7 +344,7 @@ do_action( 'woocommerce_before_main_content' );
 								src="<?php echo esc_attr($term_logo)?>" 
 								width="<?php echo esc_attr($logo_width); ?>"
     						height="<?php echo esc_attr($logo_height); ?>" 
-								alt="<?php echo esc_attr(strtolower(woocommerce_page_title())); ?>" 
+								alt="<?php echo esc_attr(strtolower(woocommerce_page_title() ?? '')); ?>" 
 							/>
 						</div>
 						<?php 
@@ -406,7 +406,7 @@ do_action( 'woocommerce_before_main_content' );
 									$is_set_bike_compatibility !== '' &&
 									!in_array($get_product_cat, $excluded_categories)
 								) : 
-									$URL = $_SERVER['REDIRECT_URL'];
+									$URL = $_SERVER['REDIRECT_URL'] ?? $_SERVER['REQUEST_URI'] ?? '';
 								?>
 									<a href="<?php echo $URL .'?wpf_filter_compability='.$is_set_bike_compatibility; ?>" class="button button-primary-orange paragraph-m show-cat-bike-compatibility">
 										<?php 
