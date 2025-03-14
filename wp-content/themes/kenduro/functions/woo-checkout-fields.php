@@ -30,6 +30,10 @@ function wc_edit_checkout_fields($fields) {
   $fields['billing']['billing_phone']['priority'] = 21;
   $fields['billing']['billing_email']['priority'] = 22;
 
+  if (!isset($fields['billing']['billing_state']['default']) || empty($fields['billing']['billing_state']['default'])) {
+    $fields['billing']['billing_state']['default'] = 'BG-22'; 
+  }
+
   // Billing fields
   unset($fields['billing']['billing_company']);
   // unset($fields['billing']['billing_country']);
