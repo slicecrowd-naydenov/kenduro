@@ -628,6 +628,11 @@ function getFileURL($fileId, $fileName) {
 
   $tmp = download_url( $finalUrl );
 
+  $pathInfo = pathinfo($fileName);
+  if (!isset($pathInfo['extension']) || empty($pathInfo['extension'])) {
+    $fileName .= '.png';
+  }
+
   $file_array = array(
     'name' => $fileName,
     'tmp_name' => $tmp
