@@ -35,7 +35,7 @@ $terms = get_terms($args);
                 $meta_fields = get_term_meta($term_id);
                 $is_exclusive = isset($meta_fields['exclusive_brand']) && $meta_fields['exclusive_brand'][0];
                 $term_logo_id = array_key_exists('exclusive_logo', $meta_fields) && isset($meta_fields['exclusive_logo'][0]) ? $meta_fields['exclusive_logo'][0] : '';
-                $term_logo = wp_get_attachment_url($term_logo_id);
+                $term_logo = $term_logo_id != 0 ? wp_get_attachment_url($term_logo_id) : IMAGES_PATH.'/no-logo.jpg';
                 $exclusive_class = $is_exclusive ? 'exclusive-brand' : '';
                 ?>
                 <li class="brands__list-item <?php echo esc_attr($exclusive_class); ?>">

@@ -200,7 +200,7 @@ if ( $get_brand !== null ) {
 	$term_logo_id = isset($meta_fields['exclusive_logo'][0]) ? $meta_fields['exclusive_logo'][0] : '';
 	$term_banner_id = isset($meta_fields['exclusive_banner'][0]) ? $meta_fields['exclusive_banner'][0] : '';
 	$brand_description = isset($meta_fields['brand_description'][0]) ? $meta_fields['brand_description'][0] : '';
-	$term_logo = wp_get_attachment_url($term_logo_id);
+	$term_logo = $term_logo_id != 0 ? wp_get_attachment_url($term_logo_id) : IMAGES_PATH.'/no-logo.jpg';
 	$term_banner = wp_get_attachment_url($term_banner_id);
 	$classes = $is_exclusive ? 'exclusive' : 'no-exclusive';
 }
@@ -333,8 +333,8 @@ do_action( 'woocommerce_before_main_content' );
 
 				
 				$logo_metadata = wp_get_attachment_metadata($term_logo_id);
-				$logo_width = isset($logo_metadata['width']) ? $logo_metadata['width'] : 0;
-				$logo_height = isset($logo_metadata['height']) ? $logo_metadata['height'] : 0;
+				$logo_width = isset($logo_metadata['width']) ? $logo_metadata['width'] : 'auto';
+				$logo_height = isset($logo_metadata['height']) ? $logo_metadata['height'] : 'auto';
 				?>
 
 				<div class="brand-info <?php echo esc_attr($classes); ?>">
