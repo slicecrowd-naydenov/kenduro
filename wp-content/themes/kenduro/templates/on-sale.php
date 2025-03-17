@@ -24,7 +24,7 @@ $promo_product_ids = implode(',', $promo_products);
           ]);
 
           // echo do_shortcode('[wccs_discounted_products]');
-          echo do_shortcode('[products ids="'.$promo_product_ids.'" limit="12" columns="4" paginate="true"]');
+          echo do_shortcode('[products ids="'.$promo_product_ids.'" limit="32" columns="4" paginate="true"]');
         ?>
       </div>
     </div>

@@ -236,7 +236,7 @@ $list_categories = function($taxonomies, $temp_arr) use ($parent_IDS, &$list_cat
               </div>
             </div>
             <?php
-              echo do_shortcode('[products limit="16" columns="4" paginate="true" ids="'.$promo_products_ids.'"]');
+              echo do_shortcode('[products limit="32" columns="4" paginate="true" ids="'.$promo_products_ids.'"]');
             ?>
           </div>
 

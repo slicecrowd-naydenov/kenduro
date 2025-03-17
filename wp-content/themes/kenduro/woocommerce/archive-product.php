@@ -435,7 +435,7 @@ do_action( 'woocommerce_before_main_content' );
 							<?php
 							// if ($on_sale) {
 								// pretty_dump($products_on_sale);
-								$limitProducts = wp_is_mobile() ? 6 : 16;
+								$limitProducts = wp_is_mobile() ? 6 : 32;
 
 								if (is_search()) {
 									woocommerce_product_loop_start();

@@ -223,7 +223,7 @@ $promo_product_ids = implode(',', $promo_products);
                 <?php echo do_shortcode('[wpf-filters id=4]'); ?>
               </div>
             </div>
-            <?php echo do_shortcode('[products ids="'.$promo_product_ids.'" limit="12" columns="4" paginate="true"]'); ?>
+            <?php echo do_shortcode('[products ids="'.$promo_product_ids.'" limit="32" columns="4" paginate="true"]'); ?>
           </div> 
           <?php  if (wp_is_mobile()) { ?>
           <div class="mobile-wrapper filter-sidebar">
