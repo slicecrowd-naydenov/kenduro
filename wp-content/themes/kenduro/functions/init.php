@@ -12,7 +12,7 @@ if (!is_admin()) {
   include 'ss-create-order.php';
   include 'get-column-fields.php';
   // include 'filter.php';
-  // include 'woo-recently-viewed-products.php';
+  include 'woo-recently-viewed-products.php';
   include 'woo-product-images.php';
   include 'woo-header-cart-button.php';
   include 'woo-checkout-fields.php';

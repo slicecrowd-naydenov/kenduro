@@ -82,7 +82,10 @@ if ($related_prod) :
 		<?php echo do_shortcode('[products ids="' . implode(',', $related_prod) . '" limit="5" columns="5"]'); ?>
 
 	</section>
+	
 <?php
+      echo do_shortcode('[recently_viewed_products]');
+
 endif;
 
 wp_reset_postdata();
