@@ -40,7 +40,7 @@ if (false === $terms) {
         <?php if (!empty($terms)) : ?>
           <div 
             class="swiper" 
-            data-slider-per-view-mobile="1"
+            data-slider-per-view-mobile="2"
             data-slider-per-view-tablet="2"
             data-slider-per-view="4"
             data-space-between="10"

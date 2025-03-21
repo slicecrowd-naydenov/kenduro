@@ -22,6 +22,7 @@ if ($slides_data === false) {
         'description' => get_sub_field('description'),
         'logo' => get_sub_field('logo_image'),
         'slide_image' => get_sub_field('slide_image'),
+        'slide_image_mobile' => get_sub_field('slide_image_mobile'),
         'cta' => get_sub_field('cta'),
         'has_logo' => get_sub_field('logo_image') ? 'has-logo' : 'no-logo',
       ];
@@ -82,16 +83,17 @@ if ($on_sale_data === false) {
                 <div class="swiper-slide">
                   <?php if ($slide['slide_image']) : 
                     $transformedString = str_replace(['_', '-', '='], ' ', $slide['slide_image']['title']);
+                    $image_url = wp_is_mobile() ? 'slide_image_mobile' : 'slide_image';
                   ?>
                     <div class="slide-image">
                       <img 
-                        src="<?php echo esc_attr($slide['slide_image']['url']); ?>" 
+                        src="<?php echo esc_attr($slide[$image_url]['url']); ?>" 
                         alt="<?php esc_attr_e(strtolower($transformedString)); ?>" 
                         class="<?php echo $set_no_lazy_class; ?>"
                         srcset="
-                          <?php echo $slide['slide_image']['sizes']['woocommerce_thumbnail']; ?> 500w, 
-                          <?php echo $slide['slide_image']['sizes']['medium_large']; ?> 768w, 
-                          <?php echo $slide['slide_image']['sizes']['large']; ?> 1024w"
+                          <?php echo $slide[$image_url]['sizes']['woocommerce_thumbnail']; ?> 500w, 
+                          <?php echo $slide[$image_url]['sizes']['medium_large']; ?> 768w, 
+                          <?php echo $slide[$image_url]['sizes']['large']; ?> 1024w"
                         sizes="
                           (max-width: 456px) 500px,
                           (max-width: 768px) 768px,
@@ -146,9 +148,35 @@ if ($on_sale_data === false) {
             </div>
             <div class="swiper-pagination"></div>
           </div>
-        <?php endif; ?>
+        <?php endif;  
+        
+        Load::organisms('information-list/index', [
+          'class' => 'with-border',
+          'list'  => [
+            [
+              'icon' => 'star', 
+              'text' => 'Уникални продукти',
+              'description' => 'Екипировка, която няма да намериш никъде другаде !'
+            ],
+            [
+              'icon' => 'customer-support', 
+              'text' => 'Лично отношение',
+              'description' => 'Най-доброто обслужване на клиенти от всичките ни конкуренти, винаги може да разчиташ на нас !'
+            ],
+            [
+              'icon' => 'return-policy', 
+              'text' => '14-дневна политика за връщане',
+              'description' => 'Не се притеснявай ако не си сигурен кой размер ти трябва. Поръчай ги всичките :)'
+            ],
+            [
+              'icon' => 'payment', 
+              'text' => 'Плащане при доставка',
+              'description' => 'Първо провери дали ти харесва и чак тогава го плати ! Ние сме тук да създаваме приятели, а не клиенти.'
+            ],
+          ]
+        ]);
 
-        <?php if (!empty($on_sale_data)) : ?>
+        if (!empty($on_sale_data)) : ?>
           <div class="on-sale-container">
             <div class="on-sale-header">
               <h4 class="bold">Намалени в момента</h4>

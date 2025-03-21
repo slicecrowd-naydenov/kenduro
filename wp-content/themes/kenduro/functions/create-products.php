@@ -214,7 +214,7 @@ function mass_update_create_products($request) {
     // Update last date with current date
     update_field('last_date_mass_update', date("Y-m-d"), 'option');
   }
-  
+
   return $response;
 }
 
@@ -348,6 +348,30 @@ function update_product_manually($data, $product_id) {
     // Uncomment this below to force delete woo cache:
     // wc_delete_product_transients($product_id)
   }
+}
+
+function is_image_in_media_library( $id ) {
+  $start_time = microtime(true);
+
+  global $wpdb;
+  $sql = $wpdb->prepare(
+    "SELECT post_id FROM $wpdb->postmeta WHERE meta_key = 'ss_image_id' AND meta_value = %s LIMIT 1",
+    $id
+  );
+
+  // Изчисляваме времето за изпълнение
+  $duration = microtime(true) - $start_time;
+
+  // Път до лог файл (можеш да промениш местоположението на файла)
+  $log_file = ABSPATH . 'wp-content/custom_logs.txt'; // Примерен път
+
+  // Съобщение за логването
+  $log_message = "Function " . __FUNCTION__ . " executed in $duration seconds\n";
+  
+  // Записваме в лог файл
+  file_put_contents($log_file, $log_message, FILE_APPEND);
+  // Връщаме post_id, ако има съвпадение
+  return $wpdb->get_var($sql);
 }
 
 function is_exist_media($id) {
@@ -603,6 +627,12 @@ function create_variation($pid, $term_slug, $product_variations_fields, $attribu
 }
 
 function getFileURL($fileId, $fileName) {
+  // Проверка дали изображението вече съществува
+  $is_exist_media = is_image_in_media_library($fileId);
+  if ($is_exist_media) {
+    return $is_exist_media; // Ако изображението съществува, връщаме съществуващото ID
+  }
+
   $url = 'https://app.smartsuite.com/api/v1/shared-files/' . $fileId . '/get_url/';
   $headers = array(
       'Authorization: Token 2570295cb9c1e4c7f81d46ed046c09bf43fd5740',
@@ -638,13 +668,7 @@ function getFileURL($fileId, $fileName) {
     'tmp_name' => $tmp
   );
 
-  $imageId = 0;
-  $is_exist_media = is_exist_media($fileId);
-  if ($is_exist_media !== 0) {
-    $imageId = $is_exist_media;
-  } else {
-    $imageId = media_handle_sideload($file_array, 0);
-  }
+  $imageId = media_handle_sideload($file_array, 0);
   update_post_meta($imageId, 'ss_image_id', $fileId);
 
   return $imageId;

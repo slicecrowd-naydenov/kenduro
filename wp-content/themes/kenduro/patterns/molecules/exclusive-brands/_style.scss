@@ -17,6 +17,32 @@
 
   .siwper-navigation {
     top: -30px;
+
+    @include media-breakpoint-down(lg) {
+      z-index: 22;
+      bottom: 0;
+      top: auto;
+      width: 50%;
+      display: flex;
+      justify-content: space-between;  
+      right: 50%;
+      transform: translateX(50%);
+    }
+
+    .swiper-button-prev:after,
+    .swiper-button-next:after {
+      @include media-breakpoint-down(lg) {
+        color: $G-8;
+      }
+    }
+  }
+
+  .col {
+    & > p {
+      @include media-breakpoint-down(lg) {
+        text-align: center;
+      }
+    }
   }
 
   .brands__list {
@@ -30,9 +56,32 @@
       flex: none;
       height: 170px;
 
-      @include media-breakpoint-down(md) {
-        min-height: 170px;
-        flex: 0 0 100%;
+      @include media-breakpoint-down(lg) {
+        min-height: auto;
+        height: auto;
+        // flex: 0 0 100%;
+      }
+
+      &-link {
+        @include media-breakpoint-down(lg) {
+          min-height: 71px;
+          height: 71px;
+        }
+      }
+
+      .exclusive-banner {
+        @include media-breakpoint-down(lg) {
+          font-size: 10px;
+        }
+      }
+
+      .brand_name {
+        @include media-breakpoint-down(lg) {
+          align-items: center;
+          font-weight: 600;
+          flex-direction: column;
+          align-items: center;
+        }
       }
 
       img {
