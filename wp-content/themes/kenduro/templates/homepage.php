@@ -55,17 +55,17 @@ get_header();
       </div>
     </div>
     
+    <div class="container">
+      <div class="row">
+        <div class="col">
+          <?php echo do_shortcode('[recently_viewed_products]'); ?>
+        </div>
+      </div>
+    </div>
     <?php 
       Load::molecules('exclusive-brands/index');
       // Load::molecules('best-selling-products/index'); 
       ?>
-      <div class="container">
-        <div class="row">
-          <div class="col">
-            <?php echo do_shortcode('[recently_viewed_products]'); ?>
-          </div>
-        </div>
-      </div>
 </main>
 <?php
 get_footer();

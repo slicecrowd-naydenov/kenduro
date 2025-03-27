@@ -190,7 +190,6 @@ if (post_password_required()) {
 			Load::organisms('information-list/index', [
 				'class' => 'product-single',
 				'list'  => [
-					['icon' => 'customer-support', 'text' => 'Доставка на следващия ден *'],
 					['icon' => 'return-policy', 'text' => 'Тествайте преди да купите'],
 					['icon' => 'payment', 'text' => 'Плащане при доставка'],
 					['icon' => 'return-policy', 'text' => '14-дневна политика за връщане']

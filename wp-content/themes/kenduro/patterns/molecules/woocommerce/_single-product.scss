@@ -23,6 +23,9 @@
     }
 
     div.product {
+      .information-list-section .information-list__item {
+        flex: 1 1 auto
+      }
 
       &.product-type-simple {
         .dsk_table_img {

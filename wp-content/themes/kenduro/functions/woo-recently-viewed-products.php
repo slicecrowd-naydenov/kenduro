@@ -44,7 +44,7 @@ function bbloomer_recently_viewed_shortcode() {
   $limit_products = wp_is_mobile() ? 2 : 5;
 
   // Обгръщаме съдържанието в <div class="container">
-  return $title . do_shortcode("[products ids='$product_ids' orderby='post__in' order='ASC' columns='5' limit='$limit_products']");
+  return '<div class="recently-viewed-products">'.$title . do_shortcode("[products ids='$product_ids' orderby='post__in' order='ASC' columns='5' limit='$limit_products']").'</div>';
 }
 
 // add_shortcode('recently_viewed_products', 'bbloomer_recently_viewed_shortcode');
