@@ -23,6 +23,7 @@ function create_sales_record($response) {
   $woo_coupon = get_column_field_id('woo_coupon', $invoices_fields);
   $delivery_street = get_column_field_id('delivery_street', $invoices_fields);
   $delivery_street_no = get_column_field_id('delivery_street_no', $invoices_fields);
+  $order_from = get_column_field_id('order_from', $invoices_fields);
   $delivery_type = get_column_field_id('delivery_type', $invoices_fields);
   $delivery_ekont_office = get_column_field_id('delivery_ekont_office', $invoices_fields);
   $sales_quantity_ordered = get_column_field_id('sales_quantity_ordered', $sales_fields);
@@ -130,6 +131,7 @@ function create_sales_record($response) {
       $delivery_street => $address_street,
       $delivery_street_no => $address_street_number,
       $delivery_address_field => $delivery_address_arr,
+      $order_from => 'FR74e' // FR74e (Website), KFx5s Phone
     );
 
     $invoice_details = create_record_curl($invoices_id, $new_data, '');
@@ -138,6 +140,7 @@ function create_sales_record($response) {
       create_CRM_record($response['order_id'], $invoice_details['id']);
     }
     update_field('sync_order_with_smartsuite', 'synced', $response['order_id']);
+    update_field('invoice_id', $invoice_details['id'], $response['order_id']);
   } else {
     $error_message = $sales_results->get_error_message();
     echo "Грешка при изпълнение на заявката: $error_message";

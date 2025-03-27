@@ -3,7 +3,7 @@
 use Lean\Load;
 
 
-if (!is_admin()) {
+// if (!is_admin()) {
   include 'create-categories.php';
   include 'create-products.php';
   include 'create-filters.php';
@@ -17,7 +17,7 @@ if (!is_admin()) {
   include 'woo-header-cart-button.php';
   include 'woo-checkout-fields.php';
   include 'woo-create-orders.php';
-} 
+// } 
 
 function add_custom_query_var($vars) {
   $vars[] = 'page';
@@ -768,3 +768,39 @@ function output_filter_modal($get_product_cat, $promo_checked, $promo_link) {
 		Load::molecules('product-category/product-categories-filter/index');
 	}
 }
+
+add_action('woocommerce_order_status_changed', function($order_id, $status_from, $status_to, $order) {
+  $ss_ids = get_field('ss_ids', 'option');
+  $invoices_tab_id = $ss_ids['invoices'];
+  $invoice_id = get_field('invoice_id', $order_id);
+  
+  if ($status_to === 'processing') {
+    $dataBody = array(
+      'status' => array(
+        'value' => 'backlog'
+      ),
+    );
+    update_record_curl($invoices_tab_id, $dataBody , $invoice_id);
+    // error_log("Поръчка #$order_id е направена");
+
+    // error_log("Поръчка #$order_id смени статуса си от $status_from на $status_to");
+  }
+
+  if ($status_to === 'completed') {  
+    $dataBody = array(
+        'status' => array(
+          'value' => 'complete'
+        ),
+      );
+      update_record_curl($invoices_tab_id, $dataBody , $invoice_id);
+  }
+
+  if ($status_to === 'cancelled') {
+    $dataBody = array(
+      'status' => array(
+        'value' => 'NEGL9'
+      ),
+    );
+    update_record_curl($invoices_tab_id, $dataBody , $invoice_id);
+  }
+}, 10, 4);
