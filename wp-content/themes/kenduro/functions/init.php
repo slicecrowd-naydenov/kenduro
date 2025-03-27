@@ -3,7 +3,7 @@
 use Lean\Load;
 
 
-// if (!is_admin()) {
+if (!is_admin()) {
   include 'create-categories.php';
   include 'create-products.php';
   include 'create-filters.php';
@@ -17,7 +17,7 @@ use Lean\Load;
   include 'woo-header-cart-button.php';
   include 'woo-checkout-fields.php';
   include 'woo-create-orders.php';
-// } 
+} 
 
 function add_custom_query_var($vars) {
   $vars[] = 'page';
