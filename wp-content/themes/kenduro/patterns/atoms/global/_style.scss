@@ -146,6 +146,7 @@ h1,
 .h1 {
   font-size: 50px;
   line-height: 68px;
+  letter-spacing: 0;
 
   @include media-breakpoint-down(lg) {
     font-size: 36px;

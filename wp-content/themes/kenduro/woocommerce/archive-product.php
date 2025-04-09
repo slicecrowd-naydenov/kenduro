@@ -257,7 +257,7 @@ do_action( 'woocommerce_before_main_content' );
 				<?php 
 				if (apply_filters('woocommerce_show_page_title', true)) : ?>
 					<!-- .woocommerce-products-header__title -->
-					<h4 class="page-title semibold <?php echo esc_attr($classes); ?>">
+					<h1 class="page-title semibold h4 <?php echo esc_attr($classes); ?>">
 						<?php 
 							if ($get_brand !== null) {
 								echo $cur_term->name;
@@ -271,15 +271,6 @@ do_action( 'woocommerce_before_main_content' );
 								Ексклузивен партньор
 							</p>
 						<?php endif; ?>
-					</h4>
-					<h1 class="hidden-h1">
-						<?php 
-							if ($get_brand !== null) {
-								echo $cur_term->name;
-							} else {
-								woocommerce_page_title(); 
-							}
-						?>
 					</h1>
 				<?php endif; ?>
 

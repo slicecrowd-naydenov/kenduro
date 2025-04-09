@@ -201,8 +201,7 @@ $promo_product_ids = implode(',', $promo_products);
   <div class="container">
     <div class="row">
       <div class="col">
-        <h3>Промоции</h3>
-        <h1 class="hidden-h1">Промоции</h1>
+        <h1 class="h3">Промоции</h1>
         <?php
           Load::molecules('product-category/product-category-info/index', [
             'title' => 'Разгледай настоящите промоции в Kenduro',

@@ -8,8 +8,7 @@ get_header();
   <div class="container">
     <div class="row">
       <div class="col-8">
-        <h3>Политика за поверителност на личните данни на <a href="https://kenduro.com">www.kenduro.com</a></h3>
-        <h1 class="hidden-h1">Политика за поверителност</h1>
+        <h1 class="h3">Политика за поверителност на личните данни на <a href="https://kenduro.com">www.kenduro.com</a></h1>
         <ol>
           <li>
             <strong>Какво представлява настоящата политика?</strong>

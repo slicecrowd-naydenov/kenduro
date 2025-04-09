@@ -206,7 +206,7 @@ $list_categories = function($taxonomies, $temp_arr) use ($parent_IDS, &$list_cat
   <div class="container">
     <div class="row">
       <div class="col">
-        <h4 class="page-title semibold">
+        <h1 class="page-title semibold h4">
           Всички продукти за 
           <div class="button button-primary-grey paragraph semibold edit-selected-bike" data-toggle="modal" data-target="#compatibilityModal" data-url="my-bike">
             <?php 
@@ -214,8 +214,7 @@ $list_categories = function($taxonomies, $temp_arr) use ($parent_IDS, &$list_cat
               Load::atom('svg', ['name' => 'edit_icon']); 
             ?>
           </div> 
-        </h4>
-        <h1 class="hidden-h1">Всички продукти за</h1>
+        </h1>
 
         <div class="filter-content-wrapper">
           <div class="products-wrapper">
