@@ -236,9 +236,9 @@ add_action('woocommerce_thankyou', 'success_message_after_payment');
 function success_message_after_payment($order_id) {
   $checkout_response = checkout_success_sent_form($order_id);
   $is_synced = get_field('sync_order_with_smartsuite', $order_id);
-  // if (get_post_type($order_id) == "shop_order" && $is_synced === NULL) {
+  if (get_post_type($order_id) == "shop_order" && $is_synced === NULL) {
     create_sales_record($checkout_response);
-  // }
+  }
 }
 
 // Function to create a record after completing an order
