@@ -105,12 +105,12 @@ function create_sales_record($response) {
     $utm_source_campaign_name = get_post_meta($response['order_id'], '_wc_order_attribution_utm_campaign', true);
     $utm_session_pages = get_post_meta($response['order_id'], '_wc_order_attribution_session_pages', true);
     $utm_source_devices = get_post_meta($response['order_id'], '_wc_order_attribution_device_type', true);
-    $utm_source = !empty($utm_source) ? $utm_source : 'Няма данни';
-    $utm_source_type = !empty($utm_source_type) ? $utm_source_type : 'Няма данни';
-    $utm_source_medium = !empty($utm_source_medium) ? $utm_source_medium : 'Няма данни';
-    $utm_source_campaign_name = !empty($utm_source_campaign_name) ? $utm_source_campaign_name : 'Няма данни';
-    $utm_session_pages = !empty($utm_session_pages) ? $utm_session_pages : 'Няма данни';
-    $utm_source_devices = !empty($utm_source_devices) ? $utm_source_devices : 'Няма данни';
+    $utm_source = !empty($utm_source) ? $utm_source : '';
+    $utm_source_type = !empty($utm_source_type) ? $utm_source_type : '';
+    $utm_source_medium = !empty($utm_source_medium) ? $utm_source_medium : '';
+    $utm_source_campaign_name = !empty($utm_source_campaign_name) ? $utm_source_campaign_name : '';
+    $utm_session_pages = !empty($utm_session_pages) ? $utm_session_pages : '';
+    $utm_source_devices = !empty($utm_source_devices) ? $utm_source_devices : '';
 
     $new_data = array(
       $invoices_items => $sales_ids_array,
@@ -236,9 +236,9 @@ add_action('woocommerce_thankyou', 'success_message_after_payment');
 function success_message_after_payment($order_id) {
   $checkout_response = checkout_success_sent_form($order_id);
   $is_synced = get_field('sync_order_with_smartsuite', $order_id);
-  if (get_post_type($order_id) == "shop_order" && $is_synced === NULL) {
+  // if (get_post_type($order_id) == "shop_order" && $is_synced === NULL) {
     create_sales_record($checkout_response);
-  }
+  // }
 }
 
 // Function to create a record after completing an order
