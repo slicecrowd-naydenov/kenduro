@@ -512,6 +512,14 @@ input[type="checkbox"] {
       }
     }
   }
+
+  &:not(.in-stock) {
+    display: none;
+  }
+}
+
+#variation-stock {
+  display: none;
 }
 
 .term-4646 {
