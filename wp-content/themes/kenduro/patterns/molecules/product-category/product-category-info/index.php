@@ -17,7 +17,7 @@
   <?php Load::atom('svg', ['name' => 'k-logo']); ?>
   <img src="<?php echo IMAGES_PATH; ?>/teo-kabakchiev-bg.png" alt="teo kabakchiev" class="teo-bg" />
   <div class="product-category-info__text">
-    <h4 class="title">
+    <h2 class="title h4">
       <?php
       if ($args['title']) :
         echo $args['title'];
@@ -26,7 +26,7 @@
       ?>
         <strong><?php echo $args['cat']; ?> </strong>
       <?php endif; ?>
-    </h4>
+    </h2>
     <?php if ($args['description']) : ?>
       <p class="paragraph paragraph-l">
         <?php echo $args['description']; ?>

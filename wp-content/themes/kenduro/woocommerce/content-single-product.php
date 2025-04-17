@@ -121,7 +121,7 @@ function custom_code_after_product_data_tabs() {
 									</div>
 									<?php
 									// Product title
-									echo '<h2 class="woocommerce-loop-product__title">' . get_the_title($related_product_ID) . '</h2>';
+									echo '<h3 class="woocommerce-loop-product__title">' . get_the_title($related_product_ID) . '</h3>';
 
 									// Product price
 									echo '<span class="price">' . $related_product->get_price_html() . '</span>';

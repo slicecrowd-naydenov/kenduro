@@ -52,7 +52,7 @@ if ($best_selling_query->have_posts()) { ?>
                           </div>
                           <?php
                           // Product title
-                          echo '<h2 class="woocommerce-loop-product__title">' . get_the_title() . '</h2>';
+                          echo '<h3 class="woocommerce-loop-product__title">' . get_the_title() . '</h3>';
 
                           // Product price
                           echo '<span class="price">' . $product->get_price_html() . '</span>';

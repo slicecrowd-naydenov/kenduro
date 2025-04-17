@@ -42,6 +42,18 @@ function my_custom_init() {
   add_theme_support('post-thumbnails');
   register_custom_menus();
   custom_posts_init();
+  // $site_aliases = [
+  //   1 => 'main',
+  //   2 => 'old',
+  //   3 => 'hebo',
+  //   4 => 'michelin',
+  //   5 => 'fmparts',
+  //   6 => 'kabat'
+  // ];
+
+  // Ако blog_id съвпада с някой ключ от масива – го взимаме, иначе fallback на 'main'
+  // define('CURRENT_SITE_ALIAS', $site_aliases[get_current_blog_id()] ?? 'main');
+  // if (defined('CURRENT_SITE_ALIAS') && CURRENT_SITE_ALIAS !== 'main')
 }
 
 function get_column_fields($id) {
@@ -804,3 +816,12 @@ add_action('woocommerce_order_status_changed', function($order_id, $status_from,
     update_record_curl($invoices_tab_id, $dataBody , $invoice_id);
   }
 }, 10, 4);
+
+// Премахваме оригиналната функция
+remove_action( 'woocommerce_shop_loop_item_title', 'woocommerce_template_loop_product_title', 10 );
+
+// Добавяме нашата нова версия с <h3>
+add_action( 'woocommerce_shop_loop_item_title', 'custom_woocommerce_template_loop_product_title', 10 );
+function custom_woocommerce_template_loop_product_title() {
+	echo '<h3 class="' . esc_attr( apply_filters( 'woocommerce_product_loop_title_classes', 'woocommerce-loop-product__title' ) ) . '">' . get_the_title() . '</h3>';
+}
