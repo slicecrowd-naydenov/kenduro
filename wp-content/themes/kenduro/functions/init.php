@@ -577,7 +577,8 @@ function filter_loop_shop_per_page( $products ) {
   // }
 
   // OR shorthand
-  $products = wp_is_mobile() ? 6 : 16;
+  // $products = wp_is_mobile() ? 6 : 16;
+  $products = 16;
 
   return $products;
 }
