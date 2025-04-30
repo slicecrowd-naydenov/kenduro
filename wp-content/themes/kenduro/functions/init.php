@@ -12,7 +12,7 @@ if (!is_admin()) {
   include 'ss-create-order.php';
   include 'get-column-fields.php';
   // include 'filter.php';
-  include 'woo-recently-viewed-products.php';
+  // include 'woo-recently-viewed-products.php';
   include 'woo-product-images.php';
   include 'woo-header-cart-button.php';
   include 'woo-checkout-fields.php';
@@ -598,6 +598,36 @@ function update_cart_discounts() {
 
 add_action('wp_ajax_update_cart_discounts', 'update_cart_discounts');
 add_action('wp_ajax_nopriv_update_cart_discounts', 'update_cart_discounts');
+
+add_action('wp_ajax_get_recently_viewed_products', 'get_recently_viewed_products_callback');
+add_action('wp_ajax_nopriv_get_recently_viewed_products', 'get_recently_viewed_products_callback');
+
+function get_recently_viewed_products_callback() {
+  if (empty($_POST['ids'])) {
+      wp_die();
+  }
+
+  $viewed_products = array_map('absint', explode(',', $_POST['ids']));
+  $viewed_products = array_slice(array_unique($viewed_products), 0, 15);
+
+  if (empty($viewed_products)) {
+      wp_die();
+  }
+
+  $limit_products = wp_is_mobile() ? 2 : 5;
+  $product_ids = implode(",", $viewed_products);
+
+  $title = '<div class="popular-categories__header">
+    <p class="paragraph paragraph-xl semibold primary">Последно разглеждани продукти</p>
+  </div><hr>';
+
+  echo '<div class="recently-viewed-products">';
+  echo $title;
+  echo do_shortcode("[products ids='$product_ids' orderby='post__in' order='ASC' columns='5' limit='$limit_products']");
+  echo '</div>';
+
+  wp_die();
+}
 
 
 function custom_coupon_error_message($msg, $err_code, $coupon) {

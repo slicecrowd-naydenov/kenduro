@@ -82,9 +82,8 @@ if ($related_prod) :
 		<?php echo do_shortcode('[products ids="' . implode(',', $related_prod) . '" limit="5" columns="5"]'); ?>
 
 	</section>
-	
+	<div class="recently-viewed-products"></div>
 <?php
-      echo do_shortcode('[recently_viewed_products]');
 
 endif;
 

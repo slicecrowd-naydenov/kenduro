@@ -57,9 +57,15 @@ function clear_woocommerce_transients_callback() {
 }
 
 function add_ajaxurl_to_front() {
-  echo '<script type="text/javascript">
-      var ajaxurl = "' . admin_url('admin-ajax.php') . '";
-  </script>';
+  echo '<script type="text/javascript">';
+  echo 'var ajaxurl = "' . admin_url('admin-ajax.php') . '";';
+
+  if (is_product()) {
+    global $post;
+    echo 'var woocommerce_single_product_id = ' . intval($post->ID) . ';';
+  }
+
+  echo '</script>';
 }
 add_action('wp_head', 'add_ajaxurl_to_front');
 

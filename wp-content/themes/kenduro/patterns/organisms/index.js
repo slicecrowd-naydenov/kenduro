@@ -49,14 +49,14 @@ export default () => {
   var consentBanner = $('#consentBanner');
   var consentBannerOptions = $('#consentBannerOptions');
 
-  if (!document.cookie.includes('consentGranted=')) {
+  if (!localStorage.getItem('consentGranted')) {
     consentBanner.modal('show');
   }
 
 
   $('.acceptCookies').on('click', () => {
   //   document.cookie = "consent=true; path=/";
-    setCookie('consentGranted', 'true', 365);
+    localStorage.setItem('consentGranted', 'true');
     consentBanner.modal('hide');
     consentBannerOptions.modal('hide');
 
@@ -226,6 +226,60 @@ export default () => {
         window.Intercom('show');
       }
     }, 7500);
+
+    if (typeof woocommerce_single_product_id !== 'undefined') {
+      var viewed = JSON.parse(localStorage.getItem("recently_viewed")) || [];
+  
+      var currentId = parseInt(woocommerce_single_product_id);
+      // console.log('currentId: ', currentId);
+      // Премахни го, ако вече съществува
+      viewed = viewed.filter(function(id) {
+        return id !== currentId;
+      });
+  
+      // Добави най-отпред
+      viewed.push(currentId);
+  
+      // Ограничаваме до 15
+      if (viewed.length > 15) {
+        viewed.shift();
+      }
+  
+      localStorage.setItem("recently_viewed", JSON.stringify(viewed));
+    }
+
+    if ($('.recently-viewed-products').length) {
+      // console.log('woocommerce_single_product_id: ', woocommerce_single_product_id);
+      let viewed = JSON.parse(localStorage.getItem("recently_viewed")) || [];
+
+      if (viewed.length) {
+        axios({
+          method: 'post',
+          url: ajaxurl,
+          data: new URLSearchParams({
+            action: 'get_recently_viewed_products',
+            ids: viewed.reverse().join(',')
+          })
+        })
+        .then((response) => {
+          $('.recently-viewed-products').html(response.data);
+        })
+        .catch((error) => {
+          console.error('AJAX error:', error);
+        });
+      }
+      // axios({
+      //   method: 'get', 
+      //   url: ajaxurl + '?action=get_recently_viewed_products'
+      // })
+      // .then((response) => {
+      //   $('.recently-viewed-products').html(response.data);
+      // })
+      // .catch((error) => {
+      //   console.error('AJAX error:', error);
+      // });
+
+    }
   };
 
   $('#filterModal').on('show.bs.modal', function(event) {

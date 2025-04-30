@@ -58,7 +58,7 @@ get_header();
     <div class="container">
       <div class="row">
         <div class="col">
-          <?php echo do_shortcode('[recently_viewed_products]'); ?>
+          <div class="recently-viewed-products"></div>
         </div>
       </div>
     </div>
