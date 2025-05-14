@@ -84,6 +84,7 @@ if ($on_sale_data === false) {
                   <?php if ($slide['slide_image']) : 
                     $transformedString = str_replace(['_', '-', '='], ' ', $slide['slide_image']['title']);
                     $image_url = wp_is_mobile() ? 'slide_image_mobile' : 'slide_image';
+                    // pretty_dump($slide[$image_url]['sizes']);
                   ?>
                     <div class="slide-image">
                       <img 
@@ -93,12 +94,13 @@ if ($on_sale_data === false) {
                         srcset="
                           <?php echo $slide[$image_url]['sizes']['woocommerce_thumbnail']; ?> 500w, 
                           <?php echo $slide[$image_url]['sizes']['medium_large']; ?> 768w, 
-                          <?php echo $slide[$image_url]['sizes']['large']; ?> 1024w"
+                          <?php echo $slide[$image_url]['sizes']['large']; ?> 1024w,
+                          <?php echo $slide[$image_url]['sizes']['1536x1536']; ?> 1400w"
                         sizes="
                           (max-width: 456px) 500px,
                           (max-width: 768px) 768px,
                           (max-width: 1024px) 1024px,
-                          1260px"
+                          1536px"
                         <?php if ($first_slide) { ?>
                           rel="preload" 
                           as="image"
