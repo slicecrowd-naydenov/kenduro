@@ -446,7 +446,14 @@ do_action( 'woocommerce_before_main_content' );
 									}
 					
 									woocommerce_product_loop_end();
-								} else {
+								} else { ?>
+										<div 
+											id="ajax-products" 
+											data-category="<?php echo esc_attr($product_cat_slug); ?>" 
+											data-term="<?php echo $get_brand; ?>"
+											data-ids="<?php echo esc_attr($ywcas_filter_ids); ?>" 
+										>
+									<?php
 									if ($get_brand) {
 										$cur_cat_on_brand_page = isset($_GET['product_cat']) ? $_GET['product_cat'] : '';
 
@@ -459,7 +466,11 @@ do_action( 'woocommerce_before_main_content' );
 										// $keyword_string = get_product_ids_by_keyword( sanitize_text_field($_GET['ywcas_filter']) );
 										// pretty_dump(get_product_ids_by_keyword(('KTM EXC-F 250 2017')));
 										// if ( $products_on_sale->have_posts() ) {
-										echo do_shortcode('[products category="'.$product_cat_slug.'" limit="'.$limitProducts.'" columns="4" paginate="true" ids="'.$ywcas_filter_ids.'"]');
+
+
+										echo do_shortcode('[products category="'.$product_cat_slug.'" limit="'.$limitProducts.'" columns="4" paginate="false" ids="'.$ywcas_filter_ids.'"]');
+
+
 											// while ( $products_on_sale->have_posts() ) : $products_on_sale->the_post();
 				
 											// // pretty_dump(get_the_ID());
@@ -475,6 +486,14 @@ do_action( 'woocommerce_before_main_content' );
 										// 	do_action( 'woocommerce_no_products_found' );
 										// }
 									}
+									
+									Load::organisms('skeleton/index'); 
+										?>
+									</div>
+									<button id="load-more-products" class="button button-primary-orange" data-page="1">
+										Зареди още
+									</button>
+									<?php
 								}
 							// } else {
 								// if ($get_brand) {

@@ -69,6 +69,85 @@ function add_ajaxurl_to_front() {
 }
 add_action('wp_head', 'add_ajaxurl_to_front');
 
+function load_more_products_callback() {
+	$page     = isset($_GET['page']) ? intval($_GET['page']) : 1;
+	$cat      = sanitize_text_field($_GET['category']);
+	$ids      = sanitize_text_field($_GET['ids']);
+	$taxonomy = sanitize_text_field($_GET['taxonomy'] ?? '');
+	$term     = sanitize_text_field($_GET['term'] ?? '');
+
+	$shortcode = '[products limit="32" columns="4" paginate="false" page="' . $page . '"';
+
+	if (!empty($cat)) {
+		$shortcode .= ' category="' . $cat . '"';
+	}
+
+	if (!empty($ids)) {
+		$shortcode .= ' ids="' . $ids . '"';
+	}
+
+	// Ако имаме специфична таксономия и термин (например pa_brand / michelin)
+	if ($taxonomy === 'pa_brand' && !empty($term)) {
+		$shortcode .= ' attribute="brand" terms="' . $term . '"';
+	}
+
+	$shortcode .= ']';
+
+	echo do_shortcode($shortcode);
+	wp_die();
+}
+
+add_action('wp_ajax_load_more_products', 'load_more_products_callback');
+add_action('wp_ajax_nopriv_load_more_products', 'load_more_products_callback');
+
+add_action( 'init', function() {
+	// we're using a different hook priority (30 instead of 10) 
+	remove_action( 'woocommerce_after_shop_loop', 'woocommerce_pagination', 30 );
+	// we're removing a different function from the hook
+	remove_action( 'woocommerce_before_shop_loop', 'storefront_woocommerce_pagination', 30 );
+} );
+
+add_filter('woocommerce_package_rates', 'custom_shipping_if_tyre_mix', 10, 2);
+
+function custom_shipping_if_tyre_mix($rates, $package) {
+  $excluded_categories = ['motocross-tyres', 'enduro-tyres'];
+  $free_shipping_min_amount = 149.00;
+  $non_excluded_total = 0;
+  $has_excluded_product = false;
+
+  foreach ($package['contents'] as $item) {
+    $product_id = $item['product_id'];
+    $quantity = $item['quantity'];
+    $product = wc_get_product($product_id);
+    $line_total = $product->get_price() * $quantity;
+
+    if (has_term($excluded_categories, 'product_cat', $product_id)) {
+      $has_excluded_product = true;
+    } else {
+      $non_excluded_total += $line_total;
+    }
+  }
+
+  // Само ако има поне един продукт от изключените категории И
+  // ако стойността на останалите продукти е под прага
+  if ($has_excluded_product && $non_excluded_total < $free_shipping_min_amount) {
+    // Задаваме фиксирани цени за woo_bg_econt
+    foreach ($rates as $rate_id => $rate) {
+      if ($rate->method_id === 'woo_bg_econt') {
+        if (strpos($rate->label, 'адрес') !== false) {
+          $rates[$rate_id]->cost = 7.50;
+          $rates[$rate_id]->label = 'Доставка до адрес';
+        } elseif (strpos($rate->label, 'Офис') !== false) {
+          $rates[$rate_id]->cost = 5.00;
+          $rates[$rate_id]->label = 'Вземи от Офис на ЕКОНТ';
+        }
+      }
+    }
+  }
+
+  return $rates;
+}
+
 add_filter('woocommerce_dropdown_variation_attribute_options_args', 'select_first_available_option', 10, 1);
 function select_first_available_option($args) {
   global $product;

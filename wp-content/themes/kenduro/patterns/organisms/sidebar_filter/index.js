@@ -37,60 +37,9 @@ export default class SidebarFilter {
     }     
   }
 
-  updatePrevNextPaginateHrefs() {
-    let currentUrl = window.location.href;
-    let url = new URL(currentUrl);
-    let filterContentWrapper = $('.filter-content-wrapper')
-    // console.log(url.searchParams);
-
-    // Премахване на параметъра product-page
-    if (url.searchParams.has('product-page')) {
-      url.searchParams.delete('product-page');
-      history.replaceState(null, '', url.toString());
-    }
-
-    // Проверяваме дали URL съдържа "page/"
-    let isPaged = currentUrl.includes('/page/');
-
-    // Извличаме базовия URL и параметрите
-    let baseUrl = currentUrl.split('?')[0];
-    let queryParams = currentUrl.includes('?') ? '?' + currentUrl.split('?')[1] : '';
-
-    // Извличаме текущата страница
-    let currentPage = 1;
-    if (isPaged) {
-      let match = baseUrl.match(/\/page\/(\d+)/);
-      if (match) {
-          currentPage = parseInt(match[1]);
-      }
-      // Премахваме "/page/X" от базовия URL
-      baseUrl = baseUrl.replace(/\/page\/\d+/, '');
-    }
-
-    // Генерираме линкове за "Предишна" и "Следваща" страница
-    let nextPage = currentPage + 1;
-    let prevPage = currentPage - 1;
-
-    let nextPageUrl = baseUrl + '/page/' + nextPage + queryParams;
-    let prevPageUrl = currentPage > 1 ? baseUrl + '/page/' + prevPage + queryParams : '#';
-
-    // Актуализираме линковете в DOM
-    filterContentWrapper.find('.next-page-link').attr('href', nextPageUrl);
-    if (currentPage > 1) {
-      filterContentWrapper.find('.prev-page-link').attr('href', prevPageUrl);
-    } else {
-      filterContentWrapper.find('.prev-page-link').attr('href', '#'); // Ако няма предишна страница
-    }
-  }
-
   handleAjaxSuccess(callback) {
     $(document).ajaxSuccess((event, xhr, settings) => {
-      if (
-        (settings.url.includes('wp-admin/admin-ajax.php') && settings.data.includes('action=filtersFrontend')) ||
-        settings.url.includes('wpf_fid=1')
-      ) {
-        this.updatePrevNextPaginateHrefs();
-
+      if (settings.url.includes('wpf_fid') || settings.url.includes('orderby')) {
         if (typeof callback === 'function') {
           callback(event, xhr, settings);
         }
@@ -98,6 +47,15 @@ export default class SidebarFilter {
     });
   }
 
+  hideSkeleton() {
+    $('#ajax-products').css('min-height', '360px');
+    
+    if ($('#ajax-products').find('.products li').length < 16) {
+      $('#load-more-products').addClass('hide');
+    }
+
+    $('#skeleton').addClass('hide');
+  }
 
   initializeSlider() {
     $('.filter-sidebar').find('.active').each(function() {
@@ -151,6 +109,7 @@ export default class SidebarFilter {
 
     $('.filter-sidebar').find('.wpfMainWrapper').on('click', () => {
       this.handleAjaxSuccess(() => {
+        this.hideSkeleton();
         var getFIlterURL = $('.filter-sidebar').find('.wpfMainWrapper').attr('data-hide-url');
         // eslint-disable-next-line no-undefined
         if (getFIlterURL !== undefined) {
@@ -163,7 +122,9 @@ export default class SidebarFilter {
     $('.dropdown-menu-sort').on('click', '.wpfLiLabel', function() {
       const selectedSortType = $(this).find('.wpfFilterTaxNameWrapper').text();
       $('.sort-by-title').text(selectedSortType);
-      self.handleAjaxSuccess();
+      self.handleAjaxSuccess(() => {
+        self.hideSkeleton();
+      });
     });
 
     if ($(window).innerWidth() < 1200) {

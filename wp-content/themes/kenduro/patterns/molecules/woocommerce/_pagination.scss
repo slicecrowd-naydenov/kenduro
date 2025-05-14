@@ -1,5 +1,7 @@
 // Pagination
 .woocommerce-pagination {
+  display: none !important;
+  
   &__info {
     margin-bottom: 37px;
     @extend .flex-center-y;

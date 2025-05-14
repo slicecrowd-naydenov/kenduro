@@ -5,7 +5,8 @@
   margin-top: -$radius-medium;
   position: relative;
   z-index: 2;
-
+  overflow: hidden;
+  
   .list-all {
     text-decoration: none;
     color: $b-highlight-two;
