@@ -4,7 +4,7 @@
   Load::organisms('modals/consent_banner/index');
 
   wp_footer(); 
-?>
+?> 
 
 <!--Start of Tawk.to Script-->
 <!-- <script type="text/javascript">
