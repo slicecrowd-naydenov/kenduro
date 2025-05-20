@@ -89,6 +89,46 @@ function create_sales_record($response) {
     $order_total = $order->get_data()['total'];
     $order_coupon = $order->get_data()['discount_total'];
     $order_items_subtotal = $order_total - $order_total_tax - $order_shipping_total + $order->get_data()['discount_total'];
+    $order_client_first_name = $order->get_data()['billing']['first_name'];
+    $order_client_last_name = $order->get_data()['billing']['last_name'];
+    $prim_rows = [];
+
+    foreach ( $order->get_items() as $item ) {
+      $product_data = $item->get_data();
+      $id = $product_data['product_id'];
+      $product = wc_get_product($id);
+      $product_total = $item['total'];
+      $product_total_tax = $item['total_tax'];
+      $product_discount = $product_total + $product_total_tax;
+        // $product = $item->get_product();
+      $prim_rows[] = [
+        "sku" => $product ? $product->get_sku() : '', // Защита ако продуктът е изтрит
+        "price" => $product_discount,
+        "quantity" => $item->get_quantity()
+      ];
+    }
+
+    $prim_mockup = [
+      "data" => [
+        [
+          "sale_type" => "Основен",
+          "pos_code" => "amz",
+          "partner" => [
+            "name" => $order_client_first_name . ' ' . $order_client_last_name
+          ],
+          "delivery_address" => [
+            "country" => "България"
+          ],
+          "tax_address" => [
+            "country" => "България"
+          ],
+          "contract" => new stdClass(),
+          "rows" => $prim_rows
+        ]
+      ]
+    ];
+
+    create_prim_sales_curl($prim_mockup);
 
     $delivery_address_arr = array(
       "location_address" => $address_street,

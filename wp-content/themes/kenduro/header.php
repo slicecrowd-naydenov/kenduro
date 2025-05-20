@@ -26,3 +26,25 @@
 
 <body <?php body_class(); ?>>
 	<?php Load::organism('header/index');	?>
+<?php
+// $order = wc_get_order(12339);
+// pretty_dump($order->get_items());
+// $rows = [];
+// foreach ( $order->get_items() as $item ) {
+// 	// pretty_dump(get_class($item));
+// 	$product_data = $item->get_data();
+// 	$id = $product_data['product_id'];
+// 	$product = wc_get_product($id);
+// 	$product_total = $item['total'];
+// 	$product_total_tax = $item['total_tax'];
+// 	$product_discount = $product_total + $product_total_tax;
+// 		// $product = $item->get_product();
+// 	$rows[] = [
+// 		"sku" => $product ? $product->get_sku() : '', // Защита ако продуктът е изтрит
+// 		"price" => $product_discount,
+// 		"quantity" => $item->get_quantity()
+// 	];
+
+// 	pretty_dump($product->get_sku());
+// }
+// pretty_dump($rows);

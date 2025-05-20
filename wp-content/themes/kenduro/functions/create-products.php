@@ -10,17 +10,17 @@ add_action('rest_api_init', 'add_get_products_endpoint');
 
 function add_get_products_endpoint() {
   // create products
-  // register_rest_route(
-  //   'ss-data',
-  //   '/get-products/(?P<id>[^/]+)(?:/(?P<product_id>[^/]+))?',
-  //   array(
-  //     'methods' => 'GET',
-  //     'callback' => 'get_all_products',
-  //     'permission_callback' => function () {
-  //       return true;
-  //     }
-  //   )
-  // );
+  register_rest_route(
+    'ss-data',
+    '/create-prim-orders',
+    array(
+      'methods' => 'GET',
+      'callback' => 'create_prim_record',
+      'permission_callback' => function () {
+        return true;
+      }
+    )
+  );
 
   // Global update products
   register_rest_route(
@@ -47,6 +47,36 @@ function add_get_products_endpoint() {
       }
     )
   );
+}
+
+function create_prim_record() {
+  $mockup = [
+    "data" => [
+      [
+        "sale_type" => "Основен",
+        "pos_code" => "amz",
+        "partner" => [
+            "name" => "Лъчезар Найденов"
+        ],
+        "delivery_address" => [
+            "country" => "България"
+        ],
+        "tax_address" => [
+            "country" => "България"
+        ],
+        "contract" => new stdClass(),
+        "rows" => [
+          [
+            "sku" => 10028,
+            "price" => "155.00",
+            "quantity" => 1
+          ]
+        ]
+      ]
+    ]
+  ];
+  $create_prim = create_prim_sales_curl($mockup);
+  return $create_prim;
 }
 
 function getInnermostValue($array) {
