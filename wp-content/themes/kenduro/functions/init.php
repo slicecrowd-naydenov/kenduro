@@ -56,6 +56,60 @@ function my_custom_init() {
   // if (defined('CURRENT_SITE_ALIAS') && CURRENT_SITE_ALIAS !== 'main')
 }
 
+// Декларираме крон задача
+// add_action('kenduro_cloner_cleanup_products', function ($target_id, $target_title) {
+//   switch_to_blog($target_id);
+
+//   $batch_size = 10;
+//   $total_deleted = 0;
+
+//   do {
+//     $args = [
+//       'post_type'      => 'product',
+//       'posts_per_page' => $batch_size,
+//       'post_status'    => 'publish',
+//       'fields'         => 'ids',
+//       'tax_query' => [
+//         [
+//           'taxonomy' => 'pa_brand',
+//           'field'    => 'slug',
+//           'operator' => 'NOT IN',
+//           'terms'    => [strtolower($target_title)],
+//         ],
+//       ],
+//       'no_found_rows'             => true,
+//       'cache_results'            => false,
+//       'update_post_term_cache'   => false,
+//       'update_post_meta_cache'   => false,
+//     ];
+//     $product_ids = get_posts($args);
+
+//     foreach ($product_ids as $product_id) {
+//       wp_delete_post($product_id, true);
+//     }
+
+//     $total_deleted += count($product_ids);
+//   } while (!empty($product_ids));
+
+//   restore_current_blog();
+
+//   error_log("Изтрити продукти при клониране на сайт {$target_title}: {$total_deleted}");
+// }, 10, 2);
+
+// add_action('ns_cloner_process_finish', function () {
+//   $target_id = ns_cloner_request()->get('target_id');
+//   $target_title = ns_cloner_request()->get('target_title');
+
+//   if ($target_id && $target_title) {
+//     // Пускаме еднократна cron задача да се изпълни веднага
+//     wp_schedule_single_event(
+//       time(), // моментално
+//       'kenduro_cloner_cleanup_products',
+//       [$target_id, $target_title]
+//     );
+//   }
+// });
+
 function get_column_fields($id) {
   $response = wp_remote_request(
     'https://app.smartsuite.com/api/v1/applications/' . $id,

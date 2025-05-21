@@ -65,7 +65,8 @@ if ($main_categories) : ?>
           <?php foreach ($main_categories as $id => $info) : ?>
             <div class="tab-pane fade" id="pills-<?php echo $info->slug; ?>" role="tabpanel" aria-labelledby="pills-<?php echo $info->slug; ?>-tab">
               <div id="products-<?php echo $info->term_id; ?>">
-                <p class="paragraph paragraph-xl">Зареждане на продукти...</p>
+                <!-- <p class="paragraph paragraph-xl">Зареждане на продукти...</p> -->
+                 <?php Load::organisms('skeleton/index', ['list' => 10, 'class' => 'column-5']); ?>
               </div>
             </div>
           <?php endforeach; ?>
