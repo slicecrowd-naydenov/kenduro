@@ -755,34 +755,34 @@ function create_simple_product($pid, $term_slug, $product_variations_fields, $at
 
       update_field($field_name, $rows, $pid);
 
-      $product = wc_get_product($pid);
-      $product->save();
+      // $product = wc_get_product($pid);
+      // $product->save();
     }
 }
 
-function multisite_product_sync($pid, $brand) {
-  $woonet_settings = get_post_meta($pid, '_woonet_settings', true);
-  if (!is_array($woonet_settings)) {
-    $woonet_settings = [];
-  }
+// function multisite_product_sync($pid, $brand) {
+//   $woonet_settings = get_post_meta($pid, '_woonet_settings', true);
+//   if (!is_array($woonet_settings)) {
+//     $woonet_settings = [];
+//   }
 
-  $sites = get_sites();
+//   $sites = get_sites();
 
-  // error_log("[Woonet Sync] testttt: $brand, продукт ID: $pid");
-  foreach ($sites as $site) {
-    $site_details = get_blog_details(['blog_id' => $site->blog_id]);
-    $site_name = trim($site_details->blogname); // Името на магазина (например "Hebo")
-    // error_log("[Woonet Sync] Викам multisite_product_sync() за продукт ID: $site_name, Brand: $brand");
-    if ($site_name === trim($brand)) {
-      $target_blog_id = $site->blog_id;
-      $woonet_settings["_woonet_publish_to_{$target_blog_id}"] = 'yes';
-      $woonet_settings["_woonet_publish_to_{$target_blog_id}_child_inheir"] = 'yes';
-      $woonet_settings["_woonet_{$target_blog_id}_child_stock_synchronize"] = 'yes';
-    }
-  }
+//   // error_log("[Woonet Sync] testttt: $brand, продукт ID: $pid");
+//   foreach ($sites as $site) {
+//     $site_details = get_blog_details(['blog_id' => $site->blog_id]);
+//     $site_name = trim($site_details->blogname); // Името на магазина (например "Hebo")
+//     // error_log("[Woonet Sync] Викам multisite_product_sync() за продукт ID: $site_name, Brand: $brand");
+//     if ($site_name === trim($brand)) {
+//       $target_blog_id = $site->blog_id;
+//       $woonet_settings["_woonet_publish_to_{$target_blog_id}"] = 'yes';
+//       $woonet_settings["_woonet_publish_to_{$target_blog_id}_child_inheir"] = 'yes';
+//       $woonet_settings["_woonet_{$target_blog_id}_child_stock_synchronize"] = 'yes';
+//     }
+//   }
 
-  update_post_meta($pid, '_woonet_settings', $woonet_settings);
-}
+//   update_post_meta($pid, '_woonet_settings', $woonet_settings);
+// }
 
 // Create Variable product
 function generate_variable_products($item, $ss_ids, $product_fields, $product_variations_fields, $incoming_id, $product_id = null) {
@@ -806,7 +806,7 @@ function generate_variable_products($item, $ss_ids, $product_fields, $product_va
   $variations->save();
   $pid = $variations->get_id();
   update_post_meta($pid, '_sku', $item[$product_sku]);
-  multisite_product_sync($pid, $item[$brand_text]);
+  // multisite_product_sync($pid, $item[$brand_text]);
 
   // $is_set_color = count($item[$attr_color]) > 0 ? $item[$attr_color][0] : '';
   // $is_set_brand = count($item[$attr_brand]) > 0 ? $item[$attr_brand][0] : '';
@@ -893,7 +893,7 @@ function generate_simple_product($item, $ss_ids, $product_fields, $product_varia
   }
 
   update_post_meta($p_id, '_rank_math_gtin_code', sprintf("%012d", $p_id));
-  multisite_product_sync($p_id, $item[$brand_text]);
+  // multisite_product_sync($p_id, $item[$brand_text]);
 
   $attributes_data = update_attributes(
     $item[$bike_compatibility_text], 
