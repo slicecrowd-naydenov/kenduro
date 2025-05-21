@@ -221,7 +221,8 @@
 .home {
   #primary {
     border-top: 1px solid $G-1-5;
-    padding-top: 30px;
+    padding-top: 60px;
+    
     @include media-breakpoint-down(lg) {
       padding-top: 10px;
     }
