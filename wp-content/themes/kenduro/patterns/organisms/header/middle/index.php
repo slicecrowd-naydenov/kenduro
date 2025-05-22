@@ -5,7 +5,7 @@
       <div class="col">
         <div class="site-title">
           <?php Load::molecules('logo/index'); ?>
-          <?php echo do_shortcode('[yith_woocommerce_ajax_search]'); ?>
+          <?php echo do_shortcode('[fibosearch]'); ?>
         </div>
       </div>
     </div>
