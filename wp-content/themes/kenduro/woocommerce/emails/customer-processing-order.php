@@ -29,7 +29,7 @@ $email_improvements_enabled = FeaturesUtil::feature_is_enabled( 'email_improveme
 do_action( 'woocommerce_email_header', $email_heading, $email ); ?>
 
 <?php echo $email_improvements_enabled ? '<div class="email-introduction">' : ''; ?>
-<p><strong>Екипът на Кендуро е в отпуск в срока от 23ти до 26ти Май (включително), поръчките направени в указания период ще бъдат обработени на 27 Май.<strong></p> 
+<p style="color: #FF5757"><strong>Екипът на Кендуро е в отпуск в срока от 23ти до 26ти Май (включително), поръчките направени в указания период ще бъдат обработени на 27 Май.<strong></p> 
 <p>
 <?php
 if ( ! empty( $order->get_billing_first_name() ) ) {
