@@ -226,7 +226,7 @@ $promo_product_ids = implode(',', $promo_products);
               id="ajax-products" 
               data-category="<?php echo esc_attr($selected_category_id); ?>" 
               data-term=""
-              data-ids="" 
+              data-ids="<?php echo esc_attr($promo_product_ids); ?>" 
             >
             <?php echo do_shortcode('[products ids="'.$promo_product_ids.'" limit="32" columns="4" paginate="true"]'); 
 									Load::organisms('skeleton/index'); 
