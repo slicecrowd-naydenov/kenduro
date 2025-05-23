@@ -222,7 +222,19 @@ $promo_product_ids = implode(',', $promo_products);
                 <?php echo do_shortcode('[wpf-filters id=4]'); ?>
               </div>
             </div>
-            <?php echo do_shortcode('[products ids="'.$promo_product_ids.'" limit="32" columns="4" paginate="true"]'); ?>
+            <div 
+              id="ajax-products" 
+              data-category="<?php echo esc_attr($selected_category_id); ?>" 
+              data-term=""
+              data-ids="" 
+            >
+            <?php echo do_shortcode('[products ids="'.$promo_product_ids.'" limit="32" columns="4" paginate="true"]'); 
+									Load::organisms('skeleton/index'); 
+            ?>
+            </div>
+            <button id="load-more-products" class="button button-primary-orange" data-page="1">
+              Зареди още
+            </button>
           </div> 
           <?php  if (wp_is_mobile()) { ?>
           <div class="mobile-wrapper filter-sidebar">
