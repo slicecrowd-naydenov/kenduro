@@ -12,7 +12,7 @@
     @extend .flex-center-y;
 
     @include media-breakpoint-down(lg) {
-      // flex-direction: row-reverse;
+      flex-direction: row-reverse;
     }
 
     .logo,
@@ -347,6 +347,10 @@
         display: flex;
         white-space: nowrap;
 
+        & > strong {
+          margin-left: 3px; 
+        }
+
         .dgwt-wcas-st-breadcrumbs {
           margin-left: 5px;
           color: $b-highlight-two;
@@ -433,11 +437,11 @@
 
 .dgwt-wcas-search-wrapp {
   @include media-breakpoint-down(lg) {
-    width: 182px;
-    // margin: 0;
-    // width: 30px;
-    // height: 30px;
-    // margin-right: -13px; 
+    // width: 182px;
+    margin: 0;
+    width: 30px;
+    height: 30px;
+    margin-right: -13px; 
     // max-width: 30px !important;
   }
 }
