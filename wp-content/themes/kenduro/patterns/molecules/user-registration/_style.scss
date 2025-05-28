@@ -1,0 +1,14 @@
+.woocommerce-MyAccount-navigation {
+  ul {
+    margin: 0;
+  }
+  
+  .woocommerce-MyAccount-navigation-link {
+    a {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-direction: row-reverse;
+    }
+  }
+}
