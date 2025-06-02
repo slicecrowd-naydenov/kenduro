@@ -205,9 +205,13 @@
     font-size: 0 !important;
   }
 
+  #header + .container {
+    background-color: $G-0-5;
+    position: relative;
+  }
+
   .woocommerce {
     padding-top: 30px;
-    background-color: $G-0-5;
     position: relative;
 
     .blockUI.blockOverlay {

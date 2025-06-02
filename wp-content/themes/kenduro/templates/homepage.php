@@ -39,6 +39,23 @@ get_header();
     Load::organisms('homepage/category-pills/index');
     Load::organisms('homepage/exclusive-partners/index');
     ?>
+    <div class="container instagram-section">
+      <div class="row">
+        <div class="col">
+          <p class="text-center heading semibold h3">
+            Последвай ни в 
+            <a 
+              href="https://www.instagram.com/kenduro_shop/" 
+              target="_blank"
+              class="instagram-link"
+            >Инстаграм</a>
+          </p>
+          <div>
+            <?php echo do_shortcode('[instagram-feed feed=1]'); ?>
+          </div>
+        </div>
+      </div>
+    </div>
     <div class="container">
       <div class="row">
         <div class="col">

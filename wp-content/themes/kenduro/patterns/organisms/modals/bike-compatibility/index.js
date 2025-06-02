@@ -215,7 +215,7 @@ export default class Compatibilities {
       this.seeAllParts
         .removeClass('disable')
         .attr('href', href);
-      $('.show-bike-compatibility').attr('href', href);
+      $('.show-bike-compatibility, .show-cat-bike-compatibility').attr('href', href);
 
       // this.brandDropdown.selectmenu('refresh');
       // this.modelDropdown.selectmenu('refresh');

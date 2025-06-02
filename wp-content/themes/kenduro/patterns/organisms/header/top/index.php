@@ -28,7 +28,7 @@ if (wp_is_mobile()) {
       </div>
       <div class="col-auto">
         <div class="header-btns-wrapper">
-          <div class="bike-compatibility-button <?php esc_attr_e($filterButtonClass); ?>">
+          <div class="in-header bike-compatibility-button <?php esc_attr_e($filterButtonClass); ?>">
             <div class="bike-icon"><?php Load::atom('svg', ['name' => 'bike']); ?></div>
             <?php if ($is_set_bike_compatibility !== '') { ?>
               <a href="" class="show-bike-compatibility button button-primary-orange paragraph-m"><?php echo $btnText;?> за: <?php echo strtoupper(remove_hyphen_after_first_and_before_last_word($filterCompability)); ?>

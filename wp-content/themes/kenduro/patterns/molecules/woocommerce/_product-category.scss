@@ -19,7 +19,7 @@
   }
 
   .page-title {
-    margin-bottom: 20px;
+    margin-bottom: 0;
     color: $text-primary;
   }
 
@@ -68,6 +68,8 @@
     align-items: center;
 
     @include media-breakpoint-down(sm) {
+      width: 100%;
+      justify-content: space-between;
       margin-left: 0;
       margin-top: 15px;
     }
@@ -355,7 +357,7 @@ ul.products {
   }
 
   .page-title {
-    margin-bottom: 10px;
+    margin-bottom: 0;
   }
 
   .nav-pills {
@@ -371,7 +373,39 @@ ul.products {
   }
 }
 
-// Brand cat page
+.tax-product_cat,
+.post-type-archive {
+  #primary {
+    header {
+      display: flex;  
+      align-items: center;
+      justify-content: space-between;
+
+      @include media-breakpoint-down(md) {
+        flex-direction: column;
+        align-items: baseline;
+        gap: 20px;
+      }
+
+      .bike-compatibility-button {
+        @include media-breakpoint-down(md) {
+          display: none !important;
+        }
+
+        .bike-icon {
+          border-right-color: rgba(0, 0, 0, 0.3);
+        }
+
+        .edit-bike {
+          path {
+            fill: rgba(0, 0, 0, 0.3);
+          }
+        }
+      }
+    }
+  }
+}
+
 .tax-pa_brand,
 .archive  {
   .page-title.exclusive {

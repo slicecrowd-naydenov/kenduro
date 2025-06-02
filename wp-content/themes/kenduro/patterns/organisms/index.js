@@ -282,16 +282,16 @@ export default () => {
     }
   };
 
-  $('#filterModal').on('show.bs.modal', function(event) {
-    let modalBody = $(this).find('.modal-body');
-    if (!modalBody.find('.show-cat-bike-compatibility').length) {
-      let elementToClone = $('.show-cat-bike-compatibility');
-      if (elementToClone.length) { // Уверяваме се, че елементът съществува
-        let clonedElement = elementToClone.clone(true);
-        modalBody.append(clonedElement);
-      }
-    }
-  });
+  // $('#filterModal').on('show.bs.modal', function(event) {
+  //   let modalBody = $(this).find('.modal-body');
+  //   if (!modalBody.find('.show-cat-bike-compatibility').length) {
+  //     let elementToClone = $('.show-cat-bike-compatibility');
+  //     if (elementToClone.length) { // Уверяваме се, че елементът съществува
+  //       let clonedElement = elementToClone.clone(true);
+  //       modalBody.append(clonedElement);
+  //     }
+  //   }
+  // });
 
   $('.category-description').find('.read-more').on('click', function() {
     $('.category-description__box').toggleClass('expanded').css('height', function() {

@@ -26,9 +26,13 @@ $bikeCompatibility = '';
 $query_vars = $wp_query->query_vars;
 $isSetCompatibility = isset($_COOKIE['brand']) && isset($_COOKIE['model']) && isset($_COOKIE['year']);
 $excluded_categories = ['body-equipment', 'navigations', 'bikes']; // exclude categories where we are showing bike compatibility button
-
+$btnText = 'Покажи всички продукти ';
 if ($is_set_bike_compatibility !== '') {
 	$bikeCompatibility = $_COOKIE['brand'] . ' ' . $_COOKIE['model'] . ' ' . $_COOKIE['year'];
+  $filterButtonClass = 'has-set-bike';
+  $btnText = 'Покажи продуктите ';
+} else {
+  $filterButtonClass = 'not-set-bike';
 }
 
 $get_brand = isset($query_vars['pa_brand']) ? $query_vars['pa_brand'] : null;
@@ -273,6 +277,28 @@ do_action( 'woocommerce_before_main_content' );
 						<?php endif; ?>
 					</h1>
 				<?php endif; ?>
+					<?php $excluded_with_children = get_excluded_category_slugs($excluded_categories); ?>
+					<?php if (!in_array($get_product_cat, $excluded_with_children)) : ?>
+
+						<div class="bike-compatibility-button <?php esc_attr_e($filterButtonClass); ?>">
+							<div class="bike-icon"><?php Load::atom('svg', ['name' => 'bike']); ?></div>
+							<?php if ($is_set_bike_compatibility !== '') { ?>
+								<a href="" class="show-bike-compatibility button button-primary-orange paragraph-m"><?php echo $btnText;?> за: <?php echo strtoupper(remove_hyphen_after_first_and_before_last_word($bikeCompatibility)); ?>
+									<?php Load::atom('svg', ['name' => 'arrow_orange']); ?>
+								</a>
+								<span class="edit-bike-model" data-toggle="modal" data-target="#compatibilityModal" data-url="my-bike"><?php Load::atom('svg', ['name' => 'edit', 'class' => 'edit-bike']); ?></span>
+								<?php } else {?>
+								<span>Покажи всички продукти за :</span>
+								<!-- Button trigger modal -->
+								<button type="button" class="button button-primary-orange paragraph-m" data-toggle="modal" data-target="#compatibilityModal" data-url="my-bike">
+									<?php 
+										Load::atom('svg', ['name' => 'plus']); 
+										echo 'Добави мотора си';
+									?>
+								</button>
+							<?php } ?>
+						</div>
+					<?php endif; ?>
 
 				<?php
 				/**
@@ -285,35 +311,35 @@ do_action( 'woocommerce_before_main_content' );
 				?>
 			</header>
 			<?php
-			$ancestors = get_ancestors(get_queried_object_id(), 'product_cat');
+			// $ancestors = get_ancestors(get_queried_object_id(), 'product_cat');
 
-			if ($ancestors) {
-				$outermost_parent_id = end($ancestors);
-			} else {
-				$outermost_parent_id = get_queried_object_id();
-			}
-			$cat_inner_image_url = get_field('inner_cat_thumbnail', 'product_cat_' . $outermost_parent_id);
+			// if ($ancestors) {
+			// 	$outermost_parent_id = end($ancestors);
+			// } else {
+			// 	$outermost_parent_id = get_queried_object_id();
+			// }
+			// $cat_inner_image_url = get_field('inner_cat_thumbnail', 'product_cat_' . $outermost_parent_id);
 
 			if ( $get_brand === null ) {
-				if (is_product_category()) {
-					Load::molecules('product-category/product-category-info/index', [
-						'title' => '',
-						'class' => 'full-container',
-						'description' => 'Разгледайте наличните ни продукти и ако ви е необходимо нещо друго - обадете ни се !',
-						'cat' => single_term_title('', false),
-						'cat_img_inner' => $cat_inner_image_url
-					]);
-				} else {
-					if (!is_search()) {
-						Load::molecules('product-category/product-category-info/index', [
-							'title' => 'Всички продукти',
-							'class' => 'full-container',
-							'description' => 'Разгледайте наличните ни продукти и ако ви е необходимо нещо друго - обадете ни се !',
-							'cat' => single_term_title('', false),
-							'cat_img_inner' => $cat_inner_image_url
-						]);
-					}
-				}
+				// if (is_product_category()) {
+				// 	Load::molecules('product-category/product-category-info/index', [
+				// 		'title' => '',
+				// 		'class' => 'full-container',
+				// 		'description' => 'Разгледайте наличните ни продукти и ако ви е необходимо нещо друго - обадете ни се !',
+				// 		'cat' => single_term_title('', false),
+				// 		'cat_img_inner' => $cat_inner_image_url
+				// 	]);
+				// } else {
+				// 	if (!is_search()) {
+				// 		Load::molecules('product-category/product-category-info/index', [
+				// 			'title' => 'Всички продукти',
+				// 			'class' => 'full-container',
+				// 			'description' => 'Разгледайте наличните ни продукти и ако ви е необходимо нещо друго - обадете ни се !',
+				// 			'cat' => single_term_title('', false),
+				// 			'cat_img_inner' => $cat_inner_image_url
+				// 		]);
+				// 	}
+				// }
 			} else {
 				// Brand Tax page
 				$banner_srcset = wp_get_attachment_image_srcset($term_banner_id);
@@ -391,32 +417,6 @@ do_action( 'woocommerce_before_main_content' );
 										<span class="optional"></span> 
 										<a href="<?php echo $promo_link; ?>">Промо продукти</a>
 									</label>
-								<?php endif; ?>
-								<?php 
-								if (
-									$is_set_bike_compatibility !== '' &&
-									!in_array($get_product_cat, $excluded_categories)
-								) : 
-									$URL = $_SERVER['REDIRECT_URL'] ?? $_SERVER['REQUEST_URI'] ?? '';
-								?>
-									<a href="<?php echo $URL .'?wpf_filter_compability='.$is_set_bike_compatibility; ?>" class="button button-primary-orange paragraph-m show-cat-bike-compatibility">
-										<?php 
-											echo 'Покажи продуктите за ';
-											echo strtoupper(remove_hyphen_after_first_and_before_last_word($bikeCompatibility));
-											Load::atom('svg', ['name' => 'arrow_orange']); 
-										?>
-									</a>
-								<?php endif; 
-								if (
-									$is_set_bike_compatibility === '' &&
-									!in_array($get_product_cat, $excluded_categories)
-								) : ?>
-									<button class="button button-primary-orange paragraph-m show-cat-bike-compatibility" data-toggle="modal" data-target="#compatibilityModal" data-url="product-cat">
-										<?php 
-											echo 'Филтрирай за мотор';
-											Load::atom('svg', ['name' => 'arrow_orange']); 
-										?>
-									</button>
 								<?php endif; ?>
 
 								<div class="dropdown-menu dropdown-menu-sort" aria-labelledby="dropdownSortMenuButton">

@@ -826,7 +826,71 @@ function check_is_set_bike_compatibility() {
   return isset($_COOKIE['bikeCompatibility']) ? $_COOKIE['bikeCompatibility'] : '';
 }
 
+/**
+ * Връща slug-овете на дадени продуктови категории и всичките им подкатегории (рекурсивно).
+ *
+ * @param array $slugs Масив със slug-ове на категориите, които искаш да изключиш.
+ * @param bool $force_refresh Ако е true, ще изтрие кеша и ще го презареди.
+ * @return array Масив с всички slug-ове (включително на подкатегориите).
+ */
+function get_excluded_category_slugs(array $slugs, $force_refresh = false): array {
+  $transient_key = 'excluded_product_cat_slugs_' . md5(implode(',', $slugs));
+
+  if ($force_refresh) {
+    delete_transient($transient_key);
+  }
+
+  $cached = get_transient($transient_key);
+  if ($cached !== false) {
+    return $cached;
+  }
+
+  $all_slugs = [];
+
+  foreach ($slugs as $slug) {
+    $term = get_term_by('slug', $slug, 'product_cat');
+    if ($term && !is_wp_error($term)) {
+      $all_slugs[] = $term->slug;
+      $all_slugs = array_merge($all_slugs, get_all_child_category_slugs($term->term_id));
+    }
+  }
+
+  $all_slugs = array_unique($all_slugs);
+
+  // Кешираме за 12 часа
+  set_transient($transient_key, $all_slugs, 12 * HOUR_IN_SECONDS);
+
+  return $all_slugs;
+}
+
+/**
+ * Рекурсивно събира всички slug-ове на подкатегориите по даден родител.
+ *
+ * @param int $parent_id term_id на родителската категория.
+ * @return array Масив от slug-ове.
+ */
+function get_all_child_category_slugs($parent_id): array {
+  $slugs = [];
+
+  $children = get_terms([
+    'taxonomy' => 'product_cat',
+    'parent' => $parent_id,
+    'hide_empty' => false,
+  ]);
+
+  foreach ($children as $child) {
+    $slugs[] = $child->slug;
+    $slugs = array_merge($slugs, get_all_child_category_slugs($child->term_id));
+  }
+
+  return $slugs;
+}
+
 function output_filter_modal($get_product_cat, $promo_checked, $promo_link) {
+  $excluded_categories = ['body-equipment', 'navigations', 'bikes']; // exclude categories where we are showing bike compatibility button
+  $excluded_with_children = get_excluded_category_slugs($excluded_categories);
+  $is_set_bike_compatibility = check_is_set_bike_compatibility();
+
 	if (wp_is_mobile()) {
 		?>
 		<!-- Button trigger modal -->
@@ -855,7 +919,28 @@ function output_filter_modal($get_product_cat, $promo_checked, $promo_link) {
 									<a href="<?php echo esc_url($promo_link); ?>">Промо продукти</a>
 								</label>
 							<?php endif;
-						?>
+
+              if (!in_array($get_product_cat, $excluded_with_children)) :
+                if ($is_set_bike_compatibility !== '') {
+                  $bikeCompatibility = $_COOKIE['brand'] . ' ' . $_COOKIE['model'] . ' ' . $_COOKIE['year'];
+                ?>
+                  <a href="" class="button button-primary-orange paragraph-m show-cat-bike-compatibility">
+                    <?php 
+                      echo 'Покажи продуктите за ';
+                      echo strtoupper(remove_hyphen_after_first_and_before_last_word($bikeCompatibility));
+                      Load::atom('svg', ['name' => 'arrow_orange']); 
+                    ?>
+                  </a>
+                <?php } else { ?>
+                  <!-- Button trigger modal -->
+                  <button type="button" class="button button-primary-orange paragraph-m" data-toggle="modal" data-target="#compatibilityModal" data-url="my-bike">
+                    <?php 
+                      Load::atom('svg', ['name' => 'plus']); 
+                      echo 'Добави мотора си';
+                    ?>
+                  </button>
+              <?php } ?>
+              <?php endif; ?>
 					</div>
 				</div>
 			</div>

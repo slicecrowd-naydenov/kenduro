@@ -52,107 +52,6 @@
     @include media-breakpoint-down(md) {
       margin-right: -15px;
     }
-
-    .bike-compatibility-button {
-      // display: none;
-      padding: 6px 11px 6px 15px;
-      border-radius: $radius-circle;
-      border: 1px dashed rgba($b-highlight-two, 0.5);
-      background-color: rgba($b-highlight-two, 0.1);
-      @extend .flex-center-y;
-      @extend #{'.paragraph', '.paragraph-m'};
-
-      @include media-breakpoint-down(md) {
-        // display: none;
-        position: absolute;
-        left: 15px;
-        top: 65px;
-        width: calc(100% - 30px);
-      }
-
-      .edit-bike-model {
-        display: flex;
-        cursor: pointer;  
-        margin-left: 13px;
-        margin-right: 8px;
-        padding: 2px;
-
-        .edit-bike {
-  
-          path {
-            fill: $G-0;
-          }
-        }
-
-        path {
-          transition: fill 0.2s ease-in-out;
-        }
-
-        &:hover {
-          path {
-            fill: $b-highlight-two;
-          }
-        }
-      }
-
-      .button {
-        padding-top: 6px;
-        padding-bottom: 6px;
-        margin-left: 7px;
-
-        @include media-breakpoint-down(md) {
-          flex: 0 1 100%;
-          justify-content: space-between;
-          margin-left: 0;
-          padding-left: 12px;
-          padding-right: 12px;
-        }
-        
-        svg  {
-          path {
-            fill: $G-0;
-          }
-        }
-      }
-
-      &.not-set-bike {
-        .button {
-          svg  {
-            margin-left: -10px;
-            margin-right: 5px;
-          }
-        }
-
-        span {
-          @include media-breakpoint-down(md) {
-            display: none;
-          }
-        }
-
-        button[data-toggle="modal"] {
-          @include media-breakpoint-down(md) {
-            flex: 0 1 100%;
-          }
-        }
-      }
-
-      &.has-set-bike {
-        .button { 
-          display: inline-flex;
-          align-items: center;
-          
-          svg {
-            margin-left: 10px;
-          }
-        }
-      }
-
-      .bike-icon {
-        border-right: 1px solid rgba($G-0, 0.1);
-        padding-right: 12px;
-        margin-right: 12px;
-      }
-    }
   }
 
   .lang-bar {
@@ -162,5 +61,107 @@
 
   .chat-link {
     color: $G-0;
+  }
+}
+
+.bike-compatibility-button {
+  // display: none;
+  padding: 6px 11px 6px 15px;
+  border-radius: $radius-circle;
+  border: 1px dashed rgba($b-highlight-two, 0.5);
+  background-color: rgba($b-highlight-two, 0.1);
+  @extend .flex-center-y;
+  @extend #{'.paragraph', '.paragraph-m'};
+
+  &.in-header {
+    @include media-breakpoint-down(md) {
+      // display: none;
+      position: absolute;
+      left: 15px;
+      top: 65px;
+      width: calc(100% - 30px);
+    }
+  }
+
+  .edit-bike-model {
+    display: flex;
+    cursor: pointer;  
+    margin-left: 13px;
+    margin-right: 8px;
+    padding: 2px;
+
+    .edit-bike {
+      path {
+        fill: $G-0;
+      }
+    }
+
+    path {
+      transition: fill 0.2s ease-in-out;
+    }
+
+    &:hover {
+      path {
+        fill: $b-highlight-two !important;
+      }
+    }
+  }
+
+  .button {
+    padding-top: 6px;
+    padding-bottom: 6px;
+    margin-left: 7px;
+
+    @include media-breakpoint-down(md) {
+      flex: 0 1 100%;
+      justify-content: space-between;
+      margin-left: 0;
+      padding-left: 12px;
+      padding-right: 12px;
+    }
+    
+    svg  {
+      path {
+        fill: $G-0;
+      }
+    }
+  }
+
+  &.not-set-bike {
+    .button {
+      svg  {
+        margin-left: -10px;
+        margin-right: 5px;
+      }
+    }
+
+    span {
+      @include media-breakpoint-down(md) {
+        display: none;
+      }
+    }
+
+    button[data-toggle="modal"] {
+      @include media-breakpoint-down(md) {
+        flex: 0 1 100%;
+      }
+    }
+  }
+
+  &.has-set-bike {
+    .button { 
+      display: inline-flex;
+      align-items: center;
+      
+      svg {
+        margin-left: 10px;
+      }
+    }
+  }
+
+  .bike-icon {
+    border-right: 1px solid rgba($G-0, 0.1);
+    padding-right: 12px;
+    margin-right: 12px;
   }
 }

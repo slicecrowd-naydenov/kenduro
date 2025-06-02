@@ -228,6 +228,23 @@
     }
   }
 
+  .instagram-section {
+    margin-bottom: 80px; 
+
+    .heading {
+      display: block;
+      margin-top: 10px;
+    }
+
+    .instagram-link {
+      text-decoration: underline;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+
   .container {
     & + .information-list-section {
       @include media-breakpoint-down(lg) {
