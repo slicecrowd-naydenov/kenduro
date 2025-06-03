@@ -17,6 +17,7 @@ if (!is_admin()) {
   include 'woo-header-cart-button.php';
   include 'woo-checkout-fields.php';
   include 'woo-create-orders.php';
+  // include 'loyalty-options.php';
 } 
 
 function add_custom_query_var($vars) {

@@ -208,6 +208,121 @@ function custom_pagination_args( $args ) {
   return $args;
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+// add_action('wp_ajax_apply_loyalty_points', 'ajax_apply_loyalty_points');
+// add_action('wp_ajax_nopriv_apply_loyalty_points', 'ajax_apply_loyalty_points');
+
+// function ajax_apply_loyalty_points() {
+//     check_ajax_referer('apply_points_nonce', 'security');
+
+//     if (!is_user_logged_in()) {
+//         wp_send_json(['success' => false, 'message' => 'Трябва да сте влезли в профила си.']);
+//     }
+
+//     $user_id = get_current_user_id();
+//     $available_points = (int) get_field('user_points', 'user_' . $user_id);
+//     $requested_points = (int) $_POST['points'];
+
+//     if ($requested_points <= 0 || $requested_points > $available_points) {
+//         wp_send_json(['success' => false, 'message' => 'Невалиден брой точки.']);
+//     }
+
+//     $coupon_code = 'points_' . $requested_points;
+
+//     // Проверка дали вече има създаден такъв купон
+//     $coupon = get_posts([
+//       'title'        => $coupon_code,
+//       'post_type'    => 'shop_coupon',
+//       'post_status'  => 'publish',
+//       'numberposts'  => 1,
+//     ]);
+
+//     if (empty($coupon)) {
+//       $coupon_id = wp_insert_post([
+//           'post_title'  => $coupon_code,
+//           'post_status' => 'publish',
+//           'post_type'   => 'shop_coupon',
+//           'post_author' => 1,
+//       ]);
+  
+//       update_post_meta($coupon_id, 'discount_type', 'fixed_cart');
+//       update_post_meta($coupon_id, 'coupon_amount', $requested_points);
+//       update_post_meta($coupon_id, 'individual_use', 'yes');
+//       update_post_meta($coupon_id, 'usage_limit', 1);
+//       update_post_meta($coupon_id, 'customer_email', get_userdata($user_id)->user_email);
+
+//     }
+
+//     // update_post_meta($coupon_id, 'expiry_date', date('Y-m-d', strtotime('+1 day')));
+
+//     // Прилагане на купона
+//     // WC()->cart->add_discount($coupon_code);
+
+//     // Намаляване на точките
+//     // $new_balance = $available_points - $requested_points;
+//     // update_field('user_points', $new_balance, 'user_' . $user_id);
+
+//     wp_send_json(['success' => true, 'message' => '<span style="color:green;">Успешно приложихте ' . $requested_points . ' точки като отстъпка!</span>']);
+// }
+
+// add_filter('woocommerce_coupon_is_valid', 'validate_points_coupon_user_and_balance', 10, 2);
+
+// function validate_points_coupon_user_and_balance($is_valid, $coupon) {
+//     $code = $coupon->get_code();
+
+//     // Работим само с нашите купони
+//     if (strpos($code, 'points_') !== 0) {
+//         return $is_valid;
+//     }
+
+//     // Ако потребителят не е логнат, не може да използва точки
+//     if (!is_user_logged_in()) {
+//         return false;
+//     }
+
+//     $user_id = get_current_user_id();
+//     $user = wp_get_current_user();
+//     $user_email = $user->user_email;
+
+//     // Сигурна проверка по имейл
+//     $allowed_email = get_post_meta($coupon->get_id(), 'customer_email', true);
+//     if ($allowed_email && strtolower($allowed_email) !== strtolower($user_email)) {
+//         return false;
+//     }
+
+//     // Проверка за реален брой точки
+//     $requested_points = (int) str_replace('points_', '', $code);
+//     $user_points = (int) get_field('user_points', 'user_' . $user_id);
+
+//     if ($requested_points > $user_points) {
+//         return false;
+//     }
+
+//     return true;
+// }
+
+
+
+
+
+
+
+
+
+
+
+
 // Филтър за промяна на каноничния URL
 // add_filter( 'rank_math/frontend/canonical', function( $canonical ) {
 //   $current_url = "https://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];

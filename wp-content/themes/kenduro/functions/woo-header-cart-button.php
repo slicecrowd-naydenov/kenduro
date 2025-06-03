@@ -353,6 +353,13 @@ function trigger_ajax_to_cart() {
                 $('.coupon-area').removeClass('loading');
 
                 if (settings.url === '/?wc-ajax=remove_coupon') {
+                  // const $currentPointsEl = $('#user_points_display');
+                  // const used = parseInt($('#used_points_value').val());
+                  // const current = parseInt($currentPointsEl.text());
+                  // const remaining = current + used;
+
+                  // $currentPointsEl.text(remaining >= 0 ? remaining : 0);
+
                   $('.coupon-wrapper').removeClass('valid-code');
                 }
               }
