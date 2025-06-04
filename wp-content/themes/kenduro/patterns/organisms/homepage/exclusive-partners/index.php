@@ -41,7 +41,7 @@
           </div>
         </div>
       </div>
-      <div class="col-12">
+      <div class="col-xl-6 col-12">
         <div class="exclusive-partners__card">
           <div class="exclusive-partners__info">
             <img src="<?php echo IMAGES_PATH; ?>/plews.png" alt="plews logo"/>
@@ -54,6 +54,25 @@
           </div>
           <div class="exclusive-partners__image">
           <img src="<?php echo IMAGES_PATH; ?>/plews_image.png" alt="plews image"/>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-6 col-12">
+        <div class="exclusive-partners__card">
+          <div class="exclusive-partners__info">
+            <img src="<?php echo IMAGES_PATH; ?>/fmparts.png" alt="fmparts logo"/>
+            <p class="paragraph paragraph-l">
+              Вярваме в Hard Enduro ! - това е мотото на FM Parts!
+            </p>
+            <p class="paragraph paragraph-l">
+              Кендуро е ексклузивен представител на FM Parts за България и единствено при нас можете да намерите цялата гама продукти. А те не са малко ...
+            </p>
+            <a href="<?php echo esc_url(get_site_url()); ?>/brand/fm-parts" class="button button-primary-blue paragraph paragraph-l semibold">
+              <span>Разгледай Продуктите</span>
+            </a>
+          </div>
+          <div class="exclusive-partners__image">
+          <img src="<?php echo IMAGES_PATH; ?>/fmparts_image.png" alt="fmparts image"/>
           </div>
         </div>
       </div>

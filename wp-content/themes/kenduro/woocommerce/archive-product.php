@@ -276,29 +276,34 @@ do_action( 'woocommerce_before_main_content' );
 							</p>
 						<?php endif; ?>
 					</h1>
-				<?php endif; ?>
-					<?php $excluded_with_children = get_excluded_category_slugs($excluded_categories); ?>
-					<?php if (!in_array($get_product_cat, $excluded_with_children)) : ?>
+				<?php 
+					endif; 
+					if (is_product_category()) :
+						$excluded_with_children = get_excluded_category_slugs($excluded_categories);
+						if (!in_array($get_product_cat, $excluded_with_children)) : ?>
 
-						<div class="bike-compatibility-button <?php esc_attr_e($filterButtonClass); ?>">
-							<div class="bike-icon"><?php Load::atom('svg', ['name' => 'bike']); ?></div>
-							<?php if ($is_set_bike_compatibility !== '') { ?>
-								<a href="" class="show-bike-compatibility button button-primary-orange paragraph-m"><?php echo $btnText;?> за: <?php echo strtoupper(remove_hyphen_after_first_and_before_last_word($bikeCompatibility)); ?>
-									<?php Load::atom('svg', ['name' => 'arrow_orange']); ?>
-								</a>
-								<span class="edit-bike-model" data-toggle="modal" data-target="#compatibilityModal" data-url="my-bike"><?php Load::atom('svg', ['name' => 'edit', 'class' => 'edit-bike']); ?></span>
-								<?php } else {?>
-								<span>Покажи всички продукти за :</span>
-								<!-- Button trigger modal -->
-								<button type="button" class="button button-primary-orange paragraph-m" data-toggle="modal" data-target="#compatibilityModal" data-url="my-bike">
-									<?php 
-										Load::atom('svg', ['name' => 'plus']); 
-										echo 'Добави мотора си';
-									?>
-								</button>
-							<?php } ?>
-						</div>
-					<?php endif; ?>
+							<div class="bike-compatibility-button <?php esc_attr_e($filterButtonClass); ?>">
+								<div class="bike-icon"><?php Load::atom('svg', ['name' => 'bike']); ?></div>
+								<?php if ($is_set_bike_compatibility !== '') { ?>
+									<a href="" class="show-bike-compatibility button button-primary-orange paragraph-m"><?php echo $btnText;?> за: <?php echo strtoupper(remove_hyphen_after_first_and_before_last_word($bikeCompatibility)); ?>
+										<?php Load::atom('svg', ['name' => 'arrow_orange']); ?>
+									</a>
+									<span class="edit-bike-model" data-toggle="modal" data-target="#compatibilityModal" data-url="my-bike"><?php Load::atom('svg', ['name' => 'edit', 'class' => 'edit-bike']); ?></span>
+									<?php } else {?>
+									<span>Покажи всички продукти за :</span>
+									<!-- Button trigger modal -->
+									<button type="button" class="button button-primary-orange paragraph-m" data-toggle="modal" data-target="#compatibilityModal" data-url="my-bike">
+										<?php 
+											Load::atom('svg', ['name' => 'plus']); 
+											echo 'Добави мотора си';
+										?>
+									</button>
+								<?php } ?>
+							</div>
+						<?php 
+							endif;
+							endif;
+						?>
 
 				<?php
 				/**

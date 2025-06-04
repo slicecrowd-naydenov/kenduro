@@ -44,6 +44,7 @@
 
     p {
       margin: 30px 0;
+      color: $b-primary;
     }
 
     .button {
@@ -56,6 +57,8 @@
 
   &__image {
     flex: 0 0 50%;
+    display: flex;
+    justify-content: end;
 
     @include media-breakpoint-down(sm) {
       display: none;
