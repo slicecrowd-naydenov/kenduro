@@ -22,26 +22,6 @@ defined('ABSPATH') || exit;
 
 $current_product = wc_get_product(get_the_ID());
 
-$image_id = $current_product->get_image_id();
-
-if ($image_id) {
-    $sizes = get_intermediate_image_sizes();
-
-    foreach ($sizes as $size) {
-        $image = wp_get_attachment_image_src($image_id, $size);
-        if ($image) {
-            echo "<p><strong>{$size}</strong>: {$image[0]} ({$image[1]}x{$image[2]})</p>";
-        }
-    }
-
-    // И пълния размер
-    $full_image = wp_get_attachment_image_src($image_id, 'woocommerce_gallery_thumbnail');
-    if ($full_image) {
-        echo "<p><strong>woocommerce_gallery_thumbnail</strong>: {$full_image[0]} ({$full_image[1]}x{$full_image[2]})</p>";
-    }
-}
-
-
 function brand_text($current_product) {
 	$brand = '';
 
