@@ -208,13 +208,13 @@ function custom_pagination_args( $args ) {
   return $args;
 }
 
-
-
-
-
-
-
-
+function get_custom_cat_template($single_template) {
+  if ( in_category( 'factory-riders' )) {
+    $single_template = dirname( __FILE__ ) . '/single-factory-riders.php';
+  }
+  return $single_template;
+}
+add_filter( "single_template", "get_custom_cat_template" ) ;
 
 
 

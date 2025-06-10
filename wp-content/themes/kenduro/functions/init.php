@@ -677,10 +677,8 @@ function get_recently_viewed_products_callback() {
     <p class="paragraph paragraph-xl semibold primary">Последно разглеждани продукти</p>
   </div><hr>';
 
-  echo '<div class="recently-viewed-products">';
   echo $title;
   echo do_shortcode("[products ids='$product_ids' orderby='post__in' order='ASC' columns='5' limit='$limit_products']");
-  echo '</div>';
 
   wp_die();
 }
