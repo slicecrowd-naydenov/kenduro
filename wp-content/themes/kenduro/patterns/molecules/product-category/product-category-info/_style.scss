@@ -104,4 +104,32 @@
       display: none;
     }
   }
+
+  .riders-bg {
+    display: none;
+  }
+
+  &.factory-riders {
+    flex-direction: row-reverse;
+    padding-right: 100px;
+    gap: 60px;
+
+    .riders-bg {
+      display: block;
+    }
+
+    .teo-bg {
+      display: none;
+    }
+
+    .paragraph {
+      font-size: 16px;
+      line-height: 26px;
+      margin-bottom: 30px;
+    }
+
+    .product-category-info__text {
+      gap: 0;
+    }
+  }
 }

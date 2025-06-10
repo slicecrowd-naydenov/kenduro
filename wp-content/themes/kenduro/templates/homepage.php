@@ -66,6 +66,14 @@ get_header();
               'description' => 'Тео Кабакчиев, световноизвестен хард ендуро състезател, ръководи Kenduro.com с непоколебима страст, гарантирайки нашия непоколебим ангажимент към услуги и качество от най-високо ниво.'
             ]);
 
+            // Load::molecules('product-category/product-category-info/index', [
+            //   'title' => '<p class="h2">Kenduro Factory Riders</p>',
+            //   'class' => 'full-width-container factory-riders',
+            //   'description' => 'Виж кои са състезателите, които работят с нас, за да направим любимите ни моторни спортове още по-разпознаваеми и по-достъпни.',
+            //   'cta_text'  => 'Разгледай нашите Factory Riders',
+            //   'cta_link'  => '/factory-riders',
+            // ]);
+
             // echo do_shortcode('[products limit="12" columns="5" best_selling="true"]');
           ?>
         </div>

@@ -16,6 +16,7 @@
 <div class="product-category-info <?php echo $args['class']; ?>" style="<?php echo esc_attr($bg_image);?>">
   <?php Load::atom('svg', ['name' => 'k-logo']); ?>
   <img src="<?php echo IMAGES_PATH; ?>/teo-kabakchiev-bg.png" alt="teo kabakchiev" class="teo-bg" />
+  <img src="<?php echo IMAGES_PATH; ?>/riders.png" alt="riders" class="riders-bg" />
   <div class="product-category-info__text">
     <h2 class="title h4">
       <?php
