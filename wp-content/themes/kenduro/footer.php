@@ -143,5 +143,92 @@ s0.parentNode.insertBefore(s1,s0);
 </script> -->
 <!--End of Tawk.to Script-->
 
+<?php if (is_product()) : ?>
+<script>
+function LBInitRecommender() { 
+	Luigis.Recommend({
+		TrackerId: '647996-833562',
+		Theme: 'luigis',
+		Size: 4,
+		Type: 'item_detail_alternatives',
+		Name: 'item-detail-alternatives',
+		// RecommendationContext: function () {
+		// 	return {
+		// 		// brand: {
+		// 		// 	values: ['Ripin'],
+		// 		// 	operator: 'or'
+		// 		// },
+		// 		color: {
+		// 			values: ['Черно'],
+		// 			operator: 'and'
+		// 		}
+		// 	};
+		// },
+		GetItemIds: function() {
+			return [woocommerce_single_product_id.toString()];
+		},
+		GetBlacklistedItemIds: function() {
+			return [woocommerce_single_product_id.toString()];
+		}
+	}, '.recommender-ui-wrapper');
+}
+
+function LBInitBasketRecommender() { 
+	Luigis.Recommend({
+		TrackerId: '647996-833562',
+		Theme: 'luigis',
+		Size: 4,
+		Type: 'basket_popup',
+		Name: 'item-detail-alternatives',
+		// RecommendationContext: function () {
+		// 	return {
+		// 		// brand: {
+		// 		// 	values: ['Ripin'],
+		// 		// 	operator: 'or'
+		// 		// },
+		// 		color: {
+		// 			values: ['Черно'],
+		// 			operator: 'and'
+		// 		}
+		// 	};
+		// },
+		GetItemIds: function() {
+			return [woocommerce_single_product_id.toString()];
+		},
+		GetBlacklistedItemIds: function() {
+			return [woocommerce_single_product_id.toString()];
+		}
+	}, '.recommender-basket-ui-wrapper');
+}
+</script>
+
+
+<script type="text/x-template" id="template-recommend-item-detail-alternatives">
+	<div class="woocommerce columns-4">
+		<ul v-if="items.length" class="recco-custom products columns-4">
+			<li v-for="item in items" :key="item.url" class="product">
+				<a
+					class="woocommerce-LoopProduct-link woocommerce-loop-product__link"
+					:href="item.attributes.web_url"
+				>
+					<div class="wc-img-wrapper">
+						<img :src="item.attributes.image_link || 'https://kenduro.com/wp-content/uploads/2024/01/empty-product-768x768.jpg'" />
+					</div>
+					<p class="paragraph paragraph-l">{{ item.attributes.title }}</p>
+					<div class="button button-secondary-blue">Разгледай</div>
+					<!-- <span 
+						class="onsale wccs-onsale-badge wccs-onsale-badge-discount"
+						v-if="item.attributes.discount_price_percentage_amount && item.attributes.discount_price_percentage_amount > 0"
+					><span class="wccs-sale-flash-negative-symbol">-</span>{{ item.attributes.discount_price_percentage_amount }}<span class="wccs-sale-flash-percentage-symbol">%</span></span> -->
+				</a>
+			</li>
+		</ul>
+	</div>
+</script>
+
+<script src="https://cdn.luigisbox.com/recco.js" async onload="LBInitRecommender(); LBInitBasketRecommender();"></script>
+
+<?php endif; ?>
+
 </body>
 </html>

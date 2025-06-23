@@ -7,6 +7,7 @@
 
 get_header();
 
+// Uncomment below function to create/update Compatibilities post types
 // process_mockup(get_bike_model_types());
 
 $ss_ids = get_field('ss_ids', 'option');

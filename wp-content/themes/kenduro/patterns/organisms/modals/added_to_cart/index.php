@@ -23,6 +23,12 @@
           </div>
         </div>
       </div>
+      <div class="modal-footer">
+        <div class="recommended-box">
+          <p class="paragraph paragraph-xl semibold primary text-center">Може би искаш да разгледаш и това:</p>
+          <div class="recommender-basket-ui-wrapper"></div>
+        </div>
+      </div>
     </div>
   </div>
 </div>

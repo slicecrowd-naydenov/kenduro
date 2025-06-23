@@ -14,6 +14,7 @@
 				document.head.appendChild(t);
 			})();
 		</script>
+		<script async src="https://scripts.luigisbox.com/LBX-833562.js"></script> 
 	<?php endif; ?>
 	<meta charset="<?php bloginfo('charset'); ?>">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">

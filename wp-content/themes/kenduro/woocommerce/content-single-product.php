@@ -153,8 +153,16 @@ if (post_password_required()) {
 }
 ?>
 <div id="product-<?php the_ID(); ?>" <?php wc_product_class('', $current_product ); ?>>
-	<div class="product-gallery-section">
+	<?php
+		$attachment_ids = $current_product->get_gallery_image_ids();
+		$class_gallery = '';
+		if (empty($attachment_ids)) {
+			$class_gallery = 'no-gallery';
+		}
+	?>
+	<div class="product-gallery-section <?php echo $class_gallery; ?>">
 		<?php
+
 		/**
 		 * Hook: woocommerce_before_single_product_summary.
 		 *
@@ -187,19 +195,77 @@ if (post_password_required()) {
 			 * @hooked WC_Structured_Data::generate_product_data() - 60
 			 */
 			do_action('woocommerce_single_product_summary');
-			Load::organisms('information-list/index', [
-				'class' => 'product-single',
-				'list'  => [
-					['icon' => 'return-policy', 'text' => 'Тествайте преди да купите'],
-					['icon' => 'payment', 'text' => 'Плащане при доставка'],
-					['icon' => 'return-policy', 'text' => '14-дневна политика за връщане']
-				]
-			]);
 			?>
+			<div class="recommended-box">
+				<p class="paragraph paragraph-xl semibold primary text-center">Може би ще харесаш също така</p>
+				<div class="woocommerce column-4 skeleton-products">
+					<ul class="recco-custom products columns-4">
+						<li class="product skeleton">
+							<a
+								class="woocommerce-LoopProduct-link woocommerce-loop-product__link"
+								href="#"
+							>
+								<div class="wc-img-wrapper">
+									<img src="<?php echo wc_placeholder_img_src(); ?>" />
+								</div>
+								<p class="paragraph paragraph-l">Product Title</p>
+								<div class="button button-secondary-blue">Разгледай</div>
+							</a>
+						</li>
+						<li class="product skeleton">
+							<a
+								class="woocommerce-LoopProduct-link woocommerce-loop-product__link"
+								href="#"
+							>
+								<div class="wc-img-wrapper">
+									<img src="<?php echo wc_placeholder_img_src(); ?>" />
+								</div>
+								<p class="paragraph paragraph-l">Product Title</p>
+								<div class="button button-secondary-blue">Разгледай</div>
+							</a>
+						</li>
+						<li class="product skeleton">
+							<a
+								class="woocommerce-LoopProduct-link woocommerce-loop-product__link"
+								href="#"
+							>
+								<div class="wc-img-wrapper">
+									<img src="<?php echo wc_placeholder_img_src(); ?>" />
+								</div>
+								<p class="paragraph paragraph-l">Product Title</p>
+								<div class="button button-secondary-blue">Разгледай</div>
+							</a>
+						</li>
+						<li class="product skeleton">
+							<a
+								class="woocommerce-LoopProduct-link woocommerce-loop-product__link"
+								href="#"
+							>
+								<div class="wc-img-wrapper">
+									<img src="<?php echo wc_placeholder_img_src(); ?>" />
+								</div>
+								<p class="paragraph paragraph-l">Product Title</p>
+								<div class="button button-secondary-blue">Разгледай</div>
+							</a>
+						</li>
+					</ul>
+				</div>
+				<div class="recommender-ui-wrapper"></div>
+			</div>
 		</div>
 	</div>
 
 	<?php
+
+	Load::organisms('information-list/index', [
+		'class' => 'product-single',
+		'list'  => [
+			['icon' => 'calendar', 'text' => 'Доставка на следващия ден *'],
+			['icon' => 'return-policy', 'text' => 'Тествайте преди да купите'],
+			['icon' => 'payment', 'text' => 'Плащане при доставка'],
+			['icon' => 'return-policy', 'text' => '14-дневна политика за връщане']
+		]
+	]);
 	/**
 	 * Hook: woocommerce_after_single_product_summary.
 	 *
