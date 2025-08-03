@@ -143,6 +143,10 @@ export default () => {
     setTimeout(() => {
       const wooProductGallery = $('.woocommerce-product-gallery').width();
       $('.product-gallery-section').find('.onsale').css('left', `calc(${wooProductGallery}px - 30px)`);
+
+      if (!$('.product-gallery-section').find('.onsale').length) {
+        $('.custom-price-box').addClass('flex-direction-diff');
+      }
     }, 500);
   }
 

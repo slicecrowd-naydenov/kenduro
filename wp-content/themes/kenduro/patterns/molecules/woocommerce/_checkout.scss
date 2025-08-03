@@ -329,7 +329,7 @@
     }
 
     .product-price {
-      bdi {
+      span {
         margin: 0;
         font-size: 16px;
         line-height: 22px;
@@ -465,6 +465,42 @@
 
   h2 {
     margin: 0;
+  }
+
+  #total {
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+    position: relative;
+
+    &:after {
+      width: calc(100% - 10px);
+      height: 2px;
+      background-color: $G-2;
+      content: '';
+      position: absolute;
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+
+    .amount-eur {
+      position: relative;
+
+      &:before {
+        width: 18px;
+        height: 100%;
+        background-color: $G-0-5;
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0;
+
+        @include media-breakpoint-down(lg) {
+          background-color: $G-0;
+        }
+      }
+    }
   }
 }
 
@@ -779,7 +815,7 @@
       display: none;
     }
 
-    .woocommerce-Price-amount.amount {
+    .woocommerce-Price-amount.amount:not(.amount-eur) {
       margin-left: -3px;
 
       &:before {
@@ -787,6 +823,10 @@
         position: relative;
         left: -7px;
       }
+    }
+
+    .woocommerce-Price-amount.amount-eur {
+      margin-left: -3px;
 
       &:after {
         content: ')';

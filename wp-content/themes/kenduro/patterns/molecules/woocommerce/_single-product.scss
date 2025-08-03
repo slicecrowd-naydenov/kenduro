@@ -578,12 +578,17 @@
             border: 1px solid rgba(15, 15, 15, 0.1);
             height: 88px;
             padding: 10px;
-            flex-direction: column-reverse;
+            flex-direction: column;
             font-size: 0;
             @extend .flex-center;
 
             @include media-breakpoint-only(lg) {
               height: 60px;
+            }
+
+            @include media-breakpoint-down(sm) {
+              height: auto;
+              margin-bottom: 10px;
             }
 
             .asnp-savedPrice {
@@ -647,6 +652,7 @@
               margin: 0;
               font-size: 14px;
               line-height: 20px;
+              order: 2;
               @extend .flex-center;
 
               @include media-breakpoint-down(sm) {
@@ -659,9 +665,12 @@
                 content: 'Намалено от ';
               }
 
-              bdi {
-                padding-left: 5px;
+              span {
                 text-decoration: line-through;
+
+                bdi {
+                  padding-left: 5px;
+                }
               }
 
               ins {
@@ -675,7 +684,20 @@
             .price {
               display: flex;
               align-items: center;
-              flex-direction: column-reverse;
+              // flex-direction: column-reverse;
+              flex-direction: column;
+            }
+
+            &.flex-direction-diff {
+              flex-direction: row;
+
+              .price {
+                flex-direction: row;
+              }
+
+              .amount-eur {
+                margin-left: 8px;
+              }
             }
           }
 
@@ -689,6 +711,10 @@
             .custom-price-box {
               border-radius: $radius-medium;
               flex: 0 1 calc(50% - 5px);
+
+              @include media-breakpoint-down(sm) {
+                flex: 1 1 auto;
+              }
             }
 
             .single_add_to_cart_button,

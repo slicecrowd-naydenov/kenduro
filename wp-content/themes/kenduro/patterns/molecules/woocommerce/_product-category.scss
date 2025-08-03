@@ -273,7 +273,10 @@ ul.products {
       flex-wrap: wrap;
       // font-size: 0; 
       text-align: left;
-      column-gap: 10px;
+      column-gap: 4px;
+      font-weight: 600;
+      font-size: 16px;
+      line-height: 22px;
 
       br {
         display: none;
@@ -622,3 +625,12 @@ ul.products {
   }
 }
 
+.product-type-easy_product_bundle {
+  .custom-price-box {
+    flex-direction: column !important;
+
+    ins {
+      font-size: 25px !important;
+    }
+  }
+}
