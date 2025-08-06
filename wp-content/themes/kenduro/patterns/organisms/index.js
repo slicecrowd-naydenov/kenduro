@@ -208,28 +208,28 @@ export default () => {
   }
 
   window.onload = function() {
-    let additionalTaxTimeout;
-    clearTimeout(additionalTaxTimeout);
-    additionalTaxTimeout = setTimeout(() => {
-      if (!window.Intercom) {
-        // Създаваме <script> таг и го зареждаме динамично
-        var intercomScript = document.createElement('script');
-        intercomScript.type = 'text/javascript';
-        intercomScript.async = true;
-        intercomScript.src = 'https://widget.intercom.io/widget/xtb4h29q';
-        var firstScript = document.getElementsByTagName('script')[0];
-        firstScript.parentNode.insertBefore(intercomScript, firstScript);
+    // let additionalTaxTimeout;
+    // clearTimeout(additionalTaxTimeout);
+    // additionalTaxTimeout = setTimeout(() => {
+    //   if (!window.Intercom) {
+    //     // Създаваме <script> таг и го зареждаме динамично
+    //     var intercomScript = document.createElement('script');
+    //     intercomScript.type = 'text/javascript';
+    //     intercomScript.async = true;
+    //     intercomScript.src = 'https://widget.intercom.io/widget/xtb4h29q';
+    //     var firstScript = document.getElementsByTagName('script')[0];
+    //     firstScript.parentNode.insertBefore(intercomScript, firstScript);
 
-        intercomScript.onload = function() {
-          window.Intercom('boot', {
-            app_id: 'xtb4h29q'
-          });
-          // window.Intercom('show');
-        };
-      } else {
-        window.Intercom('show');
-      }
-    }, 7500);
+    //     intercomScript.onload = function() {
+    //       window.Intercom('boot', {
+    //         app_id: 'xtb4h29q'
+    //       });
+    //       // window.Intercom('show');
+    //     };
+    //   } else {
+    //     window.Intercom('show');
+    //   } 
+    // }, 7500);
 
     if (typeof woocommerce_single_product_id !== 'undefined') {
       var viewed = JSON.parse(localStorage.getItem("recently_viewed")) || [];
